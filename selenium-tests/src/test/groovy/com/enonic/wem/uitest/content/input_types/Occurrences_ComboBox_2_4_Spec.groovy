@@ -99,14 +99,14 @@ class Occurrences_ComboBox_2_4_Spec
         formViewPanel.isValidationMessagePresent();
     }
 
-    def "GIVEN new ComboBox-content(2:4) with four options is created WHEN content has been opened THEN four selected options present on page and 'filter input' is disabled"()
+    def "GIVEN saving of ComboBox-content (2:4) with four options WHEN content opened for edit THEN four selected options present on page and 'filter input' is disabled"()
     {
-        given: "new content ComboBox2_4 is added'"
+        given: "new content with type ComboBox2_4 added'"
         Content comboBoxContent = buildComboBox2_4_Content( 4 );
         selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
             comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content has been opened"
+        when: "content opened for edit"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBoxContent );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
@@ -137,6 +137,6 @@ class Occurrences_ComboBox_2_4_Spec
         then: "the content should be with 'Published'-status"
         contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
         and:
-        publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, comboBoxContent.getName() );
+        publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, comboBoxContent.getName() );
     }
 }

@@ -9,7 +9,7 @@ import spock.lang.Stepwise
 
 @Stepwise
 class DeleteSite_ConfirmDelete_Spec
-        extends BaseContentSpec {
+    extends BaseContentSpec {
     @Shared
     Content SITE;
 
@@ -119,8 +119,8 @@ class DeleteSite_ConfirmDelete_Spec
         confirmDialog.typeNumber("2").clickOnConfirmButton();
         saveScreenshot("test_confirm_delete_site_online");
 
-        then: "correct notification message should appears"
-        contentBrowsePanel.waitExpectedNotificationMessage("Item \"" + onlineSite.getName() + "\" is deleted.", 1)
+        then: "expected notification message should appears"
+        contentBrowsePanel.waitExpectedNotificationMessage("Item \"" + onlineSite.getName() + "\" is deleted.", 1);
 
 
         and: "site successfully deleted"

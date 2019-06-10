@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content.move_publish_sort.issue
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
@@ -16,6 +15,7 @@ import com.enonic.autotests.vo.contentmanager.Issue
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 
 /**
@@ -65,7 +65,7 @@ class BaseIssueSpec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( BaseContentType.FOLDER.getDisplayName(  )).
+            contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
         return content;
@@ -84,7 +84,7 @@ class BaseIssueSpec
             name( NameHelper.uniqueName( name ) ).
             displayName( "double content" ).
             parent( ContentPath.ROOT ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "double1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":double1_1" ).data( data ).
             build();
         return dateContent;
     }
@@ -108,7 +108,7 @@ class BaseIssueSpec
             name( siteName ).
             displayName( "site-contenttypes-based" ).
             parent( ContentPath.ROOT ).
-            contentType( "Site" ).data( data ).
+            contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
     }

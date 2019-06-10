@@ -7,16 +7,16 @@ import com.enonic.xp.content.ContentPath
 class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
     extends BaseContentSpec
 {
-    def "WHEN existing image has been selected THEN preview panel should be displayed with the image"()
+    def "WHEN existing image is selected THEN preview panel should be displayed with a image"()
     {
-        when: "existing image has been selected"
+        when: "existing image is selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
 
-        then: "the image should be present on the preview panel"
+        then: "preview panel displayed with a image"
         contentItemPreviewPanel.isImageDisplayed();
     }
 
-    def "WHEN existing svg-file has been selected THEN 'svg' should be displayed in the preview panel"()
+    def "WHEN existing svg-file is selected THEN 'svg' should be displayed in the preview panel"()
     {
         when: "existing svg-file is selected"
         findAndSelectContent( CIRCLES );
@@ -26,7 +26,7 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
         contentItemPreviewPanel.isSVGDisplayed();
     }
 
-    def "WHEN existing folder has been selected THEN 'preview not available' should be displayed in the preview panel"()
+    def "WHEN existing folder is selected THEN 'preview not available' should be displayed in the preview panel"()
     {
         when: "existing folder is selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
@@ -37,17 +37,17 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
 
     def "WHEN existing page-template is selected THEN 'page-preview' should be displayed in the panel"()
     {
-        given: "site with a template has been added"
+        given: "site with a template was added"
         Content site = buildMyFirstAppSite( "site-statistics" );
         addSite( site );
         Content template = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_SITE, "test statistics template",
                                               site.getName() );
-        and: "the site is expanded"
+        and:"the site is expanded"
         filterPanel.typeSearchText( site.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( site.getName() ) );
-        and: "new template has been added"
+        and:"new template has been added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            template.getContentTypeName() ).showPageEditor().typeData( template ).closeBrowserTab().switchToBrowsePanelTab();
+            template.getContentTypeName() ).showPageEditor().typeData( template ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
         when: "the template has been selected"

@@ -7,7 +7,9 @@ import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
-
+/**
+ * Tasks:
+ * XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards*/
 class Restore_ComboBox_Spec
     extends Base_InputFields_Occurrences
 {
@@ -49,7 +51,6 @@ class Restore_ComboBox_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
-        sleep(1000);
 
         then: "content should be displayed as valid in the grid"
         saveScreenshot( "combobox_valid_version" );

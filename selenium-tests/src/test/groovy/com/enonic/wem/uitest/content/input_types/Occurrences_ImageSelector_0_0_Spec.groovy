@@ -10,15 +10,13 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
- * Tasks:
- * XP-4893 Add selenium test to verify the XP-4863
  * Verifies:
  * -XP-4863 Content Wizard - Mod+S won't save content when image selector has focus
  * -Path-search in selectors doesn't work #4786
  * */
 @Stepwise
 class Occurrences_ImageSelector_0_0_Spec
-        extends Base_InputFields_Occurrences {
+    extends Base_InputFields_Occurrences {
     @Shared
     Content TEST_IMAGE_SELECTOR_CONTENT;
 
@@ -57,7 +55,7 @@ class Occurrences_ImageSelector_0_0_Spec
         given: "Image Selector-content (0:0) with two images has been added"
         Content imageSelectorContent = buildImageSelector0_0_Content(NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME);
         selectSitePressNew(imageSelectorContent.getContentTypeName()).typeData(
-                imageSelectorContent).save().closeBrowserTab().switchToBrowsePanelTab();
+            imageSelectorContent).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu(imageSelectorContent);
@@ -78,10 +76,10 @@ class Occurrences_ImageSelector_0_0_Spec
     def "GIVEN Image Selector-content (0:0) with four images has been added WHEN content opened for edit THEN correct images should be present on the page"() {
         given: "Image Selector-content (0:0) with four images has been added"
         TEST_IMAGE_SELECTOR_CONTENT =
-                buildImageSelector0_0_Content(NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME, MAN_IMAGE_DISPLAY_NAME,
-                        FL_IMAGE_DISPLAY_NAME);
+            buildImageSelector0_0_Content(NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME, MAN_IMAGE_DISPLAY_NAME,
+                                          FL_IMAGE_DISPLAY_NAME);
         selectSitePressNew(TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName()).typeData(
-                TEST_IMAGE_SELECTOR_CONTENT).save().closeBrowserTab().switchToBrowsePanelTab();
+            TEST_IMAGE_SELECTOR_CONTENT).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "content is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu(TEST_IMAGE_SELECTOR_CONTENT);

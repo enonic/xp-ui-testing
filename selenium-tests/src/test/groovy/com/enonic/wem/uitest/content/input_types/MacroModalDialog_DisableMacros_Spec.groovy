@@ -40,7 +40,7 @@ class MacroModalDialog_DisableMacros_Spec
         wizard.save();
         saveScreenshot( "test_disable_macros_inserted" );
 
-        then: "correct text should be displayed in the htmlarea"
+        then: "correct macro is displayed in the htmlarea"
         htmlAreaFormViewPanel.getTextInCKE().contains( DISABLE_MACROS_RESULT );
     }
 

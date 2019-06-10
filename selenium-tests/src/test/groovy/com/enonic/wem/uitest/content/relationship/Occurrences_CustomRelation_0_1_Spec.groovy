@@ -112,6 +112,11 @@ class Occurrences_CustomRelation_0_1_Spec
 
         then: "citation should be with 'online' status"
         contentBrowsePanel.getContentStatus( RELATIONSHIP_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
+
+        and: "expected notification message should be displayed"
+        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, RELATIONSHIP_CONTENT.getDisplayName() ) ||
+            message.contains( "items are published" );
+
     }
 
     private Content buildCitationRelation0_1_Content( String... names )
@@ -126,7 +131,7 @@ class Occurrences_CustomRelation_0_1_Spec
             name( NameHelper.uniqueName( "citation_rel_" ) ).
             displayName( "citation_rel_0_1" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "custom-relationship0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":custom-relationship0_1" ).data( data ).
             build();
         return imageSelectorContent;
     }
@@ -145,7 +150,7 @@ class Occurrences_CustomRelation_0_1_Spec
             name( NameHelper.uniqueName( "article" ) ).
             displayName( name ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "article" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":article" ).data( data ).
             build();
         return imageSelectorContent;
     }

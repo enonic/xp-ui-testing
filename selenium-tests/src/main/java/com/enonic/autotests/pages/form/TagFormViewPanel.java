@@ -22,7 +22,7 @@ public class TagFormViewPanel
 
     private final String TAGS_INPUT_XPATH = FORM_VIEW + "//input[@type='text']";
 
-    private final String LI_TAG_XPATH = FORM_VIEW + "//ul/li[contains(@id,'Tag')]";
+    private final String LI_TAG_XPATH = FORM_VIEW + "//ul/li[contains(@id,'api.ui.tags.Tag')]";
 
 
     public TagFormViewPanel( final TestSession session )

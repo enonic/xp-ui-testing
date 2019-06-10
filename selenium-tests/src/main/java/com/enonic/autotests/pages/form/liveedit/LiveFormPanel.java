@@ -22,6 +22,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class LiveFormPanel
     extends Application
 {
+    private final String SET_TINY_MCE_INNERHTML = "document.getElementById(arguments[0]).innerHTML=arguments[1];";
 
     public final String LAYOUT_COMPONENT = "//div[contains(@id,'LayoutComponentView')]";
 
@@ -31,16 +32,19 @@ public class LiveFormPanel
 
     public static final String LIVE_FORM_PANEL = "//div[contains(@id,'LiveFormPanel')]";
 
+
     private final String IMAGE_COMPONENT_VIEW = "//*[contains(@id,'ImageComponentView')]";
 
     private final String TEXT_COMPONENT_VIEW = "//div[contains(@id,'TextComponentView')]";
 
     private final String FRAGMENT_COMPONENT_VIEW = "//div[contains(@id,'FragmentComponentView')]";
 
-    private final String FRAGMENT_DISPLAY_NAMES = FRAGMENT_COMPONENT_VIEW + "//div[contains(@id,'FragmentComponentView')]";
+    private final String FRAGMENT_DISOLAY_NAMES = FRAGMENT_COMPONENT_VIEW + "//div[contains(@id,'FragmentComponentView')]";
 
 
     private LayoutComponentView layoutComponentView;
+
+    private MceToolbar mceToolbar;
 
     public LiveFormPanel( final TestSession session )
     {
@@ -56,6 +60,15 @@ public class LiveFormPanel
         return layoutComponentView;
     }
 
+    public MceToolbar getMceToolbar()
+    {
+        if ( mceToolbar == null )
+        {
+            mceToolbar = new MceToolbar( getSession() );
+        }
+        return mceToolbar;
+    }
+
     public void setLayoutComponentView( LayoutComponentView layoutComponentView )
     {
         this.layoutComponentView = layoutComponentView;
@@ -67,6 +80,15 @@ public class LiveFormPanel
         return new ContentWizardPanel( getSession() );
     }
 
+//    public LiveFormPanel typeTextInTextComponent( String text )
+//    {
+//        String input = TEXT_COMPONENT_VIEW + "//div[@class='tiny-mce-here mce-content-body mce-edit-focus']";
+//        String id = getDisplayedElement( By.xpath( input ) ).getAttribute( "id" );
+//        setTextIntoArea( id, text );
+//        sleep( 500 );
+//        return this;
+//    }
+
     public LiveFormPanel typeTextInTextComponent( String text )
     {
         String input =
@@ -76,6 +98,7 @@ public class LiveFormPanel
         sleep( 500 );
         return this;
     }
+
 
     public LiveEditComponentContextMenu clickOnTextComponentAndShowContextMenu()
     {
@@ -87,9 +110,9 @@ public class LiveFormPanel
         return contextMenu;
     }
 
-    private void setTextInCke( String id, String text )
+    private void setTextIntoArea( String id, String text )
     {
-        getJavaScriptExecutor().executeScript( SCRIPT_SET_CKE, id, text );
+        getJavaScriptExecutor().executeScript( SET_TINY_MCE_INNERHTML, id, text );
     }
 
     /**
@@ -128,7 +151,7 @@ public class LiveFormPanel
         return getNumberOfElements( By.xpath( columns ) );
     }
 
-    public List<String> getTextFromTextComponents()
+    public String getTextFromTextComponent()
     {
         String textPath = "//section/p";
         if ( !isElementDisplayed( TEXT_COMPONENT_VIEW + textPath ) )
@@ -136,7 +159,7 @@ public class LiveFormPanel
             saveScreenshot( "err_text_component_not_found" );
             throw new TestFrameworkException( "text in the component was not found!" );
         }
-        return getDisplayedStrings( By.xpath( TEXT_COMPONENT_VIEW + textPath ) );
+        return getDisplayedString( TEXT_COMPONENT_VIEW + textPath );
     }
 
     public boolean isLayoutComponentPresent()
@@ -222,4 +245,9 @@ public class LiveFormPanel
         sleep( 2000 );
         return this;
     }
+    private void setTextInCke( String id, String text )
+    {
+        getJavaScriptExecutor().executeScript( SCRIPT_SET_CKE, id, text );
+    }
+
 }

@@ -17,18 +17,20 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentDetailsPanel
     extends Application
 {
-    public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'ContextPanel') and contains(@class,'context-panel')]";
+    private final String SPLIT_PANEL_WITH_DETAILS_PANEL = "//div[contains(@class,'split-panel-with-details')]";
+
+    public static final String DETAILS_PANEL = "//div[contains(@id,'ContentBrowsePanel')]//div[contains(@id,'DetailsPanel')]";
 
     private final String WIDGET_SELECTOR_DROPDOWN = DETAILS_PANEL + "//div[contains(@id,'WidgetSelectorDropdown')]";
 
-    private final String VERSION_HISTORY_OPTION_ITEM =
-        WIDGET_SELECTOR_DROPDOWN + String.format( NAMES_VIEW_BY_DISPLAY_NAME, "Version history" );
+    private final String VERSION_HISTORY_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Version history']";
 
     private final String DETAILS_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Details']";
 
-    private final String WIDGET_SELECTOR_OPTIONS = WIDGET_SELECTOR_DROPDOWN + H6_DISPLAY_NAME;
+    private final String WIDGET_SELECTOR_OPTIONS =
+        WIDGET_SELECTOR_DROPDOWN + "//div[contains(@class,'slick-cell')]//div[contains(@id,'DefaultOptionDisplayValueViewer')]";
 
-    private final String DEPENDENCIES_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + String.format( NAMES_VIEW_BY_DISPLAY_NAME, "Dependencies" );
+    private final String DEPENDENCIES_OPTION_ITEM = WIDGET_SELECTOR_DROPDOWN + "//div[text()='Dependencies']";
 
     private final String WIDGET_SELECTOR_DROPDOWN_HANDLER = WIDGET_SELECTOR_DROPDOWN + DROP_DOWN_HANDLE_BUTTON;
 
@@ -112,11 +114,9 @@ public class ContentDetailsPanel
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( VERSION_HISTORY_OPTION_ITEM ) )
         {
-            waitUntilVisibleNoException( By.xpath( WIDGET_SELECTOR_DROPDOWN_HANDLER ), Application.EXPLICIT_QUICK );
             //click on drop down handler and show options
             widgetSelectorDropDownHandler.click();
         }
-        waitUntilVisibleNoException( By.xpath( VERSION_HISTORY_OPTION_ITEM ), Application.EXPLICIT_QUICK );
         if ( !isElementDisplayed( VERSION_HISTORY_OPTION_ITEM ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_history_opt" ) );
@@ -126,7 +126,6 @@ public class ContentDetailsPanel
         sleep( 700 );
         AllContentVersionsView versions = new AllContentVersionsView( getSession() );
         versions.waitUntilLoaded();
-        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return versions;
     }
 
@@ -171,20 +170,19 @@ public class ContentDetailsPanel
      */
     public boolean isDisplayed()
     {
-//        WebElement splitPanel = getDisplayedElement( By.xpath( SPLIT_PANEL_WITH_DETAILS_PANEL ) );
-//        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-//        return !(Boolean) executor.executeScript(
-//            "return window.api.dom.ElementRegistry.getElementById(arguments[0]).isSecondPanelHidden()", splitPanel.getAttribute( "id" ) );
-        return isElementDisplayed( DETAILS_PANEL );
+        WebElement splitPanel = getDisplayedElement( By.xpath( SPLIT_PANEL_WITH_DETAILS_PANEL ) );
+        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
+        return !(Boolean) executor.executeScript(
+            "return window.api.dom.ElementRegistry.getElementById(arguments[0]).isSecondPanelHidden()", splitPanel.getAttribute( "id" ) );
     }
 
     public String getContentDisplayName()
     {
-        if ( !isElementDisplayed( DETAILS_PANEL + CONTENT_SUMMARY_VIEWER + H6_DISPLAY_NAME ) )
+        if ( !isElementDisplayed( DETAILS_PANEL + H6_DISPLAY_NAME ) )
         {
             saveScreenshot( "err_det_panel_displayname" );
             throw new TestFrameworkException( "display name was not found on the details panel!" );
         }
-        return getDisplayedString( DETAILS_PANEL + CONTENT_SUMMARY_VIEWER + H6_DISPLAY_NAME );
+        return getDisplayedString( DETAILS_PANEL + H6_DISPLAY_NAME );
     }
 }

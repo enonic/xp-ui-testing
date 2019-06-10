@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
@@ -9,16 +8,12 @@ import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.SystemUserName
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
  * Created on 1/31/2017.
- *
- * Tasks:
- * XP-2845 Create selenium tests for "Overwrite child permission" feature(Edit Permissions Dialog)
- * xp-ui-testing#4 Check fixed application's bugs and add Selenium tests for each fixed bugs
- * xp-ui-testing#54 Add selenium tests to verify xp#5063
  *
  * Verifies:
  * XP-4932 Impossible to save changes when 'Overwrite child permissions' was set in true
@@ -42,7 +37,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
     def "GIVEN 'Edit Permissions Dialog' is opened WHEN 'Overwrite child permissions' has been clicked THEN 'Apply' button on the dialog should be enabled"()
     {
         given: "Content wizard is opened"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         and: "'Edit Permissions Dialog' is opened"
         EditPermissionsDialog dialog = wizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
 
@@ -72,9 +67,11 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
 
         and: "'Overwrite child permissions' is checked"
         dialog.setOverwriteChildPermissionsCheckbox( true ).clickOnApply();
-
+        and: "the content is saved"
+        wizard.save();
         and: "wizard is closing"
         wizard.executeCloseWizardScript();
+        wizard.switchToBrowsePanelTab();
 
         then: "'Alert' with warning message should not be displayed"
         !wizard.isAlertPresent();
@@ -83,20 +80,20 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
     def "GIVEN existing parent folder with a child is opened WHEN new permission as added in the parent AND 'Overwrite' is true THEN the permissions should be updated in the child folder"()
     {
         given: "existing parent folder with a child is opened"
-        ContentWizardPanel parentWizard = findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarEdit()
-        parentWizard.switchToBrowsePanelTab();
+        ContentWizardPanel parent = findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarEdit()
+        parent.switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
         ContentWizardPanel childFolder = findAndSelectContent( CHILD_FOLDER.getName() ).clickToolbarEdit();
         contentBrowsePanel.switchToBrowserTabByTitle( PARENT_FOLDER.getDisplayName() );
 
         when: " Anonymous acl-entry was added in the parent wizard"
-        EditPermissionsDialog dialog = parentWizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
+        EditPermissionsDialog dialog = parent.clickOnAccessTabLink().clickOnEditPermissionsButton();
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         and: "'Overwrite child permissions' set in true for the parent folder AND new permission was added"
         dialog.setInheritPermissionsCheckbox( false ).setOverwriteChildPermissionsCheckbox( true ).addPermissionByClickingCheckbox(
             anonymousEntry ).clickOnApply();
-        sleep( 1000 );
-
+        and: "parent folder has been saved"
+        parent.save();
         and: "navigate to the child wizard-tab"
         contentBrowsePanel.switchToBrowserTabByTitle( CHILD_FOLDER.getDisplayName() );
         saveScreenshot( "inherit_perm_true_child_permissions_updated" );
@@ -122,7 +119,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
             PermissionSuite.CAN_READ ).build();
 
         and: "child folder has been saved"
-        //childWizard.save();
+        childWizard.save();
         saveScreenshot( "inherit_perm_false_perm_changed" );
 
         then: "expected role should be present on the Security form in the wizard"
@@ -145,7 +142,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         and: "the content has been saved"
         ContentAclEntry entryToRemove = ContentAclEntry.builder().principalName( USER_ADMIN_ROLE ).suite(
             PermissionSuite.CAN_READ ).build();
-        //childWizard.save();
+        childWizard.save();
         saveScreenshot( "inherit_perm_true_initial_perm_restored" );
 
         then: "permissions should be the same as in the parent folder"
@@ -155,7 +152,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
     def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel'-top button pressed THEN Confirmation Dialog should not appear"()
     {
         given: "Content wizard is opened"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         and: "'Edit Permissions Dialog' is opened"
         EditPermissionsDialog editPermissionsButton = wizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
         and: "changes is made"
@@ -170,10 +167,10 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         !confirm.isOpened();
     }
 
-    def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel' button pressed THEN Confirmation Dialog should not appear"()
+    def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel' button pressed THEN Confirmation Dialog should appear"()
     {
         given: "Content wizard is opened"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         and: "'Edit Permissions Dialog' is opened"
         EditPermissionsDialog editPermissionsButton = wizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
         and: "changes is made"

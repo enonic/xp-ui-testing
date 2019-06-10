@@ -10,8 +10,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 13.10.2016.
- *
- * TASKS: XP-4222 Add selenium tests for restoring of cropped image
  * Verifies the bug: XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
  * */
 @Stepwise
@@ -82,7 +80,7 @@ class Restore_Version_Crop_Image_Spec
 
     def "GIVEN existing image with several versions WHEN version with cropped size is restored THEN button 'reset' is present on the wizard page "()
     {
-        given: "existing image with several versions is selected"
+        given: "existing image with several versions is selcted"
         findAndSelectContent( IMPORTED_MAN_IMAGE );
 
         and: "version panel was opened"
@@ -146,7 +144,7 @@ class Restore_Version_Crop_Image_Spec
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
-        then: "'Reset' button should appear"
+        then: "'Reset' button should appears"
         formViewPanel.isButtonResetPresent();
     }
 }

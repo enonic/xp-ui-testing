@@ -15,12 +15,9 @@ class Occurrences_Date_1_1_Spec
     @Shared
     String TEST_DATE = "2016-01-11";
 
-    @Shared
-    Content TEST_CONTENT;
-
-    def "GIVEN wizard for new Date(1:1) is opened WHEN date input was clicked THEN 'date picker popup' dialog should appear"()
+    def "GIVEN wizard for adding a Date opened WHEN date input was clicked THEN 'date picker popup' dialog is displayed"()
     {
-        given: "wizard for new Date(1:1) is opened"
+        given: "wizard for adding a Date opened"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
         selectSitePressNew( dateContent.getContentTypeName() );
 
@@ -29,31 +26,31 @@ class Occurrences_Date_1_1_Spec
         DatePickerPopup picker = formViewPanel.showPicker();
         saveScreenshot( "date-picker-popup" );
 
-        then: "'date picker' popup dialog should appear"
+        then: "'date picker' popup dialog is displayed"
         picker.isDisplayed();
     }
 
-    def "GIVEN wizard for new 'Date(1:1)' is opened WHEN name has been typed AND date input is empty THEN red icon should be present on the wizard-page(date input is required)"()
+    def "GIVEN wizard for adding a Date(1:1) opened WHEN name typed and date was not typed THEN red icon should be present on the wizard-page"()
     {
-        given: "wizard for new 'Date(1:1)' is opened"
+        given: "start to add a content with type 'Date(1:1)'"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
         ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() );
 
-        when: "only a name was typed and date input is empty(the content is not saved)"
+        when: "only a name was typed and date was not typed(the content is not saved)"
         wizard.typeDisplayName( dateContent.getDisplayName() );
 
         then: "red icon should be present on the wizard-page, because required input is empty"
         wizard.isContentInvalid();
     }
 
-    def "GIVEN wizard for Date(1:1) is opened WHEN required 'date' is empty AND the content has been saved THEN red icon should be present on the wizard"()
+    def "GIVEN opened content wizard WHEN content without required 'date' was saved THEN wizard has a red icon on wizard-tab"()
     {
-        given: "wizard for Date(1:1) is opened"
-        TEST_CONTENT = buildDate1_1_Content( null );
-        ContentWizardPanel wizard = selectSitePressNew( TEST_CONTENT.getContentTypeName() ).typeData( TEST_CONTENT );
+        given: "new content with type date added'"
+        Content dateContent = buildDate1_1_Content( null );
+        ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() ).typeData( dateContent );
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
 
-        when: "content without required 'date' has been saved"
+        when: "content without required 'date' was saved"
         wizard.save();
 
         then: "validation message should be displayed"
@@ -63,17 +60,22 @@ class Occurrences_Date_1_1_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN existing Date(1:1) AND date is not selected WHEN content has been selected THEN red icon should be present near the content in the grid"()
+    def "GIVEN opened content wizard WHEN content saved without required 'date' and wizard closed THEN content displayed in a grid with a invalid status"()
     {
-        when: "existing Date(1:1) has been selected(date is not selected)"
-        filterPanel.typeSearchText( TEST_CONTENT.getName() );
+        given: "new content with type date time added'"
+        Content dateContent = buildDate1_1_Content( null );
+        ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() ).typeData( dateContent );
+
+        when: "content saved without required 'date' and wizard closed"
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        filterPanel.typeSearchText( dateContent.getName() );
         saveScreenshot( "date-not-valid" )
 
         then: "content should be invalid, because required field is empty"
-        contentBrowsePanel.isContentInvalid( TEST_CONTENT.getName() );
+        contentBrowsePanel.isContentInvalid( dateContent.getName() );
     }
 
-    def "WHEN new Data(1:1) content has been published THEN status  of the content should be 'Online'"()
+    def "GIVEN creating new Date 1:1 on root WHEN data was typed and saved and the content has been published THEN new content with status equals 'Online' should be listed in the grid"()
     {
         given: "start to add a content with type 'Date'"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
@@ -87,5 +89,8 @@ class Occurrences_Date_1_1_Spec
 
         then: "content should be 'Published'"
         contentBrowsePanel.getContentStatus( dateContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
+
+        and: "expected notification message should be shown"
+        publishMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE, dateContent.getName() );
     }
 }

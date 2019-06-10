@@ -25,11 +25,11 @@ public class ImageFormViewPanel
 
     private final String IMG = FORM_VIEW + "//img[contains(@class,'image-bg')]";
 
-    private final String IMAGE_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + String.format( TAB_BAR_ITEM, "Properties" );
+    private final String IMAGE_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + String.format( TAB_BAR_ITEM, "Image Info" );
 
-    private final String PHOTO_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + String.format( TAB_BAR_ITEM, "Photo" );
+    private final String PHOTO_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + String.format( TAB_BAR_ITEM, "Photo Info" );
 
-    private final String GPS_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + String.format( TAB_BAR_ITEM, "Location" );
+    private final String GPS_INFO_TAB_BAR_ITEM = STEP_NAVIGATOR + String.format( TAB_BAR_ITEM, "Gps Info" );
 
     private final String CAPTION_TEXTAREA = FORM_VIEW + "//textarea[contains(@name,'caption')]";
 
@@ -52,10 +52,10 @@ public class ImageFormViewPanel
         FORM_VIEW + "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Tags']]//input[@type='text']";
 
     private final String ARTISTS_TAGS = FORM_VIEW +
-        "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Artist']]//ul/li[contains(@id,'Tag')]/span";
+        "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Artist']]//ul/li[contains(@id,'api.ui.tags.Tag')]/span";
 
     private final String TAGS = FORM_VIEW +
-        "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Tags']]//ul/li[contains(@id,'Tag')]/span";
+        "//div[contains(@id,'InputView') and descendant::div[@class='label' and text()='Tags']]//ul/li[contains(@id,'api.ui.tags.Tag')]/span";
 
     @FindBy(xpath = CAPTION_TEXTAREA)
     private WebElement captionTextArea;
@@ -99,7 +99,7 @@ public class ImageFormViewPanel
 
     public ImageEditor clickOnFocusButton()
     {
-        boolean isClickable = waitUntilClickableNoException( By.xpath( BUTTON_FOCUS ), EXPLICIT_LONG );
+        boolean isClickable = waitUntilClickableNoException( By.xpath( BUTTON_FOCUS ), EXPLICIT_NORMAL );
         if ( !isClickable )
         {
             saveScreenshot( "err_focus_button" );
@@ -114,7 +114,6 @@ public class ImageFormViewPanel
     {
         buttonReset.click();
         waitsElementNotVisible( By.xpath( BUTTON_RESET ), EXPLICIT_NORMAL );
-        sleep( 2000 );
         return this;
     }
 

@@ -48,7 +48,7 @@ public class LoginPage
         LoginPage loginPage = new LoginPage( getSession() );
         loginPage.typeNameAndPassword( username, password );
         getSession().setLoggedIn( true );
-        sleep( 200 );
+        sleep( 500 );
         return new HomePage( getSession() );
     }
 
@@ -87,7 +87,7 @@ public class LoginPage
             saveScreenshot( NameHelper.uniqueName( "err_load_login_page" ) );
             throw new TestFrameworkException( "login page was not loaded!" );
         }
-        return true;
+        return isLoginPageLoaded;
     }
 
     public boolean isDisplayed()

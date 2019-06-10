@@ -3,8 +3,6 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import org.openqa.selenium.Keys
-import spock.lang.Ignore
-import spock.lang.IgnoreIf
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -29,7 +27,7 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN some content are listed in root WHEN no selection THEN all rows should be white"()
     {
         given:
-        Number rowNumber = contentBrowsePanel.getRowsCount();
+        int rowNumber = contentBrowsePanel.getRowsCount();
 
         expect: "all rows should be white(unselected)"
         contentBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
@@ -108,7 +106,7 @@ class ContentBrowsePanel_GridPanel_Spec
         and: "'New' button should be disabled"
         !contentBrowsePanel.isNewButtonEnabled();
     }
-
+    //#4727 'Preview' button should be disabled, when 'Selection Controller' has been unchecked( 'Clear Selection')
     def "GIVEN 'Selection Controller' is checked WHEN click on the 'Selection Controller' THEN it should be unchecked AND 'Preview', 'Delete' and 'New' buttons should be disabled"()
     {
         given: "'Selection Controller' is checked"

@@ -9,7 +9,7 @@ import spock.lang.Stepwise
 
 @Stepwise
 class DisplayNameSortContent_Spec
-        extends BaseContentSpec {
+    extends BaseContentSpec {
 
     def "GIVEN sort content dialog is opened (default sorting) WHEN 'DisplayName - Ascending order' has been selected THEN content in the folder should be sorted correctly"() {
         given: "folder with contents is selected and 'Sort' button clicked"
@@ -22,7 +22,7 @@ class DisplayNameSortContent_Spec
 
         when: "'DisplayName - Ascending' has been selected"
         List<String> nameAscendingList = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().doSort(
-                SortMenuItem.DISPLAY_NAME.getValue(), SortOrder.ASCENDING).getContentNames();
+            SortMenuItem.DISPLAY_NAME.getValue(), SortOrder.ASCENDING).getContentNames();
         saveScreenshot("dname_ascending");
 
         then: "content in the dialog should be correctly sorted"
@@ -38,7 +38,7 @@ class DisplayNameSortContent_Spec
 
         when: "'DisplayName - Descending' has been selected "
         List<String> nameDescendingList = sortContentDialog.clickOnTabMenu().doSort(
-                SortMenuItem.DISPLAY_NAME.getValue(), SortOrder.DESCENDING).getContentNames();
+            SortMenuItem.DISPLAY_NAME.getValue(), SortOrder.DESCENDING).getContentNames();
 
         then: "content in the dialog should be correctly sorted "
         Collections.sort(defaultSortingList, Collections.reverseOrder());
@@ -71,7 +71,7 @@ class DisplayNameSortContent_Spec
 
         when: "'ascending by display name' has been selected "
         List<String> contentsInDialog = sortContentDialog.clickOnTabMenu().doSort(
-                SortMenuItem.DISPLAY_NAME.getValue(),SortOrder.ASCENDING).getContentNames();
+            SortMenuItem.DISPLAY_NAME.getValue(),SortOrder.ASCENDING).getContentNames();
         sortContentDialog.clickOnSaveButton();
         contentBrowsePanel.expandContent(ContentPath.from(IMPORTED_FOLDER_NAME));
 

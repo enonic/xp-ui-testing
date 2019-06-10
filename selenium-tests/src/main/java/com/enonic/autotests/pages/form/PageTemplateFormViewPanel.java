@@ -61,7 +61,6 @@ public class PageTemplateFormViewPanel
         }
         sleep( 2000 );
         selectPageController( data.getString( PAGE_CONTROLLER ) );
-        contentWizardPanel.switchToDefaultWindow();
         return this;
     }
 
@@ -113,7 +112,7 @@ public class PageTemplateFormViewPanel
         }
         saveScreenshot( NameHelper.uniqueName( pageName ) );
         getDisplayedElement( By.xpath( pageItemXpath ) ).click();
-        sleep( 1000 );
+        waitUntilVisibleNoException( By.xpath( "//body[@data-portal-component-type='page']" ), Application.EXPLICIT_NORMAL );
     }
 
     public List<String> getSelectedContentTypes()

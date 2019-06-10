@@ -143,7 +143,7 @@ public class ImageSelectorFormViewPanel
             saveScreenshot( "err_click_on_image" );
             throw new TestFrameworkException( "Image was not clicked! " + displayName );
         }
-        sleep( 700 );
+        sleep( 500 );
         return this;
     }
 

@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewD
 import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.FragmentInspectionPanel
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
-import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -23,7 +22,7 @@ import spock.lang.Stepwise
  * XP #5454 Inspection Panel - DropDown list of options not updated, when new fragment has been created
  * */
 @Stepwise
-class Fragment_Change_In_InspectionPanel_Spec
+class Fragment_Change_In_InspectionPanel
     extends BaseContentSpec
 {
     @Shared
@@ -56,14 +55,16 @@ class Fragment_Change_In_InspectionPanel_Spec
         and: "new fragment has been created from the part"
         siteWizard.showComponentView();
         pageComponentsView.openMenu( PART_FRAGMENT_CITY_LIST ).selectMenuItem( "Save as Fragment" );
-        saveScreenshot( "fragment_inspection_panel1" );
-        sleep( 1200 );
+        saveScreenshot( "fragment_inspection_panel1" )
 
         when: "'Dropdown handle' has been clicked"
         FragmentInspectionPanel fragmentInspectionPanel = new FragmentInspectionPanel( getSession() );
         fragmentInspectionPanel.clickOnFragmentDropdownHandle();
 
-        then: "one option should be present in the list"
+        then: "drop down list should be expanded"
+        fragmentInspectionPanel.isDropdownListExpanded();
+
+        and: "one option should be present in the list"
         List<String> options = fragmentInspectionPanel.getDropdownOptions();
         options.size() == 1;
         and: "correct display name of fragment should be present"
@@ -82,7 +83,6 @@ class Fragment_Change_In_InspectionPanel_Spec
         and: "new fragment has been created from the part"
         siteWizard.showComponentView();
         pageComponentsView.openMenu( PART_FRAGMENT_CITY_CREATION ).selectMenuItem( "Save as Fragment" );
-        sleep( 2500 );
         saveScreenshot( "fragment_inspection_panel2" )
 
         when: "'Dropdown handle' has been clicked"
@@ -149,8 +149,6 @@ class Fragment_Change_In_InspectionPanel_Spec
 
         when: "'Show Outbound' button has been pressed"
         dependenciesWidget.clickOnShowOutboundButton();
-        sleep( 2000 );
-        NavigatorHelper.switchToNextTab( getTestSession() );
 
         then: "required fragment should be filtered"
         contentBrowsePanel.getContentDisplayNamesFromGrid().size() == 1;
@@ -163,7 +161,7 @@ class Fragment_Change_In_InspectionPanel_Spec
         given: "site wizard  is opened and the controller has been selected"
         SITE2 = buildSiteBasedOnFirstApp();
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE2.getContentTypeName() ).typeData(
-            SITE2 ).selectPageDescriptor( "main region" );
+            SITE2 ).selectPageDescriptor( "main region" ).save();
 
         and: "'Component View' has been opened"
         PageComponentsViewDialog pageComponentsView = siteWizard.showComponentView();
@@ -174,7 +172,6 @@ class Fragment_Change_In_InspectionPanel_Spec
         and: "new fragment has been created from the part"
         siteWizard.showComponentView();
         pageComponentsView.openMenu( PART_CITIES_DISTANCE_FACET ).selectMenuItem( "Save as Fragment" );
-        sleep( 1000 );
         saveScreenshot( "fragment_cities_distance" )
 
         when: "'Dropdown handle' has been clicked"

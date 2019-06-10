@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -17,8 +16,6 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.WaitHelper;
 import com.enonic.autotests.vo.contentmanager.ContentVersion;
-
-import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class AllContentVersionsView
     extends Application
@@ -43,34 +40,14 @@ public class AllContentVersionsView
     public LinkedList<ContentVersion> getAllVersions()
     {
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        List<WebElement> liElements = null;
-        try
-        {
-            liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
-        }
-        catch ( StaleElementReferenceException e )
-        {
-            sleep( 1000 );
-            liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
-        }
-
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
         return liElements.stream().map( e -> buildContentVersion( e ) ).collect( Collectors.toCollection( LinkedList::new ) );
     }
 
     private ContentVersion buildContentVersion( WebElement li )
     {
         String statusInElement = ".//div[contains(@class,'status')]";
-        String modifierName = null;
-        try
-        {
-            modifierName = li.findElements( By.xpath( "." + H6_DISPLAY_NAME ) ).get( 0 ).getText();
-        }
-        catch ( StaleElementReferenceException e )
-        {
-            sleep( 1000 );
-            modifierName = li.findElements( By.xpath( "." + H6_DISPLAY_NAME ) ).get( 0 ).getText();
-        }
-
+        String modifierName = li.findElements( By.xpath( "." + H6_DISPLAY_NAME ) ).get( 0 ).getText();
         String status = null;
         if ( li.findElements( By.xpath( statusInElement ) ).size() > 0 )
         {

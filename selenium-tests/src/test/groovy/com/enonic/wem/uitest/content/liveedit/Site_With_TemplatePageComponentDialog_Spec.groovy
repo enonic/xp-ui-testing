@@ -7,11 +7,8 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.PageComponent
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
-import spock.lang.Ignore
 import spock.lang.Shared
-import spock.lang.Stepwise
 
-@Stepwise
 class Site_With_TemplatePageComponentDialog_Spec
     extends BaseContentSpec
 {
@@ -33,7 +30,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).close( PAGE_TEMPLATE.getDisplayName() );
+            PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).save().close( PAGE_TEMPLATE.getDisplayName() );
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
 
         then: "template should be listed in the grid"
@@ -59,14 +56,14 @@ class Site_With_TemplatePageComponentDialog_Spec
         dialog.isOpened();
 
         and: "correct title should be displayed on the view"
-        dialog.getTextFromHeader() == PageComponentsViewDialog.DIALOG_HEADER;
+        dialog.getTextFromHeader().equals( PageComponentsViewDialog.DIALOG_HEADER );
 
         and: "one component should be displayed"
         components.size() == 2;
         and: "correct 'page template' should be displayed"
         components.get( 0 ).getName().equals( PAGE_TEMPLATE.getDisplayName() );
         and: "correct component's name should be displayed"
-        components.get( 1 ).getName().equals( "country" );
+        components.get( 1 ).getName().equals( "country" )
     }
 
     def "GIVEN existing site is opened WHEN 'Page Component View' shown AND menu-button clicked THEN context menu should be present"()
@@ -74,7 +71,6 @@ class Site_With_TemplatePageComponentDialog_Spec
         given: "existing site is opened"
         filterPanel.typeSearchText( SITE.getName() )
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
-        sleep( 2000 );
 
         and: "'Page Components View' is shown"
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
@@ -86,6 +82,22 @@ class Site_With_TemplatePageComponentDialog_Spec
 
         then: "context menu should be displayed"
         contextMenu.isOpened();
+    }
+
+    def "GIVEN existing site is opened and 'customize' menu item was selected WHEN wizard has been closed THEN 'save before close dialog' should be displayed"()
+    {
+        given: "existing site is opened"
+        filterPanel.typeSearchText( SITE.getName() )
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit(); ;
+
+        and: "'Page Components View' is shown"
+        wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
+
+        when: "wizard has been closed"
+        wizard.executeCloseWizardScript();
+
+        then: "Alert dialog should appear, because renderer was changed"
+        wizard.waitIsAlertDisplayed();
     }
 
     def "GIVEN 'Page Components' view is opened WHEN button 'close' was clicked THEN dialog should not be present"()

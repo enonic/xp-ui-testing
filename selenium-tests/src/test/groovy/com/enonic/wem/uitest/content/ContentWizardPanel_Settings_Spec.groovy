@@ -1,10 +1,10 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -16,10 +16,10 @@ class ContentWizardPanel_Settings_Spec
     @Shared
     Content content;
 
-    def "WHEN content wizard is opened THEN language should be not selected AND option filter-input should be present"()
+    def "WHEN content wizard opened THEN language not selected AND option input filter is present"()
     {
-        when: "content wizard is opened"
-        contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
+        when: "content wizard opened"
+        contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         SettingsWizardStepForm form = new SettingsWizardStepForm( getSession() );
 
         then: "language 'option filter' is present"
@@ -32,14 +32,14 @@ class ContentWizardPanel_Settings_Spec
         form.getOwner() == SUPER_USER;
     }
 
-    def "GIVEN saving a content with a language WHEN content has been opened  THEN correct language should be present in settings"()
+    def "GIVEN saving a content with a language WHEN content selected and 'Edit' pressed in toolbar  THEN correct language present in settings"()
     {
         given: "saving a content with a language"
         ContentSettings settings = ContentSettings.builder().language( NORSK_LANGUAGE ).build();
         content = buildFolderWithSettingsContent( "folder", "content settings", settings );
         addContent( content );
 
-        when: "when content has been opened"
+        when: "when content opened for edit"
         SettingsWizardStepForm form = findAndSelectContent(
             content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSettingsTabLink();
         saveScreenshot( "norsk-lang" );
@@ -48,7 +48,7 @@ class ContentWizardPanel_Settings_Spec
         form.getLanguage() == NORSK_LANGUAGE;
     }
 
-    def "GIVEN existing content with language is opened WHEN language has been removed AND content saved  THEN language should not be selected in the settings"()
+    def "GIVEN existing content with language opened WHEN language removed AND content saved  THEN no one language present in settings"()
     {
         given: "when content opened for edit"
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -60,7 +60,7 @@ class ContentWizardPanel_Settings_Spec
         sleep( 700 );
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnSettingsTabLink();
 
-        then: "language should not be not present in settings"
+        then: "language not present in settings"
         form.getLanguage() == null;
     }
 
@@ -70,14 +70,14 @@ class ContentWizardPanel_Settings_Spec
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
 
-        when: "owner has been changed AND the content saved"
+        when: "owner changed AND content saved"
         form.removeOwner( SUPER_USER ).selectOwner( ANONYMOUS_USER );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
-        and: "the content has been opened"
+        and: "the content opened in the wizard"
         findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSettingsTabLink()
         saveScreenshot( "norsk-lang-owner-anonym" )
 
-        then: "new owner should be present in settings"
+        then: "new owner shown in settings"
         form.getOwner() == ANONYMOUS_USER;
     }
 }

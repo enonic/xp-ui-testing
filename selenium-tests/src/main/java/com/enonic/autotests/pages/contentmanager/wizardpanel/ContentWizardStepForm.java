@@ -42,8 +42,7 @@ import com.enonic.autotests.pages.form.TextLine2_5_FormViewPanel;
 import com.enonic.autotests.pages.form.TimeFormViewPanel;
 import com.enonic.autotests.pages.form.optionset.OptionSetFormView;
 import com.enonic.xp.data.PropertyTree;
-
-import static com.enonic.autotests.utils.SleepHelper.sleep;
+import com.enonic.xp.schema.content.ContentTypeName;
 
 public class ContentWizardStepForm
     extends WizardStepForm
@@ -57,7 +56,7 @@ public class ContentWizardStepForm
     public ContentWizardStepForm type( PropertyTree data, String contentTypeName )
     {
         FormViewPanel formViewPanel = null;
-        if ( contentTypeName.equals( "Site" ) )
+        if ( contentTypeName.equals( ContentTypeName.site().toString() ) )
         {
             formViewPanel = new SiteFormViewPanel( getSession() );
         }
@@ -90,7 +89,7 @@ public class ContentWizardStepForm
             formViewPanel = new CheckBoxFormViewPanel( getSession() );
         }
 
-        else if ( contentTypeName.equals( "Page Template" ) )
+        else if ( contentTypeName.equals( ContentTypeName.pageTemplate().toString() ) )
         {
             formViewPanel = new PageTemplateFormViewPanel( getSession() );
         }
@@ -181,7 +180,7 @@ public class ContentWizardStepForm
             formViewPanel = new CustomSelectorFormViewPanel( getSession() );
         }
 
-        else if ( contentTypeName.contains( "Shortcut" ) )
+        else if ( contentTypeName.contains( "base:shortcut" ) )
         {
             formViewPanel = new ShortcutFormViewPanel( getSession() );
         }
@@ -217,7 +216,7 @@ public class ContentWizardStepForm
             throw new TestFrameworkException( "ContentWizardStepForm: type() not implemented for " + contentTypeName );
         }
         formViewPanel.type( data );
-        sleep( 300 );
+
         return this;
     }
 }

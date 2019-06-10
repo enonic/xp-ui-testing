@@ -36,7 +36,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         when: "executable file is selected"
         findAndSelectContent( EXECUTABLE_BAT );
         and: "Details Panel is opened"
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "executable_bat_info_widget" );
 
@@ -52,7 +52,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         when: "executable file was selected"
         findAndSelectContent( EXECUTABLE_SH );
         and: "Details Panel is opened"
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "executable_sh_info_widget" );
 
@@ -69,7 +69,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         when: "executable file was selected"
         findAndSelectContent( EXECUTABLE_EXE );
         and: "Details Panel is opened"
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "executable_exe_info_widget" );
 
@@ -90,7 +90,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( FOLDER_CONTENT.getName() );
 
         when: "details panel was opened"
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
 
         then: "'Id' should be present on the widget"
@@ -121,7 +121,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         findAndSelectContent( FOLDER_CONTENT.getName() );
 
         when: "PropertiesWidgetItemView is shown"
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "folder_info_properties" );
 
@@ -148,7 +148,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
     {
         when: "image content was selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "image_info_properties" );
 
@@ -174,7 +174,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "details panel has been opened"
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "property-widget-owner-anonym" )
 
@@ -189,8 +189,8 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         addContent( shortcut );
         findAndSelectContent( shortcut.getName() );
 
-        when: "details panel has been opened(by default)"
-        contentBrowsePanel.openContentDetailsPanel();
+        when: "details panel has been opened"
+        contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "shortcut_info_properties" );
 
@@ -211,7 +211,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         addContent( site );
         findAndSelectContent( site.getName() );
         when: "details panel has been opened"
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "site_info_properties" );
 

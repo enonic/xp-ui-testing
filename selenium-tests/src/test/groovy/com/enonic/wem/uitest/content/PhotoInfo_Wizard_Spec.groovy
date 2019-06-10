@@ -4,19 +4,20 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PhotoInfoFormViewPanel
 
 /**
+ * XP-4135 Add selenium tests for Photo Info (ContentWizard)
  * Created on 23.09.2016.
  * */
 class PhotoInfo_Wizard_Spec
     extends BaseContentSpec
 {
 
-    def "WHEN existing image content is opened THEN all control elements are present"()
+    def "WHEN image content opened THEN all control elements are present"()
     {
-        given: "existing image content is opened"
+        given: "content wizard opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit();
 
-        when: "'Photo' step has been clicked"
-        wizard.clickOnWizardStep( "Photo" );
+        when: "'Image Info' step was clicked"
+        wizard.clickOnWizardStep( "Photo Info" );
         PhotoInfoFormViewPanel photoInfoFormViewPanel = new PhotoInfoFormViewPanel( getSession() );
 
         then: "input for 'focal length'  is present"

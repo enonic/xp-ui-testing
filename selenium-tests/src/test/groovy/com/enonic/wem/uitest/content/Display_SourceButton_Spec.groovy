@@ -22,6 +22,7 @@ import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -151,7 +152,7 @@ class Display_SourceButton_Spec
         saveScreenshot( "logged_" + USER_NAME );
 
         when: "double click on the text component is performed"
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType( "htmlarea0_1" );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType( "com.enonic.xp.ui_testing.simple_page:htmlarea" );
         saveScreenshot( "htmlarea_source_button_not_displayed" );
         HtmlArea0_1_FormViewPanel htmlArea = new HtmlArea0_1_FormViewPanel( getSession() );
 
@@ -210,7 +211,7 @@ class Display_SourceButton_Spec
         saveScreenshot( "logged_" + USER_NAME );
 
         when: "double click on the text component is performed"
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType( "htmlarea0_1" );
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType( "com.enonic.xp.ui_testing.simple_page:htmlarea" );
         saveScreenshot( "htmlarea_source_button_should_be_displayed" );
         HtmlArea0_1_FormViewPanel htmlArea = new HtmlArea0_1_FormViewPanel( getSession() );
         htmlArea.showToolbar(  );
@@ -230,7 +231,7 @@ class Display_SourceButton_Spec
             name( name ).
             displayName( "simple site" ).
             parent( ContentPath.ROOT ).
-            contentType( "Site" ).data( data ).aclEntries( aclEntries ).
+            contentType( ContentTypeName.site()  ).data( data ).aclEntries( aclEntries ).
             build();
         return site;
     }

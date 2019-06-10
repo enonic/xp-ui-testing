@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SecurityWizardStepForm
@@ -9,13 +8,12 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
 import com.enonic.autotests.vo.usermanager.RoleName
+import com.enonic.xp.schema.content.ContentTypeName
 import com.enonic.xp.security.PrincipalKey
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-/**
- * Tasks:
- * enonic/xp-ui-testing#36 Add Selenium tests for already fixed bugs*/
+
 @Stepwise
 class ContentWizard_EditPermissionsDialog_Spec
     extends BaseContentSpec
@@ -31,7 +29,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "GIVEN wizard for new folder is opened WHEN data has been typed and the content saved AND 'Edit Permissions' dialog is opened THEN correct name of folder should be present on the dialog"()
     {
         given: "wizard for new folder is opened"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         def testName = NameHelper.uniqueName( "folder" );
 
         when: "data has been typed and the content saved"
@@ -125,7 +123,8 @@ class ContentWizard_EditPermissionsDialog_Spec
         modalDialog.setInheritPermissionsCheckbox( false ).addPermissionByClickingCheckbox( entry ).clickOnApply();
         sleep( 500 );
 
-        and: "dialog has been opened again"
+        and: "the content has been saved"
+        wizard.save();
         modalDialog = securityForm.clickOnEditPermissionsButton();
 
         then: "number of ACL-entries on the modal dialog should be increased"
@@ -148,13 +147,12 @@ class ContentWizard_EditPermissionsDialog_Spec
 
         and: "Apply button has been pressed"
         modalDialog.clickOnApply();
-        sleep( 700 );
 
         when: "shortcut to 'Close' has been pressed"
         wizard.pressCloseKeyboardShortcut();
 
-        then: "'Alert' dialog should not appear"
-        !wizard.isAlertPresent();
+        then: "'Alert' dialog with warning message should appear"
+        wizard.waitIsAlertDisplayed();
     }
 
     def "GIVEN 'Edit Permissions' dialog is opened WHEN one acl entry was removed THEN number of entries on the modal dialog should be reduced"()
@@ -165,18 +163,20 @@ class ContentWizard_EditPermissionsDialog_Spec
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
 
         when: "one Role was removed"
-        modalDialog.removeAclEntry( RoleName.SYSTEM_ADMIN.getValue() );
+        modalDialog.removeAclEntry( RoleName.SYSTEM_USER_MANAGER.getValue() );
         saveScreenshot( "content-wizard-role-was-removed" );
         and: "Apply button has been pressed"
         modalDialog.clickOnApply();
 
-        and: "dialog has been opened again"
-        securityForm.clickOnEditPermissionsButton();
+        and: "dialog is opened again"
+        modalDialog = securityForm.clickOnEditPermissionsButton();
 
         then: "number of entries on the modal dialog should be reduced"
         List<ContentAclEntry> aclEntries = modalDialog.getAclEntries();
-        aclEntries.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES - 1;
+        aclEntries.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES;
 
+        and: "actual entries should contain expected entries"
+        aclEntries.containsAll( getExpectedDefaultPermissions() );
     }
 
     private List<ContentAclEntry> getExpectedDefaultPermissions()

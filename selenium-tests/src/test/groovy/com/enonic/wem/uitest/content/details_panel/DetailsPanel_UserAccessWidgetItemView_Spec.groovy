@@ -23,7 +23,7 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
         findAndSelectContent( FOLDER_CONTENT.getName() );
 
         when: "details panel has been opened"
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         UserAccessWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getUserAccessWidgetItemView();
 
         then: "'user access' widget should be displayed"
@@ -37,7 +37,7 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
     {
         when: "existing executable content with permissions for 'Everyone' is selected"
         findAndSelectContent( EXECUTABLE_BAT );
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
 
         and: "User Access widget was selected in the details panel"
         UserAccessWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getUserAccessWidgetItemView();
@@ -53,16 +53,16 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
         view.getEveryoneText() == UserAccessWidgetItemView.EVERYONE_CAN_READ;
     }
 
-    def "GIVEN new 'Acl-entry' was added for existing content WHEN the content has been selected and 'UserAccessWidget' opened THEN new 'acl-entry' should be displayed on the widget"()
+    def "GIVEN new 'Acl-entry' was added for existing content WHEN the content is selected and 'UserAccessWidgetItemView' opened THEN new 'acl-entry' should be displayed on the widget"()
     {
         given: "new Acl-entry was added for existing content"
         findAndSelectContent( FOLDER_CONTENT.getName() );
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         UserAccessWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getUserAccessWidgetItemView();
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         EditPermissionsDialog modalDialog = view.clickOnEditPermissionsLink();
 
-        when: "content has been selected and widget opened"
+        when: "content was selected and widget opened"
         modalDialog.setInheritPermissionsCheckbox( false ).addPermissionByClickingCheckbox( anonymousEntry ).clickOnApply();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "anonymous_ua_widget" );

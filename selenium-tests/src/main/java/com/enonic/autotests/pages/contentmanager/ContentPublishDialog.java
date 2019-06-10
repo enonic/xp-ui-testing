@@ -103,11 +103,7 @@ public class ContentPublishDialog
 
     public void clickOnShowDependentItemsLink()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( SHOW_DEPENDANT_ITEMS_LINK ), Application.EXPLICIT_NORMAL );
-        if ( !result )
-        {
-            throw new TestFrameworkException( "Content Publish Dialog - Show Dependent Items Link is not visible!" );
-        }
+        waitUntilVisible( By.xpath( SHOW_DEPENDANT_ITEMS_LINK ) );
         showDependantItemsLink.click();
         sleep( 400 );
     }
@@ -272,7 +268,7 @@ public class ContentPublishDialog
             }
             getDisplayedElement( By.xpath( INCLUDE_CHILD_TOGGLER ) ).click();
         }
-        sleep( 1200 );
+        sleep( 700 );
         return this;
     }
 
@@ -289,7 +285,7 @@ public class ContentPublishDialog
 
     public ContentPublishDialog clickOnPublishNowButton()
     {
-        waitUntilVisibleNoException( By.xpath( PUBLISH_BUTTON ), Application.EXPLICIT_NORMAL );
+        sleep( 500 );
         if ( !isElementDisplayed( PUBLISH_BUTTON ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_publish_button" ) );

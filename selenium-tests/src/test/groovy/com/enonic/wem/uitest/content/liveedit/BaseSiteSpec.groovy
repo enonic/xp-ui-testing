@@ -29,7 +29,7 @@ class BaseSiteSpec
     String COUNTRY_REGION_TITLE = "Country Region";
 
     @Shared
-    String COUNTRY_LIST_CONTROLLER = "Country List";
+    String COUNTRY_LIST_CONTROLLER = "country-list";
 
     @Shared
     String COUNTRY_REGION_HEADER = "Country"
@@ -69,7 +69,7 @@ class BaseSiteSpec
             name( NameHelper.uniqueName( countryName.toLowerCase() ) ).
             displayName( countryName ).
             parent( ContentPath.from( parentName ) ).
-            contentType( "Country" ).data( data ).
+            contentType( MY_FIRST_APP_NAME + ":country" ).data( data ).
             build();
         return dateContent;
     }
@@ -88,11 +88,10 @@ class BaseSiteSpec
             name( NameHelper.uniqueName( cityName.toLowerCase() ) ).
             displayName( cityName ).
             parent( ContentPath.from( parentName ) ).
-            contentType( "City" ).data( data ).
+            contentType( MY_FIRST_APP_NAME + ":city" ).data( data ).
             build();
         return dateContent;
     }
-
     protected void insertPart( PageComponentsViewDialog pageComponentsView, String target, ContentWizardPanel siteWizard, String partName )
     {
         pageComponentsView.openMenu( target ).selectMenuItem( "Insert", "Part" );

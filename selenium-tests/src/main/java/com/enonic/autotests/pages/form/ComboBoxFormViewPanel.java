@@ -67,7 +67,6 @@ public class ComboBoxFormViewPanel
         List<WebElement> list = getDisplayedElements( By.xpath( REMOVE_SELECTED_OPTION_BUTTON ) );
         if ( list.size() == 0 )
         {
-            saveScreenshot( "err_remove_option_in_combobox" );
             throw new TestFrameworkException( "Remove button was not found" );
         }
         list.get( list.size() - 1 ).click();

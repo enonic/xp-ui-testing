@@ -47,7 +47,7 @@ public class ContentBrowseFilterPanel
 
     public enum ContentTypeDisplayNames
     {
-        FOLDER( "Folder" ), SITE( "Site" ), SHORTCUT( "Shortcut" ), IMAGE( "Image" );
+        FOLDER( "Folder" ), SITE( "Site" ), SHORTCUT( "Shortcut" );
 
         private String value;
 
@@ -84,7 +84,6 @@ public class ContentBrowseFilterPanel
 
     public void doCloseDependenciesSection()
     {
-        waitUntilVisibleNoException( By.xpath( CLOSE_DEPENDENCIES_SECTION_BUTTON ),Application.EXPLICIT_NORMAL );
         getDisplayedElement( By.xpath( CLOSE_DEPENDENCIES_SECTION_BUTTON ) ).click();
     }
 

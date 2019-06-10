@@ -35,7 +35,7 @@ public class DeleteContentDialog
 
     private final String DEPENDANT_LIST = CONTAINER_DIV + "//ul[contains(@id,'DialogDependantList')]";
 
-    private final String HIDE_DEPENDANT_ITEM_LINK = CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header' and contains(.,'Hide dependent items')]";
+    private final String HIDE_DEPENDANT_ITEM_LINK = CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header']";
 
     private final String SHOW_DEPENDANT_ITEM_LINK =
         CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header' and contains(.,'Show dependent items')]";
@@ -139,17 +139,6 @@ public class DeleteContentDialog
             throw new TestFrameworkException( "'Show dependent items' link is not displayed " );
         }
         getDisplayedElement( By.xpath( SHOW_DEPENDANT_ITEM_LINK ) ).click();
-        sleep( 1000 );
-        return this;
-    }
-    public DeleteContentDialog clickOnHideDependentItemsLink()
-    {
-        if ( !isHideDependantItemsLinkDisplayed() )
-        {
-            this.saveScreenshot( "err_show_dependents_items_link" );
-            throw new TestFrameworkException( "'Show dependent items' link is not displayed " );
-        }
-        getDisplayedElement( By.xpath( HIDE_DEPENDANT_ITEM_LINK ) ).click();
         sleep( 1000 );
         return this;
     }

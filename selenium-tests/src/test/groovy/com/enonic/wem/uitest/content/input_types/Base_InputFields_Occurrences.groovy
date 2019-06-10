@@ -138,7 +138,7 @@ class Base_InputFields_Occurrences
             name( SITE_NAME ).
             displayName( "site-contenttypes-based" ).
             parent( ContentPath.ROOT ).
-            contentType( "Site" ).data( data ).
+            contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
     }
@@ -158,7 +158,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "time content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "time0_0" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":time0_0" ).data( data ).
             build();
         return dateContent;
     }
@@ -176,7 +176,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "reqired time content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "time1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":time1_1" ).data( data ).
             build();
         return dateContent;
     }
@@ -194,7 +194,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "time content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "time2_4" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":time2_4" ).data( data ).
             build();
         return dateContent;
     }
@@ -213,7 +213,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "time content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "datetime2_4" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":datetime2_4" ).data( data ).
             build();
         return dateContent;
     }
@@ -230,7 +230,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "date time content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "datetime1_1" ).data( contentData ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":datetime1_1" ).data( contentData ).
             build();
         return dateTimeContent;
     }
@@ -247,7 +247,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "date content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "date1_1" ).data( contentData ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":date1_1" ).data( contentData ).
             build();
         return dateTimeContent;
     }
@@ -264,7 +264,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "img0_1_" ) ).
             displayName( "img_sel 0_1" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "imageselector0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":imageselector0_1" ).data( data ).
             build();
         return imageSelectorContent;
     }
@@ -281,7 +281,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "img1_1_" ) ).
             displayName( "img_sel 1_1" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "imageselector1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":imageselector1_1" ).data( data ).
             build();
         return imageSelectorContent;
     }
@@ -298,7 +298,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "custom_sel" ) ).
             displayName( "custom selector" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "custom-selector0_2" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":custom-selector0_2" ).data( data ).
             build();
         return imageSelectorContent;
     }
@@ -315,7 +315,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "custom_sel" ) ).
             displayName( "custom selector" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "custom-selector1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":custom-selector1_1" ).data( data ).
             build();
         return imageSelectorContent;
     }
@@ -332,7 +332,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "img0_0_" ) ).
             displayName( "img_sel 0_0" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "imageselector0_0" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":imageselector0_0" ).data( data ).
             build();
         return imageSelectorContent;
     }
@@ -349,7 +349,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "img2_4_" ) ).
             displayName( "img_sel 2_4" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "imageselector2_4" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":imageselector2_4" ).data( data ).
             build();
         return imageSelectorContent;
     }
@@ -364,7 +364,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "date content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "date0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":date0_1" ).data( data ).
             build();
         return dateContent;
     }
@@ -379,7 +379,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "attachment content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "attachment1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":attachment1_1" ).data( data ).
             build();
         return attachmentContent;
     }
@@ -394,7 +394,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "attachments content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "attachment2_4" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":attachment2_4" ).data( data ).
             build();
         return attachmentsContent;
     }
@@ -412,7 +412,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "date time content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "datetime0_1" ).data( contentData ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":datetime0_1" ).data( contentData ).
             build();
         return dateTimeContent;
     }
@@ -429,7 +429,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "double content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "double0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":double0_1" ).data( data ).
             build();
         return dateContent;
     }
@@ -446,7 +446,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "double content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "double0_0" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":double0_0" ).data( data ).
             build();
         return dateContent;
     }
@@ -465,7 +465,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "double content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "double1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":double1_1" ).data( data ).
             build();
         return dateContent;
     }
@@ -484,7 +484,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "double content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "double2_4" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":double2_4" ).data( data ).
             build();
         return dateContent;
     }
@@ -501,7 +501,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "long content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "long0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":long0_1" ).data( data ).
             build();
         return dateContent;
     }
@@ -518,7 +518,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "long content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "long1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":long1_1" ).data( data ).
             build();
         return dateContent;
     }
@@ -533,7 +533,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "geo point content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "geopoint0_0" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":geopoint0_0" ).data( data ).
             build();
         return dateContent;
     }
@@ -548,7 +548,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "geo point content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "geopoint1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":geopoint1_1" ).data( data ).
             build();
         return dateContent;
     }
@@ -563,7 +563,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "checkbox content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "checkbox" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":checkbox" ).data( data ).
             build();
         return checkboxContent;
     }
@@ -575,7 +575,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "radiobutton" ) ).
             displayName( "radiobutton content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "radiobutton" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":radiobutton" ).data( data ).
             build();
         return textLineContent;
     }
@@ -590,7 +590,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "textline0_1 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "textline0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":textline0_1" ).data( data ).
             build();
         return textLineContent;
     }
@@ -605,7 +605,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "textline1_0 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "textline1_0" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":textline1_0" ).data( data ).
             build();
         return textLineContent;
     }
@@ -622,7 +622,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "textline1_1 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "textline1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":textline1_1" ).data( data ).
             build();
         return textLineContent;
     }
@@ -639,7 +639,8 @@ class Base_InputFields_Occurrences
 
     protected AllContentVersionsView openVersionPanel()
     {
-        ContentDetailsPanel contentDetailsPanel =contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
+        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
         AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         return contentItemVersionsPanel;
     }
@@ -681,7 +682,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( name ) ).
             displayName( "tag2_5 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "tag2_5" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":tag2_5" ).data( data ).
             build();
         return tagContent;
     }
@@ -693,7 +694,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "cbox2_4_" ) ).
             displayName( "combobox2_4 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "combobox2_4" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":combobox2_4" ).data( data ).
             build();
         return comboboxContent;
     }
@@ -709,7 +710,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "html0_1_" ) ).
             displayName( "html0_1 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "htmlarea0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":htmlarea0_1" ).data( data ).
             build();
         return tinyMceContent;
     }
@@ -720,7 +721,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "itemset" ) ).
             displayName( "item set content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "item-set0_0" ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":item-set0_0" ).
             build();
         return itemSetContent;
     }
@@ -731,7 +732,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "itemset" ) ).
             displayName( "item set content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "item-set0_0" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":item-set0_0" ).data( data ).
             build();
         return itemSetContent;
     }
@@ -774,7 +775,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "textarea" ) ).
             displayName( "text_area content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "textarea0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":textarea0_1" ).data( data ).
             build();
         return textAreaContent;
     }
@@ -790,7 +791,7 @@ class Base_InputFields_Occurrences
             name( NameHelper.uniqueName( "textarea" ) ).
             displayName( "text_area content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "textarea1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":textarea1_1" ).data( data ).
             build();
         return textAreaContent;
     }

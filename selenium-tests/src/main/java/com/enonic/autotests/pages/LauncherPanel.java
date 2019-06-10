@@ -9,15 +9,12 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
 
-import static com.enonic.autotests.utils.SleepHelper.sleep;
-
-
 public class LauncherPanel
     extends Application
 {
     public static final String PANEL_DIV = "//div[contains(@class,'launcher-panel')]";
 
-    public static final String CLOSE_LAUNCHER_BUTTON = "//button[contains(@class,'launcher-button')]";
+    public static final String CLOSE_LAUNCHER_BUTTON = "//button[contains(@class,'launcher-button toggled')]";
 
     private final String ACTIVE_ROW_TEXT = PANEL_DIV + "//div[@class='app-row active']//p[@class='app-name']";
 
@@ -115,10 +112,10 @@ public class LauncherPanel
 
     public LauncherPanel clickOnContentStudio()
     {
-        boolean isDisplayed = waitUntilVisibleNoException( By.xpath( CONTENT_STUDIO_LINK ), Application.EXPLICIT_NORMAL );
-        if ( !isDisplayed )
+        boolean isdisplayed = waitUntilVisibleNoException( By.xpath( CONTENT_STUDIO_LINK ), Application.EXPLICIT_NORMAL );
+        if ( !isdisplayed )
         {
-            //saveScreenshot( NameHelper.uniqueName( "err_content_studio_link" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_content_studio_link" ) );
             throw new TestFrameworkException( "content-studio link is not displayed" );
         }
         contentStudioLink.click();
@@ -173,10 +170,11 @@ public class LauncherPanel
         return isElementDisplayed( LOGOUT_LINK );
     }
 
-    public boolean iButtonCloseLauncherDisplayed()
+    public boolean isCloseButtonDisplayed()
     {
-        return closePanelButton.getAttribute("class"  ).equals( "launcher-button toggled" );
+        return isElementDisplayed( CLOSE_LAUNCHER_BUTTON );
     }
+
 
     public String getUserDisplayName()
     {
@@ -190,7 +188,7 @@ public class LauncherPanel
 
     public boolean isOpenLauncherButtonPresent()
     {
-        return closePanelButton.getAttribute("class"  ).equals( "launcher-button" );
+        return isElementDisplayed( OPEN_LAUNCHER_BUTTON );
     }
 
     public LauncherPanel openPanel()

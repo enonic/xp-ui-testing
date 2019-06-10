@@ -10,7 +10,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
 /**
- * Tasks:
  *
  **/
 class SiteConfiguratorDialog_Spec
@@ -34,12 +33,11 @@ class SiteConfiguratorDialog_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE );
         PageTemplateFormViewPanel pageTemplateFormViewPanel = new PageTemplateFormViewPanel( getSession() );
 
-        and: "controller has been selected,(the site should be saved automatically)"
+        and: "controller selected"
         pageTemplateFormViewPanel.selectPageController( COUNTRY_REGION_PAGE_CONTROLLER );
 
-        and: "wizard has been closed"
-        wizard.closeBrowserTab().switchToBrowsePanelTab();
-        filterPanel.typeSearchText( SITE.getName() );
+        and: "wizard was closed"
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
         contentBrowsePanel.exists( SITE.getName() );

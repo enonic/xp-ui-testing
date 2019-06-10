@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content.liveedit
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.pages.form.liveedit.ItemViewContextMenu
-import com.enonic.autotests.pages.form.liveedit.WizardContextPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
@@ -20,7 +19,7 @@ class LiveEditLockedMode_Spec
     extends BaseContentSpec
 {
     @Shared
-    String SIT_NAME = NameHelper.uniqueName( "site" );
+    String SIT_NAME = NameHelper.uniqueName( "lockedmode" );
 
 
     def "create a site based on the 'My First App' application"()
@@ -49,28 +48,21 @@ class LiveEditLockedMode_Spec
         and: "'Show Component view' should not be displayed on the toolbar"
         !wizard.isComponentViewTogglerDisplayed()
 
-        and: "'Context Panel' toggler should be present on toolbar"
-        wizard.isContextPanelTogglerDisplayed();
-
-        and:"Context Panel should be opened"
-        WizardContextPanel contextPanel= new WizardContextPanel( getSession(  ));
-        contextPanel.waitForLoaded(  );
-
-        and:"Widget Selector dropdown should be visible"
-        contextPanel.isWidgetSelectorVisible(  );
+        and: "'Show Inspection panel' not displayed on toolbar"
+        !wizard.isInspectionPanelTogglerDisplayed();
     }
 
-    def "GIVEN existing site WHEN new template has been added THEN it should be listed beneath the '_templates' folder"()
+    def "GIVEN existing site WHEN template was added THEN it should be listed beneath the '_templates' folder"()
     {
-        given: "new site is created"
+        given: "add a site, based on the test application"
         filterPanel.typeSearchText( SIT_NAME );
         contentBrowsePanel.expandContent( ContentPath.from( SIT_NAME ) );
         Content template = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, "site", "site-template", SIT_NAME );
 
-        when: "new template has been added"
+        when: "the site should be listed"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).typeData( template );
-        wizard.closeBrowserTab().switchToBrowsePanelTab();
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
         then: "new page-template should be listed"
@@ -78,7 +70,7 @@ class LiveEditLockedMode_Spec
         contentBrowsePanel.exists( template.getName() );
     }
 
-    def "WHEN existing site with a template is opened THEN shader is applied to entire page"()
+    def "WHEN existing site with added template is opened THEN shader is applied to entire page"()
     {
         given: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
@@ -90,15 +82,14 @@ class LiveEditLockedMode_Spec
         wizard.isLiveEditLocked();
     }
 
-    def "WHEN site opened AND right click on the live edit frame THEN context menu (Customize) should appear"()
+    def "WHEN site opened for edit AND 'Page Editor' is shown AND right button clicked on the frame THEN context menu for the page should appear"()
     {
         when: "site is opened"
         filterPanel.typeSearchText( SIT_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
-        sleep( 2000 );
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
 
-        then: "context menu (Customize) should appear"
+        then: "context menu for the page should appear"
         itemViewContextMenu.isOpened();
     }
 
@@ -107,7 +98,6 @@ class LiveEditLockedMode_Spec
         given: "site opened for edit"
         filterPanel.typeSearchText( SIT_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SIT_NAME ).clickToolbarEdit();
-        sleep( 2000 );
         ItemViewContextMenu itemViewContextMenu = wizard.showItemViewContextMenu();
 
         when: "the 'Customize' menu item was clicked"
@@ -134,9 +124,9 @@ class LiveEditLockedMode_Spec
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( siteName ).
-            displayName( "locked-mode" ).
+            displayName( "locked-mode-test" ).
             parent( ContentPath.ROOT ).
-            contentType( "Site" ).data( data ).
+            contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
     }
@@ -152,7 +142,7 @@ class LiveEditLockedMode_Spec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( ContentPath.from( parentName ) ).
-            contentType( "Page Template" ).data( data ).
+            contentType( ContentTypeName.pageTemplate() ).data( data ).
             build();
         return pageTemplate;
     }

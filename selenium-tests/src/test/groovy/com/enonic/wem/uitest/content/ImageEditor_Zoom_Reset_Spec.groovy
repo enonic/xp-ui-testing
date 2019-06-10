@@ -4,15 +4,12 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
 import com.enonic.autotests.pages.form.ImageFormViewPanel
-import spock.lang.Ignore
 import spock.lang.Stepwise
 
 /**
  * Created on 17.10.2016.
  *
- * Task: XP-4272 Add selenium tests for zooming an image
- *
- * */
+  * */
 @Stepwise
 class ImageEditor_Zoom_Reset_Spec
     extends BaseContentSpec
@@ -58,11 +55,11 @@ class ImageEditor_Zoom_Reset_Spec
 
         and: "wizard-tab is closing, but 'Save' was not pressed"
         wizard.executeCloseWizardScript();
+        //wizard.switchToBrowsePanelTab();
 
         then: "'Alert' dialog with warning messages should appear"
         wizard.isAlertPresent();
     }
-
 
     def "GIVEN 'Image Editor' opened WHEN image has been zoomed AND Apply button pressed AND Save AND 'Close' button pressed THEN Alert modal dialog should not appear"()
     {
@@ -81,6 +78,7 @@ class ImageEditor_Zoom_Reset_Spec
 
         and: "'Save' was pressed and wizard-tab is closing"
         wizard.save().executeCloseWizardScript();
+        wizard.switchToBrowsePanelTab();
 
         then: "'Alert' dialog with warning messages should not appear"
         !wizard.isAlertPresent();
@@ -107,12 +105,13 @@ class ImageEditor_Zoom_Reset_Spec
 
         and: "'close tab' button was pressed, but Save was not pressed"
         wizard.executeCloseWizardScript();
+        // wizard.switchToBrowsePanelTab();
 
         then: "'Alert' dialog with warning messages should appear"
         wizard.waitIsAlertDisplayed();
     }
 
-    def "GIVEN existing zoomed image WHEN the image has been opened AND 'Reset' button pressed AND 'Saved' and 'close' button pressed  THEN 'Alert' dialog should not appear"()
+    def "GIVEN existing zoomed image WHEN it opened AND 'Reset' button pressed AND 'close' button pressed AND 'save' pressed THEN 'Alert' dialog should not appear"()
     {
         given: "existing zoomed image"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
@@ -121,10 +120,11 @@ class ImageEditor_Zoom_Reset_Spec
         when: "'Reset' button has been pressed"
         formViewPanel.clickOnResetButton();
 
-        and: "'Save' has been pressed and wizard-tab is closing"
+        and: "Save was pressed and wizard-tab is closing"
         wizard.save().executeCloseWizardScript();
+        wizard.switchToBrowsePanelTab();
 
-        then: "'Alert' dialog should not appear"
+        then: "'Alert' dialog with warning messages should not appear"
         !wizard.isAlertPresent();
     }
 }

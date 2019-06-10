@@ -6,11 +6,9 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ShortcutFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-@Ignore
 @Stepwise
 class Restore_Version_Shortcut_Spec
     extends BaseVersionHistorySpec
@@ -96,7 +94,7 @@ class Restore_Version_Shortcut_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
 
-        and: "version panel is opened"
+        and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         when: "the shortcut selected AND previous version restored"
@@ -106,7 +104,7 @@ class Restore_Version_Shortcut_Spec
         saveScreenshot( "shortcut_target_restored" );
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 
-        then: "expected target should be displayed in the wizard"
+        then: "correct target displayed in the wizard"
         formViewPanel.getTargetDisplayName() == TARGET_1
     }
 }

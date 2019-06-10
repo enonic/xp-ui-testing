@@ -24,7 +24,7 @@ class Occurrences_ItemSet_0_0_Spec
 {
 
     @Shared
-    String ITEM_SET_STEP = "item-set"
+    String ITEM_SET_STEP = "Item set"
 
     @Shared
     Content ITEM_SET_CONTENT;

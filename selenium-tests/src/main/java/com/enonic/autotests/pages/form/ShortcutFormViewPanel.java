@@ -77,7 +77,6 @@ public class ShortcutFormViewPanel
             throw new TestFrameworkException( "remove target button was not found!" );
         }
         getDisplayedElement( By.xpath( REMOVE_TARGET_BUTTON ) ).click();
-        sleep( 500 );
         return this;
     }
 

@@ -14,10 +14,10 @@ import com.enonic.autotests.exceptions.SaveOrUpdateException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BrowsePanel;
+import com.enonic.autotests.pages.DuplicateContentDialog;
 import com.enonic.autotests.pages.contentmanager.ContentMenuItem;
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog;
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog;
-import com.enonic.autotests.pages.contentmanager.DuplicateContentDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel;
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog;
 import com.enonic.autotests.pages.contentmanager.issue.IssueListDialog;
@@ -74,7 +74,7 @@ public class ContentBrowsePanel
     private final String MORE_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'FoldButton')]";
 
     private final String PUBLISH_BUTTON_XPATH =
-        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish...']]";
+        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish...' or text()='#action.publishMore#']]";
 
     private final String UNDO_DELETE_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
@@ -82,7 +82,7 @@ public class ContentBrowsePanel
     private final String PUBLISH_MENU_DROPDOWN_HANDLER =
         BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'MenuButton')]" + DROP_DOWN_HANDLE_BUTTON;
 
-    protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//button[contains(@id,'NonMobileContextPanelToggleButton')]";
+    protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//button[contains(@id,'NonMobileDetailsPanelToggleButton')]";
 
     private final String UNPUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish...']";
 
@@ -147,17 +147,9 @@ public class ContentBrowsePanel
 
     public ContentBrowsePanel showPublishMenu()
     {
-        waitUntilElementEnabled( By.xpath( PUBLISH_MENU_DROPDOWN_HANDLER ), Application.EXPLICIT_NORMAL );
-        try
-        {
-            publishMenuDropDownHandler.click();
-        }
-        catch ( Exception e )
-        {
-            sleep( 500 );
-            publishMenuDropDownHandler.click();
-        }
-        sleep( 300 );
+
+        publishMenuDropDownHandler.click();
+        sleep( 400 );
         return this;
     }
 
@@ -525,7 +517,10 @@ public class ContentBrowsePanel
      */
     public DeleteContentDialog clickToolbarDelete()
     {
-        waitUntilVisibleNoException( By.xpath( DELETE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isElementDisplayed( DELETE_BUTTON_XPATH ) )
+        {
+            clickOnFoldButton();
+        }
         boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
         if ( !isEnabledDeleteButton )
         {
@@ -541,11 +536,9 @@ public class ContentBrowsePanel
 
     public ContentPublishDialog clickToolbarPublish()
     {
-        waitForPublishButtonVisible( Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( PUBLISH_BUTTON_XPATH ) )
         {
-            saveScreenshot( "err_publish_button" );
-            throw new TestFrameworkException( "Publish button is not visible on the toolbar" );
+            clickOnFoldButton();
         }
         publishButton.click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
@@ -556,7 +549,6 @@ public class ContentBrowsePanel
 
     public ContentBrowsePanel clickToolbarUndodelete()
     {
-        waitUntilVisibleNoException( By.xpath( UNDO_DELETE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
         undoDeleteButton.click();
         sleep( 500 );
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
@@ -622,7 +614,7 @@ public class ContentBrowsePanel
      */
     public NewContentDialog clickToolbarNew()
     {
-        boolean isClickable = waitUntilElementEnabledNoException( By.xpath( NEW_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        boolean isClickable = waitUntilClickableNoException( By.xpath( NEW_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isClickable )
         {
             saveScreenshot( "err_new_button" );
@@ -762,7 +754,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "Edit button should be enabled!" );
         }
         editButton.click();
-        sleep( 700 );
+        sleep( 500 );
         switchToContentWizardTabBySelectedContent();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
@@ -1092,16 +1084,6 @@ public class ContentBrowsePanel
     public boolean isPublishButtonEnabled()
     {
         return publishButton.isEnabled();
-    }
-
-    public boolean isPublishButtonDisplayed()
-    {
-        return publishButton.isDisplayed();
-    }
-
-    public boolean waitForPublishButtonVisible( long timeout )
-    {
-        return waitUntilVisibleNoException( By.xpath( PUBLISH_BUTTON_XPATH ), timeout );
     }
 
     public boolean isPreviewButtonEnabled()

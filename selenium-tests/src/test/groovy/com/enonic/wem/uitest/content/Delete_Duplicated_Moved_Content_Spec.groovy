@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.DuplicateContentDialog
 import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
-import com.enonic.autotests.pages.contentmanager.DuplicateContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -16,14 +16,14 @@ class Delete_Duplicated_Moved_Content_Spec
     extends BaseContentSpec
 {
 
-    def "GIVEN existing site and its copy WHEN the original site has been deleted THEN duplicated site should not be deleted"()
+    def "GIVEN existing site and its copy WHEN the original site has been deleted THEN copy of the site should not be deleted"()
     {
         given: "existing site and its copy"
         String name = NameHelper.uniqueName( "site" );
         Content site = buildSiteWithNameAndDispalyNameAndDescription( name, "test-site", "delete duplicated content" );
         addSite( site );
         findAndSelectContent( site.getName() ).clickToolbarDuplicate();
-        DuplicateContentDialog dialog = new DuplicateContentDialog(getSession(  ));
+        DuplicateContentDialog dialog = new DuplicateContentDialog( getSession(  ));
         dialog.waitForOpened(  );
         dialog.clickOnDuplicateButton(  );
         dialog.waitForClosed(  );
@@ -34,10 +34,10 @@ class Delete_Duplicated_Moved_Content_Spec
         saveScreenshot( "original_site_deleted" );
         filterPanel.clickOnCleanFilter();
 
-        and: "name of the duplicated site has been typed"
+        and: "name of copy of the site is typed"
         findAndSelectContent( site.getName() + "-copy" );
 
-        then: "duplicated site should not be deleted (expander-icon should be displayed)"
+        then: "the copy of the deleted site should be present(with expander-icon)"
         contentBrowsePanel.isExpanderPresent( site.getName() + "-copy" );
     }
 

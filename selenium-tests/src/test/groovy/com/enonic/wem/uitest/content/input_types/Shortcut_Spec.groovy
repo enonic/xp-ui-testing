@@ -7,13 +7,11 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.schema.content.ContentTypeName
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
  * Created on 26.08.2016.*/
-@Ignore
 @Stepwise
 class Shortcut_Spec
     extends BaseContentSpec

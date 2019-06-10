@@ -17,8 +17,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 7/12/2017.
- *
- * Tasks: xp-ui-testing#64 Add selenium tests for Issue List dialog
  * */
 @Stepwise
 class IssueListDialog_Spec

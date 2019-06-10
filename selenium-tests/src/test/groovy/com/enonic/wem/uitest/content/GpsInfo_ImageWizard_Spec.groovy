@@ -1,15 +1,13 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.form.LocationFormViewPanel
+import com.enonic.autotests.pages.form.GpsInfoFormViewPanel
 import spock.lang.Shared
 
 /**
- * Selenium tests for Location step in ImageWizard
- *
  * Created on 27.09.2016.
  * */
-class Location_ImageWizard_Spec
+class GpsInfo_ImageWizard_Spec
     extends BaseContentSpec
 {
     @Shared
@@ -21,14 +19,14 @@ class Location_ImageWizard_Spec
     @Shared
     String TEST_DIRECTION = "direction";
 
-    def "GIVEN image content is opened WHEN 'Location' step has been clicked THEN expected control elements should be present"()
+    def "GIVEN image content is opened WHEN 'Gps Info' step was clicked THEN all control elements should be present"()
     {
         given: "content wizard is opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
 
-        when: "'Location' step was clicked"
-        wizard.clickOnWizardStep( "Location" );
-        LocationFormViewPanel gpsInfoFormViewPanel = new LocationFormViewPanel( getSession() );
+        when: "'Gps Info' step was clicked"
+        wizard.clickOnWizardStep( "Gps Info" );
+        GpsInfoFormViewPanel gpsInfoFormViewPanel = new GpsInfoFormViewPanel( getSession() );
         saveScreenshot( "image_gps_info_empty" )
 
         then: "input for 'direction' should be present"
@@ -41,33 +39,33 @@ class Location_ImageWizard_Spec
         gpsInfoFormViewPanel.isAltitudeInputPresent();
     }
 
-    def "GIVEN image content is opened WHEN new Location typed and content has been saved THEN expected info should be present on the page"()
+    def "GIVEN image content is opened WHEN new gps-info data typed and wizard saved THEN correct info should be present on the page"()
     {
         given: "content wizard is opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
-        wizard.clickOnWizardStep( "Location" );
-        LocationFormViewPanel locationFormViewPanel = new LocationFormViewPanel( getSession() );
+        wizard.clickOnWizardStep( "Gps Info" );
+        GpsInfoFormViewPanel gpsInfoFormViewPanel = new GpsInfoFormViewPanel( getSession() );
 
         when: "gps info has been typed"
-        locationFormViewPanel.typeAltitude( TEST_ALTITUDE );
-        locationFormViewPanel.typeDirection( TEST_DIRECTION );
-        locationFormViewPanel.typeGeoPoint( TEST_GEO_POINT );
+        gpsInfoFormViewPanel.typeAltitude( TEST_ALTITUDE );
+        gpsInfoFormViewPanel.typeDirection( TEST_DIRECTION );
+        gpsInfoFormViewPanel.typeGeoPoint( TEST_GEO_POINT );
 
         and: "data saved and the wizard has been closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "image is opened again"
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
-        wizard.clickOnWizardStep( "Location" );
+        wizard.clickOnWizardStep( "Gps Info" );
         saveScreenshot( "test_gps_info_saved" );
 
         then: "correct value for 'altitude' should be displayed"
-        locationFormViewPanel.getAltitude() == TEST_ALTITUDE;
+        gpsInfoFormViewPanel.getAltitude() == TEST_ALTITUDE;
 
         and: "correct value for 'direction' should be displayed"
-        locationFormViewPanel.getDirection() == TEST_DIRECTION;
+        gpsInfoFormViewPanel.getDirection() == TEST_DIRECTION;
 
         and: "correct value for 'geo point' should be displayed"
-        locationFormViewPanel.getGeoPoint() == TEST_GEO_POINT;
+        gpsInfoFormViewPanel.getGeoPoint() == TEST_GEO_POINT;
     }
 }

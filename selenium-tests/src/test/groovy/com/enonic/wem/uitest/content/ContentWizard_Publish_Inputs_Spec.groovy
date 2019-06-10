@@ -11,9 +11,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 27.12.2016.
- *
- * Tasks:
- *  XP-4562 Add selenium tests for Time-based publishing
  * */
 @Stepwise
 class ContentWizard_Publish_Inputs_Spec
@@ -89,7 +86,6 @@ class ContentWizard_Publish_Inputs_Spec
     {
         given: "existing published folder"
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
-        sleep(1000);
 
         when: "the folder has been unpublished"
         wizard.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
@@ -118,5 +114,6 @@ class ContentWizard_Publish_Inputs_Spec
         wizard.waitStatus( ContentStatus.PUBLISHED_PENDING, Application.EXPLICIT_NORMAL );
         saveScreenshot( "schedule_wizard_online_pending" )
     }
+    //TODO add tests for Online (Expired), when  https://youtrack.enonic.net/issue/INBOX-615 will be fixed
 
 }

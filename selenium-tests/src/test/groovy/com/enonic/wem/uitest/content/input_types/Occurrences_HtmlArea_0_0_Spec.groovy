@@ -160,7 +160,7 @@ class Occurrences_HtmlArea_0_0_Spec
             name( NameHelper.uniqueName( "htmlarea0_0_" ) ).
             displayName( "html0_0 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "htmlarea0_0" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":htmlarea0_0" ).data( data ).
             build();
         return tinyMceContent;
     }

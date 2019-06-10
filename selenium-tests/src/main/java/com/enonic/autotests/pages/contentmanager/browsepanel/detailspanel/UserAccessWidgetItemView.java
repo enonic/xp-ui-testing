@@ -25,7 +25,7 @@ public class UserAccessWidgetItemView
 
     private final String EDIT_PERM_LINK = DIV_CONTAINER + "//a[@class='edit-permissions-link']";
 
-    private final String EVERYONE_HEADER = "//div[contains(@class,'user-access-widget-header')]//span[@class='header-string']";
+    private final String EVERYONE_HEADER = "//div[@class='user-access-widget-header']//span[@class='header-string']";
 
     @FindBy(xpath = EDIT_PERM_LINK)
     private WebElement editPermissionsLink;

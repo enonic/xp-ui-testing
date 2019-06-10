@@ -31,7 +31,7 @@ public class LayoutInspectionPanel
         if ( !isElementDisplayed( LAYOUT_DROPDOWN_HANDLER ) )
         {
             saveScreenshot( "err_dropdown_layout_selector" );
-            throw new TestFrameworkException( "Inspection Panel - dropdown handler was not found!  " + layoutDisplayName );
+            throw new TestFrameworkException( "dropdown handler was not found!  " + layoutDisplayName );
         }
         getDisplayedElement( By.xpath( LAYOUT_DROPDOWN_HANDLER ) ).click();
         sleep( 300 );

@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
@@ -21,6 +20,7 @@ import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 
 class BaseContentSpec
@@ -48,7 +48,7 @@ class BaseContentSpec
     String MAIN_REGION_PAGE_DESCRIPTOR_NAME = "main region";
 
     @Shared
-    String COUNTRY_LIST_PAGE_CONTROLLER = "Country List";
+    String COUNTRY_LIST_PAGE_CONTROLLER = "country-list";
 
     @Shared
     String IMPORTED_FOLDER_NAME = "all-content-types-images";
@@ -172,7 +172,7 @@ class BaseContentSpec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( BaseContentType.FOLDER.getDisplayName(  ) ).
+            contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
         return content;
@@ -193,7 +193,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( parent ).
-            contentType( "Shortcut" ).
+            contentType( ContentTypeName.shortcut() ).
             build();
         return shortcut;
     }
@@ -220,7 +220,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( parent ).
-            contentType( "Shortcut" ).settings( settings ).data( data ).build();
+            contentType( ContentTypeName.shortcut() ).settings( settings ).data( data ).build();
         return shortcut;
     }
 
@@ -245,7 +245,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( parent ).
-            contentType( "Shortcut" ).data( data ).build();
+            contentType( ContentTypeName.shortcut() ).data( data ).build();
         return shortcut;
     }
 
@@ -255,7 +255,7 @@ class BaseContentSpec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( "Folder" ).
+            contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).settings( settings ).
             build();
         return content;
@@ -266,7 +266,7 @@ class BaseContentSpec
         String generated = NameHelper.uniqueName( name );
         Content content = Content.builder().
             name( generated ).
-            contentType( "Folder" ).
+            contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
         return content;
@@ -278,7 +278,7 @@ class BaseContentSpec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( "Folder" ).
+            contentType( ContentTypeName.folder() ).
             parent( ContentPath.from( parentName ) ).
             build();
         return content;
@@ -325,7 +325,7 @@ class BaseContentSpec
             name( name ).
             displayName( "sample site" ).
             parent( ContentPath.ROOT ).
-            contentType( "Site" ).data( data ).
+            contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
     }
@@ -340,7 +340,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( siteName ) ).
             displayName( "my-site" ).
             parent( ContentPath.ROOT ).
-            contentType( "Site" ).data( data ).
+            contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
     }
@@ -356,7 +356,7 @@ class BaseContentSpec
             name( name ).
             displayName( "simple site" ).
             parent( ContentPath.ROOT ).
-            contentType( "Site" ).data( data ).
+            contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
     }
@@ -370,9 +370,9 @@ class BaseContentSpec
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( name ).
-            displayName( name ).
+            displayName( "test site " ).
             parent( ContentPath.ROOT ).
-            contentType( "Site" ).data( data ).
+            contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
     }
@@ -388,7 +388,7 @@ class BaseContentSpec
             name( name ).
             displayName( displayName ).
             parent( ContentPath.ROOT ).
-            contentType( "Site" ).data( data ).settings( settings ).
+            contentType( ContentTypeName.site() ).data( data ).settings( settings ).
             build();
         return site;
     }
@@ -403,7 +403,7 @@ class BaseContentSpec
             name( siteName ).
             displayName( displayName ).
             parent( ContentPath.ROOT ).
-            contentType( "Site" ).data( data ).
+            contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
     }
@@ -429,14 +429,14 @@ class BaseContentSpec
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( ContentPath.from( parentName ) ).
-            contentType( "Page Template" ).data( data ).
+            contentType( ContentTypeName.pageTemplate() ).data( data ).
             build();
         return pageTemplate;
     }
 
     protected DependenciesWidgetItemView openDependenciesWidgetView()
     {
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
         DependenciesWidgetItemView dependenciesWidget = contentDetailsPanel.openDependenciesWidget();
         return dependenciesWidget;
@@ -444,12 +444,12 @@ class BaseContentSpec
 
     protected void openResourceInMaster( String resource )
     {
-        getDriver().navigate().to( browser.baseUrl + "admin/site/preview/default/master/" + resource );
+        getDriver().navigate().to( browser.baseUrl + "admin/portal/preview/master/" + resource );
     }
 
     protected void openResourceInDraft( String resource )
     {
-        getDriver().navigate().to( browser.baseUrl + "admin/site/preview/default/draft/" + resource );
+        getDriver().navigate().to( browser.baseUrl + "admin/portal/preview/draft/" + resource );
     }
 
     protected void getService( String serviceName, String appName )
@@ -478,7 +478,7 @@ class BaseContentSpec
             name( siteName ).
             displayName( "site with all content types" ).
             parent( ContentPath.ROOT ).
-            contentType( "Site" ).data( data ).
+            contentType( ContentTypeName.site() ).data( data ).
             build();
         return site;
     }
@@ -495,7 +495,7 @@ class BaseContentSpec
             name( NameHelper.uniqueName( "img1_1_" ) ).
             displayName( "img_sel 1_1" ).
             parent( ContentPath.from( siteName ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "imageselector1_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":imageselector1_1" ).data( data ).
             build();
         return imageSelectorContent;
     }
@@ -505,7 +505,7 @@ class BaseContentSpec
         Content content = Content.builder().
             name( name ).
             displayName( displayName ).
-            contentType( "Folder" ).
+            contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
         return content;
@@ -513,7 +513,7 @@ class BaseContentSpec
 
     protected AllContentVersionsView openVersionPanel()
     {
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
         AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();

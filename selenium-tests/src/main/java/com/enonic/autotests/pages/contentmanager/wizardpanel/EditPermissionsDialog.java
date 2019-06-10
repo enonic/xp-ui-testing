@@ -45,15 +45,13 @@ public class EditPermissionsDialog
 
     private String PRINCIPAL_PATH = "//div[contains(@id,'AccessControlEntryViewer')]//p[contains(.,'%s')]";
 
-    private String PRINCIPAL_CHECKBOX_PATH = SLICK_ROW_BY_NAME + "//div[contains(@class,'checkboxsel')]/label";
+    private String PRINCIPAL_CHECKBOX_PATH = SLICK_ROW_BY_NAME + "//div[contains(@class,'checkboxsel')]";
 
     private final String APPLY_BUTTON_XPATH = "//button[contains(@id,'DialogButton') and child::span[text()='Apply']]";
 
     private final String CANCEL_BUTTON_XPATH = "//button[contains(@id,'DialogButton') and child::span[text()='Cancel']]";
 
     private final String CANCEL_BUTTON_TOP = CONTAINER_XPATH + APP_CANCEL_BUTTON_TOP;
-
-    private final String APPLY_IN_SELECTOR_BUTTON = CONTAINER_XPATH + "//div[@name='principalSelector']//button/span[text()='Apply']";
 
     private String ACL_ENTRY_ROW =
         "//div[contains(@class,'access-control-entry') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
@@ -159,7 +157,7 @@ public class EditPermissionsDialog
             //when operations not specified, CAN_READ will be applied by default
             selectOperations( entry.getPrincipalName(), entry.getPermissionSuite() );
         }
-        sleep( 700 );
+        sleep( 500 );
         return this;
     }
 
@@ -208,18 +206,11 @@ public class EditPermissionsDialog
         By principalCheckbox = By.xpath( String.format( PRINCIPAL_CHECKBOX_PATH, principalName ) );
         if ( !waitUntilVisibleNoException( principalCheckbox, EXPLICIT_QUICK ) )
         {
-            saveScreenshot( "err_find_principal" );
             throw new TestFrameworkException( "principal was not found! : " + principalName );
         }
         findElement( principalCheckbox ).click();
-        sleep( 300 );
-        if ( !waitUntilVisibleNoException( By.xpath( APPLY_IN_SELECTOR_BUTTON ), EXPLICIT_QUICK ) )
-        {
-            saveScreenshot( "err_apply_button" );
-            throw new TestFrameworkException( "Apply button is not present" );
-        }
         //click on apply button, that appears in principal-selector
-        getDisplayedElement( By.xpath( APPLY_IN_SELECTOR_BUTTON ) ).click();
+        findElement( By.xpath( "//div[@name='principalSelector']//button/span[text()='Apply']" ) ).click();
         sleep( 500 );
     }
 

@@ -8,7 +8,7 @@ import spock.lang.Shared
  * XP-4136 Add selenium tests for Image Info (Content Wizard)
  * Created  on 22.09.2016.
  * */
-class ImageProperties_Wizard_Spec
+class ImageInfo_Wizard_Spec
     extends BaseContentSpec
 {
     @Shared
@@ -20,7 +20,7 @@ class ImageProperties_Wizard_Spec
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit();
 
         when: "'Image Info' step was clicked"
-        wizard.clickOnWizardStep( "Properties" );
+        wizard.clickOnWizardStep( "Image Info" );
         ImageInfoFormViewPanel imageInfoFormViewPanel = new ImageInfoFormViewPanel( getSession() );
 
         then: "input for size in pixels is present"
@@ -54,7 +54,7 @@ class ImageProperties_Wizard_Spec
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit();
 
         when: "new description typed"
-        wizard.clickOnWizardStep( "Photo" );
+        wizard.clickOnWizardStep( "Image Info" );
         ImageInfoFormViewPanel imageInfoFormViewPanel = new ImageInfoFormViewPanel( getSession() );
         imageInfoFormViewPanel.typeDescription( TEST_DESCRIPTION );
 
@@ -63,7 +63,6 @@ class ImageProperties_Wizard_Spec
 
         and: " image opened again"
         contentBrowsePanel.clickToolbarEdit();
-        wizard.clickOnWizardStep( "Photo" );
 
         then: "correct description displayed on the page"
         imageInfoFormViewPanel.getDescription() == TEST_DESCRIPTION;

@@ -7,7 +7,7 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang3.StringUtils
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -161,7 +161,7 @@ class Set_In_Set_Validation_Spec
             name( NameHelper.uniqueName( "se-in-set" ) ).
             displayName( "set in set content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "set-in-set" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":set-in-set" ).data( data ).
             build();
         return tinyMceContent;
     }

@@ -1,4 +1,4 @@
-package com.enonic.autotests.pages.contentmanager;
+package com.enonic.autotests.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -6,9 +6,6 @@ import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
-import com.enonic.autotests.pages.Application;
-
-import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 public class DuplicateContentDialog
     extends Application
@@ -18,8 +15,8 @@ public class DuplicateContentDialog
     private final String CONTAINER = "//div[contains(@id,'ContentDuplicateDialog')]";
 
 
-    private final String BUTTON_DUPLICATE =
-        CONTAINER + "//button[contains(@id,'dialog.DialogButton') and descendant::span[contains(.,'Duplicate')]]";
+    private final String
+        BUTTON_DUPLICATE = CONTAINER + "//button[contains(@id,'dialog.DialogButton') and descendant::span[contains(.,'Duplicate')]]";
 
     private final String BUTTON_CANCEL = CONTAINER + "//button[contains(@id,'dialog.DialogButton') and descendant::span[text()='Cancel']]";
 
@@ -50,14 +47,11 @@ public class DuplicateContentDialog
         return isElementDisplayed( CONTAINER );
     }
 
-    public DuplicateContentDialog clickOnDuplicateButton()
-    {
-        waitUntilElementEnabledNoException( By.xpath( BUTTON_DUPLICATE ), Application.EXPLICIT_NORMAL );
+    public DuplicateContentDialog clickOnDuplicateButton(){
+        waitUntilElementEnabledNoException( By.xpath( BUTTON_DUPLICATE ) , Application.EXPLICIT_NORMAL);
         duplicateButton.click();
-        sleep( 1000 );
         return this;
     }
-
     public boolean waitForClosed()
     {
         boolean result = waitsElementNotVisible( By.xpath( CONTAINER ), Application.EXPLICIT_LONG );

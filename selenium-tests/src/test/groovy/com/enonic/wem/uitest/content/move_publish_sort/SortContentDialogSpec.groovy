@@ -142,5 +142,4 @@ class SortContentDialogSpec
         then: "default sorting should be present on the dialog"
         sortContentDialog.getCurrentSortingName() == SortMenuItem.MODIFIED_DATE.getValue();
     }
-
 }

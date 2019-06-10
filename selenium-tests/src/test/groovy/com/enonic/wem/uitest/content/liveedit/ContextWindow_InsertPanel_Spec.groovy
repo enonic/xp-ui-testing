@@ -28,8 +28,6 @@ class ContextWindow_InsertPanel_Spec
         then: "'Components View' toggler should not be displayed"
         !wizardPanel.isComponentViewTogglerDisplayed();
 
-        and: "'Context Panel' toggler should be displayed"
-        wizardPanel.isContextPanelTogglerDisplayed()
     }
 
     def "GIVEN existing site without a controller is opened WHEN page controller has been selected THEN toggler buttons for 'Components View' and 'Inspection Panel' should be displayed"()

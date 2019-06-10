@@ -10,9 +10,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 3/16/2017.
- *
- * Tasks:
- * xp-ui-testing#24 Add selenium tests for 'Undo delete' menu item
  * */
 @Stepwise
 class ContentWizard_UndoDelete_Spec

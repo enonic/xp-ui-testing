@@ -35,7 +35,7 @@ class Restore_Version_Zoom_Image_Spec
         and: "image was loaded"
         formViewPanel.waitUntilImageLoaded();
 
-        when: "the image has been zoomed"
+        when: "the image has been zoomed "
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
         imageEditor.doZoomImage( 70 );
 
@@ -44,11 +44,10 @@ class Restore_Version_Zoom_Image_Spec
 
         and: "content saved in the wizard and closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
-        sleep( 1000 );
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_increased_after_zoom" );
 
-        then: "number of version should be increased"
+        then: "number of version is increased"
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 

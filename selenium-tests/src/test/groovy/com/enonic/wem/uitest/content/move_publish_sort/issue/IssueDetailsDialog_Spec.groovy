@@ -18,9 +18,6 @@ import spock.lang.Stepwise
 /**
  * Created on 7/10/2017.
  *
- * Tasks:
- * xp-ui-testing#62 Add selenium tests for IssueDetailsDialog
- * xp-ui-testing#67 Add Selenium tests for 'UpdateIssueDialog'
  * */
 @Stepwise
 class IssueDetailsDialog_Spec

@@ -8,7 +8,6 @@ import spock.lang.Shared
 
 /**
  * Created on 7/6/2017.
- * Tasks: enonic/xp-ui-testing#57  Add Selenium tests for CreateIssueDialog
  *
  * */
 class CreateIssueDialog_Spec

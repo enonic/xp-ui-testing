@@ -7,10 +7,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 /**
  * Created  on 2/28/2017.
  *
- * Tasks:
- * xp-ui-testing#18 Add Selenium tests for InsertImage modal dialog
- * xp-ui-testing#4 Check fixed application's bugs and add Selenium tests for each fixed bugs
- *
  * verifies:
  * Error appears in the console when an Image has been inserted into HtmlArea #4957
  * */
@@ -86,10 +82,7 @@ class HtmlArea_InsertImageDialog_Spec
         insertImageModalDialog.selectImage( "book" );
         saveScreenshot( "insert_image_button_dialog" );
 
-        then: "'Image Dialog toolbar' should be displayed"
-        insertImageModalDialog.isToolbarDisplayed();
-
-        and: "Justify button should be displayed"
+        then: "Justify button should be displayed"
         insertImageModalDialog.isJustifyButtonDisplayed();
 
         and: "Justify button should be displayed"
@@ -104,8 +97,6 @@ class HtmlArea_InsertImageDialog_Spec
         and: "Align Right button should be displayed"
         insertImageModalDialog.isAlignRightButtonDisplayed();
 
-        and: "'Apply style' selector should be displayed"
-        insertImageModalDialog.isApplyStyleSelectorDisplayed();
     }
     //verifies Error appears in the console when an Image has been inserted into HtmlArea #4957
     def "GIVEN InsertImageModalDialog is opened WHEN an image has been inserted AND 'Insert' button pressed THEN InsertImageModalDialog should be closed"()

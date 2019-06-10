@@ -32,7 +32,7 @@ class CreateSiteWithLayoutSpec
     String SITE_DISPLAY_NAME = "layout-page-template";
 
     @Shared
-    String SUPPORTS = "site";
+    String SUPPORTS = ContentTypeName.site().toString();
 
     @Shared
     String TEST_IMAGE_DISPLAY_NAME = "telk";
@@ -59,7 +59,6 @@ class CreateSiteWithLayoutSpec
             SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be listed in the grid"
-        filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.exists( SITE.getName() );
     }
 
@@ -73,7 +72,7 @@ class CreateSiteWithLayoutSpec
 
         when: "'Templates' folder selected and new page-template added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            pageTemplate.getContentTypeName() ).typeData( pageTemplate ).closeBrowserTab().switchToBrowsePanelTab();
+            pageTemplate.getContentTypeName() ).typeData( pageTemplate ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         contentBrowsePanel.expandContent( ContentPath.from( "_templates" ) );
@@ -106,7 +105,7 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.isTextComponentPresent();
 
         and: "correct text should be displayed in the text-component"
-        liveFormPanel.getTextFromTextComponents().get( 0 ) == ( TEXT_COMPONENT_TEXT );
+        liveFormPanel.getTextFromTextComponent().equals( TEXT_COMPONENT_TEXT );
     }
 
     def "GIVEN 'Page Components' is opened WHEN menu for 'main region' is opened and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout should be present on the live edit frame"()
@@ -164,10 +163,9 @@ class CreateSiteWithLayoutSpec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( TEST_IMAGE_DISPLAY_NAME )
 
-        and: "the template should be saved automatically"
-        //need to wait for updating of status;
-        sleep( 1000 );
-        templateWizard.switchToDefaultWindow();
+        and: "the template is saved"
+        templateWizard.save();
+        sleep( 300 );
         String statusAfterInsertingImage = templateWizard.getStatus();
         saveScreenshot( "image_in_left_inserted" );
 
@@ -195,12 +193,12 @@ class CreateSiteWithLayoutSpec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( SECOND_TEST_IMAGE_COMPONENT_NAME );
 
-        and: "the template should be automatically saved"
-        wizard.switchToLiveEditFrame();
+        and: "the template is saved"
+        wizard.save();
         saveScreenshot( "center_region_inserted" );
 
         then: "new image should be present in the center-region "
-
+        wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 2;
     }
@@ -220,10 +218,12 @@ class CreateSiteWithLayoutSpec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( THIRD_TEST_IMAGE_COMPONENT_NAME );
 
-        and: "the template should be saved automatically"
+        and: "the template is saved"
+        wizard.save();
         saveScreenshot( "right_region_inserted" );
 
         then: "new image should be displayed on the right-region"
+        wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 3;
     }

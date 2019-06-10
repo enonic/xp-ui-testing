@@ -60,8 +60,7 @@ public class SiteFormViewPanel
     {
         clearAndType( optionFilterInput, appName );
         sleep( 700 );
-        String checkboxXpath =
-            FORM_VIEW + String.format( SLICK_ROW_BY_DISPLAY_NAME, appName ) + "//div[contains(@class,'checkboxsel')]/label";
+        String checkboxXpath = FORM_VIEW + String.format( SLICK_ROW_BY_DISPLAY_NAME, appName ) + "//div[contains(@class,'checkboxsel')]";
         if ( !isElementDisplayed( checkboxXpath ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_app_checkbox" ) );
@@ -89,7 +88,6 @@ public class SiteFormViewPanel
             throw new TestFrameworkException( "remove button for application with name: " + appName + "  was not found!" );
         }
         findElement( By.xpath( removeButtonXpath ) ).click();
-        sleep( 1000 );
         return this;
     }
 
@@ -123,7 +121,7 @@ public class SiteFormViewPanel
             getDisplayedElement( By.xpath( editButton ) ).click();
             SiteConfiguratorDialog dialog = new SiteConfiguratorDialog( getSession() );
             dialog.waitForOpened();
-            sleep( 1000 );
+            sleep( 300 );
             return dialog;
         }
     }

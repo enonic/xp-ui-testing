@@ -228,7 +228,7 @@ public class SortContentDialog
             DIALOG_CONTAINER + String.format( "//li[contains(@id,'SortContentTabMenuItem') and child::a[text()='%s']]", by );
         String selector = null;
         if(order.equals(SortOrder.ASCENDING)){
-           selector = menuItem +"//button[@title='Sort in ascending order']";
+            selector = menuItem +"//button[@title='Sort in ascending order']";
         }else{
             selector =menuItem +"//button[@title='Sort in descending order']";
         }

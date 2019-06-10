@@ -10,9 +10,13 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+/**
+ * Tasks:
+ * xp-ui-testing#56  Add Selenium tests for 'Create Issue' menu item in the publish-menu*/
 @Stepwise
 class ContentPublishDialog_Spec
     extends BaseContentSpec
@@ -28,7 +32,7 @@ class ContentPublishDialog_Spec
     def "GIVEN wizard for new folder is opened WHEN data typed and 'Publish' button was pressed  THEN correct status of content is displayed on the modal dialog"()
     {
         given:
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder() );
         String displayName = NameHelper.uniqueName( "test" );
 
         when: "'Publish' button on the wizard has been pressed"
@@ -220,10 +224,10 @@ class ContentPublishDialog_Spec
         and: "expected message should be present in the dialog's header"
         contentPublishDialog.getDependenciesListMessage() == ContentPublishDialog.OTHER_ITEMS_WILL_BE_PUBLISHED_TEXT;
 
-        and: "one dependency should be present in the dialog"
+        and: "one dependency should be shown on the dialog"
         dependant.size() == 1;
 
-        and: "name of parent folder should be displayed"
+        and: "name of the parent folder should be displayed"
         dependant.get( 0 ).contains( PARENT_FOLDER.getName() );
     }
 
@@ -249,9 +253,9 @@ class ContentPublishDialog_Spec
         !contentPublishDialog.isDependantsDisplayed();
     }
 
-    def "GIVEN existing parent folder is selected and 'PublishDialog' is opened WHEN dependant item has been removed AND 'Publish' button has been pressed THEN only parent folder should be 'Published'"()
+    def "GIVEN the parent content is selected and 'PublishDialog' is opened WHEN the dependant item was removed AND 'Publish' button has been pressed THEN only the parent folder should be is 'online'"()
     {
-        given: "existing parent folder is selected"
+        given: "the parent content is selected"
         findAndSelectContent( PARENT_FOLDER.getName() );
         and: "the folder is expanded"
         contentBrowsePanel.expandContent( ContentPath.from( PARENT_FOLDER.getName() ) )
@@ -263,6 +267,7 @@ class ContentPublishDialog_Spec
         contentPublishDialog.includeChildren( true );
         contentPublishDialog.clickOnShowDependentItemsLink();
 
+
         when: "'remove' button has been clicked and the dependant was removed"
         contentPublishDialog.removeDependant( CHILD_FOLDER.getName() );
 
@@ -273,7 +278,7 @@ class ContentPublishDialog_Spec
         then: "parent folder should be 'Published'"
         contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
 
-        and: "child folder should be 'New', because the dependant item was removed"
+        and: "child folder should be 'New', because the dependant was removed"
         contentBrowsePanel.getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.NEW.getValue();
     }
 

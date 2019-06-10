@@ -67,7 +67,7 @@ public class HomePage
             saveScreenshot( NameHelper.uniqueName( "err_home_load" ) );
             throw new TestFrameworkException( "home page was not loaded" );
         }
-        return true;
+        return result;
     }
 
     public boolean isDashboardToolbarDisplayed()
@@ -80,7 +80,7 @@ public class HomePage
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         checkLauncher();
         launcherPanel.clickOnContentStudio();
-        sleep( 500 );
+        sleep( 1000 );
         switchToContentBrowseTab();
         ContentBrowsePanel panel = new ContentBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
@@ -109,24 +109,24 @@ public class HomePage
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         checkLauncher();
         launcherPanel.clickOnUsers();
-        sleep( 700 );
+        sleep( 1000 );
         switchToUsersTab();
         UserBrowsePanel panel = new UserBrowsePanel( getSession() );
         panel.waitUntilPageLoaded( Application.PAGE_LOAD_TIMEOUT );
-        panel.waitInvisibilityOfSpinner( Application.EXPLICIT_LONG );
-        getLogger().info( "User App loaded" );
+        panel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        getLogger().info( "User Manger App loaded" );
         return panel;
     }
 
     public boolean checkLauncher()
     {
-        boolean isLauncherPresent = waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), 2 );
+        Boolean isLauncherPresent = waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), 2 );
         if ( !isLauncherPresent )
         {
-            //saveScreenshot( NameHelper.uniqueName( "err_launcher_display" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_launcher_display" ) );
             throw new TestFrameworkException( "launcher panel should be displayed by default" );
         }
-        return true;
+        return isLauncherPresent;
     }
 
     public ApplicationBrowsePanel openApplications()

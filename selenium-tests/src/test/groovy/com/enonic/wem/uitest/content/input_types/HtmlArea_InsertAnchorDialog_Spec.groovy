@@ -36,7 +36,7 @@ class HtmlArea_InsertAnchorDialog_Spec
         insertAnchorDialog.isAnchorInputDisplayed();
     }
 
-    def "GIVEN InsertAnchorModalDialog is opened WHEN 'Cancel' button has been clicked THEN modal dialog should not be displayed"()
+    def "GIVEN  InsertAnchorModalDialog is opened WHEN 'Cancel' button has been clicked THEN modal dialog should not be displayed"()
     {
         given: "InsertImageModalDialog is opened"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
@@ -78,7 +78,7 @@ class HtmlArea_InsertAnchorDialog_Spec
         InsertAnchorModalDialog insertAnchorModalDialog = formViewPanel.showToolbarAndClickOnInsertAnchorButton();
 
         when: "'Escape' key has been clicked"
-        insertAnchorModalDialog.typeText( "test_anchor" );
+        insertAnchorModalDialog.typeText( "test anchor" );
         saveScreenshot( "anchor_text_typed" );
         and: "'Insert' button has been pressed"
         insertAnchorModalDialog.clickOnInsertButton();

@@ -71,10 +71,10 @@ public abstract class BaseBrowseFilterPanel
         if ( !isVisible )
         {
             saveScreenshot( NameHelper.uniqueName( "err_filter" ) );
-            throw new TestFrameworkException( "Search input is not displayed" );
+            throw new TestFrameworkException( "filter panel or search input not displayed" );
         }
         clearAndType( searchInput, text );
-        sleep( 600 );
+        sleep( 1000 );
         getLogger().info( "Filtered by : " + text );
         return this;
     }

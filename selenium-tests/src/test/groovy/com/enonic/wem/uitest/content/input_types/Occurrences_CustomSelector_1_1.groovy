@@ -7,9 +7,8 @@ import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
 /**
- * Created  on 08.09.2016.
- * */
-class Occurrences_CustomSelector_1_1_Spec
+ * Created  on 08.09.2016.*/
+class Occurrences_CustomSelector_1_1
     extends Base_InputFields_Occurrences
 {
     @Shared
@@ -19,25 +18,25 @@ class Occurrences_CustomSelector_1_1_Spec
     String OPTION_1 = "Option number 1";
 
 
-    def "WHEN wizard for new 'Custom Selector'-content(1:1) is opened THEN option filter input is present AND content is not valid"()
+    def "WHEN wizard for adding a 'Custom Selector'-content(1:1) opened THEN option filter input is present, there no any selected options AND content is valid"()
     {
         when: "start to add a content with type 'Custom Selector'"
         Content customSelector = buildCustomSelector1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( customSelector.getContentTypeName() );
         CustomSelectorFormViewPanel formViewPanel = new CustomSelectorFormViewPanel( getSession() );
 
-        and:"content is saved"
-        wizard.typeDisplayName( customSelector.getName() ).save();
+        and:
+        wizard.typeDisplayName( customSelector.getDisplayName() ).save();
         saveScreenshot( "custom_selector_req" );
 
-        then: "option filter input should be present"
+        then: "option filter input is present"
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "content is not valid, because the value is required"
+        and: "content is valid, because the value is not required"
         formViewPanel.isValidationMessagePresent();
 
-        and:"red icon should be displayed, because selector is required"
-        wizard.isContentInvalid();
+        and:
+        formViewPanel.isValidationMessageDisplayed();
 
         and: "validation message appears"
         formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_OCCURRENCE;

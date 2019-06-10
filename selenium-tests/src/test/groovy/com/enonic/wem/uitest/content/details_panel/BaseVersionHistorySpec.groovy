@@ -10,7 +10,7 @@ class BaseVersionHistorySpec
 {
     protected AllContentVersionsView openVersionPanel()
     {
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
         AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();

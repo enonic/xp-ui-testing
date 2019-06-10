@@ -19,7 +19,7 @@ public class PageEmulatorPanel
 
     public static final String TITLE = "Emulate different client's physical sizes";
 
-    private final String CONTAINER = "//div[contains(@id,'EmulatorWidgetItemView')]";
+    private final String CONTAINER = "//div[contains(@id,'EmulatorPanel')]";
 
     private final String GRID_PANEL = "//div[contains(@id,'EmulatorGrid')]";
 

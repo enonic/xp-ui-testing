@@ -14,10 +14,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 
 import com.enonic.autotests.TestSession;
@@ -260,15 +258,21 @@ public abstract class Page
      */
     protected WebElement waitAndFindElement( By by )
     {
-        Wait<WebDriver> wait = new FluentWait<WebDriver>( getDriver() ).withTimeout( 30, TimeUnit.MILLISECONDS ).pollingEvery( 400,
-                                                                                                                               TimeUnit.MILLISECONDS ).ignoring(
-            NoSuchElementException.class );
-
-        WebElement element = wait.until( new Function<WebDriver, WebElement>()
+        FluentWait<By> fluentWait = new FluentWait<By>( by );
+        fluentWait.pollingEvery( 500, TimeUnit.MILLISECONDS );
+        fluentWait.withTimeout( Application.EXPLICIT_LONG, TimeUnit.SECONDS );
+        fluentWait.until( new Predicate<By>()
         {
-            public WebElement apply( WebDriver driver )
+            public boolean apply( By by )
             {
-                return driver.findElement( by );
+                try
+                {
+                    return getDriver().findElement( by ).isDisplayed();
+                }
+                catch ( NoSuchElementException ex )
+                {
+                    return false;
+                }
             }
         } );
         return getDriver().findElement( by );
@@ -296,29 +300,44 @@ public abstract class Page
 
     protected List<String> getDisplayedStrings( By by )
     {
+        return findElements( by ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
+    }
+
+    protected void waitForClickableAndClick( By by )
+    {
+        FluentWait<By> fluentWait = new FluentWait<By>( by );
+        fluentWait.withTimeout( 3, TimeUnit.SECONDS ).pollingEvery( 500, TimeUnit.MICROSECONDS ).ignoring( NoSuchElementException.class );
+
         try
         {
-            return findElements( by ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
+            getDriver().findElement( by ).click();
         }
-        catch ( StaleElementReferenceException e )
+        catch ( WebDriverException e )
         {
-            sleep( 1000 );
-            return findElements( by ).stream().filter( WebElement::isDisplayed ).map( WebElement::getText ).collect( Collectors.toList() );
+            try
+            {
+                fluentWait.until( new Predicate<By>()
+                {
+                    public boolean apply( By by )
+                    {
+                        return getDriver().findElement( by ).isEnabled();
+                    }
+                } );
+                getDriver().findElement( by ).click();
+            }
+            catch ( WebDriverException f )
+            {
+                logger.info( "[getElementByXpath] FluentWait findElement threw exception:\n\n" + f + "\n\n" );
+                TestUtils.saveScreenshot( getSession(), NameHelper.uniqueName( "icon_search" ) );
+                throw new WebDriverException( "Unable to find element " + by.toString() );
+            }
         }
     }
 
 
     protected List<WebElement> findElements( By by )
     {
-        try
-        {
-            return session.getDriver().findElements( by );
-        }
-        catch ( StaleElementReferenceException e )
-        {
-            sleep( 500 );
-            return session.getDriver().findElements( by );
-        }
+        return session.getDriver().findElements( by );
     }
 
     protected WebDriver getDriver()

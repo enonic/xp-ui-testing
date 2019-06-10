@@ -10,17 +10,11 @@ import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
-import spock.lang.Stepwise
 
 /**
  * Created on 12.01.2017.
  *
- * Tasks:
- * XP-4817 Add selenium test for creating fragments from a layout
- * XP-4818 Add selenium test for switching between layouts
- * xp-ui-testing#71 Add new tests for Fragments
  * */
-@Stepwise
 class Fragment_Create_From_Layout_Spec
     extends BaseContentSpec
 {
@@ -50,11 +44,11 @@ class Fragment_Create_From_Layout_Spec
         wizard.switchToLiveEditFrame();
         LayoutComponentView layoutComponentView = new LayoutComponentView( getSession() );
         layoutComponentView.selectLayout( LAYOUT_3_COL_DISPLAY_NAME );
-        wizard.switchToDefaultWindow();
+        wizard.save();
 
         when: "click on the image-component and 'create fragment' menu item is selected"
         wizard.showComponentView();
-        pageComponentsView.openMenu( LAYOUT_3_COL_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue() );
+        pageComponentsView.openMenu( LAYOUT_3_COL_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue(  ));
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 2000 );
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( LAYOUT_3_COL_DISPLAY_NAME );
@@ -175,11 +169,12 @@ class Fragment_Create_From_Layout_Spec
         imageComponentView.clickOnDropDownHandler();
         imageComponentView.clickOnDropDownModeToggler().clickOnExpanderInDropDownList( "imagearchive" ).clickOnOption( "enterprise" );
 
-        and: "the fragment should be automatically saved"
-        fragmentWizard.switchToLiveEditFrame();
+        and: "the fragment has been saved"
+        fragmentWizard.save();
         saveScreenshot( "image_in_fragment_inserted" );
 
         then: "new image should be present in the left-region "
+        fragmentWizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 1;
     }

@@ -17,9 +17,22 @@ class Occurrences_ComboBox_0_1_Spec
     @Shared
     Content content_with_opt;
 
-    def "GIVEN ComboBox-content (0:1) without options is added WHEN content has been opened THEN no one options should be displayed on the page"()
+    def "WHEN wizard for  ComboBox-content(0:1) is opened THEN option filter input should be present"()
     {
-        given: "new ComboBox0_1 is added"
+        when: "start to add a content with type 'ComboBox 0:1'"
+        Content comboBoxContent = buildComboBox0_1_Content( 0 );
+        selectSitePressNew( comboBoxContent.getContentTypeName() );
+        ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
+
+        then: "option filter input should be present and enabled"
+        formViewPanel.isOptionFilterInputEnabled();
+        and: "no selected should be on the form"
+        formViewPanel.getSelectedOptionValues().size() == 0;
+    }
+
+    def "GIVEN ComboBox-content (0:1) without options was added WHEN content is opened THEN no one options should be displayed on the page"()
+    {
+        given: "new content with type ComboBox0_1 was added'"
         Content comboBoxContent = buildComboBox0_1_Content( 0 );
         selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData(
             comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
@@ -36,9 +49,9 @@ class Occurrences_ComboBox_0_1_Spec
         formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "GIVEN new ComboBox0_1 is saved AND one option is selected WHEN content has been opened THEN one selected option should be present on the page and options filter input is disabled"()
+    def "GIVEN saving of  ComboBox-content (0:1) with one option WHEN content opened for edit THEN one selected option  present on page and options filter input is disabled"()
     {
-        given: "new ComboBox0_1 is saved"
+        given: "new content with type ComboBox0_1 was added'"
         content_with_opt = buildComboBox0_1_Content( 1 );
         selectSitePressNew( content_with_opt.getContentTypeName() ).typeData(
             content_with_opt ).save().closeBrowserTab().switchToBrowsePanelTab();
@@ -58,9 +71,9 @@ class Occurrences_ComboBox_0_1_Spec
         !formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "GIVEN existing ComboBox 0:1 with one option is opened WHEN the content has been published THEN content's status is getting 'Published'"()
+    def "GIVEN a existing new ComboBox 0:1 with one option  WHEN content was opened and 'Publish' on toolbar pressed THEN content's status is getting 'Online'"()
     {
-        given: "existing ComboBox 0:0 with options'"
+        given: "existing new ComboBox 0:0 with options'"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
         when: "the content has been published"
@@ -72,28 +85,41 @@ class Occurrences_ComboBox_0_1_Spec
         contentBrowsePanel.getContentStatus( content_with_opt.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
-    def "GIVEN existing ComboBox-content(0:1) with selected option is opened and the option is removed AND content saved WHEN content has been opened THEN options should not be selected on the page"()
+    def "GIVEN wizard for ComboBox-content (0:1) with one selected option is opened and the option was removed and content saved WHEN content is opened THEN options should not be selected on the page"()
     {
-        given: "content with one option is opened "
+        given: "content with one option is  opened "
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
-        and: "one option has been removed"
+        and: "one option was removed"
         formViewPanel.clickOnLastRemoveButton();
-        and: "the content has been saved and closed"
+        and: "the content is saved and closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content has been reopened"
+        when: "content is opened again"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
-        then: "no options should be selected on the wizard"
+        then: "no options is selected on the page "
         List<String> optValues = formViewPanel.getSelectedOptionValues();
         optValues.size() == 0;
 
         and: "and options filter should be enabled"
         formViewPanel.isOptionFilterInputEnabled();
+    }
 
-        and: "content should be 'Modified'"
-        wizard.getStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
+    def "WHEN content without option was saved and published THEN the content should be displayed with 'Online' status"()
+    {
+        given: "content without option saved and published"
+        Content comboBoxContent = buildComboBox0_1_Content( 0 );
+        ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
+        wizard.clickOnWizardPublishButton().waitUntilDialogShown(
+            Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
+
+        when:"the content is filtered"
+        filterPanel.typeSearchText( comboBoxContent.getName() );
+
+        then: "content has a 'Published' status"
+        contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
     private Content buildComboBox0_1_Content( int numberOptions )
@@ -103,7 +129,7 @@ class Occurrences_ComboBox_0_1_Spec
             name( NameHelper.uniqueName( "cbox0_1_" ) ).
             displayName( "combobox0_1 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "combobox0_1" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":combobox0_1" ).data( data ).
             build();
         return comboboxContent;
     }

@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
-import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content

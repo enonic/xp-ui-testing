@@ -87,8 +87,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.isNewButtonEnabled();
 
         and:
-        String mess = String.format(Application.ITEM_IS_DELETED, folder.getName());
-        contentBrowsePanel.waitExpectedNotificationMessage(mess, 1)
+        contentBrowsePanel.waitForNotificationMessage() == String.format( Application.ITEM_IS_DELETED, folder.getName() );
     }
 
     def "GIVEN two existing folders in the root WHEN both folders were deleted THEN New-button should be enabled"()

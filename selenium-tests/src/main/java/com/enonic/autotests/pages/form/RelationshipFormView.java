@@ -24,7 +24,7 @@ public class RelationshipFormView
 
     protected final String OPTION_FILTER_INPUT = CONTAINER_DIV + COMBOBOX_OPTION_FILTER_INPUT;
 
-    protected final String STEP_XPATH = "//li[contains(@id,'TabBarItem') and child::a[contains(.,'default_relation')]]";
+    protected final String STEP_XPATH = "//li[contains(@id,'TabBarItem') and child::a[contains(.,'Relationship')]]";
 
     private String REMOVE_TARGET_BUTTON =
         "//div[contains(@id,'ContentSelectedOptionView') and descendant::h6[contains(@class,'main-name') and text()='%s']]//a[@class='remove']";
@@ -52,12 +52,6 @@ public class RelationshipFormView
                 sleep( 300 );
             }
         }
-        return this;
-    }
-
-    public FormViewPanel typeNameInOptionFilter( String displayName )
-    {
-        clearAndType( optionFilterInput, displayName );
         return this;
     }
 
@@ -96,11 +90,5 @@ public class RelationshipFormView
             throw new TestFrameworkException( "Button remove for " + fileName + " was not found!" );
         }
         getDisplayedElement( By.xpath( CONTAINER_DIV + removeButtonXpath ) ).click();
-        sleep( 500 );
-    }
-    public boolean isNoMatchingItemsVisible()
-    {
-        String message = CONTAINER_DIV + "//div[@class='empty-options' and text()='No matching items']";
-        return waitUntilVisibleNoException(By.xpath( message ) ,Application.EXPLICIT_NORMAL );
     }
 }

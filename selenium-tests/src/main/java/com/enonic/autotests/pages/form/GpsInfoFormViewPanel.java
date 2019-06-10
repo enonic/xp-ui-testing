@@ -12,10 +12,10 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 /**
  * Created on 26.09.2016.
  */
-public class LocationFormViewPanel
+public class GpsInfoFormViewPanel
     extends FormViewPanel
 {
-    private final String GPS_INFO_STEP_FORM = "//div[contains(@id,'XDataWizardStepForm') and preceding-sibling::div[child::span[text()='Location']]]";
+    private final String GPS_INFO_STEP_FORM = "//div[contains(@id,'XDataWizardStepForm') and preceding-sibling::div[child::span[text()='Gps Info']]]";
 
     private final String ALTITUDE = GPS_INFO_STEP_FORM + "//input[contains(@name,'altitude')]";
 
@@ -34,7 +34,7 @@ public class LocationFormViewPanel
     private WebElement geoPointInput;
 
 
-    public LocationFormViewPanel( final TestSession session )
+    public GpsInfoFormViewPanel( final TestSession session )
     {
         super( session );
     }
@@ -42,7 +42,7 @@ public class LocationFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
-        throw new TestFrameworkException( "method is not implemented in LocationFormViewPanel" );
+        throw new TestFrameworkException( "method not implemented  in GpsInfoFormViewPanel" );
     }
 
     public void typeAltitude( String altitude )

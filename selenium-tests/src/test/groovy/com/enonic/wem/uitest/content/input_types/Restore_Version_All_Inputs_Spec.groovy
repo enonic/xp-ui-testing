@@ -8,7 +8,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -61,9 +60,9 @@ class Restore_Version_All_Inputs_Spec
     @Shared
     String COMBOBOX_OPTION_V2 = "myOption 2";
 
-    def "GIVEN content with input types has been added WHEN content has been selected and version history opened THEN two versions should be present in versions-panel"()
+    def "GIVEN adding of content with all input types WHEN content saved and version history opened THEN two versions are present in panel"()
     {
-        given: "content with input types has been added"
+        given: "adding of content with input types"
         ALL_INPUTS_CONTENT = buildContent( "types", INITIAL_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( ALL_INPUTS_CONTENT.getContentTypeName() );
         wizard.typeData( ALL_INPUTS_CONTENT );
@@ -71,16 +70,16 @@ class Restore_Version_All_Inputs_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
 
-        when: "content has been selected and version history opened"
+        when: "display name of the folder changed"
         contentBrowsePanel.doClearSelection();
         findAndSelectContent( ALL_INPUTS_CONTENT.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        then: "2 versions should be present on the widget by default(the content is just created)"
+        then: "new 'version history item' appeared in the version-view"
         allContentVersionsView.getAllVersions().size() == 2;
     }
 
-    def "GIVEN existing content is opened WHEN  values in inputs have been changed AND the content has been saved THEN number of versions should be increased by 1"()
+    def "GIVEN content with input types added WHEN all values changed THEN new version appears in the version history"()
     {
         given:
         ContentWizardPanel wizard = findAndSelectContent( ALL_INPUTS_CONTENT.getName() ).clickToolbarEdit();
@@ -102,13 +101,13 @@ class Restore_Version_All_Inputs_Spec
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
-    def "GIVEN existing content with 3 versions WHEN previous version has been restored THEN expected values should be present in all inputs"()
+    def "GIVEN values in all inputs were updated WHEN previous version of content has been restored THEN correct values are present in the wizard"()
     {
-        given: "existing content with 3 versions"
+        given: "content with updated values"
         findAndSelectContent( ALL_INPUTS_CONTENT.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "the previous version has been restored"
+        when: "the previous version is restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( versionItem.getId() );
@@ -117,7 +116,7 @@ class Restore_Version_All_Inputs_Spec
         and: "content is opened"
         contentBrowsePanel.clickToolbarEdit();
 
-        then: "expected values should be present in all inputs"
+        then: "correct values should be present on the wizard"
         InputsFormViewPanel formView = new InputsFormViewPanel( getSession() );
         formView.geoPointFormViewPanel.getGeoPointValue() == GEO_POINT_V1;
 
@@ -148,12 +147,12 @@ class Restore_Version_All_Inputs_Spec
         addRadioData( data, RADIO_OPTION_V1 );
         addCheckboxData( data, true );
         addImageSelectorData( data, BOOK_IMAGE_DISPLAY_NAME )
-        addRelationshipData( data, "Templates" )
+        addRelationshipData( data, EXECUTABLE_BAT_DISPLAY_NAME )
         Content content = Content.builder().
             name( NameHelper.uniqueName( name ) ).
             displayName( displayName ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "all-inputs" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":all-inputs" ).data( data ).
             build();
         return content;
     }

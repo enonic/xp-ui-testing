@@ -1,7 +1,5 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel;
 
-import org.openqa.selenium.By;
-
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
 
@@ -32,7 +30,6 @@ public class PageTemplateWidgetItemView
 
     public String getControllerName()
     {
-        waitUntilVisibleNoException( By.xpath(CONTROLLER_NAME),Application.EXPLICIT_NORMAL );
         return getDisplayedString( CONTROLLER_NAME );
     }
 

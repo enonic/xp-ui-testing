@@ -67,7 +67,7 @@ public class ImageComponentView
     public ImageComponentView clickOnDropDownHandler()
     {
         dropDownHandler.click();
-        sleep( 400 );
+        sleep( 700 );
         return this;
     }
 

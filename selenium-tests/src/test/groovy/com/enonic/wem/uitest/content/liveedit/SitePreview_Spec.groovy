@@ -1,8 +1,8 @@
 package com.enonic.wem.uitest.content.liveedit
 
-import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -83,7 +83,7 @@ class SitePreview_Spec
     {
         given: "existing site with the page-template was selected and 'New' button pressed"
         ContentWizardPanel wizard = findAndSelectContent( MY_SITE.getName() ).clickToolbarNew().selectContentType(
-            BaseContentType.FOLDER.getDisplayName(  ) );
+            ContentTypeName.folder() );
 
         when: "child-folder has been added for the site"
         wizard.typeDisplayName( "test-page-editor-toggler" ).save();

@@ -33,7 +33,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         filterPanel.clickOnCleanFilter();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "initial grid view should be restored"
+        then: "initial grid view should be displayed"
         !beforeClean && contentBrowsePanel.exists( IMPORTED_FOLDER_NAME );
     }
 
@@ -43,16 +43,16 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         contentBrowsePanel.doShowFilterPanel();
         filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.SHORTCUT.getValue() );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        Integer numberOfShortcuts = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.SHORTCUT.getValue() );
+        Integer numberOfData = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.SHORTCUT.getValue() );
 
         when: "'Folder' checkbox has been checked "
-        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.IMAGE.getValue() );
-        sleep( 1000 );
-        saveScreenshot( "folder_shortcut_aggregated" );
+        filterPanel.selectContentTypeInAggregationView( ContentTypeDisplayNames.FOLDER.getValue() );
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        saveScreenshot( "filtering_one-selection1" );
 
         then: "all content in the grid should be correctly filtered"
-        Integer numberOfImages = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.IMAGE.getValue() );
-        ( numberOfImages + numberOfShortcuts ) == contentBrowsePanel.getRowsCount();
+        Integer numberOfFolder = filterPanel.getNumberAggregatedByContentType( ContentTypeDisplayNames.FOLDER.getValue() );
+        ( numberOfFolder + numberOfData ) == contentBrowsePanel.getRowsCount();
     }
 
     def "GIVEN 'Shortcut' checkbox is checked WHEN 'Shortcut' checkbox has been unchecked THEN initial grid should be displayed"()

@@ -3,49 +3,61 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
+/**
+ * Tasks:
+ * enonic/xp-ui-testing#44  Update tests for 'Details Panel' in order to new changes*/
+
 class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
     extends BaseContentSpec
 {
     @Shared
     Content folderContent;
 
-    def "WHEN folder has been selected AND widget dropdown selector has been clicked THEN expected options should be displayed"()
+    def "WHEN no one content is selected THEN 'Details Panel Toggle' button should be displayed AND details panel should not be displayed by default"()
     {
-        given: "new folder has been added"
+        expect: "'Details Panel Toggle' button is displayed"
+        contentBrowsePanel.isDetailsPanelToggleButtonDisplayed();
+
+        and: "details panel should not be displayed by default"
+        !contentDetailsPanel.isDisplayed();
+    }
+
+    def "WHEN content selected THEN correct display name shown in the Detail Panel"()
+    {
+        given: "folder has been added"
         folderContent = buildFolderContent( "details_p", "details_panel_test" );
         addContent( folderContent );
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
 
-        when: "when the folder has been selected and widgets dropdown selector has been clicked"
+        when: "when the folder is selected in the 'Browse Panel'"
         findAndSelectContent( folderContent.getName() );
-        contentDetailsPanel.getContentDisplayName() == folderContent.getDisplayName();
 
-        then: "expected display name should be shown on the Details Panel"
+        then: "correct display name should be shown on the Details Panel"
+        contentDetailsPanel.getContentDisplayName() == folderContent.getDisplayName();
+        and: "menu options is opened"
         List<String> widgetMenuOptions = contentDetailsPanel.getMenuOptions();
         and: "three items should be present"
-        widgetMenuOptions.size() == 4;
+        widgetMenuOptions.size() == 3;
         and: "'Details' menu option should be present"
         widgetMenuOptions.contains( "Details" );
         and: "'Dependencies' menu option should be present"
         widgetMenuOptions.contains( "Dependencies" );
         and: "Version history menu option should be present"
         widgetMenuOptions.contains( "Version history" );
-        and:
-        widgetMenuOptions.contains( "Emulator" );
     }
 
-    def "GIVEN existing folder is selected AND 'Content Details Panel' is opened WHEN Toggle Content Details button has been clicked THEN 'Content Details Panel' closes"()
+    def "GIVEN 'Content Details Panel' opened WHEN Toggle Content Details button clicked THEN 'Content Details Panel' hidden"()
     {
-        given: "content has been selected and the 'Content Details Panel' is opened"
+        given: "content selected and the 'Content Details Panel' shown"
         findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         saveScreenshot( "detail-panel-opened" );
 
-        when: "'Toggle' button has been clicked"
+        when: "'Toggle' button clicked"
         contentBrowsePanel.clickOnDetailsToggleButton();
         saveScreenshot( "detail-panel-closed" );
 
-        then: "'Content Details Panel' should be closed"
+        then: "'Content Details Panel' should not be displayed"
         !contentBrowsePanel.getContentDetailsPanel().isOpened( folderContent.getDisplayName() );
     }
 }

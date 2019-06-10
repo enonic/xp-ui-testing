@@ -37,7 +37,7 @@ public class CustomSelectorFormViewPanel
     @FindBy(xpath = OPTION_FILTER_INPUT)
     protected WebElement optionFilterInput;
 
-    public static final String CUSTOM_SELECTOR_OPTIONS = "custom_options";
+    public static final String CUSTOM_SELECTOR_OPTIONS = "images";
 
     public CustomSelectorFormViewPanel( final TestSession session )
     {

@@ -142,7 +142,7 @@ class TagsInputType_Unlim_Spec
             name( NameHelper.uniqueName( name ) ).
             displayName( "tag_unlim content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "tag_unlim" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":tag_unlim" ).data( data ).
             build();
         return tagContent;
     }

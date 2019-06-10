@@ -12,7 +12,6 @@ import com.enonic.autotests.vo.usermanager.User;
 
 public class TestSession
 {
-
     public final static String WEBDRIVER = "webdriver";
 
     public final static String START_URL = "bas_url";

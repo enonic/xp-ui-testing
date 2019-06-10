@@ -44,14 +44,13 @@ public class NewContentDialog
 
     public static final String LIST_ITEMS_SITES = "//div[contains(@id,'NewContentDialog')]//ul/li[@class='content-types-list-item site']";
 
-    public static final String SEARCH_INPUT = CONTAINER+ "//div[contains(@id,'FileInput')]/input";
+    public static final String SEARCH_INPUT = "//div[contains(@id,'api.ui.text.FileInput')]/input";
 
     private final static String DIALOG_TITLE_XPATH =
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'Create Content')]";
 
-    public static String CONTENT_TYPE_DISPLAY_NAME =
-        CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::h6[contains(@class,'main-name') and text()='%s']]";
-    public static String CONTENT_TYPE_BY_DESCRIPTION =CONTAINER+"//li[contains(@class,'content-types-list-item') and descendant::p[contains(@class,'sub-name') and text()='%s']]";
+    public static String CONTENT_TYPE_NAME =
+        CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
 
     private final String AVAILABLE_CONTENT_TYPES = CONTAINER + "//ul[contains(@id,'FilterableItemsList')]" + "//li" + P_NAME;
 
@@ -81,8 +80,7 @@ public class NewContentDialog
 
     public boolean isMostPopularBlockDisplayed()
     {
-        return waitUntilVisibleNoException( By.xpath( MOST_POPULAR_BLOCK ), Application.EXPLICIT_NORMAL );
-        //return isElementDisplayed( MOST_POPULAR_BLOCK );
+        return isElementDisplayed( MOST_POPULAR_BLOCK );
     }
 
     public List<String> getContentTypesNames()
@@ -174,11 +172,6 @@ public class NewContentDialog
         clearAndType( searchInput, text );
         return this;
     }
-    public NewContentDialog typeSearchTextInHiddenInput( String text )
-    {
-        buildActions().sendKeys( text).build().perform();
-        return this;
-    }
 
     public boolean isUploadButtonEnabled()
     {
@@ -247,23 +240,22 @@ public class NewContentDialog
     }
 
     /**
-     * Select content type by name or description.
+     * Select content type by name.
      *
-     * @param type the name of a content type.
+     * @param contentTypeName the name of a content type.
      */
-    public ContentWizardPanel selectContentType( String type )
+    public ContentWizardPanel selectContentType( String contentTypeName )
     {
-        //String searchString = contentTypeDisplayName.substring( contentTypeDisplayName.indexOf( ":" ) + 1 );
-        //waitUntilElementEnabled( By.xpath( SEARCH_INPUT ), Application.EXPLICIT_NORMAL );
-        buildActions().sendKeys( type).build().perform();
-        //clearAndType( searchInput, searchString );
+        String searchString = contentTypeName.substring( contentTypeName.indexOf( ":" ) + 1 );
+        waitUntilElementEnabled( By.xpath( SEARCH_INPUT ), Application.EXPLICIT_NORMAL );
+        clearAndType( searchInput, searchString );
         sleep( 700 );
-        String ctypeXpath = String.format( CONTENT_TYPE_DISPLAY_NAME, type );
+        String ctypeXpath = String.format( CONTENT_TYPE_NAME, contentTypeName );
         boolean isContentTypePresent = isElementDisplayed( ctypeXpath );
         if ( !isContentTypePresent )
         {
             saveScreenshot( NameHelper.uniqueName( "err_type" ) );
-            throw new TestFrameworkException( "content type with name " + type + " was not found!" );
+            throw new TestFrameworkException( "content type with name " + contentTypeName + " was not found!" );
         }
         getDisplayedElement( By.xpath( ctypeXpath ) ).click();
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
@@ -309,9 +301,5 @@ public class NewContentDialog
             getLogger().info( "list of content types is empty" );
         }
         return findElements( By.xpath( LIST_ITEMS_SITES ) ).size();
-    }
-    public NewContentDialog showSearchInput(){
-        buildActions().sendKeys( "a").build().perform();
-        return this;
     }
 }

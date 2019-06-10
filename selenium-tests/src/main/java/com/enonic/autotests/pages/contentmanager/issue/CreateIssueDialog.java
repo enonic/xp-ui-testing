@@ -214,7 +214,7 @@ public class CreateIssueDialog
     public void clickOnCreateIssueButton()
     {
         createIssueButton.click();
-        sleep( 700 );
+        sleep( 500 );
     }
 
     public CreateIssueDialog clickOnIncludeChildrenToggler()

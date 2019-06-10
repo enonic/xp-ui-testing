@@ -6,7 +6,6 @@ import com.enonic.autotests.pages.XpTourDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.wem.uitest.BaseGebSpec
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -35,8 +34,11 @@ class HomePage_Spec
         then:
         homePage.isDashboardToolbarDisplayed();
 
-        //and: "'Docs' link present"
-        //homePage.isDocs_Displayed();
+        and: "'XP Tour' link present"
+        homePage.isXP_Tour_Displayed();
+
+        and: "'Docs' link present"
+        homePage.isDocs_Displayed();
 
         and: "'Discuss' link present"
         homePage.isDiscus_Displayed();
@@ -46,11 +48,8 @@ class HomePage_Spec
 
         and: "'About' link present"
         homePage.isAbout_Displayed();
-        and: "'XP Tour' link should not be present, because 'tourDisabled = true' is configured"
-        !homePage.isXP_Tour_Displayed();
     }
 
-    @Ignore
     def "GIVEN home page opened WHEN 'XP Tour' pressed THEN modal dialog appears"()
     {
         given: "home page opened"
@@ -73,7 +72,6 @@ class HomePage_Spec
         dialog.isNextButtonDisplayed();
     }
 
-    @Ignore
     def "GIVEN Xp Tour dialog opened WHEN cancel button clicked THEN modal dialog has been closed"()
     {
         given: " Xp Tour dialog opened"
@@ -87,7 +85,6 @@ class HomePage_Spec
         !dialog.isOpened()
     }
 
-    @Ignore
     def "GIVEN Xp Tour dialog opened WHEN Skip button clicked THEN modal dialog has been closed"()
     {
         given: "Xp Tour dialog opened"

@@ -29,7 +29,7 @@ class ContentWizardPanel_NameCollisions_Spec
     {
         given:
         findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarDelete().doDelete();
-        String expectedMessage = String.format( Application.CONTENT_SAVED, TEST_FOLDER.getName() );
+        String expectedMessage = String.format( Application.CONTENT_SAVED, TEST_FOLDER.getDisplayName() );
 
         when:
         boolean isMessageCorrect = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_FOLDER.getContentTypeName() ).typeData(

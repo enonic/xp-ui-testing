@@ -4,14 +4,11 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
 import com.enonic.autotests.pages.form.ImageFormViewPanel
-import spock.lang.Ignore
 import spock.lang.Stepwise
 
 /**
- * XP-4174 Add selenium tests for image cropping
  * XP-4168 Add selenium test for verifying XP-4167
- *
- * Created on 30.09.2016.
+ * * Created on 30.09.2016.
  * */
 @Stepwise
 class ImageEditor_Crop_Reset_Spec
@@ -56,11 +53,12 @@ class ImageEditor_Crop_Reset_Spec
         imageEditor.doDragCropButtonAndChangeHeightCropArea( -50 );
         imageEditor.getToolbar().clickOnApplyButton();
 
-        and: "Save button has been pressed "
+        and: "Save button pressed "
         wizard.save();
 
         and: "wizard has been closed"
         wizard.executeCloseWizardScript();
+        wizard.switchToBrowsePanelTab();
 
         then: "'Alert' with warning message should not be displayed"
         !wizard.isAlertPresent();
@@ -95,7 +93,6 @@ class ImageEditor_Crop_Reset_Spec
         !imageFormViewPanel.isButtonResetPresent();
     }
 
-
     def "GIVEN existing cropped image opened WHEN  'Reset' button has been pressed AND 'Save' button pressed AND tab with the wizard has been closed THEN Alert dialog should not appear"()
     {
         given: "existing cropped image"
@@ -112,7 +109,8 @@ class ImageEditor_Crop_Reset_Spec
         imageFormViewPanel.clickOnResetButton();
 
         and: "tab with wizard has been closed"
-        wizard.executeCloseWizardScript();
+        wizard.save().executeCloseWizardScript();
+        wizard.switchToBrowsePanelTab();
 
         then: "Alert dialog should not appear"
         !wizard.isAlertPresent();

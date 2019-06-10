@@ -10,10 +10,6 @@ import spock.lang.Shared
 
 /**
  * Created on 2/2/2017.
- *
- * Tasks:
- * XP-4945 Add ui-test to verify the XP-4944
- * xp-ui-testing#66 Add selenium tests for expanding of a tree in the ImageSelector drop-down list
  * Verifies:
  * XP-4944 ImageComponentView - NullPointerException and Upload does not add new file
  * (NullPointerException thrown when dropdown Handler was clicked  when dropdown Handler was clicked)

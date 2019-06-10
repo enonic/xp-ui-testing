@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel
-import com.enonic.autotests.pages.form.liveedit.ContextWindow
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
@@ -27,8 +26,7 @@ class ContextWindow_InspectionPanel_Spec
             TEST_SITE ).selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER );
 
         when: "Context window opened and 'Inspect' link was pressed"
-        ContextWindow contextWindow = wizardPanel.showContextWindow();
-        contextWindow.clickOnTabBarItem( "Page" );
+        wizardPanel.showContextWindow().clickOnInspectLink();
         PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
         saveScreenshot( "test-inspection-tab-activated" );
 
@@ -48,7 +46,7 @@ class ContextWindow_InspectionPanel_Spec
     def "GIVEN the site with 'page controller' is opened WHEN 'Preview' button pressed THEN page-sources are correct and correct header present as well"()
     {
         given: "the site with a 'page controller' is opened"
-        ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit();
 
         when: "'Preview' button pressed"
         wizardPanel.clickToolbarPreview();
@@ -64,35 +62,33 @@ class ContextWindow_InspectionPanel_Spec
     def "GIVEN 'Custom' renderer is selected WHEN Page controller has been changed to 'Country list' THEN correct page controller displayed in the selector"()
     {
         given: "existing site with the selected page controller is opened"
-        ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit();
 
-        and: "'Page' tab bar item has been clicked"
-        ContextWindow contextWindow = wizardPanel.showContextWindow();
-        contextWindow.clickOnTabBarItem( "Page" );
+        and: "'Inspect tab' has been opened"
+        wizardPanel.showContextWindow().clickOnInspectLink();
         PageInspectionPanel inspectPanel = new PageInspectionPanel( getSession() );
 
         when: "Page controller has been changed to 'Country list'"
-        inspectPanel.selectTemplateOrController( COUNTRY_LIST_PAGE_CONTROLLER );
+        inspectPanel.changePageController( COUNTRY_LIST_PAGE_CONTROLLER );
 
         and: "'Yes' button on the Confirmation dialog has been pressed"
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
         dialog.pressYesButton();
         saveScreenshot( "test-inspection-new-controller-selected" );
 
-        then: "correct page controller should be displayed on the Inspect panel"
+        then: "correct page controller displayed on the Inspect panel"
         inspectPanel.getSelectedPageController() == COUNTRY_LIST_PAGE_CONTROLLER;
     }
 
-    def "GIVEN 'Page Inspection' tab is opened WHEN 'Automatic' option has been selected THEN 'Confirmation Dialog' should appear"()
+    def "GIVEN 'Inspect' panel is opened WHEN 'Automatic' renderer was selected THEN 'Confirmation Dialog' should be displayed"()
     {
         given: "'Inspect' panel is opened"
-        ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
-        ContextWindow contextWindow = wizardPanel.showContextWindow();
-        contextWindow.clickOnTabBarItem( "Page" );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit()
+        wizardPanel.showContextWindow().clickOnInspectLink();
 
         when: "'Automatic' page-template has been selected"
         PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
-        inspectionPanel.selectTemplateOrController( "Automatic" );
+        inspectionPanel.selectRenderer( "Automatic" );
 
         then: "'Confirmation Dialog' should be displayed "
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
@@ -102,16 +98,15 @@ class ContextWindow_InspectionPanel_Spec
         dialog.getQuestion() == "Switching to a page template will discard all of the custom changes made to the page. Are you sure?"
     }
     //verifies :XP-3993 Inspection Panel should be closed, when 'Page Controller' was removed (Automatic)
-    def "GIVEN ''Page Inspection' tab is opened WHEN 'Automatic' option has been selected AND confirmed THEN 'Context window' should be closed"()
+    def "GIVEN 'Inspect' panel is opened WHEN 'Automatic' renderer was selected THEN 'Context window' should be closed"()
     {
         given: "'Inspect' panel is opened"
-        ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
-        ContextWindow contextWindow = wizardPanel.showContextWindow();
-        contextWindow.clickOnTabBarItem( "Page" )
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickCheckboxAndSelectRow( TEST_SITE.getName() ).clickToolbarEdit()
+        wizardPanel.showContextWindow().clickOnInspectLink();
 
         when: "'Automatic' page-template has been selected"
         PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
-        inspectionPanel.selectTemplateOrController( "Automatic" );
+        inspectionPanel.selectRenderer( "Automatic" );
 
         and: "'Confirmation Dialog' is displayed "
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );

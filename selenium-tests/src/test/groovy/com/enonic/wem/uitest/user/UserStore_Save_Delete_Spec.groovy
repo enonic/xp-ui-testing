@@ -72,7 +72,7 @@ class UserStore_Save_Delete_Spec
 
         when: "user store was selected and 'Delete' button pressed"
         userBrowsePanel.clickCheckboxAndSelectRow( us.getName() ).clickToolbarDelete().doDelete();
-        String message = userBrowsePanel.waitForNotificationMessage();
+        String message = userBrowsePanel.waitForNotificationMessage( );
         saveScreenshot( "user-store-deleted" );
 
         then: "the user store should not be present in the grid"

@@ -2,10 +2,9 @@ import org.openqa.selenium.Platform
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
-import org.openqa.selenium.firefox.FirefoxBinary
 import org.openqa.selenium.firefox.FirefoxDriver
-import org.openqa.selenium.firefox.FirefoxOptions
 import org.openqa.selenium.firefox.FirefoxProfile
+import org.openqa.selenium.firefox.MarionetteDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 
@@ -13,6 +12,7 @@ import java.util.logging.Level
 
 // chrome driver by default
 driver = {
+
     def path = System.getProperty( "webdriver.chrome.driver" )
 
     if ( path == null )
@@ -49,9 +49,9 @@ driver = {
 
     def headless = System.getProperty( "chrome.headless" )
 
-    if ( headless != null && headless.equals( "true" ) )
+    if (headless != null && headless.equals( "true" ))
     {
-        options.addArguments( "--headless", "--disable-gpu", "--no-sandbox", "window-size=1990,1100" );
+        options.addArguments( "--headless", "--disable-gpu", "--no-sandbox", "window-size=1920,1100" );
     }
 
     ChromeDriver driver = new ChromeDriver( options );
@@ -100,15 +100,10 @@ environments {
     }
     firefox {
         driver = {
-            println "Firefox Configuration!"
             Properties props = new Properties()
             File propsFile = new File( 'tests.properties' )
             props.load( propsFile.newDataInputStream() )
             def pathToDriver;
-            def headless = System.getProperty( "firefox.headless" )
-            FirefoxOptions options = new FirefoxOptions();
-
-
             if ( Platform.current.is( Platform.WINDOWS ) )
             {
                 pathToDriver = props.getProperty( 'windows.gecko.path' )
@@ -127,29 +122,14 @@ environments {
                 throw new RuntimeException( "Unsupported operating system [${Platform.current}]" )
             }
             System.setProperty( "webdriver.gecko.driver", pathToDriver );
-//            FirefoxProfile profile = new FirefoxProfile();
-//            DesiredCapabilities capabilities = new DesiredCapabilities();
-//            capabilities.setCapability( FirefoxDriver.PROFILE, profile );
-//            capabilities.setCapability( "marionette", true );
-//            FirefoxDriver driver = new FirefoxDriver( capabilities );
-
-            FirefoxBinary firefoxBinary = new FirefoxBinary();
-            if ( headless != null && headless.equals( "true" ) )
-            {
-                firefoxBinary.addCommandLineOptions( "--headless" );
-                firefoxBinary.addCommandLineOptions( "--disable-gpu" );
-                firefoxBinary.addCommandLineOptions( "window-size=1920,1100" );
-
-            }
-
-            System.setProperty( "webdriver.gecko.driver", pathToDriver );
-            FirefoxOptions firefoxOptions = new FirefoxOptions();
-            firefoxOptions.setBinary( firefoxBinary );
-            FirefoxDriver driver = new FirefoxDriver( firefoxOptions );
-
-            driver.setLogLevel( Level.SEVERE )
+            FirefoxProfile profile = new FirefoxProfile();
+            DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+            capabilities.setCapability( FirefoxDriver.PROFILE, profile );
+            capabilities.setCapability( "marionette", true );
+            def driver = new MarionetteDriver( capabilities );
+            driver.setLogLevel( Level.INFO )
             driver.manage().window().maximize()
-            println "The end of firefox configuration";
+            println "firefox configuration"
             return driver
         }
     }

@@ -137,7 +137,7 @@ class TagsInputType_0_5_Spec
             name( NameHelper.uniqueName( name ) ).
             displayName( "tag0_5 content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "tag0_5" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":tag0_5" ).data( data ).
             build();
         return tagContent;
     }

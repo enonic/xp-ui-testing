@@ -135,9 +135,9 @@ class Site_Publish_Spec
         PartComponentView partComponentView = new PartComponentView( getSession() );
         partComponentView.selectItem( CITY_CREATION_PART );
         saveScreenshot( "site_modified_in_wizard" );
+        wizard.switchToDefaultWindow(  );
 
         and: "site saved in the wizard"
-        wizard.switchToDefaultWindow();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "status on the wizard-page is getting 'Modified'"

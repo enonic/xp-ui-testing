@@ -23,7 +23,6 @@ class SiteFormViewPanel_Applications_Spec
             SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
-        contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
         contentBrowsePanel.exists( SITE.getName() );
     }
 
@@ -44,7 +43,7 @@ class SiteFormViewPanel_Applications_Spec
         LinkedList<String> namesAfter = formViewPanel.getAppDisplayNames();
         saveScreenshot( "app_swapped2" );
 
-        then: "new order of applications should be present on the form-panel"
+        then: "new order of applications present in form-panel"
         namesBefore.getFirst() == namesAfter.getLast();
     }
 
@@ -70,14 +69,14 @@ class SiteFormViewPanel_Applications_Spec
         namesBefore.size() - namesAfter.size() == 1;
     }
 
-    def "GIVEN site with selected application is opened WHEN an application has been filtered AND app-checkbox has been clicked and 'Apply' button pressed THEN two application should be present on the form-panel"()
+    def "GIVEN site with application WHEN name of an application was typed AND app-checkbox was clicked and 'Apply' button pressed THEN two application should be present on the form-panel"()
     {
-        given: "site with one application is opened"
+        given: "site with one application opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         LinkedList<String> namesBefore = formViewPanel.getAppDisplayNames();
 
-        when: "name of an application has been typed in the options=filter and app-checkbox has been clicked and 'Apply' button pressed"
+        when: "name of an application was typed and app-checkbox was clicked and 'Apply' button pressed"
         formViewPanel.clickOnAppCheckBoxAndDoApply( MY_FIRST_APP )
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();

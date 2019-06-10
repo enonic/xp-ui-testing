@@ -1,6 +1,5 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
@@ -14,6 +13,7 @@ import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
+import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -74,7 +74,7 @@ class ContentWizardPanel_Owner_Removed_Spec
 
         go "admin"
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.folder().toString() );
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
 
         when: "the user was set as 'owner' in the folder"
@@ -123,7 +123,7 @@ class ContentWizardPanel_Owner_Removed_Spec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( BaseContentType.FOLDER.getDisplayName(  ) ).
+            contentType( ContentTypeName.folder() ).
             parent( ContentPath.ROOT ).
             build();
         return content;

@@ -13,8 +13,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 4/5/2017.
- * Tasks:
- * enonic/xp-ui-testing#36  Add Selenium tests for already fixed bugs
  *
  * Verifies:
  * Page Template Wizard- button 'Edit' in the support-selected option does not open the content in new wizard tab #4745
@@ -40,7 +38,7 @@ class PageTemplate_Spec
         contentBrowsePanel.expandContent( ContentPath.from( TEST_SITE.getName() ) );
         and: "_templates folder is selected and 'New' button pressed"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            "Page Template" );
+            ContentTypeName.pageTemplate() );
         PageTemplateFormViewPanel formViewPanel = new PageTemplateFormViewPanel( getSession() );
 
         when: "'Support' combobox should be displayed"
@@ -64,19 +62,14 @@ class PageTemplate_Spec
         TEST_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, null, "not-valid",
                                            TEST_SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            "Page Template" );
+            ContentTypeName.pageTemplate() );
 
         when: "display name has been typed"
-        wizard.typeData( TEST_TEMPLATE );
-        //wizard.clickOnMinimizeEditIcon();
-        sleep( 500 );
-        saveScreenshot( "support_not_selected" );
+        wizard.typeData( TEST_TEMPLATE ).save();
+        saveScreenshot( "support_not_selected" )
 
         then: "red icon should be displayed on the wizard, the content is not valid"
         wizard.isContentInvalid();
-
-        and:"Save button should be disabled, because auto-saving should be performed when the controller has been selected"
-        !wizard.isSaveButtonEnabled(  );
     }
 
     def "GIVEN existing page-template('support' is not selected) EXPECT the template should be displayed in the grid as not valid"()
@@ -97,7 +90,6 @@ class PageTemplate_Spec
         when: "'site' has been selected from the support options"
         formViewPanel.selectSupportOption( TEMPLATE_SUPPORTS_SITE );
         wizard.save().switchToBrowsePanelTab().waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        sleep( 1000 );
 
         then: "the template should be displayed in the grid as valid"
         !contentBrowsePanel.isContentInvalid( TEST_TEMPLATE.getName() );
@@ -112,7 +104,7 @@ class PageTemplate_Spec
 
         and: "_templates folder is selected and 'New' button pressed"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            "Page Template" );
+            ContentTypeName.pageTemplate() );
         PageTemplateFormViewPanel formViewPanel = new PageTemplateFormViewPanel( getSession() );
 
         when: "display name has been typed"

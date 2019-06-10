@@ -2,7 +2,6 @@ package com.enonic.autotests.pages;
 
 import java.util.ArrayList;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -23,9 +22,11 @@ public class Application
 {
     protected final String SCRIPT_SET_CKE = "CKEDITOR.instances[arguments[0]].setData(arguments[1])";
 
-    protected final String CKE_HTML_AREA = "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'api.ui.text.TextArea')]";
-
     protected final String SCRIPT_DATA_CKE = "return CKEDITOR.instances[arguments[0]].getData()";
+
+    protected final String CKE_TEXT_AREA = "//div[contains(@id,'cke_api.ui.text.TextArea')]";
+
+    protected final String CKE_HTML_AREA = "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'api.ui.text.TextArea')]";
 
     public static final String NO_SELECTION_MESSAGE = "You are wasting this space - select something!";
 
@@ -38,25 +39,33 @@ public class Application
 
     public static final String CONTENT_STUDIO_TAB_HANDLE = "content_studio_window_id_key";
 
-    public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "Item \"%s\" is marked for deletion.";
+    public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "The item is marked for deletion.";
 
     public static String ITEM_IS_UNDELETED = "Item is undeleted";
 
     public static String ITEMS_IS_UNDELETED = "Items are undeleted";
 
+    public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP = "Item \"%s\" is published.";
+
     public static String CONTENTS_DELETED_AND_MARKED_FOR_DELETION_MESSAGE = "%s items are deleted ( %s are marked for deletion ).";
 
-    public static String CONTENTS_PUBLISHED_AND_DELETED_MESSAGE = "%s items are published ( %s deleted ).";
+    public static String CONTENTS_MARKED_FOR_DELETION_MESSAGE = "%s items are marked for deletion";
+
+    public static String CONTENT_MARKED_FOR_DELETION_MESSAGE = "Item \"%s\" is marked for deletion.";
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
-    public static String GROUP_ALREADY_IN_USE_WARNING = "Principal [%s] could not be created. A principal with that name already exists";
+    public static String GROUP_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
     public static String GROUP_CREATED_MESSAGE = "Group was created";
 
     public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "Item \"%s\" is unpublished.";
 
     public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "%s items are unpublished";
+
+    public static String ITEM_IS_DELETED = "Item \"%s\" is deleted.";
+
+    public static String CONTENTS_PUBLISHED_AND_DELETED_MESSAGE = "%s items are published ( %s deleted ).";
 
     public static String ONE_PENDING_ITEM_IS_DELETED = "Item \"%s\" is deleted.";
 
@@ -72,7 +81,7 @@ public class Application
 
     public static String CONTENT_SAVED = "Item \"%s\" is saved.";
 
-    public static String ITEM_IS_DELETED = "Item \"%s\" is deleted.";
+    public static String CONTENT_DELETED_MESSAGE = "The item is deleted.";
 
     public static final String FULL_ACCESS = "Full Access";
 
@@ -95,11 +104,9 @@ public class Application
 
     protected final String TEXT_INPUT = "//input[contains(@id,'TextInput')]";
 
-    protected final String CKE_TEXT_AREA = "//div[contains(@id,'cke_api.ui.text.TextArea')]";
+    protected final String TEXT_AREA = "//iframe[contains(@id,'api.ui.text.TextArea')]";
 
     protected final String TEXT_AREA_INPUT = "//textarea[contains(@id,'TextArea')]";
-
-    public final String CONTENT_SUMMARY_VIEWER= "//div[contains(@id,'ContentSummaryViewer')]";
 
     protected final String DROPDOWN_OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
@@ -148,7 +155,7 @@ public class Application
 
     public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']/span";
 
-    public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP = "Item \"%s\" is published.";
+    public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE = "Item \"%s\" is published.";
 
     public static String CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE = "%s items are published.";
 
@@ -159,8 +166,6 @@ public class Application
     public static final long EXPLICIT_NORMAL = 3;
 
     public static final long EXPLICIT_QUICK = 2;
-
-    public static final long EXPLICIT_1 = 1;
 
     public static final long APP_INSTALL_TIMEOUT = 10;
 
@@ -201,7 +206,7 @@ public class Application
         do
         {
             isDisplayed = isElementDisplayed( SPINNER_XPATH );
-            sleep( 300 );
+            sleep( 100 );
             i++;
             if ( i == 5 )
             {
@@ -254,8 +259,7 @@ public class Application
     {
         try
         {
-            Alert alert = getDriver().switchTo().alert();
-            alert.accept();
+            getDriver().switchTo().alert();
             return true;
         }
         catch ( NoAlertPresentException var3 )
@@ -274,10 +278,9 @@ public class Application
         buildActions().sendKeys( Keys.ESCAPE ).build().perform();
         sleep( 500 );
     }
+
     public void setTextInCKE( String id, String text )
     {
         getJavaScriptExecutor().executeScript( SCRIPT_SET_CKE, id, text );
     }
-
-
 }

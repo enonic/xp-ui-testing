@@ -17,7 +17,7 @@ class DetailsPanel_AttachmentsWidgetItemView_Spec
     {
         when: "image content is selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         AttachmentsWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getAttachmentsWidgetItemView();
 
         then: "'Attachments Widget' should be displayed"
@@ -30,7 +30,7 @@ class DetailsPanel_AttachmentsWidgetItemView_Spec
     {
         when: "image content selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         AttachmentsWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getAttachmentsWidgetItemView();
         List<String> attachmentNames = view.getAttachmentNames();
 
@@ -44,7 +44,7 @@ class DetailsPanel_AttachmentsWidgetItemView_Spec
     {
         when: "content selected and details panel opened"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
-        contentBrowsePanel.openContentDetailsPanel();
+        contentBrowsePanel.clickOnDetailsToggleButton();
         AttachmentsWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getAttachmentsWidgetItemView();
 
         then: "Attachments Widget should be displayed"

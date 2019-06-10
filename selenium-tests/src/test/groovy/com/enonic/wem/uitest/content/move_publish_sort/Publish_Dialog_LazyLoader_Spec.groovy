@@ -6,8 +6,6 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 /**
  * Created  on 23.12.2016.
  *
- * Tasks:  XP-4756 Add selenium tests to verify XP-4754
- *
  * Verifies:
  *   XP-4754 Publish Dialog - Lazy loader stops loading items after turning "Include child items" off and on again
  * */

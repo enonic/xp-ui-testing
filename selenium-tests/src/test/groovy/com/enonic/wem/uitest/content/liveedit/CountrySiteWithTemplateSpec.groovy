@@ -4,15 +4,12 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
-import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel
 import com.enonic.autotests.pages.form.CityFormView
-import com.enonic.autotests.pages.form.liveedit.ContextWindow
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.PageComponent
 import com.enonic.xp.content.ContentPath
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -65,7 +62,6 @@ class CountrySiteWithTemplateSpec
         when: "'Templates' folder selected and new page-template is added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).typeData( PAGE_TEMPLATE );
-        sleep( 500 );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
@@ -73,6 +69,7 @@ class CountrySiteWithTemplateSpec
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
+
 
     def "GIVEN existing page-template is opened WHEN the template is opened and the and 'country' part is added THEN correct page-sources should be present in the HTML"()
     {
@@ -118,30 +115,26 @@ class CountrySiteWithTemplateSpec
         source.contains( "Cities" );
     }
 
-    def "GIVEN existing page template is opened WHEN Context Window has been opened AND 'Inspect' link is clicked THEN correct page controller should be displayed on the panel"()
+    def "GIVEN existing page template is opened WHEN Context Window has been opened AND 'Inspect' link is clicked THEN expected page controller should be displayed on the panel"()
     {
         given: "existing page-template is opened"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
         when: "the 'Inspect' link is clicked"
-        ContextWindow contextWindow = contentWizard.showContextWindow();
-        contextWindow.clickOnTabBarItem( "Page" );
-        PageInspectionPanel inspectionPanel = new PageInspectionPanel( getSession() );
-        String name = inspectionPanel.getSelectedPageController();
+        String name = contentWizard.showContextWindow().clickOnInspectLink().getInspectionPanel().getSelectedPageController();
         saveScreenshot( "city_part_added" );
 
         then: "correct page controller should be displayed on the panel"
         name == PAGE_CONTROLLER_NAME;
     }
 
-    @Ignore
     def "GIVEN new USA-content has been added AND child city-content for USA was added  WHEN USA-content selected AND 'Preview' button is pressed THEN correct text should be present on the page-source "()
     {
         given: "new USA-content has been added"
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, SITE.getName() );
         ContentWizardPanel wizard = selectSitePressNew( USA_CONTENT.getContentTypeName(), SITE.getName() );
-        wizard.typeData( USA_CONTENT ).save();
+        wizard.typeData( USA_CONTENT ).save().waitForNotificationMessage();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         and: "child city-content for USA was added "
@@ -158,10 +151,9 @@ class CountrySiteWithTemplateSpec
 
         when: "country-content is selected in the grid and the 'Preview' button pressed"
         findAndSelectContent( USA_CONTENT.getName() );
-        sleep( 1000 );
+        sleep( 2000 );
         saveScreenshot( "USA_City" )
         contentBrowsePanel.clickToolbarPreview();
-        sleep( 1000 );
 
         then: "correct headers "
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
@@ -171,7 +163,6 @@ class CountrySiteWithTemplateSpec
 
     }
 
-    @Ignore
     def "WHEN site is not published yet WHEN site opened in 'master', through the portal THEN '404' should be present in the sources"()
     {
         given: "site not published and opened in the 'master'"
@@ -184,7 +175,6 @@ class CountrySiteWithTemplateSpec
         source.contains( "404" );
     }
 
-    @Ignore
     def "WHEN site is not published yet AND site opened in 'draft', through the portal THEN correct data should be present in page sources"()
     {
         when: "site not published and opened in the 'master'"
@@ -200,7 +190,6 @@ class CountrySiteWithTemplateSpec
         source.contains( USA_DESCRIPTION );
     }
 
-    @Ignore
     def "WHEN site has been published AND site opened through the portal THEN correct description and population should be present in page sources"()
     {
         given: "site has been 'published'"
@@ -221,15 +210,13 @@ class CountrySiteWithTemplateSpec
         source.contains( USA_DESCRIPTION );
     }
 
-    @Ignore
     def "GIVEN city content changed and content is not 'Published' now WHEN site opened in 'master', through the portal THEN old data for city-content should be displayed"()
     {
         given: "city content was changed and content was not 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         CityFormView cityFormView = new CityFormView( getSession() );
         cityFormView.typePopulation( NEW_SF_POPULATION );
-        wizard.save();
-        sleep( 1000 );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site was opened in the master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
@@ -239,14 +226,13 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + SF_POPULATION );
     }
 
-    @Ignore
     def "GIVEN city content was changed and 'Published' WHEN site opened in 'master', through the portal THEN new population should be displayed"()
     {
         given: "city content changed and 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
-        contentBrowsePanel.waitForNotificationMessage();
-        sleep( 1000 );
+        contentBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
+        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site was opened in master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
@@ -256,7 +242,6 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + NEW_SF_POPULATION );
     }
 
-    @Ignore
     def "GIVEN existing country content WHEN 'Page Component View' is opened THEN all added components should be displayed"()
     {
         given: "existing country content is opened"
@@ -272,12 +257,12 @@ class CountrySiteWithTemplateSpec
         components.size() == 4;
 
         and:
-        components.get( 0 ).getType().equals( "page" ) && components.get( 0 ).getName().equals( COUNTRY_TEMPLATE_DISPLAY_NAME );
+        components.get( 0 ).getType() == "page" && components.get( 0 ).getName().equals( COUNTRY_TEMPLATE_DISPLAY_NAME );
         and:
-        components.get( 1 ).getType().equals( "region" ) && components.get( 1 ).getName().equals( "country" );
+        components.get( 1 ).getType() == "region" && components.get( 1 ).getName().equals( "country" );
         and:
-        components.get( 3 ).getType().equals( "part" ) && components.get( 3 ).getName().equals( COUNTRY_PART_DEFAULT_NAME );
+        components.get( 2 ).getType() == "part" && components.get( 2 ).getName().equals( COUNTRY_PART_DEFAULT_NAME );
         and:
-        components.get( 2 ).getType().equals( "part" ) && components.get( 2 ).getName().equals( "City list" );
+        components.get( 3 ).getType() == "part" && components.get( 3 ).getName().equals( "City list" );
     }
 }

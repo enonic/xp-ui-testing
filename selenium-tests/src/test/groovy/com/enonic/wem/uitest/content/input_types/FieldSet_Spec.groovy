@@ -40,7 +40,7 @@ class FieldSet_Spec
 
         when: "wizard was not closed but navigate to the grid"
         wizard.switchToBrowsePanelTab();
-        saveScreenshot( "fieldset_should_be_valid" );
+        saveScreenshot( "test_fieldset_valid" );
 
         then: "red icon should not be present in the browse panel, because all required inputs is not empty"
         filterPanel.typeSearchText( FIELDSET_CONTENT.getName() );
@@ -55,7 +55,7 @@ class FieldSet_Spec
 
         when: "data was typed but required text-line is empty"
         wizard.typeData( FIELDSET_CONTENT ).save();
-        saveScreenshot( "fieldset_textline_empty" );
+        saveScreenshot( "test_fieldset_textline_empty" );
         TextLine1_1_FormViewPanel textLine1_1_formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
         then: "validation message should be displayed under the text-line"
@@ -73,7 +73,7 @@ class FieldSet_Spec
 
         when: "data was typed but the html-area is empty"
         wizard.typeData( FIELDSET_CONTENT ).save();
-        saveScreenshot( "fieldset_hmlarea_empty" );
+        saveScreenshot( "test_fieldset_hmlarea_empty" );
         HtmlArea0_1_FormViewPanel htmlArea0_1_formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         then: "correct message should be displayed"
@@ -89,7 +89,7 @@ class FieldSet_Spec
         when: "data was typed but required double value is empty"
         wizard.typeData( FIELDSET_CONTENT ).save();
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
-        saveScreenshot( "fieldset_double_is_empty" );
+        saveScreenshot( "test_fieldset_double_is_empty" );
 
         then: "correct message should be displayed"
         doubleFormViewPanel.getValidationMessage() == "Min 2 occurrences required";
@@ -107,7 +107,7 @@ class FieldSet_Spec
             name( NameHelper.uniqueName( name ) ).
             displayName( "fieldset content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "fieldset" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + ":fieldset" ).data( data ).
             build();
         return textLineContent;
     }

@@ -7,7 +7,6 @@ import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -87,14 +86,13 @@ public class ContentWizardPanel
         TOOLBAR_PUBLISH + "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
 
     private final String TOOLBAR_PUBLISH_BUTTON_XPATH =
-        TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish...']]";
+        TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish...' or text()='#action.publishMore#']]";
 
     private final String TOOLBAR_DELETE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete...']]";
 
     private final String TOOLBAR_PREVIEW_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
-    private final String CONTEXTN_PANEL_TOGGLER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ContextPanel')]" +
-        "//button[contains(@id, 'NonMobileContextPanelToggleButton') and contains(@class,'icon-cog')]";
+    private final String INSPECTION_PANEL_TOGGLER = TOOLBAR + "/*[contains(@id, 'TogglerButton') and contains(@class,'icon-cog')]";
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
@@ -122,7 +120,7 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_UNDO_DELETE_BUTTON_XPATH)
     private WebElement toolbarUndoDeleteButton;
 
-    @FindBy(xpath = CONTEXTN_PANEL_TOGGLER)
+    @FindBy(xpath = INSPECTION_PANEL_TOGGLER)
     private WebElement toolbarShowContextWindow;
 
     @FindBy(xpath = TOOLBAR_PUBLISH_DROPDOWN_HANDLER)
@@ -150,16 +148,7 @@ public class ContentWizardPanel
 
     public ContentWizardPanel showPublishMenu()
     {
-        waitUntilVisibleNoException( By.xpath( TOOLBAR_PUBLISH_DROPDOWN_HANDLER ), Application.EXPLICIT_NORMAL );
-        try
-        {
-            publishMenuDropDownHandler.click();
-        }
-        catch ( Exception e )
-        {
-            sleep( 1500 );
-            publishMenuDropDownHandler.click();
-        }
+        publishMenuDropDownHandler.click();
         sleep( 400 );
         return this;
     }
@@ -293,17 +282,15 @@ public class ContentWizardPanel
             switchToDefaultWindow();
         }
         ContextWindow cw = new ContextWindow( getSession() );
-        if ( !cw.waitForContextWindowVisible() )
+        if ( !cw.isContextWindowPresent() )
         {
-            boolean isTogglerVisible = waitUntilVisibleNoException( By.xpath( CONTEXTN_PANEL_TOGGLER ), Application.EXPLICIT_NORMAL );
-            if ( !isTogglerVisible )
+            if ( !isElementDisplayed( INSPECTION_PANEL_TOGGLER ) )
             {
                 saveScreenshot( NameHelper.uniqueName( "err_icon-cog" ) );
-                throw new TestFrameworkException( "Toggler for Context Panel (icon-cog) was not found" );
+                throw new TestFrameworkException( "button with 'icon-cog' was not found" );
             }
-            getDisplayedElement( By.xpath( CONTEXTN_PANEL_TOGGLER ) ).click();
+            getDisplayedElement( By.xpath( INSPECTION_PANEL_TOGGLER ) ).click();
             cw.waitUntilWindowLoaded( 1l );
-            sleep( 1500 );
         }
         return cw;
     }
@@ -425,6 +412,7 @@ public class ContentWizardPanel
             sleep( 700 );
             saveScreenshot( NameHelper.uniqueName( "acl_" + content.getName() ) );
         }
+        sleep(500);
         return this;
     }
 
@@ -487,7 +475,7 @@ public class ContentWizardPanel
         }
         waitForSaveButtonClickable();
         toolbarSaveButton.click();
-        sleep( 700 );
+        sleep( 500 );
         return this;
     }
 
@@ -497,14 +485,9 @@ public class ContentWizardPanel
         return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
     }
 
-    public boolean waitForPublishButtonVisible( long timeout )
-    {
-        return waitUntilVisibleNoException( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), timeout );
-    }
-
     public ContentPublishDialog clickOnWizardPublishButton()
     {
-        if ( !waitForPublishButtonVisible( Application.EXPLICIT_QUICK ) )
+        if ( !isElementDisplayed( TOOLBAR_PUBLISH_BUTTON_XPATH ) )
         {
             saveScreenshot( "err_toolbar_publish" );
             throw new TestFrameworkException( "publish button was not found in the wizard" );
@@ -646,12 +629,13 @@ public class ContentWizardPanel
         return isElementDisplayed( COMPONENT_VIEW_TOGGLER );
     }
 
+
     /**
-     * return true if button "Show Context Panel" is displayed
+     * return true if button "Show Inspection Panel" is displayed
      */
-    public boolean isContextPanelTogglerDisplayed()
+    public boolean isInspectionPanelTogglerDisplayed()
     {
-        return isElementDisplayed( CONTEXTN_PANEL_TOGGLER );
+        return isElementDisplayed( INSPECTION_PANEL_TOGGLER );
     }
 
     public ContentWizardPanel selectPageDescriptor( String pageDescriptorDisplayName )

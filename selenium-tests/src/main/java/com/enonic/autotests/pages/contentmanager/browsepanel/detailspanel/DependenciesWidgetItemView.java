@@ -46,14 +46,14 @@ public class DependenciesWidgetItemView
     public DependenciesWidgetItemView clickOnShowOutboundButton()
     {
         showOutboundButton.click();
-        sleep( 700 );
+        sleep( 400 );
         return this;
     }
 
     public DependenciesWidgetItemView clickOnShowInboundButton()
     {
         showInboundButton.click();
-        sleep( 700 );
+        sleep( 400 );
         return this;
     }
 

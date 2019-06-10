@@ -6,7 +6,6 @@ import java.net.URL;
 import java.nio.file.Paths;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -36,7 +35,8 @@ public class InstallAppDialog
 
     private final String APPLICATION_UPLOADER = INSTALL_DIALOG_DIV + "//div[contains(@id,'ApplicationUploaderEl')]";
 
-    private final String VALIDATION_MESSAGE = INSTALL_DIALOG_DIV + "//div[contains(@class,'status-message') and contains(@class,'failed')]";
+    private final String VALIDATION_MESSAGE = INSTALL_DIALOG_DIV +
+        "//div[contains(@id,'ModalDialogContentPanel')]//div[contains(@class,'status-message') and contains(@class,'failed')]";
 
     private final String APP_VIEWER_DIV = INSTALL_DIALOG_DIV + "//div[contains(@id,'MarketAppViewer')]";
 
@@ -73,9 +73,7 @@ public class InstallAppDialog
     public InstallAppDialog typeInApplicationInput( String url )
     {
         clearAndType( applicationInput, url );
-        sleep( 1000 );
-        applicationInput.sendKeys( Keys.ENTER );
-        sleep( 500 );
+        sleep( 2000 );
         return this;
     }
 

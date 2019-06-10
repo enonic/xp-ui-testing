@@ -32,12 +32,11 @@ class BaseGebSpec
         {
             session.setLoggedIn( false );
             session.setInLiveEditFrame( false );
-
-            if ( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) != null )
-            {
-                closeAlerts();
-                closeAllTabs( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) );
-            }
+        }
+        if ( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) != null )
+        {
+            closeAlerts();
+            closeAllTabs( session.get( HomePage.HOME_PAGE_TAB_HANDLE ) );
         }
 
         resetBrowser();
@@ -46,6 +45,9 @@ class BaseGebSpec
     def setupSpec()
     {
         initializeBaseUrl();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String userAgent = (String) js.executeScript( "return navigator.userAgent;" );
+        println "user agent is : " + userAgent;
     }
 
     def closeAlerts()
@@ -54,19 +56,6 @@ class BaseGebSpec
         {
             Alert alert = getDriver().switchTo().alert();
             alert.dismiss();
-        }
-        catch ( Exception e )
-        {
-            println "no alerts";
-        }
-    }
-
-    def acceptAlerts()
-    {
-        try
-        {
-            Alert alert = getDriver().switchTo().alert();
-            alert.accept();
         }
         catch ( Exception e )
         {
@@ -97,15 +86,15 @@ class BaseGebSpec
 
                 loadProperties();
                 println "   baseUrl was loaded from the properties file: " + defaultProperties.get( "base.url" );
-                browser.driver.manage().window().setSize( new Dimension( 2000, 1100 ) )
+                browser.driver.manage().window().setSize( new Dimension( 1700, 1100 ) )
             }
             else
             {
                 println "baseUrl was loaded as system property " + baseUrl;
-                browser.driver.manage().window().setSize( new Dimension( 2000, 1100 ) );
+                browser.driver.manage().window().setSize( new Dimension( 1700, 1100 ) );
             }
         }
-        //browser.driver.manage().window().setSize( new Dimension( 1700, 1100 ) )
+        browser.driver.manage().window().setSize( new Dimension( 1700, 1100 ) )
     }
 /**Run code before each test method*/
     def setup()

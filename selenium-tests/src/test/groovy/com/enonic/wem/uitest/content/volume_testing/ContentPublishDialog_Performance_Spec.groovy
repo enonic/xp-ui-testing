@@ -41,7 +41,7 @@ class ContentPublishDialog_Performance_Spec
 
         then: "modal dialog has been closed"
         contentPublishDialog.waitForDialogClosed();
-        String message = contentBrowsePanel.waitForNotificationMessage();
+        String message = contentBrowsePanel.waitForNotificationMessage( Application.EXPLICIT_NORMAL );
         //and: "correct notification message appears"
         //message == "1434 items were unpublished"
     }
