@@ -39,7 +39,7 @@ class Occurrences_DefaultRelation_0_1_Spec
     {
         given: "start to add a content with type 'Relation 2:4'"
         Content relationship = buildDefaultRelation0_1_Content( NORD_IMAGE_DISPLAY_NAME );
-        ContentWizardPanel wizard = selectSitePressNew( relationship.getContentTypeName() );
+        selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
         when: "External content's name has been typed in options filter input"

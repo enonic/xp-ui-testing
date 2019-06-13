@@ -86,7 +86,6 @@ class PageTemplate_Fragments_Spec
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Fragment" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
-        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
 
         and: "existing fragment has been selected from the options"
         FragmentComponentView fragmentComponentView = new FragmentComponentView( getSession() );

@@ -73,7 +73,7 @@ class Occurrences_Date_1_1_Spec
         contentBrowsePanel.isContentInvalid( TEST_CONTENT.getName() );
     }
 
-    def "WHEN new Data(1:1) content has been published THEN status  of the content should be 'Online'"()
+    def "WHEN new Date(1:1) content has been published THEN content's status should be 'Published'"()
     {
         given: "start to add a content with type 'Date'"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
@@ -81,7 +81,7 @@ class Occurrences_Date_1_1_Spec
 
         when: "data was typed and saved and the content has been published"
         contentWizardPanel.typeData( dateContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
-        String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
+        contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( dateContent.getName() );
 

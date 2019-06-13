@@ -107,7 +107,7 @@ class Occurrences_CustomRelation_0_1_Spec
 
         when: "content has been published"
         contentPublishDialog.clickOnPublishNowButton();
-        String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
+        contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "citation-published" );
 
         then: "citation should be with 'online' status"

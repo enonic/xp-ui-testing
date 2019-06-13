@@ -11,13 +11,10 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
     def "GIVEN grid panel is opened WHEN button 'show filter' has been clicked THEN filter panel should be present"()
     {
-        given: "content-grid is opened"
-        def displayed = filterPanel.isFilterPanelDisplayed();
-
         when: "button 'show filter' has been clicked "
         contentBrowsePanel.doShowFilterPanel();
 
-        then: "filter panel should be displayed"
+        then: "filter panel should appear"
         filterPanel.isFilterPanelDisplayed();
     }
 

@@ -18,11 +18,6 @@ import spock.lang.Stepwise
 /**
  * Created on 05.01.2017.
  *
- * Tasks:
- *   XP-4814 Add selenium tests for creating of fragment from an image
- *   XP-4851 Add selenium tests for checking of outbound, inbound dependencies (Image Fragment)
- *   xp-ui-testing#71 Add new tests for Fragments
- *
  *   Verifies: Fragment Selector - Fragments are not shown in the dropdown #5371
  * */
 @Stepwise
@@ -252,7 +247,6 @@ class Fragment_Create_From_Image_Spec
         pageComponentsView.openMenu( "main" ).selectMenuItem( "Insert", "Fragment" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
-        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         FragmentComponentView fragmentComponentView = new FragmentComponentView( getSession() );
         and: "'DropDown handler' has been clicked"
         fragmentComponentView.clickOnDropDownHandler();

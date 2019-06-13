@@ -67,7 +67,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
         timestamp != null;
 
         and: "string successfully parsed to date time"
-        LocalDateTime ldt = LocalDateTime.parse( timestamp, DateTimeFormatter.ofPattern( "yyy-MM-dd HH:mm:ss" ) );
+        LocalDateTime.parse( timestamp, DateTimeFormatter.ofPattern( "yyy-MM-dd HH:mm:ss" ) );
     }
 
 
