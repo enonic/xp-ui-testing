@@ -121,7 +121,7 @@ class Base_InputFields_Occurrences
         }
     }
 
-    public void addContent( Content content )
+    void addContent( Content content )
     {
         contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() ).typeData(
             content ).save().closeBrowserTab().switchToBrowsePanelTab();
@@ -627,7 +627,7 @@ class Base_InputFields_Occurrences
         return textLineContent;
     }
 
-    public ContentBrowsePanel findAndSelectContent( String name )
+    ContentBrowsePanel findAndSelectContent( String name )
     {
         filterPanel.typeSearchText( name );
         if ( !contentBrowsePanel.isRowSelected( name ) )
@@ -639,7 +639,7 @@ class Base_InputFields_Occurrences
 
     protected AllContentVersionsView openVersionPanel()
     {
-        ContentDetailsPanel contentDetailsPanel =contentBrowsePanel.openContentDetailsPanel();
+        ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.openContentDetailsPanel();
         AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         return contentItemVersionsPanel;
     }

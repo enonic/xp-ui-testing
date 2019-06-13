@@ -42,7 +42,7 @@ class BaseIssueSpec
         return issue;
     }
 
-    public ContentBrowsePanel findAndSelectContent( String name )
+    ContentBrowsePanel findAndSelectContent( String name )
     {
         filterPanel.typeSearchText( name );
         selectContentByName( name );
@@ -59,13 +59,13 @@ class BaseIssueSpec
     }
 
 
-    public Content buildFolderContent( String name, String displayName )
+    Content buildFolderContent( String name, String displayName )
     {
         String generated = NameHelper.uniqueName( name );
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( BaseContentType.FOLDER.getDisplayName(  )).
+            contentType( BaseContentType.FOLDER.getDisplayName() ).
             parent( ContentPath.ROOT ).
             build();
         return content;
@@ -90,7 +90,7 @@ class BaseIssueSpec
     }
 
 
-    public void addContent( Content content )
+    void addContent( Content content )
     {
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
         wizard.typeData( content ).save().closeBrowserTab().switchToBrowsePanelTab();

@@ -166,13 +166,13 @@ class BaseContentSpec
         contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
     }
 
-    public Content buildFolderContent( String name, String displayName )
+    Content buildFolderContent( String name, String displayName )
     {
         String generated = NameHelper.uniqueName( name );
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( BaseContentType.FOLDER.getDisplayName(  ) ).
+            contentType( BaseContentType.FOLDER.getDisplayName() ).
             parent( ContentPath.ROOT ).
             build();
         return content;
@@ -249,7 +249,7 @@ class BaseContentSpec
         return shortcut;
     }
 
-    public Content buildFolderWithSettingsContent( String name, String displayName, ContentSettings settings )
+    Content buildFolderWithSettingsContent( String name, String displayName, ContentSettings settings )
     {
         String generated = NameHelper.uniqueName( name );
         Content content = Content.builder().
@@ -261,7 +261,7 @@ class BaseContentSpec
         return content;
     }
 
-    public Content buildFolderWithEmptyDisplayNameContent( String name )
+    Content buildFolderWithEmptyDisplayNameContent( String name )
     {
         String generated = NameHelper.uniqueName( name );
         Content content = Content.builder().
@@ -272,7 +272,7 @@ class BaseContentSpec
         return content;
     }
 
-    public Content buildFolderContentWithParent( String name, String displayName, String parentName )
+    Content buildFolderContentWithParent( String name, String displayName, String parentName )
     {
         String generated = NameHelper.uniqueName( name );
         Content content = Content.builder().
@@ -284,14 +284,14 @@ class BaseContentSpec
         return content;
     }
 
-    public void addContent( Content content )
+    void addContent( Content content )
     {
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
         wizard.typeData( content ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 
-    public ContentBrowsePanel findAndSelectContent( String name )
+    ContentBrowsePanel findAndSelectContent( String name )
     {
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         filterPanel.typeSearchText( name );
@@ -500,7 +500,7 @@ class BaseContentSpec
         return imageSelectorContent;
     }
 
-    public Content buildFolderWithName( String name, String displayName )
+    Content buildFolderWithName( String name, String displayName )
     {
         Content content = Content.builder().
             name( name ).
