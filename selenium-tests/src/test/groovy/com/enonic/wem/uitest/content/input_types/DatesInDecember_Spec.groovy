@@ -7,8 +7,6 @@ import spock.lang.Shared
 
 /**
  * Created on 16.08.2016.
- *
- *  verifies   the https://youtrack.enonic.net/issue/XP-3885
  * */
 class DatesInDecember_Spec
     extends Base_InputFields_Occurrences

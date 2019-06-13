@@ -14,9 +14,9 @@ class DetailsPanels_VersionHistory_Spec
     @Shared
     Content folderContent;
 
-    def "GIVEN content was added and selected  WHEN 'Version History' option is selected THEN panel with all versions of the content should be loaded"()
+    def "GIVEN content is selected WHEN 'Version History' menu item has been clicked THEN panel with versions should be loaded"()
     {
-        given: "content was added"
+        given: "content is added"
         folderContent = buildFolderContent( "version_h_", "version_history_test" );
         addContent( folderContent );
 
@@ -26,7 +26,7 @@ class DetailsPanels_VersionHistory_Spec
         when: "'Version History' option has been selected'"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        then: "panel with all versions of the content should be loaded"
+        then: "panel with all versions should be loaded"
         allContentVersionsView.isLoaded();
     }
 
@@ -49,7 +49,7 @@ class DetailsPanels_VersionHistory_Spec
         and: "super user should be 'modifier'"
         allVersions.getFirst().getModifier() == "Super User";
 
-        and: "correct 'modified time' should be displayed"
+        and: "expected 'modified time' should be displayed"
         allVersions.getFirst().getModified().contains( "minute ago" );
     }
 
@@ -65,7 +65,7 @@ class DetailsPanels_VersionHistory_Spec
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "the number of versions should be the same"
-        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS ;
+        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS;
 
         and: "latest version should has 'published' status"
         contentVersions.getFirst().getStatus().equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );

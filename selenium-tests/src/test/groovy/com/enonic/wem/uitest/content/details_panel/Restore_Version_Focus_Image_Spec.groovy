@@ -8,8 +8,6 @@ import com.enonic.autotests.pages.form.ImageFormViewPanel
 
 /**
  * Created  on 25.10.2016.
- *
- * Task: XP-4328 Add selenium tests for changing of focus in the Image Wizard
  * */
 class Restore_Version_Focus_Image_Spec
     extends BaseVersionHistorySpec

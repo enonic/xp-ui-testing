@@ -9,9 +9,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 17.01.2017.
- *
- * Tasks:
- * XP-4870 Add Selenium tests for testing the main keyboard shortcuts
  * */
 @Stepwise
 class ContentWizard_Keyboard_Shortcuts_Spec

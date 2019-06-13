@@ -9,8 +9,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 /**
  * Created  on 17.11.2016.
  *
- * Task:XP-4478 Add selenium tests to verify XP-4476 and INBOX-583
- *
  * */
 class Delete_Duplicated_Moved_Content_Spec
     extends BaseContentSpec

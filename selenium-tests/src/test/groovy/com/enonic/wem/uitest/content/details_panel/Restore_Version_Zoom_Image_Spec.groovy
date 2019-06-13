@@ -9,10 +9,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 26.10.2016.
- * *
- * Task: XP-4344 Add selenium tests for restoring of zoomed image
- *       XP-4272 Add selenium tests for zooming an image
- *       XP-4332 Add selenium tests to verify XP-4331
  * Verifies bug: XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
  * */
 @Stepwise
@@ -20,16 +16,16 @@ class Restore_Version_Zoom_Image_Spec
     extends BaseVersionHistorySpec
 {
 
-    def "GIVEN existing image WHEN image THEN new 'version history item' appeared in the version-view"()
+    def "GIVEN existing image WHEN image has been zoomed AND aplly button pressed THEN new 'version history item' should appear in the widget"()
     {
         given:
         findAndSelectContent( HAND_IMAGE_NAME );
 
-        and: "version history panel has been opened"
+        and: "versions panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
 
-        and: "image opened in the wizard"
+        and: "the image is opened in the wizard"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         and: "image was loaded"
@@ -52,7 +48,7 @@ class Restore_Version_Zoom_Image_Spec
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing image with several versions WHEN version with original image is restored THEN button 'reset' is not present on the wizard page "()
+    def "GIVEN existing image with several versions WHEN version with original image is restored THEN button 'reset filter' should not be present in the Image Editor"()
     {
         given: "existing image with several versions"
         findAndSelectContent( HAND_IMAGE_NAME );
@@ -72,7 +68,7 @@ class Restore_Version_Zoom_Image_Spec
         !formViewPanel.isButtonResetPresent();
     }
 
-    def "GIVEN existing image with several versions WHEN version with zoomed image is restored THEN button 'reset' is present on the wizard page "()
+    def "GIVEN existing image with several versions WHEN version with zoomed image is restored THEN button 'reset filter' should appear"()
     {
 
         given: "existing image with several versions"

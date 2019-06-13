@@ -27,7 +27,7 @@ class GeoPoint_Spec
         GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
         then: "actual value in the form view and expected should be equals"
-        geoPointFormViewPanel.getGeoPointValue().equals( TEST_GEO_LOCATION );
+        geoPointFormViewPanel.getGeoPointValue() == TEST_GEO_LOCATION;
     }
 
     def "GIVEN wizard for adding a content with type 'Geo Location' opened WHEN value of 'Geo Location' is not within range and content saved and wizard closed THEN incorrect value is not saved"()

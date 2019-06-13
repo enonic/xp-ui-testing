@@ -44,7 +44,7 @@ class Restore_Version_Out_Of_Date_Spec
         then: "'out-of-date' status displayed in the version view"
         versionItem.getContentStatus( versionItem.getId() ) == ContentStatus.OUT_OF_DATE.getValue();
 
-        and: "'out-of-date' status displayed in the Browse panel"
+        and: "'out-of-date' status should be displayed in the Browse panel"
         contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.OUT_OF_DATE.getValue();
     }
     //verifies the  XP-4156

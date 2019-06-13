@@ -18,7 +18,7 @@ class MacroModalDialog_EmbedIFrame_Spec
     @Shared
     String ENONIC_IFRAME = "<iframe src='http://www.enonic.com'> enonic</iframe>";
 
-    def "GIVEN MacroModalDialog opened WHEN 'embed iframe' macro selected AND content saved THEN correct macro is displayed in the htmlarea"()
+    def "GIVEN MacroModalDialog is opened WHEN 'embed iframe' macro selected AND content saved THEN correct macro is displayed in the htmlarea"()
     {
         given: "existing content with html-area is opened"
         HTML_AREA_CONTENT = buildHtmlArea0_1_Content( null );

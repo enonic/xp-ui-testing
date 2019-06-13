@@ -22,16 +22,16 @@ class MacroModalDialog_DisableMacros_Spec
     @Shared
     String DISABLE_MACROS_RESULT = "[disable]" + TEST_TEXT + "[/disable]"
 
-    def "GIVEN MacroModalDialog opened WHEN 'Disable macros' macro selected AND content saved THEN correct macro is displayed in the htmlarea"()
+    def "GIVEN MacroModalDialog is opened WHEN 'Disable macros' macro selected AND content saved THEN expected macro should be displayed in the htmlarea"()
     {
         given: "existing content with html-area is opened"
         HTML_AREA_CONTENT = buildHtmlArea0_1_Content( null );
 
-        and: "MacroDialog opened"
+        and: "MacroDialog is opened"
         ContentWizardPanel wizard = selectSitePressNew( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        when: "'Disable macros' selected from the options"
+        when: "'Disable macros' has been selected from the options"
         MacroModalDialog dialog = htmlAreaFormViewPanel.showToolbarAndClickOnInsertMacroButton();
         PropertyTree data = new PropertyTree();
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, TEST_TEXT );
@@ -44,7 +44,7 @@ class MacroModalDialog_DisableMacros_Spec
         htmlAreaFormViewPanel.getTextInCKE().contains( DISABLE_MACROS_RESULT );
     }
 
-    def "GIVEN MacroModalDialog opened WHEN 'Disable macros' selected AND text not typed AND 'insert' button clicked THEN error message appears on the modal dialog"()
+    def "GIVEN MacroModalDialog is opened WHEN 'Disable macros' selected AND text has not typed AND 'insert' button clicked THEN error message appears on the modal dialog"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -74,7 +74,7 @@ class MacroModalDialog_DisableMacros_Spec
         ( (TextAreaConfigPanel) dialog.getMacroConfigPanel() ).getValidationMessage() == "This field is required"
     }
 
-    def "GIVEN MacroModalDialog opened WHEN 'Disable macros' selected AND text not typed AND 'preview' link on the dialog clicked THEN warning message appears on the modal dialog"()
+    def "GIVEN MacroModalDialog is opened WHEN 'Disable macros' selected AND text has not typed AND 'preview' link on the dialog clicked THEN warning message appears on the modal dialog"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -97,7 +97,7 @@ class MacroModalDialog_DisableMacros_Spec
         previewPanel.getPreviewMessage() == MacroConfigPanel.NOT_COMPLETE_PREVIEW_MESSAGE;
     }
 
-    def "GIVEN MacroModalDialog opened WHEN 'Disable macros' selected AND text typed in the textArea AND 'preview' link on the dialog clicked THEN correct info in the preview-content panel appears"()
+    def "GIVEN MacroModalDialog opened WHEN 'Disable macros' selected AND text has been typed in the textArea AND 'preview' link on the dialog clicked THEN correct info in the preview-content panel appears"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
@@ -111,11 +111,11 @@ class MacroModalDialog_DisableMacros_Spec
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, TEST_TEXT );
         dialog.selectOption( MacroType.DISABLE_MACROS ).getMacroConfigPanel().typeData( data );
 
-        and: "preview tab link clicked"
+        and: "preview tab link has been clicked"
         MacroPreviewPanel previewPanel = dialog.clickOnPreviewTabLink();
         saveScreenshot( "test_disable_macros_textarea_filled_preview" );
 
-        then: "correct info in the preview-content panel appears"
+        then: "expected info in the preview-content panel appears"
         previewPanel.getPreviewContentMessage() == TEST_TEXT;
     }
 }

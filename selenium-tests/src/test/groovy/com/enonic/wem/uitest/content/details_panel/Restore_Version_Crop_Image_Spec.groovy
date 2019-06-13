@@ -10,8 +10,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 13.10.2016.
- *
- * TASKS: XP-4222 Add selenium tests for restoring of cropped image
  * Verifies the bug: XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
  * */
 @Stepwise
@@ -24,9 +22,9 @@ class Restore_Version_Crop_Image_Spec
     @Shared
     Integer CROPPED_IMAGE_HEIGHT;
 
-    def "GIVEN existing image WHEN handler moved up and image was cropped THEN new 'version history item' appeared in the version-view"()
+    def "GIVEN existing image WHEN handler moved up and image has been cropped AND changes applied THEN new 'version history item' appeared in the version-view"()
     {
-        given:"existing image"
+        given: "existing image"
         findAndSelectContent( IMPORTED_MAN_IMAGE );
 
         and: "version history panel has been opened"
@@ -54,7 +52,7 @@ class Restore_Version_Crop_Image_Spec
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing image with several versions is selected WHEN version with original image is restored THEN button 'reset' is not present on the wizard page "()
+    def "GIVEN existing image with several versions is selected WHEN version with original image is restored THEN button 'reset filter' should not be present on the wizard page"()
     {
         given: "existing image with several versions is selected"
         findAndSelectContent( IMPORTED_MAN_IMAGE );
@@ -80,15 +78,15 @@ class Restore_Version_Crop_Image_Spec
         !formViewPanel.isButtonResetPresent();
     }
 
-    def "GIVEN existing image with several versions WHEN version with cropped size is restored THEN button 'reset' is present on the wizard page "()
+    def "GIVEN existing image with several versions WHEN version with cropped size has been restored THEN button 'reset filter' should appear on the image editor"()
     {
         given: "existing image with several versions is selected"
         findAndSelectContent( IMPORTED_MAN_IMAGE );
 
-        and: "version panel was opened"
+        and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version of image with cropped size is restored"
+        when: "version of image with cropped size has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
         versionItem.doRestoreVersion( versionItem.getId() );
 
@@ -102,7 +100,7 @@ class Restore_Version_Crop_Image_Spec
         imageEditor.getCropAreaHeight() == CROPPED_IMAGE_HEIGHT;
         imageEditor.getToolbar().clickOnCloseButton();
 
-        and: "button 'reset' should be present on the wizard page"
+        and: "button 'reset' should be present on the image editor"
         formViewPanel.isButtonResetPresent();
     }
     //Verifies bug: XP-4331 Image Editor - Image not refreshed after being restored one of the its versions

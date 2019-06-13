@@ -7,7 +7,6 @@ import spock.lang.Shared
 
 /**
  * Created  on 17.08.2016.
- *  verifies   the https://youtrack.enonic.net/issue/XP-3885
  * */
 class DateTime_April_Spec
     extends Base_InputFields_Occurrences
@@ -41,7 +40,7 @@ class DateTime_April_Spec
         formViewPanel.getDateTimeValue() == DATE_TIME_1;
     }
 
-    def "GIVEN wizard for adding a DateTime with tz opened WHEN second datetime in March typed AND saved THEN correct value displayed in the wizard"()
+    def "GIVEN wizard for adding a DateTime with tz opened WHEN second datetime in April typed AND saved THEN correct value displayed in the wizard"()
     {
         given: "wizard for adding a DateTime with timezone opened"
         Content dateTimeContent = buildDateTime1_1_Content( DATE_TIME_2 );
@@ -60,7 +59,7 @@ class DateTime_April_Spec
         formViewPanel.getDateTimeValue() == DATE_TIME_2;
     }
 
-    def "GIVEN wizard for adding a DateTime with tz opened WHEN third datetime in March typed AND saved THEN correct value displayed in the wizard"()
+    def "GIVEN wizard for adding a DateTime with tz is opened WHEN datetime in March typed AND saved THEN expected value displayed in the wizard"()
     {
         given: "wizard for adding a DateTime with timezone opened"
         Content dateTimeContent = buildDateTime1_1_Content( DATE_TIME_3 );

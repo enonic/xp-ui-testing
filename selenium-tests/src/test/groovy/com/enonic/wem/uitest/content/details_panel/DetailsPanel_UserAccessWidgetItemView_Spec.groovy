@@ -15,9 +15,9 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
     @Shared
     Content FOLDER_CONTENT;
 
-    def "GIVEN new folder was added and it selected WHEN details panel has been opened THEN UserAccessWidgetItemView should be shown "()
+    def "GIVEN new folder is selected WHEN details panel has been opened THEN UserAccessWidgetItemView should appear"()
     {
-        given: "new folder was added and it selected"
+        given: "new folder is selected"
         FOLDER_CONTENT = buildFolderContent( "folder", "user access widget" );
         addContent( FOLDER_CONTENT );
         findAndSelectContent( FOLDER_CONTENT.getName() );
@@ -33,7 +33,7 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
         view.isEditPermissionsLinkDisplayed();
     }
 
-    def "GIVEN existing executable content with permissions for 'Everyone' WHEN details panel opened THEN correct info should be shown "()
+    def "GIVEN existing executable content with permissions for 'Everyone' WHEN details panel opened THEN expected info should be present"()
     {
         when: "existing executable content with permissions for 'Everyone' is selected"
         findAndSelectContent( EXECUTABLE_BAT );

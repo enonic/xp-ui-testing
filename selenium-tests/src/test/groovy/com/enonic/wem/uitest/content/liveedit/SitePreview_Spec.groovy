@@ -14,7 +14,7 @@ class SitePreview_Spec
     Content MY_SITE
 
 
-    def "GIVEN existing site without a template WHEN site is selected THEN 'Preview' on a BrowseToolbar should be disabled"()
+    def "GIVEN existing site without a template WHEN site has been selected THEN 'Preview' on a BrowseToolbar should be disabled"()
     {
         given:
         MY_SITE = buildMyFirstAppSite( "preview" );
@@ -38,12 +38,12 @@ class SitePreview_Spec
         contentBrowsePanel.waitUntilItemDisabledInContextMenu( MY_SITE.getName(), "Preview" );
     }
 
-    def "GIVEN existing site without a template WHEN site is opened THEN 'Preview' in the toolbar wizard should be disabled"()
+    def "GIVEN existing site without a template WHEN site is opened THEN 'Preview' button should be disabled in the wizard"()
     {
-        when: "site is selected and wizard opened"
+        when: "existing has been opened"
         ContentWizardPanel wizard = findAndSelectContent( MY_SITE.getName() ).clickToolbarEdit();
 
-        then: "'Preview' in the toolbar wizard should be disabled"
+        then: "'Preview' button should be disabled in the wizard"
         !wizard.isPreviewButtonEnabled()
     }
 
@@ -83,7 +83,7 @@ class SitePreview_Spec
     {
         given: "existing site with the page-template was selected and 'New' button pressed"
         ContentWizardPanel wizard = findAndSelectContent( MY_SITE.getName() ).clickToolbarNew().selectContentType(
-            BaseContentType.FOLDER.getDisplayName(  ) );
+            BaseContentType.FOLDER.getDisplayName() );
 
         when: "child-folder has been added for the site"
         wizard.typeDisplayName( "test-page-editor-toggler" ).save();

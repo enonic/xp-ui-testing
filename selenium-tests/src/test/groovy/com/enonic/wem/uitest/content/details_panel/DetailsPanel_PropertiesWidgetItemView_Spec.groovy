@@ -11,10 +11,6 @@ import spock.lang.Stepwise
 
 import java.time.LocalDate
 
-/**
- * Tasks:
- *  XP-4424 Add selenium tests for 'Published from' property, that displayed at the Info Widget
- **/
 @Stepwise
 class DetailsPanel_PropertiesWidgetItemView_Spec
     extends BaseContentSpec
@@ -62,7 +58,6 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         and: "'executable' type should be displayed"
         view.getType() == EXECUTABLE_APP_NAME;
     }
-
 
     def "GIVEN existing '*.exe' WHEN the file was selected THEN correct info should be displayed on the widget"()
     {

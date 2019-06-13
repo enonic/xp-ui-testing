@@ -19,9 +19,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 3/6/2017.
- *
- * Tasks:
- * xp-ui-testing#11 Add Selenium test for content, when it's owner has been deleted
  * */
 @Stepwise
 class ContentWizardPanel_Owner_Removed_Spec

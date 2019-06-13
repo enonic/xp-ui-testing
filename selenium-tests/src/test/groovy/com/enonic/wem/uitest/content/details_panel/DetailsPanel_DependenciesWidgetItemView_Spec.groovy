@@ -14,8 +14,6 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
- * Tasks:
- * XP-4643 Add selenium tests to verify XP-3893
  * verifies the XP-3893 Dependencies Widget: outbound dependencies not displayed , when site with inserted images was selected
  * */
 @Stepwise
@@ -32,7 +30,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
     @Shared
     String TEST_SITE_NAME = NameHelper.uniqueName( "site" );
 
-    def "WHEN image has been selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget should appear and has attachments"()
+    def "WHEN image has been selected and  'Dependencies' menu item has been clicked THEN Dependencies Widget should appear"()
     {
         when: "image content is selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
@@ -43,7 +41,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         dependencies.isDisplayed();
     }
 
-    def "WHEN folder has been selected and details panel opened AND 'Dependencies' option selected THEN Dependencies Widget should be displayed without dependencies"()
+    def "WHEN folder has been selected AND 'Dependencies' menu item has been clicked THEN Dependencies Widget should be displayed without 'No incoming dependencies'"()
     {
         when: "folder content has been selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );

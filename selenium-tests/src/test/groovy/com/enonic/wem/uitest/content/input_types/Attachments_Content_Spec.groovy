@@ -9,9 +9,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 /**
  * Created on 26.12.2016.
  *
- * Tasks:
- * XP-4780 Add selenium test for Attachments-content
- *
  * Verifies: XP-4779 Broken uploader in attachment content type
  * */
 class Attachments_Content_Spec
@@ -27,7 +24,7 @@ class Attachments_Content_Spec
         selectSitePressNew( dateContent.getContentTypeName() );
         AttachmentsFormView attachmentsFormView = new AttachmentsFormView( getSession() );
 
-        then: "Attachment-uploader is present"
+        then: "Attachment-uploader should be displayed"
         attachmentsFormView.isUploaderPresent();
 
         and: "Upload' button should be displayed"
@@ -55,7 +52,6 @@ class Attachments_Content_Spec
 
         and: "'Publish' button should be disabled"
         !wizard.isPublishButtonEnabled();
-
     }
 
     def "GIVEN wizard for adding an attachments-content with 2 required occurrences is opened WHEN 'Save' button has been pressed AND the required attachment is not selected THEN validation message is present"()

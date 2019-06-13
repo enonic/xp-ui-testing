@@ -11,10 +11,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 5/25/2017.
- *
- *  Task:
- * xp-ui-testing#39 Add Selenium tests to verify #4813
- *
  * Verifies:
  * OptionSet -Error appears when 'upload' button in the ImageSelector was pressed #4813
  *
