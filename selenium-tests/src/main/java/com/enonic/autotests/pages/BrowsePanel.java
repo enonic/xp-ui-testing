@@ -30,7 +30,7 @@ public abstract class BrowsePanel
 
     protected final String TREEGRID_TOOLBAR_XPATH = "//div[contains(@id,'TreeGridToolbar')]";
 
-    protected final String APP_BAR="//div[contains(@id,'AppBar')]";
+    protected final String APP_BAR = "//div[contains(@id,'AppBar')]";
 
     protected final String SELECTION_TOGGLER = TREEGRID_TOOLBAR_XPATH + "//button[contains(@id,'SelectionPanelToggler')]";
 
@@ -334,7 +334,8 @@ public abstract class BrowsePanel
         List<WebElement> rows = getDisplayedElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH ) );
         for ( WebElement row : rows )
         {
-            if ( row.getAttribute( "class" ).contains( "selected" ) || isRowCheckBoxChecked( row ) )
+            if ( isRowCheckBoxChecked( row ) ||
+                row.findElement( By.xpath( "div[contains(@class,'slick-cell')]" ) ).getAttribute( "class" ).contains( "highlight" ) )
             {
                 result.add( getNameFromRow( row ) );
             }
@@ -375,9 +376,9 @@ public abstract class BrowsePanel
 
     private List<String> getGridItemNames()
     {
-        List<WebElement> elements = findElements( By.xpath( ALL_ROWS_IN_BROWSE_PANEL_XPATH +
-                                                                "//div[contains(@class,'slick-cell l1 r1')]//div[@class='names-and-icon-view small']" +
-                                                                P_NAME ) );
+        List<WebElement> elements = findElements( By.xpath(
+            ALL_ROWS_IN_BROWSE_PANEL_XPATH + "//div[contains(@class,'slick-cell l1 r1')]//div[@class='names-and-icon-view small']" +
+                P_NAME ) );
         return elements.stream().filter( e -> !e.getText().isEmpty() ).map( WebElement::getText ).collect( Collectors.toList() );
     }
 
@@ -612,7 +613,7 @@ public abstract class BrowsePanel
         actions.moveToElement( findElement( By.xpath( rowXpath ) ) );
         actions.sendKeys( key );
         actions.build().perform();
-        sleep( 500 );
+        sleep( 700 );
         getLogger().info( "key was typed:" + key.toString() + " ,   name is:" + item );
         return this;
     }

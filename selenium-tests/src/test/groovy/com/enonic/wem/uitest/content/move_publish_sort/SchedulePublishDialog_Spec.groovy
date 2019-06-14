@@ -13,10 +13,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 19.12.2016.
- *
- * Tasks:
- *    XP-4682 Add selenium tests for 'Scheduled Publishing Dialog'
- *    XP-4562 Add selenium tests for Time-based publishing
  * */
 @Stepwise
 class SchedulePublishDialog_Spec

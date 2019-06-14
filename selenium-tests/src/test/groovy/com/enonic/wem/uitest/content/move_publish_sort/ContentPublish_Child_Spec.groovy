@@ -49,15 +49,15 @@ class ContentPublish_Child_Spec
         message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, parentContent.getName() );
     }
 
-    def "GIVEN parent 'online' folder with not published child WHEN the parent folder is selected THEN Publish-menu becomes available"()
+    def "GIVEN existing 'Published' folder with not published child WHEN the parent folder has been clicked THEN Publish-menu becomes available"()
     {
-        given: "parent folder with a not published child"
+        given: "existing 'Published' folder with not published child"
         filterPanel.typeSearchText( parentContent.getName() );
 
-        when: "the parent folder is selected"
+        when: "the parent folder has been selected"
         contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
 
-        then: "'Publish' button on the toolbar is disabled"
+        then: "'Publish' button on the toolbar should be disabled"
         !contentBrowsePanel.isPublishButtonEnabled();
 
         and: "Publish-menu becomes available"

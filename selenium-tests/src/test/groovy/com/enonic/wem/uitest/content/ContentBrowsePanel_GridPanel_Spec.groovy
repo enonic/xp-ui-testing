@@ -8,13 +8,6 @@ import spock.lang.IgnoreIf
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-/**
- * Tasks:
- * Add Selenium tests for already fixed bugs #36
- *
- * Verifies:
- *   #4727 'Preview' button should be disabled, when 'Selection Controller' has been unchecked( 'Clear Selection')
- * */
 @Stepwise
 class ContentBrowsePanel_GridPanel_Spec
     extends BaseContentSpec
