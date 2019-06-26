@@ -15,9 +15,6 @@ import spock.lang.Stepwise
 /**
  * Created on 8/9/2017.
  *
- * Tasks:
- * xp-ui-testing#80  Add Selenium tests for checking of fragments on the Inspection Panel
- *
  * Verifies:
  * XP#5443 Inspection Panel - fragments from another sites should be available in the FragmentDropdown selector
  * XP #5454 Inspection Panel - DropDown list of options not updated, when new fragment has been created

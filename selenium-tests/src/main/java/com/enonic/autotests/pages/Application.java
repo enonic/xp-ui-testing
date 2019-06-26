@@ -99,7 +99,7 @@ public class Application
 
     protected final String TEXT_AREA_INPUT = "//textarea[contains(@id,'TextArea')]";
 
-    public final String CONTENT_SUMMARY_VIEWER= "//div[contains(@id,'ContentSummaryViewer')]";
+    public final String CONTENT_SUMMARY_VIEWER = "//div[contains(@id,'ContentSummaryViewer')]";
 
     protected final String DROPDOWN_OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
@@ -125,10 +125,10 @@ public class Application
     protected final String VALIDATION_RECORDING_VIEWER = "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
     public String SLICK_ROW_BY_NAME =
-        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
+        "//div[contains(@class,'slick-viewport')]//div[contains(@class,'slick-row') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
 
     public String SLICK_ROW_BY_DISPLAY_NAME =
-        "//div[@class='slick-viewport']//div[contains(@class,'slick-row') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]";
+        "//div[contains(@class,'slick-viewport')]//div[contains(@class,'slick-row') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]";
 
     protected final String NAMES_VIEW = "//div[contains(@id,'NamesView')]";
 
@@ -274,6 +274,7 @@ public class Application
         buildActions().sendKeys( Keys.ESCAPE ).build().perform();
         sleep( 500 );
     }
+
     public void setTextInCKE( String id, String text )
     {
         getJavaScriptExecutor().executeScript( SCRIPT_SET_CKE, id, text );
