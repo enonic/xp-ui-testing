@@ -37,6 +37,7 @@ class Restore_Version_Focus_Image_Spec
 
         and: "content saved in the wizard and closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        sleep( 1000 );
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_increased_after_focus_moved" );
 

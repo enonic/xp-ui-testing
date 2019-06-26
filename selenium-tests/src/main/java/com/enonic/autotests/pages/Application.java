@@ -82,7 +82,7 @@ public class Application
 
     public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
 
-    protected final String GRID_CANVAS = "//div[@class='grid-canvas']";
+    protected final String GRID_CANVAS = "//div[contains(@class,'grid-canvas')]";
 
     protected final String APP_CANCEL_BUTTON_TOP = "//div[contains(@class,'cancel-button-top')]";
 
