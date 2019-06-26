@@ -566,7 +566,7 @@ public abstract class BrowsePanel
         {
             return false;
         }
-        styleValue = findElements( By.xpath( "//div[@class='slick-viewport']" ) ).get( 0 ).getAttribute( "style" );
+        styleValue = findElements( By.xpath( "//div[contains(@class,'slick-viewport')]" ) ).get( 0 ).getAttribute( "style" );
         int viewportHeight = getHeightFromStyleString( styleValue );
         if ( viewportHeight == 0 )
         {
