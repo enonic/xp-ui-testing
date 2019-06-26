@@ -549,9 +549,9 @@ public abstract class BrowsePanel
 
     protected Number doScrollViewport( Number step )
     {
-        if ( findElements( By.xpath( TREE_GREED + "//div[@class='slick-viewport']" ) ).size() != 0 )
+        if ( findElements( By.xpath( TREE_GREED + "//div[contains(@class,'slick-viewport')]" ) ).size() != 0 )
         {
-            WebElement viewportElement = findElements( By.xpath( TREE_GREED + "//div[@class='slick-viewport']" ) ).get( 0 );
+            WebElement viewportElement = findElements( By.xpath( TREE_GREED + "//div[contains(@class,'slick-viewport')]" ) ).get( 0 );
             getJavaScriptExecutor().executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
         }
         sleep( 1000 );

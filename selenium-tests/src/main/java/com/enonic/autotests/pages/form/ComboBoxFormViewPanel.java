@@ -24,7 +24,8 @@ public class ComboBoxFormViewPanel
     private final String REMOVE_SELECTED_OPTION_BUTTON =
         FORM_VIEW + "//div[contains(@id,'combobox.BaseSelectedOptionView')]//a[@class='remove']";
 
-    private String COMBOBOX_OPTION = "//div[@class='slick-viewport']//div[contains(@id,'ComboBoxDisplayValueViewer') and text()='%s']";
+    private String COMBOBOX_OPTION =
+        "//div[contains(@class,'slick-viewport')]//div[contains(@id,'ComboBoxDisplayValueViewer') and text()='%s']";
 
     @FindBy(xpath = COMBO_BOX_OPTIONS_INPUT_XPATH)
     protected WebElement optionFilterInput;
