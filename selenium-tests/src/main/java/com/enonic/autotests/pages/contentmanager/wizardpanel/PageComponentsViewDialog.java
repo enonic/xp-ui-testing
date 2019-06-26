@@ -48,7 +48,7 @@ public class PageComponentsViewDialog
 
     public final String CLOSE_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'CloseButton')]";
 
-    private final String SLICK_VIEW_PORT = "//div[@class='slick-viewport']";
+    private final String SLICK_VIEW_PORT = "//div[contains(@class,'slick-viewport')]";
 
     private String CONTEXT_MENU_ITEM = "//dl[contains(@id,'TreeContextMenu')]//*[contains(@id,'TreeMenuItem') and text()='%s']";
 

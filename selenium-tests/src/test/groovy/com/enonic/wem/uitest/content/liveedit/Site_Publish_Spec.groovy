@@ -14,7 +14,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 01.11.2016.
- * Task "XP-4368 Add tests to verify the XP-4367'
  * verifies bug XP-4367 Wizard - Status/Publish button state are not updated after modifying a published content
  * */
 @Stepwise
