@@ -10,8 +10,6 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
- * Tasks:
- * XP-4893 Add selenium test to verify the XP-4863
  * Verifies:
  * -XP-4863 Content Wizard - Mod+S won't save content when image selector has focus
  * -Path-search in selectors doesn't work #4786
@@ -73,7 +71,7 @@ class Occurrences_ImageSelector_0_0_Spec
         and:
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "images should be present with correct names"
+        and: "expected images should be present"
         images.get( 0 ) == NORD_IMAGE_DISPLAY_NAME;
         and:
         images.get( 1 ) == BOOK_IMAGE_DISPLAY_NAME;
@@ -99,7 +97,7 @@ class Occurrences_ImageSelector_0_0_Spec
         and:
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "images are present with correct names"
+        and: "expected images are present"
         images.get( 0 ) == NORD_IMAGE_DISPLAY_NAME;
         and:
         images.get( 1 ) == BOOK_IMAGE_DISPLAY_NAME;

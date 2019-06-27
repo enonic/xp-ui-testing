@@ -21,7 +21,6 @@ class InputTypesSpec
     @Shared
     String TEST_DATE_TIME = "2015-02-28 19:01";
 
-
     def "GIVEN 'Date' content was added WHEN the content is opened THEN actual date and expected should be equals"()
     {
         given: "add a content with type 'Date'"

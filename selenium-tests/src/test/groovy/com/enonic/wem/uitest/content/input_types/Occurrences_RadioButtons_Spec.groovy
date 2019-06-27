@@ -12,10 +12,8 @@ class Occurrences_RadioButtons_Spec
     extends Base_InputFields_Occurrences
 
 {
-
     @Shared
     Content content_wit_opt;
-
 
     def "WHEN wizard for  'Radio Buttons'-content is opened THEN radio buttons should be present on the page AND options should not be selected"()
     {
@@ -46,7 +44,7 @@ class Occurrences_RadioButtons_Spec
         formViewPanel.getSelectedOption().isEmpty();
     }
 
-    def "GIVEN saving of not required 'Radio Buttons content' without selected option WHEN 'Publish' button pressed THEN content with 'Online' status listed"()
+    def "GIVEN saving of not required 'Radio Buttons content' without selected option WHEN 'Publish' button pressed THEN status should be 'Published'"()
     {
         given: "new content with type 'Radio Buttons'"
         String option = null;
@@ -56,14 +54,14 @@ class Occurrences_RadioButtons_Spec
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.close( radioButtonsContent.getDisplayName() );
 
-        when: "content opened for edit"
+        when: "content has been opened"
         filterPanel.typeSearchText( radioButtonsContent.getName() );
 
         then:
         contentBrowsePanel.getContentStatus( radioButtonsContent.getName() ).equals( ContentStatus.PUBLISHED.getValue() );
         and:
         !contentBrowsePanel.isContentInvalid( radioButtonsContent.getName() );
-        and: "correct publish message was present"
+        and: "expected notification message should appear"
         publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP,  radioButtonsContent.getName() );
     }
 

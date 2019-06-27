@@ -32,6 +32,7 @@ class Unpublish_Deleted_Content_Spec
         contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
+    //verifies issue https://github.com/enonic/app-contentstudio/issues/385
     def "GIVEN existing 'Published' folder is opened AND has been deleted in the wizard WHEN the folder has been 'unpublished' in the wizard THEN wizard closes AND the content should not be listed in the grid"()
     {
         given: "existing 'deleted' content is opened"
@@ -41,15 +42,12 @@ class Unpublish_Deleted_Content_Spec
 
         when: "'Unpublish' menu item has been clicked"
         wizard.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
+
+        then: "the content should be deleted"
         wizard.switchToBrowsePanelTab();
         sleep( 400 );
-        saveScreenshot( "test_wizard_unpublish_of_deleted" );
-
-        then: "the content should not be listed in the grid"
         !contentBrowsePanel.exists( CONTENT.getName() );
 
-        //verifies issue https://github.com/enonic/app-contentstudio/issues/385
-        and:"expected notification should appear"
-        contentBrowsePanel.waitForNotificationMessage(  )== String.format(Application.ITEM_IS_DELETED ,CONTENT.getName(  ));
+
     }
 }

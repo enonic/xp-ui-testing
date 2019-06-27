@@ -14,14 +14,14 @@ class Occurrences_TextLine_1_1_Spec
     @Shared
     String TEST_TEXT = "test text 1:1";
 
-    def "GIVEN 'text line' content without required text has been saved WHEN the content is opened THEN red icon should be displayed on the wizard page"()
+    def "GIVEN 'text line' content without required text has been saved WHEN the content has been opened THEN red icon should be displayed on the wizard page"()
     {
         given: "'text line' content without required text has been saved"
         Content textLineContent = buildTextLine1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() ).typeData( textLineContent );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
-        when: "content is opened"
+        when: "content has been opened"
         wizard.save();
 
         then: "one text input should be displayed on  the form view"

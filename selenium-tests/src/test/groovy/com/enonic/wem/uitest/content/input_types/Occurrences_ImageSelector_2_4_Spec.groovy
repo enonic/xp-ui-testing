@@ -17,9 +17,9 @@ class Occurrences_ImageSelector_2_4_Spec
     @Shared
     Content IMAGE_SELECTOR_CONTENT_4_IMAGES;
 
-    def "WHEN wizard for a 'Image Selector'-content(2:4) is opened THEN option filter input should be present, there no selected image and upload button should be enabled"()
+    def "WHEN wizard for 'Image Selector'-content(2:4) is opened THEN option filter input should be present, there no selected image and upload button should be enabled"()
     {
-        when: "wizard for a 'Image Selector'-content(2:4) is opened and image was not selcted"
+        when: "wizard for 'Image Selector'-content(2:4) is opened and image is not selected"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
         selectSitePressNew( imageSelectorContent.getContentTypeName() );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
@@ -86,7 +86,7 @@ class Occurrences_ImageSelector_2_4_Spec
         and:
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "correct image should be present on the page"
+        and: "expected images should be present on the page"
         imagesActual.get( 0 ) == NORD_IMAGE_DISPLAY_NAME;
 
         and:

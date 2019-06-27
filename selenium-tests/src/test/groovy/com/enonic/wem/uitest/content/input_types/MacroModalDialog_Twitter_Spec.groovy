@@ -23,7 +23,7 @@ class MacroModalDialog_Twitter_Spec
     @Shared
     String LANGUAGE_STRING = "en";
 
-    //this is macro was moved into the 'social applications'
+    //this macro was moved into the 'social applications'
     @Ignore
     def "GIVEN MacroModalDialog opened WHEN twitter macro selected AND data saved THEN correct macro is displayed in the htmlarea"()
     {

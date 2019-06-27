@@ -9,7 +9,6 @@ class DateContentValidation_Spec
     extends Base_InputFields_Occurrences
 
 {
-
     @Shared
     String CORRECT_DATE = "2015-02-28";
 

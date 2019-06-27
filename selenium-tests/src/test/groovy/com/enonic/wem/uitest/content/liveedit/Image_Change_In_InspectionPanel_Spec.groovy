@@ -12,8 +12,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 8/16/2017.
- *
- * Tasks: xp-ui-testing#81  Add Selenium tests for ImageInspectionPanel
  * */
 @Stepwise
 class Image_Change_In_InspectionPanel_Spec
@@ -21,9 +19,6 @@ class Image_Change_In_InspectionPanel_Spec
 {
     @Shared
     Content SITE1;
-
-    @Shared
-    Content SITE2;
 
     @Shared
     String IMAGE_DISPLAY_NAME = "seng";
@@ -70,7 +65,6 @@ class Image_Change_In_InspectionPanel_Spec
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         !liveFormPanel.isImagePresent( IMAGE_DISPLAY_NAME );
     }
-
 
     private void insertImage( PageComponentsViewDialog pageComponentsView, ContentWizardPanel siteWizard, String imageDisplayName )
     {

@@ -36,7 +36,7 @@ public class SortContentDialog
     private String GRID_ITEM =
         DIALOG_CONTAINER + "//div[contains(@class,'slick-row') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
 
-    private String VIEWPORT_XPATH = "//div[contains(@id,'SortContentTreeGrid')]//div[@class='slick-viewport']";
+    private String VIEWPORT_XPATH = "//div[contains(@id,'SortContentTreeGrid')]//div[contains(@class,'slick-viewport')]";
 
     @FindBy(xpath = SAVE_BUTTON)
     WebElement saveButton;
@@ -172,7 +172,12 @@ public class SortContentDialog
 
     WebElement getViewportElement()
     {
-        return findElements( By.xpath( VIEWPORT_XPATH ) ).get( 0 );
+        List<WebElement> elements = findElements( By.xpath( VIEWPORT_XPATH ) );
+        if ( elements.size() == 0 )
+        {
+            throw new TestFrameworkException( "Sort Content Dialog, incorrect xpath for 'viewport'" );
+        }
+        return elements.get( 0 );
     }
 
     public LinkedList<String> getContentNames()
@@ -180,14 +185,14 @@ public class SortContentDialog
         LinkedHashSet<String> set = new LinkedHashSet<>();
         scrollViewPortToTop( getViewportElement() );
         set.addAll( getGridItemNames() );
-        long newScrollTop = 400;
-        long scrollTopBefore;
-        long scrollTopAfter;
+        Long newScrollTop = 400l;
+        Long scrollTopBefore;
+        Long scrollTopAfter;
         for ( ; ; )
         {
-            scrollTopBefore = getViewportScrollTopValue( getViewportElement() );
+            scrollTopBefore = (Long) getViewportScrollTopValue( getViewportElement() );
             scrollTopAfter = doScrollViewport( newScrollTop );
-            if ( scrollTopBefore == scrollTopAfter )
+            if ( scrollTopBefore.longValue() == scrollTopAfter.longValue() )
             {
                 break;
             }
@@ -199,7 +204,9 @@ public class SortContentDialog
 
     public Long getViewportScrollTopValue( WebElement viewport )
     {
-        return (Long) getJavaScriptExecutor().executeScript( "return arguments[0].scrollTop", viewport );
+        Number result = (Number) getJavaScriptExecutor().executeScript( "return arguments[0].scrollTop", viewport );
+        //(Number)getJavaScriptExecutor().executeScript( "return arguments[0].scrollTop", viewport );
+        return result.longValue();
     }
 
     private LinkedList<String> getGridItemNames()
@@ -209,7 +216,6 @@ public class SortContentDialog
         return list;
     }
 
-
     public Long doScrollViewport( long step )
     {
         if ( findElements( By.xpath( VIEWPORT_XPATH ) ).size() != 0 )
@@ -217,20 +223,21 @@ public class SortContentDialog
             WebElement viewportElement = findElements( By.xpath( VIEWPORT_XPATH ) ).get( 0 );
             getJavaScriptExecutor().executeScript( "arguments[0].scrollTop=arguments[1]", viewportElement, step );
         }
-
         sleep( 1000 );
-        return getViewportScrollTopValue( findElements( By.xpath( VIEWPORT_XPATH ) ).get( 0 ) );
+        return (Long) getViewportScrollTopValue( findElements( By.xpath( VIEWPORT_XPATH ) ).get( 0 ) );
     }
 
-    public SortContentDialog doSort( String by, SortOrder order  )
+    public SortContentDialog doSort( String by, SortOrder order )
     {
-        String menuItem =
-            DIALOG_CONTAINER + String.format( "//li[contains(@id,'SortContentTabMenuItem') and child::a[text()='%s']]", by );
+        String menuItem = DIALOG_CONTAINER + String.format( "//li[contains(@id,'SortContentTabMenuItem') and child::a[text()='%s']]", by );
         String selector = null;
-        if(order.equals(SortOrder.ASCENDING)){
-           selector = menuItem +"//button[@title='Sort in ascending order']";
-        }else{
-            selector =menuItem +"//button[@title='Sort in descending order']";
+        if ( order.equals( SortOrder.ASCENDING ) )
+        {
+            selector = menuItem + "//button[@title='Sort in ascending order']";
+        }
+        else
+        {
+            selector = menuItem + "//button[@title='Sort in descending order']";
         }
 
         if ( !isElementDisplayed( selector ) )
