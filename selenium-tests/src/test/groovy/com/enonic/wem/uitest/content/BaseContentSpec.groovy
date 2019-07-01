@@ -288,6 +288,7 @@ class BaseContentSpec
     {
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
         wizard.typeData( content ).save().closeBrowserTab().switchToBrowsePanelTab();
+        sleep( 1000 );
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 

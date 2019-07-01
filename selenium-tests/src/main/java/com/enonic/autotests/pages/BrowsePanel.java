@@ -829,6 +829,21 @@ public abstract class BrowsePanel
         return (T) this;
     }
 
+    public <T extends BrowsePanel> T clickOnRowCheckbox( String itemName )
+    {
+        String itemCheckBoxXpath = String.format( ROW_CHECKBOX_BY_NAME, itemName );
+        getLogger().info( "Xpath of checkbox for item is :" + itemCheckBoxXpath );
+        boolean isPresent = waitUntilVisibleNoException( By.xpath( itemCheckBoxXpath ), 3l );
+        if ( !isPresent )
+        {
+            saveScreenshot( "err_checkbox_" + itemName );
+            throw new SaveOrUpdateException( "checkbox for item: " + itemName + "was not found" );
+        }
+        waitAndFindElement( By.xpath( itemCheckBoxXpath ) ).click();
+        sleep( 700 );
+        return (T) this;
+    }
+
     public <T extends BrowsePanel> T clickCheckboxAndSelectRowByDisplayName( String itemDisplayName )
     {
         String itemCheckBoxXpath = String.format( ROW_CHECKBOX_BY_DISPLAY_NAME, itemDisplayName );

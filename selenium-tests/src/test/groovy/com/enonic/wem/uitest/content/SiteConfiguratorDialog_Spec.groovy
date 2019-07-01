@@ -9,10 +9,6 @@ import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
-/**
- * Tasks:
- *
- **/
 class SiteConfiguratorDialog_Spec
     extends BaseContentSpec
 {

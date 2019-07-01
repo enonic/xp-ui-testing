@@ -18,7 +18,7 @@ class MacroModalDialog_EmbedIFrame_Spec
     @Shared
     String ENONIC_IFRAME = "<iframe src='http://www.enonic.com'> enonic</iframe>";
 
-    def "GIVEN MacroModalDialog is opened WHEN 'embed iframe' macro selected AND content saved THEN correct macro is displayed in the htmlarea"()
+    def "GIVEN MacroModalDialog('embed iframe') is opened AND correct text has been typed AND Insert button pressed THEN expected macro should be present in the htmlarea"()
     {
         given: "existing content with html-area is opened"
         HTML_AREA_CONTENT = buildHtmlArea0_1_Content( null );
@@ -33,7 +33,7 @@ class MacroModalDialog_EmbedIFrame_Spec
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, ENONIC_IFRAME );
         dialog.selectOption( MacroType.EMBED_IFRAME ).getMacroConfigPanel().typeData( data );
         dialog.clickInsertButton();
-        wizard.save();
+        //wizard.save();
         saveScreenshot( "test_embedded_iframe_macro_inserted" );
 
         then: "correct macro is displayed in the htmlarea"
@@ -43,7 +43,7 @@ class MacroModalDialog_EmbedIFrame_Spec
     }
 
 
-    def "GIVEN MacroModalDialog opened WHEN 'embedded code' macro selected AND text not typed AND 'insert' button clicked THEN error message appears on the modal dialog"()
+    def "GIVEN MacroModalDialog('embed iframe') is opened AND text area in Configuration-tab is empty  WHEN 'insert' button has been clicked THEN 'This field is required' should appear"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
@@ -58,7 +58,7 @@ class MacroModalDialog_EmbedIFrame_Spec
         dialog.clickInsertButton();
         saveScreenshot( "test_macro_embedded_iframe_textarea_empty" );
 
-        then: "modal dialog is not closed"
+        then: "modal dialog is not closed and 'This field is required' should appear"
         dialog.isOpened();
 
         and: "text area has a red border"
@@ -133,7 +133,7 @@ class MacroModalDialog_EmbedIFrame_Spec
         MacroPreviewPanel previewPanel = dialog.clickOnPreviewTabLink();
         saveScreenshot( "test_embedded_iframe_enonic_preview" );
 
-        then: "correct info in the preview-content panel appears"
+        then: "expected text  should be present in the preview-tab panel"
         previewPanel.isIFrameEmbedded( "enonic.com" );
     }
 }

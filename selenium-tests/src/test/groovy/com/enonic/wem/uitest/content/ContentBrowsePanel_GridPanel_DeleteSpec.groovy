@@ -6,6 +6,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
+import com.enonic.autotests.utils.TestUtils
 import spock.lang.Stepwise
 
 @Stepwise
@@ -13,7 +14,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     extends BaseContentSpec
 {
 
-    def "GIVEN existing two folders WHEN both folders are selected and delete button pressed THEN both contents should not be listed in the table"()
+    def "GIVEN existing two folders WHEN both folders are selected and delete button pressed THEN both contents should not be listed in the grid"()
     {
         given: "existing two folders"
         Content content1 = buildFolderContent( "deletecontent", "content to delete" );
@@ -21,11 +22,12 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         Content content2 = buildFolderContent( "deletecontent", "content to delete" );
         addContent( content2 );
         List<String> contentList = new ArrayList<>();
-        contentList.add( content1.getName() );
-        contentList.add( content2.getName() );
+        sleep( 1000 );
 
         when: "both content are selected and delete button pressed AND deleting is confirmed"
-        DeleteContentDialog deleteContentDialog = contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete();
+        findAndSelectContent( content1.getName() );
+        findAndSelectContent( content2.getName() );
+        DeleteContentDialog deleteContentDialog = contentBrowsePanel.clickToolbarDelete();
         deleteContentDialog.clickOnDeleteButton();
         and: "correct number of contents to delete is typed"
         ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
@@ -35,7 +37,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         !contentBrowsePanel.exists( content1.getName() ) && !contentBrowsePanel.exists( content2.getName() );
     }
 
-    def "GIVEN existing content at the root WHEN the content is deleted THEN the content is no longer listed at the root"()
+    def "GIVEN existing folder in the root WHEN the content has been deleted THEN the content is no longer listed in the root"()
     {
         given: "folder content was added on the root"
         Content content = buildFolderContent( "deletecontent", "delete content" );
@@ -48,31 +50,62 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         !contentBrowsePanel.exists( content.getName() );
     }
 
-    def "GIVEN parent folder with a child were added WHEN parent folder is expanded and child content has been deleted THEN child is no longer listed beneath parent"()
+    def "GIVEN parent folder and child folder are added WHEN parent folder has been expanded and child content deleted THEN child folder should not be displayed"()
     {
         given: "folder content added at the root and added child content to this folder"
         Content parent = buildFolderContent( "parent", "parent" );
         addContent( parent );
 
+        filterPanel.typeSearchText( parent.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( parent.getName() );
-        Content contentToDelete = buildFolderContent( "folder", "delete content beneath parent" );
-        addContent( contentToDelete );
+        Content childFolder = buildFolderContent( "folder", "child content to delete" );
+        addContent( childFolder );
         List<String> contentList = new ArrayList<>()
-        contentList.add( contentToDelete.getName() );
+        contentList.add( childFolder.getName() );
+        and: "parent folder should be unchecked"
+        contentBrowsePanel.clickOnRowCheckbox( parent.getName() );
+        sleep( 1000 );
 
         when: "parent folder expanded and child content selected and 'Delete' button on toolbar pressed"
         DeleteContentDialog deleteContentDialog = contentBrowsePanel.expandContent( parent.getPath() ).selectContentInTable(
             contentList ).clickToolbarDelete();
         deleteContentDialog.clickOnDeleteButton();
-        and: "correct number of contents to delete is typed"
+
+        then: "child folder should not be displayed"
+        !contentBrowsePanel.exists( childFolder.getName(), true );
+        and: "expand-icon is no longer present for the parent folder"
+        !contentBrowsePanel.isExpanderPresent( ContentPath.from( parent.getName() ) );
+    }
+
+    def "GIVEN parent folder and child folder are added WHEN parent folder and child folders have been selected and deleted THEN both folders should not be displayed"()
+    {
+        given: "folder content added at the root and added child content to this folder"
+        Content parent = buildFolderContent( "parent", "parent" );
+        addContent( parent );
+
+        filterPanel.typeSearchText( parent.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( parent.getName() );
+        Content childFolder = buildFolderContent( "folder", "child content to delete" );
+        addContent( childFolder );
+        List<String> contentList = new ArrayList<>()
+        contentList.add( childFolder.getName() );
+        and: "parent folder should be unchecked"
+        sleep( 1000 );
+
+        when: "parent folder expanded and child content selected and 'Delete' button on toolbar pressed"
+        DeleteContentDialog deleteContentDialog = contentBrowsePanel.expandContent( parent.getPath() ).selectContentInTable(
+            contentList ).clickToolbarDelete();
+        deleteContentDialog.clickOnDeleteButton();
+        and: "2 has been typed and deleting confirmed"
         ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
 
-        then: "child Content is no longer listed beneath the parent"
-        !contentBrowsePanel.exists( contentToDelete.getName(), true );
-        and: "expand-icon is no longer shown for the parent folder"
-        !contentBrowsePanel.isExpanderPresent( ContentPath.from( parent.getName() ) );
+        then: "child folder should not be displayed"
+        !contentBrowsePanel.exists( childFolder.getName(), true );
+        and: "parent folder should not be displayed"
+        !contentBrowsePanel.exists( parent.getName() );
     }
+
 
     def "GIVEN existing folder WHEN the folder is selected and deleted THEN New-button should be enabled"()
     {
@@ -81,38 +114,17 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         addContent( folder );
 
         when: "just created content was deleted"
-        contentBrowsePanel.selectContentInTable( folder.getName() ).clickToolbarDelete().doDelete();
+        findAndSelectContent( folder.getName() ).clickToolbarDelete().doDelete();
+        sleep( 1000 );
 
         then: "New-button should be enabled"
         contentBrowsePanel.isNewButtonEnabled();
 
         and:
-        String mess = String.format(Application.ITEM_IS_DELETED, folder.getName());
-        contentBrowsePanel.waitExpectedNotificationMessage(mess, 1)
+        String mess = String.format( Application.ITEM_IS_DELETED, folder.getName() );
+        contentBrowsePanel.waitExpectedNotificationMessage( mess, 1 )
     }
 
-    def "GIVEN two existing folders in the root WHEN both folders were deleted THEN New-button should be enabled"()
-    {
-        given: "two folder were added at the root"
-        Content content1 = buildFolderContent( "folder", "folder-to-delete1" );
-        addContent( content1 );
-
-        Content content2 = buildFolderContent( "folder", "folder-to-delete2" );
-        addContent( content2 );
-
-        List<String> contentList = new ArrayList<>();
-        contentList.add( content2.getName() );
-        contentList.add( content1.getName() );
-
-        when: "both contents selected in the grid and  deleted"
-        DeleteContentDialog deleteContentDialog = contentBrowsePanel.selectContentInTable( contentList ).clickToolbarDelete();
-        deleteContentDialog.clickOnDeleteButton();
-        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
-        confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
-
-        then: "New-button should be enabled"
-        contentBrowsePanel.isNewButtonEnabled();
-    }
 
     def "GIVEN existing content is opened WHEN content has been moved to another location AND 'delete' button on the wizard-toolbar pressed THEN content deleted AND wizard closed"()
     {
