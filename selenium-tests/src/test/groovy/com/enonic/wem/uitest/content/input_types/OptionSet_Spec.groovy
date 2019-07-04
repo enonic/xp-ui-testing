@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.NotificationDialog
 import com.enonic.autotests.pages.form.optionset.OptionSetFormView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -10,9 +11,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 5/12/2017.
- *
- * Tasks:
- * xp-ui-testing#7 Add Selenium tests for OptionSet
  * */
 @Stepwise
 class OptionSet_Spec
@@ -40,7 +38,7 @@ class OptionSet_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN existing 'Option Set' content WHEN required fields are empty THEN the content should be displayed as invalid"()
+    def "GIVEN existing 'Option Set' content is selected in grid WHEN required fields are empty THEN the content should be displayed as invalid"()
     {
         when:
         findAndSelectContent( OPTION_SET.getName() );
@@ -106,6 +104,8 @@ class OptionSet_Spec
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
         optionSetFormView.getSingleSelectionOptionSet().clickOnSecondRadio();
+        NotificationDialog dialog = new NotificationDialog( getSession() );
+        dialog.clickOnOkButton();
 
         when: "option in 'Multi selection' has been clicked"
         optionSetFormView.getMultiSelectionOptionSet().clickOnCheckbox( 2 );
