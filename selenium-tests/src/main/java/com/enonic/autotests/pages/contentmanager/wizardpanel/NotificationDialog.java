@@ -79,6 +79,7 @@ public class NotificationDialog
         waitUntilElementEnabledNoException( By.xpath( BUTTON_OK ), Application.EXPLICIT_NORMAL );
         buttonOk.click();
         sleep( 1000 );
+        this.waitForClosed();
     }
 
 }
