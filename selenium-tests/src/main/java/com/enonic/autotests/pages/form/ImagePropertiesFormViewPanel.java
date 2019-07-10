@@ -9,7 +9,7 @@ import com.enonic.xp.data.PropertyTree;
 /**
  * Created  on 22.09.2016.
  */
-public class ImageInfoFormViewPanel
+public class ImagePropertiesFormViewPanel
     extends FormViewPanel
 {
     private final String IMAGE_INFO_STEP_FORM =
@@ -44,7 +44,7 @@ public class ImageInfoFormViewPanel
     private WebElement imageDescriptionInput;
 
 
-    public ImageInfoFormViewPanel( final TestSession session )
+    public ImagePropertiesFormViewPanel( final TestSession session )
     {
         super( session );
     }
@@ -96,13 +96,13 @@ public class ImageInfoFormViewPanel
     }
 
 
-    public ImageInfoFormViewPanel typeSizeInPixels( String size )
+    public ImagePropertiesFormViewPanel typeSizeInPixels( String size )
     {
         clearAndType( sizeInPixelsInput, size );
         return this;
     }
 
-    public ImageInfoFormViewPanel typeDescription( String description )
+    public ImagePropertiesFormViewPanel typeDescription( String description )
     {
         clearAndType( imageDescriptionInput, description );
         return this;

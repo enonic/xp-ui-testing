@@ -37,7 +37,8 @@ import com.enonic.xp.security.auth.AuthenticationInfo;
 public class Initializer
 {
     private static final String[] FOLDER_IMAGES =
-        {"book.jpg", "man.jpg", "man2.jpg", "fl.jpg", "nord.jpg", "whale.jpg", "hand.jpg", "spumans.jpg", "elephant.jpg", "renault.jpg","cape.jpg", "kotey.jpeg"};
+        {"book.jpg", "man.jpg", "man2.jpg", "fl.jpg", "nord.jpg", "whale.jpg", "hand.jpg", "spumans.jpg", "elephant.jpg", "renault.jpg",
+            "cape.jpg", "kotey.jpeg"};
 
     private static final String[] BAT_FILES = {"server.bat", "start.bat"};
 
@@ -87,56 +88,62 @@ public class Initializer
     }
 
     private void doInitialize()
-        throws Exception
     {
-        final ContentPath imagesPath = ContentPath.from( "/" + FOLDER_NAME );
-        if ( hasContent( imagesPath ) )
+        try
         {
-            return;
+            final ContentPath imagesPath = ContentPath.from( "/" + FOLDER_NAME );
+            if ( hasContent( imagesPath ) )
+            {
+                return;
+            }
+
+            addFolderWithImage();
+            // set permissions  for folder with images
+            final Content imagesFolder = contentService.getByPath( imagesPath );
+            if ( imagesFolder != null )
+            {
+                final UpdateContentParams setAppPermissions = new UpdateContentParams().
+                    contentId( imagesFolder.getId() ).
+                    editor( ( content ) -> {
+                        content.permissions = PERMISSIONS;
+                        content.inheritPermissions = false;
+                    } );
+                contentService.update( setAppPermissions );
+
+                contentService.applyPermissions( ApplyContentPermissionsParams.create().
+                    contentId( imagesFolder.getId() ).
+
+                    build() );
+            }
+
+            final ContentPath emptyFolderPath = ContentPath.from( "/" + TEST_FOLDER_NAME );
+            if ( hasContent( emptyFolderPath ) )
+            {
+                return;
+            }
+
+            ///////////////////////////////////////////////////////////////////////
+            addTestFolder();
+            // set permissions  for empty folder
+            final Content emptyFolder = contentService.getByPath( emptyFolderPath );
+            if ( emptyFolder != null )
+            {
+                final UpdateContentParams setAppPermissions = new UpdateContentParams().
+                    contentId( emptyFolder.getId() ).
+                    editor( ( content ) -> {
+                        content.permissions = PERMISSIONS;
+                        content.inheritPermissions = false;
+                    } );
+                contentService.update( setAppPermissions );
+
+                contentService.applyPermissions( ApplyContentPermissionsParams.create().
+                    contentId( emptyFolder.getId() ).
+                    build() );
+            }
         }
-
-        addFolderWithImage();
-        // set permissions  for folder with images
-        final Content imagesFolder = contentService.getByPath( imagesPath );
-        if ( imagesFolder != null )
+        catch ( Exception e )
         {
-            final UpdateContentParams setAppPermissions = new UpdateContentParams().
-                contentId( imagesFolder.getId() ).
-                editor( ( content ) -> {
-                    content.permissions = PERMISSIONS;
-                    content.inheritPermissions = false;
-                } );
-            contentService.update( setAppPermissions );
-
-            contentService.applyPermissions( ApplyContentPermissionsParams.create().
-                contentId( imagesFolder.getId() ).
-
-                build() );
-        }
-
-        final ContentPath emptyFolderPath = ContentPath.from( "/" + TEST_FOLDER_NAME );
-        if ( hasContent( emptyFolderPath ) )
-        {
-            return;
-        }
-
-        ///////////////////////////////////////////////////////////////////////
-        addTestFolder();
-        // set permissions  for empty folder
-        final Content emptyFolder = contentService.getByPath( emptyFolderPath );
-        if ( emptyFolder != null )
-        {
-            final UpdateContentParams setAppPermissions = new UpdateContentParams().
-                contentId( emptyFolder.getId() ).
-                editor( ( content ) -> {
-                    content.permissions = PERMISSIONS;
-                    content.inheritPermissions = false;
-                } );
-            contentService.update( setAppPermissions );
-
-            contentService.applyPermissions( ApplyContentPermissionsParams.create().
-                contentId( emptyFolder.getId() ).
-                build() );
+            LOG.info( "Exception when content Initialized " + e.getMessage() );
         }
 
 
