@@ -109,7 +109,7 @@ class DeleteSite_ConfirmDelete_Spec
         given: "existing site selected AND delete button pressed"
         Content onlineSite = buildSiteWithNameAndDispalyNameAndDescription("site", "confirm delete online", "description");
         addContent(onlineSite);
-        findAndSelectContent(onlineSite.getName()).clickToolbarPublish().clickOnPublishNowButton();
+        findAndSelectContent( onlineSite.getName() ).clickToolbarPublish().clickOnPublishButton();
 
         when: "site selected and Delete pressed AND 'Instantly delete' checkbox checked"
         contentBrowsePanel.clickToolbarDelete().clickOnInstantlyCheckbox().clickOnDeleteButton();

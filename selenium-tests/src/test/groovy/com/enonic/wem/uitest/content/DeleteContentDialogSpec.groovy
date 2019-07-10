@@ -104,7 +104,7 @@ class DeleteContentDialogSpec
         given: "existing content is selected"
         findAndSelectContent( CONTENT1.getName() );
         and: "the content has been published"
-        contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton().waitForDialogClosed();
+        contentBrowsePanel.clickToolbarPublish().clickOnPublishButton().waitForDialogClosed();
 
         when: "the content is selected and 'Delete' button has been pressed"
         DeleteContentDialog dialog = contentBrowsePanel.clickToolbarDelete();

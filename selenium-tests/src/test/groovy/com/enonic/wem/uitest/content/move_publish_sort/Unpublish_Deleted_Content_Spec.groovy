@@ -26,7 +26,7 @@ class Unpublish_Deleted_Content_Spec
         addContent( CONTENT );
 
         when: "the folder has been published"
-        findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();
 
         then: "'Online' status should be displayed"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();

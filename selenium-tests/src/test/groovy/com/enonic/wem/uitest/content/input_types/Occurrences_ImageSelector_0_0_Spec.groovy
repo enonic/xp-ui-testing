@@ -190,7 +190,7 @@ class Occurrences_ImageSelector_0_0_Spec
         Content imageSelectorContent = buildImageSelector0_0_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
         and: "Publish button has been pressed"
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         and: "wizard tab was closed"
         wizard.closeBrowserTab().switchToBrowsePanelTab();
@@ -213,7 +213,7 @@ class Occurrences_ImageSelector_0_0_Spec
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
 
         when: "the content has been published(from the wizard)"
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         and: "name of the content is typed in the search input"

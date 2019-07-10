@@ -18,7 +18,7 @@ class TagsInputType_2_5_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        contentWizardPanel.typeData( tagContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        contentWizardPanel.typeData( tagContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( tagContent.getName() );

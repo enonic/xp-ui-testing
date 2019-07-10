@@ -34,7 +34,7 @@ class Site_Publish_Spec
             COUNTRY_REGION_PAGE_CONTROLLER ).closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site has been published"
-        findAndSelectContent( SITE.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
+        findAndSelectContent( SITE.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
         saveScreenshot( "site_published" );
 
         then: "'Published' status should be displayed in the grid"
@@ -67,7 +67,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "text component has been removed"
@@ -87,7 +87,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
 
         when: "display name was changed"
         wizard.typeDisplayName( "new name" )
@@ -104,7 +104,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
         saveScreenshot( "site_published_in_wizard" );
 
         when: "language was changed"
@@ -124,7 +124,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "new part was inserted"

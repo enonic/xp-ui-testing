@@ -25,7 +25,7 @@ class Image_Change_And_Publish_Spec
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_ELEPHANT_IMAGE ).clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         formViewPanel.waitUntilImageLoaded();
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton().waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        wizard.clickOnWizardPublishButton().clickOnPublishButton().waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         formViewPanel.waitUntilImageLoaded();
 
         when: "the image has been zoomed "

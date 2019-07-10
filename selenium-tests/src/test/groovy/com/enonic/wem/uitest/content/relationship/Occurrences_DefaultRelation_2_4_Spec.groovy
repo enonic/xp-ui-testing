@@ -115,7 +115,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         ContentPublishDialog contentPublishDialog = findAndSelectContent( TEST_RELATIONSHIP_CONTENT.getName() ).clickToolbarPublish();
 
         when: "'publish' button  was pressed"
-        contentPublishDialog.clickOnPublishNowButton();
+        contentPublishDialog.clickOnPublishButton();
 
         then: "'Published' status should be displayed for this content"
         contentBrowsePanel.getContentStatus( TEST_RELATIONSHIP_CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );

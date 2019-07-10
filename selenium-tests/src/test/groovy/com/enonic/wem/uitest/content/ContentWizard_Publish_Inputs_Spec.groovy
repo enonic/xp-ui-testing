@@ -33,7 +33,7 @@ class ContentWizard_Publish_Inputs_Spec
         boolean isDisplayedBeforePublish = wizard.isOnlineFromInputDisplayed();
 
         when: "'Publish' button has been pressed and the content published"
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
         String nowDate = TimeUtils.getNowDate();
 
         then: "'Schedule' wizard step appears"

@@ -80,7 +80,7 @@ class Occurrences_Date_1_1_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "data was typed and saved and the content has been published"
-        contentWizardPanel.typeData( dateContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        contentWizardPanel.typeData( dateContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( dateContent.getName() );

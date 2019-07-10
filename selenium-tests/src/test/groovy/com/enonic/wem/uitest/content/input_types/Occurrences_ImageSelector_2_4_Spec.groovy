@@ -126,7 +126,7 @@ class Occurrences_ImageSelector_2_4_Spec
                                            FL_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
             IMAGE_SELECTOR_CONTENT_4_IMAGES ).save();
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         and: "wizard has been closed"

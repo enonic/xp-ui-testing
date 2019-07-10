@@ -82,7 +82,7 @@ class Occurrences_TextLine_1_1_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( textLineContent.getContentTypeName() );
 
         when: "all data typed and the content has been published"
-        contentWizardPanel.typeData( textLineContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        contentWizardPanel.typeData( textLineContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL )
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textLineContent.getName() );

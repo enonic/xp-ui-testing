@@ -140,7 +140,7 @@ class CreateSiteWithLayoutSpec
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         when: "site is published with its children"
-        ContentPublishDialog modalDialog = wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishNowButton();
+        ContentPublishDialog modalDialog = wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishButton();
 
         then: "publish dialog should be closed"
         modalDialog.waitForDialogClosed();

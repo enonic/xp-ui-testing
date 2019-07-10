@@ -79,7 +79,7 @@ class ContentPublishDialog_Sibling_Folders_Spec
         contentPublishDialog.removeItem( FOLDER2.getDisplayName() );
 
         when: "'Publish' button has been pressed and the dialog is closed"
-        contentPublishDialog.clickOnPublishNowButton();
+        contentPublishDialog.clickOnPublishButton();
         saveScreenshot( "publish_wizard_status_for_removed" );
 
         then: "the second folder should be 'New'"

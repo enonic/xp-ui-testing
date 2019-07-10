@@ -26,7 +26,7 @@ class ContentPublishDelete_Spec
 
         when: "the folder has been published"
         filterPanel.typeSearchText( content.getName() )
-        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "'Published' status should be displayed in the grid"
@@ -68,7 +68,7 @@ class ContentPublishDelete_Spec
         when: "existing content with 'Deleted' status"
         filterPanel.typeSearchText( content.getName() );
         and: "content is selected and 'Publish' button pressed"
-        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "content should not be listed in the browse panel"

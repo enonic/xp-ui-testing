@@ -287,7 +287,7 @@ public class ContentPublishDialog
         sleep( 200 );
     }
 
-    public ContentPublishDialog clickOnPublishNowButton()
+    public ContentPublishDialog clickOnPublishButton()
     {
         waitUntilVisibleNoException( By.xpath( PUBLISH_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( PUBLISH_BUTTON ) )

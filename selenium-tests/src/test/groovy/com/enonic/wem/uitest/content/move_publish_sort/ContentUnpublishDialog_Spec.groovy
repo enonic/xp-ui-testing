@@ -26,7 +26,7 @@ class ContentUnpublishDialog_Spec
         PARENT_CONTENT = buildFolderContent("parent", "content unpublish dialog");
         addContent(PARENT_CONTENT);
         and: "the content has been published"
-        findAndSelectContent(PARENT_CONTENT.getName()).clickToolbarPublish().clickOnPublishNowButton();
+        findAndSelectContent( PARENT_CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();
 
         when: "content selected and 'Unpublish' menu item is clicked"
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
@@ -119,7 +119,7 @@ class ContentUnpublishDialog_Spec
         findAndSelectContent(PARENT_CONTENT.getName());
         addContent(CHILD_CONTENT);
         and: "both contents has been published"
-        contentBrowsePanel.clickToolbarPublish().includeChildren(true).clickOnPublishNowButton();
+        contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
 
         when: "parent content was selected and 'Unpublish' menu item has been clicked"
         contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
@@ -146,7 +146,7 @@ class ContentUnpublishDialog_Spec
     def "GIVEN existing parent and child are 'online' WHEN the parent is selected and Unpublish dialog is opened THEN dependant item should be displayed on the dialog"() {
         given: "existing parent and child has been published"
         findAndSelectContent(PARENT_CONTENT.getName());
-        contentBrowsePanel.clickToolbarPublish().includeChildren(true).clickOnPublishNowButton();
+        contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
 
         when: "the parent is selected and 'Unpublish' dialog is opened"
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();

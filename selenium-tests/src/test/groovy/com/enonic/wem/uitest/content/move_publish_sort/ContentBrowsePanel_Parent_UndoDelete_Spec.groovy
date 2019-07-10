@@ -32,7 +32,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         and: "child folder has been added"
         addContent( CHILD_FOLDER );
         and: "both contents are published"
-        contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
+        contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
 
         when: "Delete button has been pressed and the deleting confirmed"
         contentBrowsePanel.clickToolbarDelete().clickOnDeleteButton();

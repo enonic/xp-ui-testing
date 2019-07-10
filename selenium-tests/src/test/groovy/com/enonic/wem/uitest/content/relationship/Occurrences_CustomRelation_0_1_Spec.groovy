@@ -106,7 +106,7 @@ class Occurrences_CustomRelation_0_1_Spec
             RELATIONSHIP_CONTENT.getName() ).clickToolbarPublish().waitUntilDialogShown( Application.EXPLICIT_NORMAL );
 
         when: "content has been published"
-        contentPublishDialog.clickOnPublishNowButton();
+        contentPublishDialog.clickOnPublishButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "citation-published" );
 

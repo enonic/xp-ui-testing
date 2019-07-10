@@ -23,7 +23,7 @@ class Content_Online_Modified_Spec
         addContent( CONTENT );
 
         when: "the content has been published"
-        findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "notification message should appear and content is getting 'Online'"
@@ -51,7 +51,7 @@ class Content_Online_Modified_Spec
         Content content = buildFolderContent( "publish", "folder-content" );
         addContent( content );
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
 
         when: "new display name has ben typed"
         wizard.typeDisplayName( NEW_DISPLAY_NAME ).save();
@@ -71,7 +71,7 @@ class Content_Online_Modified_Spec
     {
         when: "modified content has been published"
         findAndSelectContent( CONTENT.getName() ).
-            clickToolbarPublish().clickOnPublishNowButton();
+            clickToolbarPublish().clickOnPublishButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "content-status is getting 'Published'"

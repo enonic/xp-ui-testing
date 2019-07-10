@@ -58,7 +58,6 @@ class ContentInfoWidget_Spec
         props.get( ContentInfoTerms.CREATED.getValue() ).contains( LocalDate.now().toString() );
     }
 
-    //xp-ui-testing#17 Add Selenium tests for "First Published" field in content
     def "GIVEN existing folder that is 'New' WHEN folder was published THEN new correct status is shown"()
     {
         given: "existing folder that is 'New'"
@@ -66,7 +65,7 @@ class ContentInfoWidget_Spec
         contentBrowsePanel.selectContentInTable( FOLDER.getName() )
 
         when: "the folder has been published"
-        contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
+        contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
         contentBrowsePanel.openContentDetailsPanel();
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "info_widget-content-published" );

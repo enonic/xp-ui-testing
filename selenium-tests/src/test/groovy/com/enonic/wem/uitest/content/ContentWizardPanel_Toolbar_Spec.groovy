@@ -84,7 +84,7 @@ class ContentWizardPanel_Toolbar_Spec
         wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
 
         when: "content has been published"
-        wizardPanel.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizardPanel.clickOnWizardPublishButton().clickOnPublishButton();
         saveScreenshot( "folder_published_in_wizard" );
 
         then: "'Delete' button should be enabled"

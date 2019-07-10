@@ -22,7 +22,7 @@ class TagsInputType_Unlim_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        contentWizardPanel.typeData( tagContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        contentWizardPanel.typeData( tagContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.close( tagContent.getDisplayName() );
         filterPanel.typeSearchText( tagContent.getName() );

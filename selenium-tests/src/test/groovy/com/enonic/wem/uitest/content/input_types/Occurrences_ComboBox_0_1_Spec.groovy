@@ -64,7 +64,7 @@ class Occurrences_ComboBox_0_1_Spec
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
         when: "the content has been published"
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton().waitForDialogClosed();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton().waitForDialogClosed();
         wizard.closeBrowserTab().switchToBrowsePanelTab(); ;
         filterPanel.typeSearchText( content_with_opt.getName() );
 

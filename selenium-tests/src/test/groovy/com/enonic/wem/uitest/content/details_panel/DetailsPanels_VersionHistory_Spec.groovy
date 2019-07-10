@@ -60,7 +60,7 @@ class DetailsPanels_VersionHistory_Spec
         AllContentVersionsView allContentVersionsView = openVersionPanel()
 
         when: "content has been published"
-        contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
+        contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
         saveScreenshot( "history_panel_content_was_published" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 

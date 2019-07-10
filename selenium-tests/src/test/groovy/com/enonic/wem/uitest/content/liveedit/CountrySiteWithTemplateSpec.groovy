@@ -206,7 +206,7 @@ class CountrySiteWithTemplateSpec
         given: "site has been 'published'"
         filterPanel.typeSearchText( SITE.getName(), );
         ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName(), ).clickToolbarPublish();
-        dialog.includeChildren( true ).clickOnPublishNowButton();
+        dialog.includeChildren( true ).clickOnPublishButton();
         sleep( 2000 );
         saveScreenshot( "country_site_published" );
 
@@ -244,7 +244,7 @@ class CountrySiteWithTemplateSpec
     {
         given: "city content changed and 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
         contentBrowsePanel.waitForNotificationMessage();
         sleep( 1000 );
 

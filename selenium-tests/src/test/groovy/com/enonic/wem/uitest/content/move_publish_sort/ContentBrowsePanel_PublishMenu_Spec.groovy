@@ -35,7 +35,7 @@ class ContentBrowsePanel_PublishMenu_Spec
     def "GIVEN existing 'New' folder in the root WHEN the folder has been published THEN 'Publish'-menu is available AND 'Unpablish' menu item enabled"()
     {
         when: "the folder has been published"
-        findAndSelectContent( FOLDER_CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        findAndSelectContent( FOLDER_CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();
 
         then: "'Publish'-menu should be available"
         contentBrowsePanel.isPublishMenuAvailable();

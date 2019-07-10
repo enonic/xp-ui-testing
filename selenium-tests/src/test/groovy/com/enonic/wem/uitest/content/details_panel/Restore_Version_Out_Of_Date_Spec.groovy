@@ -30,7 +30,7 @@ class Restore_Version_Out_Of_Date_Spec
             NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the folder has been published"
-        contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
+        contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
 

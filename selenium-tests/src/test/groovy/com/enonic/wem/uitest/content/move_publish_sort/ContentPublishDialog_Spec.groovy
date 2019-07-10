@@ -267,7 +267,7 @@ class ContentPublishDialog_Spec
         contentPublishDialog.removeDependant( CHILD_FOLDER.getName() );
 
         and: "Publish button has been pressed"
-        contentPublishDialog.clickOnPublishNowButton().waitForDialogClosed();
+        contentPublishDialog.clickOnPublishButton().waitForDialogClosed();
         saveScreenshot( "dependant_not_published" );
 
         then: "parent folder should be 'Published'"

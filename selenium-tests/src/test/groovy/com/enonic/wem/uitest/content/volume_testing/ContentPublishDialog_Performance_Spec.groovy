@@ -37,7 +37,7 @@ class ContentPublishDialog_Performance_Spec
         contentPublishDialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         contentPublishDialog.includeChildren( true );
         contentPublishDialog.waitUntilPublishButtonEnabled( Application.EXPLICIT_NORMAL );
-        contentPublishDialog.clickOnPublishNowButton();
+        contentPublishDialog.clickOnPublishButton();
 
         then: "modal dialog has been closed"
         contentPublishDialog.waitForDialogClosed();

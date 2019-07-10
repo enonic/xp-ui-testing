@@ -183,7 +183,7 @@ class Occurrences_ItemSet_0_0_Spec
 
         when: "the content has been published"
         wizard.clickOnWizardPublishButton().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
+            Application.EXPLICIT_NORMAL ).clickOnPublishButton().waitForDialogClosed();
 
         then: "'Published' status should be displayed"
         wizard.getStatus() == ContentStatus.PUBLISHED.getValue();

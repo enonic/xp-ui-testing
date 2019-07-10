@@ -66,7 +66,7 @@ class Occurrences_ImageSelector_0_1_Spec
         Content imageSelectorContent = buildImageSelector0_1_Content(null);
         ContentWizardPanel wizard = selectSitePressNew(imageSelectorContent.getContentTypeName());
         and: "data has been typed and the content published"
-        wizard.typeData(imageSelectorContent).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.typeData( imageSelectorContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage(Application.EXPLICIT_NORMAL);
         and: "wizard was closed"
         wizard.close(imageSelectorContent.getDisplayName());

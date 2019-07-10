@@ -24,7 +24,7 @@ class ContentWizard_PublishButton_Spec
 
         when: "the content has been 'published'"
         ContentWizardPanel wizard = findAndSelectContent( CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         then: "folder should be 'Published' now"
@@ -85,7 +85,7 @@ class ContentWizard_PublishButton_Spec
         given: "existing 'online' content"
         findAndSelectContent( CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
 
         when: "'Delete' button on the wizard-toolbar pressed AND content deleted"
         wizard.clickToolbarDelete().doDelete();

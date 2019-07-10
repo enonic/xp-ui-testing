@@ -50,7 +50,7 @@ class Occurrences_RadioButtons_Spec
         String option = null;
         Content radioButtonsContent = buildRadioButtonsContent( option );
         ContentWizardPanel wizard = selectSitePressNew( radioButtonsContent.getContentTypeName() ).typeData( radioButtonsContent )
-        wizard.save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        wizard.save().clickOnWizardPublishButton().clickOnPublishButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.close( radioButtonsContent.getDisplayName() );
 

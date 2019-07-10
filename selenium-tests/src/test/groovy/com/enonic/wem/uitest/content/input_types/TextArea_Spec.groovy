@@ -54,7 +54,7 @@ class TextArea_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( textAreaContent.getContentTypeName() );
 
         when: "text area is empty and the content has been published"
-        contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textAreaContent.getName() );
@@ -70,7 +70,7 @@ class TextArea_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( textAreaContent.getContentTypeName() );
 
         when: "data has been typed and the content published"
-        contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textAreaContent.getName() );

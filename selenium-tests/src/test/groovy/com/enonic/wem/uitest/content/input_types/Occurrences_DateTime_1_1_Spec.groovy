@@ -79,7 +79,7 @@ class Occurrences_DateTime_1_1_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew(dateTimeContent.getContentTypeName());
 
         when: "data typed and 'Save' and  'Publish' has been pressed"
-        contentWizardPanel.typeData(dateTimeContent).save().clickOnWizardPublishButton().clickOnPublishNowButton();
+        contentWizardPanel.typeData( dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage(Application.EXPLICIT_NORMAL);
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         and: "the name of the content has been typed in the search input"
