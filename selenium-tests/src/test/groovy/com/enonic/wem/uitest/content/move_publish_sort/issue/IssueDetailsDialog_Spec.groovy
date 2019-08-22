@@ -17,10 +17,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 7/10/2017.
- *
- * Tasks:
- * xp-ui-testing#62 Add selenium tests for IssueDetailsDialog
- * xp-ui-testing#67 Add Selenium tests for 'UpdateIssueDialog'
  * */
 @Stepwise
 class IssueDetailsDialog_Spec
@@ -124,7 +120,7 @@ class IssueDetailsDialog_Spec
 
         when: "'Assigned to Me' has been checked"
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-        issueListDialog.setAssignedToMeCheckbox( true );
+        //issueListDialog.setAssignedToMeCheckbox( true );
         saveScreenshot( "assigned_issue" + USER_NAME );
         List<String> titles = issueListDialog.getIssueTitles();
 
@@ -141,7 +137,7 @@ class IssueDetailsDialog_Spec
         NavigatorHelper.openContentStudioApp( getTestSession() );
         and: "'Assigned to Me' has been checked"
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-        issueListDialog.setAssignedToMeCheckbox( true );
+       // issueListDialog.setAssignedToMeCheckbox( true );
 
         when: "issue has been clicked"
         IssueDetailsDialog detailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
@@ -161,7 +157,7 @@ class IssueDetailsDialog_Spec
         NavigatorHelper.openContentStudioApp( getTestSession() );
         and: "'Assigned to Me' has been checked"
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-        issueListDialog.setAssignedToMeCheckbox( true );
+       // issueListDialog.setAssignedToMeCheckbox( true );
         IssueDetailsDialog detailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
 
         when: "'Back' button has been pressed"

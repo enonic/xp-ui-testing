@@ -64,7 +64,7 @@ class Restore_Version_Site_Spec
 
         when: "the previous version has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "site_display_name_restored" );
 
         then: "previous display name should appear in the grid"
@@ -88,7 +88,7 @@ class Restore_Version_Site_Spec
         when: "the previous version has been restored"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
 
         then: "acl-entry must not be displayed after the restoring of version without this role"
         !contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink().getDisplayNamesOfAclEntries().contains(
@@ -106,7 +106,7 @@ class Restore_Version_Site_Spec
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
 
         when: "the previous version has been restored"
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
 
         and: "navigate to the security tab"
         SecurityWizardStepForm form = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink();
@@ -152,7 +152,7 @@ class Restore_Version_Site_Spec
 
         when: "version with one application has been restored restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         saveScreenshot( "version_site_application_restored" );
 
@@ -196,7 +196,7 @@ class Restore_Version_Site_Spec
 
         when: "version without a selected controller was restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 2 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         sleep( 300 );
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         sleep( 700 );

@@ -30,12 +30,12 @@ class ContentPublish_Child_Spec
     {
         setup: "parent folder has been added"
         parentContent = buildFolderContent( "publish", "parent-folder" );
-        addContent( parentContent );
+        addReadyContent( parentContent );
 
         and: "one child content has been added"
         findAndSelectContent( parentContent.getName() );
         childContent1 = buildFolderContentWithParent( "publish", "child-folder1", parentContent.getName() );
-        addContent( childContent1 );
+        addReadyContent( childContent1 );
 
         when: "'publish' dialog is opened and parent content has been published without a child"
         contentBrowsePanel.clickToolbarPublish().includeChildren( false ).clickOnPublishButton(); ;

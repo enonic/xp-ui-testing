@@ -48,7 +48,7 @@ class Restore_Tags_Spec
         when: "previous version has been restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         contentBrowsePanel.switchToBrowserTabByTitle( TAG_CONTENT.getDisplayName() );
         saveScreenshot( "tag_valid_version" );
 
@@ -66,7 +66,7 @@ class Restore_Tags_Spec
         when: "not valid version of content is restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         contentBrowsePanel.switchToBrowserTabByTitle( TAG_CONTENT.getDisplayName() );
         saveScreenshot( "tag_not_valid_restored" );
 

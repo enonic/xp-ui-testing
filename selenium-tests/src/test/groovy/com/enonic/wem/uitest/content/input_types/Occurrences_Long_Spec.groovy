@@ -67,18 +67,18 @@ class Occurrences_Long_Spec
         and: "validation message should be displayed"
         longFormViewPanel.isValidationMessagePresent();
 
-        and: "'Publish' button on the wizard-toolbar should be enabled, because input is not required"
-        wizard.isPublishButtonEnabled();
+        and: "'Publish' menu item should be enabled, because input is not required"
+        wizard.showPublishMenu().isPublishMenuItemEnabled(  );
     }
 
-    def "GIVEN creating of content with type 'long'(required) WHEN invalid value for long typed THEN input with a red border AND red icon shown on the wizard tab"()
+    def "GIVEN new wizard for 'long'(required) is opened WHEN not valid value for long typed THEN input with a red border AND red icon shown on the wizard tab"()
     {
         given: "creating of  content with type 'Long'"
         Content longContent = buildLong1_1_Content( INVALID_LONG1 );
         ContentWizardPanel wizard = selectSitePressNew( longContent.getContentTypeName() ).waitUntilWizardOpened();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
-        when: "invalid value for long was typed"
+        when: "not valid value has been typed"
         wizard.typeData( longContent );
         saveScreenshot( "test_long_invalid_req" );
 
@@ -95,7 +95,7 @@ class Occurrences_Long_Spec
         !wizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN wizard for long content with required input WHEN name was typed AND 'save' button pressed THEN 'confirmation' dialog should not appears"()
+    def "GIVEN wizard for long content(required) WHEN name has been typed AND 'Save' button has been pressed THEN 'confirmation' dialog should not appear"()
     {
         given: "wizard for a long content with required input"
         Content longContent = buildLong1_1_Content( null );
@@ -110,7 +110,7 @@ class Occurrences_Long_Spec
         then: "validation message should be displayed, because this input is required and input is empty"
         longFormViewPanel.isValidationMessagePresent();
 
-        and: "confirmation dialog should not appears"
+        and: "confirmation dialog should not appear"
         !dialog.isOpened();
 
         and: "red icon should be displayed on the wizard page, because the input is required and empty"

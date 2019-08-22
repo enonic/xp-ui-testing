@@ -60,9 +60,9 @@ class Restore_Version_Shortcut_Spec
         and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "the shortcut selected AND previous version restored"
+        when: "the shortcut selected AND previous version has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "shortcut_display_name_restored" );
 
         then: "correct display name appears in the grid"
@@ -70,7 +70,7 @@ class Restore_Version_Shortcut_Spec
         contentBrowsePanel.exists( SHORTCUT_CONTENT.getName() );
     }
 
-    def "GIVEN existing shortcut WHEN target changed THEN new target displayed on wizard AND number of versions is increased"()
+    def "GIVEN existing shortcut WHEN target has been changed in the wizard THEN new target displayed on wizard AND number of versions is increased"()
     {
         given: "existing shortcut"
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
@@ -80,12 +80,12 @@ class Restore_Version_Shortcut_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 
-        when: "target changed"
+        when: "target has been changed"
         formViewPanel.removeTarget().selectTarget( TARGET_2 );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
 
-        then: "number of versions increased"
+        then: "number of versions should be increased"
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
@@ -101,7 +101,7 @@ class Restore_Version_Shortcut_Spec
 
         when: "the shortcut selected AND previous version restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion( );
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         saveScreenshot( "shortcut_target_restored" );
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );

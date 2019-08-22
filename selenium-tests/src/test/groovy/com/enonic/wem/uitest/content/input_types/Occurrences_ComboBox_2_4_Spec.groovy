@@ -126,7 +126,8 @@ class Occurrences_ComboBox_2_4_Spec
     {
         when: "content without options was saved and published"
         Content comboBoxContent = buildComboBox2_4_Content( 2 );
-        ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
+        ContentWizardPanel wizard = selectSitePressNew( comboBoxContent.getContentTypeName() ).typeData( comboBoxContent );
+        wizard.showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
         wizard.clickOnWizardPublishButton().clickOnPublishButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 

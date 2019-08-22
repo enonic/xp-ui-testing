@@ -92,7 +92,30 @@ public class AllContentVersionsView
         return buildContentVersion( element );
     }
 
+    public boolean isVersionInfoExpanded( int index )
+    {
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
+        WebElement version = liElements.get( index );
+        String attrClass = version.getAttribute( "class" );
+        return attrClass.contains( ( "expanded" ) ) || attrClass.contains( "active" );
+    }
+
+    public boolean isVersionActive( int index )
+    {
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
+        WebElement version = liElements.get( index );
+        String attrClass = version.getAttribute( "class" );
+        return attrClass.contains( "active" );
+    }
+
     public ContentVersionInfoView clickOnVersionAndExpand( int index )
+    {
+        WebElement versionItem = clickOnVersionItem( index );
+        waitAndCheckAttrValue( versionItem, "class", "expanded", EXPLICIT_1 );
+        return new ContentVersionInfoView( getSession() );
+    }
+
+    private WebElement clickOnVersionItem( int index )
     {
         List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
         if ( liElements.size() == 0 || index >= liElements.size() )
@@ -101,11 +124,24 @@ public class AllContentVersionsView
             throw new TestFrameworkException( "required version does not exist!" );
         }
 
-        WebElement version = liElements.get( index );
+        WebElement versionItem = liElements.get( index );
         Actions builder = new Actions( getDriver() );
         //builder.moveToElement( version ).click().build().perform();
-        builder.click( version ).build().perform();
-        return new ContentVersionInfoView( getSession() );
+        builder.click( versionItem ).build().perform();
+        return versionItem;
+    }
+
+    public void clickOnVersionAndCloseView( int index )
+    {List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
+        if ( liElements.size() == 0 || index >= liElements.size() )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_expand_version" ) );
+            throw new TestFrameworkException( "required version does not exist!" );
+        }
+
+        WebElement versionItem = liElements.get( index );
+        waitAndCheckAttrValue( versionItem, "class", "expanded", EXPLICIT_1 );
+        clickOnVersionItem( index );
     }
 
     public AllContentVersionsView isLoaded()

@@ -55,7 +55,7 @@ class Occurrences_ImageSelector_2_4_Spec
         wizard.isContentInvalid();
     }
 
-    def "WHEN 'Image Selector (2:4)' without required image has been added THEN content should be displayed with red circle"()
+    def "WHEN 'Image Selector (2:4)' content has been added AND no one image is selected THEN content should be displayed with red circle"()
     {
         when: "content without required images was added"
         Content imageSelectorContent = buildImageSelector2_4_Content( null );
@@ -126,7 +126,7 @@ class Occurrences_ImageSelector_2_4_Spec
                                            FL_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( IMAGE_SELECTOR_CONTENT_4_IMAGES.getContentTypeName() ).typeData(
             IMAGE_SELECTOR_CONTENT_4_IMAGES ).save();
-        wizard.clickOnWizardPublishButton().clickOnPublishButton();
+        wizard.clickOnMarkAsReadyAndDoPublish();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         and: "wizard has been closed"

@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.move_publish_sort.issue
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueDetailsDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueListDialog
@@ -17,8 +18,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 7/12/2017.
- *
- * Tasks: xp-ui-testing#64 Add selenium tests for Issue List dialog
  * */
 @Stepwise
 class IssueListDialog_Spec
@@ -95,7 +94,7 @@ class IssueListDialog_Spec
         message == Application.ISSUE_IS_CREATED_MESSAGE;
     }
 
-    def "GIVEN issue is assigned to the user WHEN 'show Issues Dialog' button has been pressed THEN Issues List dialog should be displayed"()
+    def "GIVEN issue is assigned to the user WHEN 'show Issues Dialog' toolbar-button has been pressed THEN Issues List dialog should appear"()
     {
         given: "Content Studio is opened"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -103,17 +102,17 @@ class IssueListDialog_Spec
         when:
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
-        then: "Show Closed Issues link should be present"
-        issueListDialog.isShowClosedIssuesLinkVisible();
+        then: "Show Closed Issues button should be present"
+        issueListDialog.isShowClosedIssuesButtonDisplayed();
 
-        and: "'Assigned to Me' checkbox should be disabled"
-        issueListDialog.isAssignedToMeCheckboxDisabled();
+        and: "'Assigned by Me' option should be selected"
+        issueListDialog.getAssignedSelectedOption().contains( "Assigned by Me" );
 
-        and: "'My Issues' checkbox should be enabled"
-        !issueListDialog.isMyIssuesCheckboxDisabled();
+        and: "'All issues' tab should be activate by default"
+        issueListDialog.isAllIssuesTabActive(  );
 
-        and: "'New Issue' should be present"
-        issueListDialog.isNewIssueButtonDisplayed();
+        and: "'New Issue' button should be present"
+        issueListDialog.clickOnIssuesTab(  ).isNewIssueButtonDisplayed();
 
         and: "just added issue should be present in the list"
         issueListDialog.isIssuePresent( TEST_ISSUE.getTitle() );
@@ -140,7 +139,7 @@ class IssueListDialog_Spec
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
         when: "'Assigned to Me' checkbox has been checked"
-        issueListDialog.setAssignedToMeCheckbox( true );
+        //issueListDialog.setAssignedToMeCheckbox( true );
         List<String> titles = issueListDialog.getIssueTitles();
 
         then: "one issue should be present in the list"
@@ -148,6 +147,9 @@ class IssueListDialog_Spec
 
         and: ""
         titles.get( 0 ).contains( TEST_ISSUE.getTitle() );
+
+        and: "'Assigned to Me' option should be selected"
+        issueListDialog.getAssignedSelectedOption().contains( "Assigned to Me" );
     }
 
     def "GIVEN existing user is logged in WHEN assigned issue has been clicked AND it has been published THEN the issue should be 'closed' AND 'closed'-tab should be opened"()
@@ -156,7 +158,7 @@ class IssueListDialog_Spec
         getTestSession().setUser( TEST_USER );
         NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-        issueListDialog.setAssignedToMeCheckbox( true );
+        // issueListDialog.setAssignedToMeCheckbox( true );
 
         when: "the issue has been clicked"
         issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
@@ -165,16 +167,17 @@ class IssueListDialog_Spec
         details.clickOnItemsTabBarItem();
 
         and: "Publish & Close issue button has been pressed"
-        details.clickOnPublishAndCloseButton();
+        details.clickOnPublishButton();
+        ContentPublishDialog contentPublishDialog = new ContentPublishDialog(getSession(  ));
+        contentPublishDialog.clickOnPublishButton(  )
         saveScreenshot( "issue_published" );
 
-        then: "'Issue  is closed' notification message should be displayed"
-        String mess = contentBrowsePanel.waitForNotificationMessage();
-        println mess;
+        then: "'Publish button on the dialog should be disabled, because the folder in "
+        !contentPublishDialog.isPublishButtonEnabled(  );
         // TODO uncommit it when bug will be fixed
         //contentBrowsePanel.waitExpectedNotificationMessage( String.format( Application.ISSUE_IS_CLOSED, TEST_ISSUE.getTitle() ), 1 );
         //contentBrowsePanel.waitExpectedNotificationMessage( "The issue is Closed.", 3 );
-        and: "the issue should be present in the 'Closed'-tab"
-        issueListDialog.isIssuePresent( TEST_ISSUE.getTitle() );
+        //and: "the issue should be present in the 'Closed'-tab"
+       // issueListDialog.isIssuePresent( TEST_ISSUE.getTitle() );
     }
 }

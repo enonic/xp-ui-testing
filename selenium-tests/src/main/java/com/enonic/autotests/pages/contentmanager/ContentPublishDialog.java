@@ -18,9 +18,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentPublishDialog
     extends Application
 {
-    public static final String OTHER_ITEMS_WILL_BE_PUBLISHED_TEXT = "Other items that will be published";
-
-    public static final String DIALOG_SUBHEADER_READY_FOR_PUBLISH = "Your changes are ready for publishing";
 
     public static final String DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH = "Invalid item(s) prevent publishing";
 
@@ -31,7 +28,7 @@ public class ContentPublishDialog
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 
     private final String PUBLISH_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@id,'ActionButton') and child::span[contains(.,'Publish')]]";
+        DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish Now')]]";
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
@@ -75,11 +72,20 @@ public class ContentPublishDialog
 
     private final String PUBLISH_MENU_DROPDOWN_HANDLER = DIALOG_CONTAINER + "//div[contains(@id,'MenuButton')]" + DROP_DOWN_HANDLE_BUTTON;
 
+    private final String ADD_SCHEDULE_BUTTON =
+        DIALOG_CONTAINER + "//button[contains(@id,'ActionButton') and child::span[contains(.,'Add schedule')]]";
+
+    private final String ONLINE_FROM_INPUT = DIALOG_CONTAINER +
+        "//div[contains(@id,'DateTimePicker') and preceding-sibling::label[text()='Online from']]//input[contains(@id,'TextInput')]";
+
     @FindBy(xpath = PUBLISH_MENU_DROPDOWN_HANDLER)
     private WebElement publishMenuDropDownHandler;
 
     @FindBy(xpath = PUBLISH_BUTTON)
     private WebElement publishButton;
+
+    @FindBy(xpath = ADD_SCHEDULE_BUTTON)
+    private WebElement addScheduleButton;
 
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     private WebElement cancelButtonTop;
@@ -89,6 +95,9 @@ public class ContentPublishDialog
 
     @FindBy(xpath = SHOW_DEPENDANT_ITEMS_LINK)
     private WebElement showDependantItemsLink;
+
+    @FindBy(xpath = ONLINE_FROM_INPUT)
+    private WebElement onlineFromInput;
 
     public ContentPublishDialog( final TestSession session )
     {
@@ -373,5 +382,25 @@ public class ContentPublishDialog
     public List<String> getDependantList()
     {
         return getDisplayedStrings( By.xpath( DEPENDANT_NAMES ) );
+    }
+
+    ContentPublishDialog typeOnlineFrom( String dateTime )
+    {
+        clearAndType( onlineFromInput, dateTime );
+        return this;
+    }
+
+    public ContentPublishDialog clickOnAddScheduleButton()
+    {
+        addScheduleButton.click();
+        sleep( 500 );
+        return this;
+    }
+
+    public ContentPublishDialog clickOnScheduleButton()
+    {
+        waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='Schedule']" ), EXPLICIT_NORMAL );
+        getDisplayedElement( By.xpath( DIALOG_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='Schedule']" ) ).click();
+        return this;
     }
 }

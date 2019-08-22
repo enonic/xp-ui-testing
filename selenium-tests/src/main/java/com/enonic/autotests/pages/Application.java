@@ -183,6 +183,14 @@ public class Application
 
     public static String MIN_OCCURRENCES_REQUIRED_MESSAGE = "Min %s occurrences required";
 
+    protected final String MARK_AS_READY_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Mark as ready']";
+
+    protected final String CREATE_ISSUE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Create Issue...']";
+
+
+    protected final String PUBLISH_TREE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree...']";
+    protected final String PUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish...']";
+
     public Application( TestSession session )
     {
         super( session );
@@ -247,7 +255,7 @@ public class Application
     {
         ArrayList<String> tabHandles = new ArrayList<String>( getDriver().getWindowHandles() );
         getDriver().switchTo().window( tabHandles.get( tabHandles.size() - 1 ) );
-        sleep( 400 );
+        sleep( 200 );
     }
 
     public boolean isAlertPresent()
@@ -279,6 +287,4 @@ public class Application
     {
         getJavaScriptExecutor().executeScript( SCRIPT_SET_CKE, id, text );
     }
-
-
 }

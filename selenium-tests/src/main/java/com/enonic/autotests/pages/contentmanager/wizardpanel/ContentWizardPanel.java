@@ -41,13 +41,13 @@ public class ContentWizardPanel
 {
     public static final String SHOW_PAGE_EDITOR_BUTTON_TITLE = "Show Page Editor";
 
-    public static final String ONLINE_TO_VALIDATION_MESSAGE = "\"Online to\" date/time cannot be in the past";
-
-    public static final String ONLINE_FROM_VALIDATION_MESSAGE = "\"Online from\" date/time must be earlier than \"Online to\"";
+    public static final String SCHEDULE_VALIDATION_MESSAGE = "End date/time cannot be in the past";
 
     public static final String ONLINE_FROM_MISSED_NOTIFICATION_MESSAGE = "[Online to] date/time cannot be set without [Online from]";
 
     private final String TOOLBAR = "//div[contains(@id,'ContentWizardToolbar')]";
+
+    private final String CONTAINER = "//div[contains(@id,'ContentWizard')]";
 
     private final String DIV_CONTENT_WIZARD_PANEL = "//div[contains(@id,'ContentWizardPanel') and not(contains(@style,'display: none'))]";
 
@@ -69,25 +69,24 @@ public class ContentWizardPanel
 
     private final String SCHEDULE_WIZARD_STEP = "//div[contains(@id,'ScheduleWizardStepForm')]";
 
-    private final String ONLINE_FROM_DATETIME_INPUT =
-        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" + DATA_TIME_PICKER_INPUT;
+    private final String ONLINE_FROM_DATETIME_INPUT = SCHEDULE_WIZARD_STEP +
+        "//div[contains(@id,'DateTimePicker') and preceding-sibling::label[text()='Online from']]//input[contains(@id,'TextInput')]";
 
-    private final String ONLINE_TO_DATETIME_INPUT =
-        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" + DATA_TIME_PICKER_INPUT;
+    private final String ONLINE_TO_DATETIME_INPUT = SCHEDULE_WIZARD_STEP +
+        "//div[contains(@id,'DateTimePicker') and preceding-sibling::label[text()='Online to']]//input[contains(@id,'TextInput')]";
 
-    private final String ONLINE_TO_INPUT_ERROR_MESSAGE =
-        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online to']]" +
-            "//div[contains(@id,'ValidationRecordingViewer')]//li";
+    private final String SCHEDULE_VALIDATION_MESSAGE_XPATH =
+        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView')]" + "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
-    private final String ONLINE_FROM_INPUT_ERROR_MESSAGE =
-        SCHEDULE_WIZARD_STEP + "//div[contains(@id,'InputView') and descendant::div[text()='Online from']]" +
-            "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
     private final String UNPUBLISH_MENU_ITEM =
         TOOLBAR_PUBLISH + "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish']";
 
     private final String TOOLBAR_PUBLISH_BUTTON_XPATH =
         TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Publish...']]";
+
+    private final String TOOLBAR_MARK_AS_READY_BUTTON_XPATH =
+        TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Mark as ready']]";
 
     private final String TOOLBAR_DELETE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete...']]";
 
@@ -99,7 +98,7 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
 
-    private String THUMBNAIL_UPLOADER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ThumbnailUploaderEl')]";
+    private String CONTENT_STATE_ICON = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@class,'toolbar-state-icon')]";
 
     private String TOGGLE_PAGE_EDITOR_TOOLBAR_BUTTON = TOOLBAR + "//button[contains(@id, 'CycleButton') ]";
 
@@ -160,7 +159,7 @@ public class ContentWizardPanel
             sleep( 1500 );
             publishMenuDropDownHandler.click();
         }
-        sleep( 400 );
+        sleep( 500 );
         return this;
     }
 
@@ -259,6 +258,44 @@ public class ContentWizardPanel
                               Application.EXPLICIT_NORMAL ).contains( "disabled" );
     }
 
+    public boolean isMarkAsReadyMenuItemEnabled()
+    {
+        if ( !isElementDisplayed( CONTAINER + MARK_AS_READY_MENU_ITEM ) )
+        {
+            saveScreenshot( "err_mark_as_ready_menu_item_not_visible " );
+            throw new TestFrameworkException( "'mark as ready' menu item is not visible!" );
+        }
+        return !getAttribute( getDisplayedElement( By.xpath( CONTAINER + MARK_AS_READY_MENU_ITEM ) ), "class",
+                              Application.EXPLICIT_NORMAL ).contains( "disabled" );
+    }
+
+    public String clickOnMarkAsReadyMenuItem()
+    {
+        if ( !isMarkAsReadyMenuItemEnabled() )
+        {
+            saveScreenshot( "err_mark_as_ready_menu_item" );
+            throw new TestFrameworkException( "menu item is not enabled" );
+        }
+        getDisplayedElement( By.xpath( CONTAINER + MARK_AS_READY_MENU_ITEM ) ).click();
+        sleep( 400 );
+        return waitForNotificationMessage();
+    }
+
+    public String clickOnMarkAsReadyButton()
+    {
+        waitUntilVisible( By.xpath( TOOLBAR_MARK_AS_READY_BUTTON_XPATH ));
+        getDisplayedElement( By.xpath( TOOLBAR_MARK_AS_READY_BUTTON_XPATH ) ).click();
+        sleep( 300 );
+        return waitForNotificationMessage();
+    }
+
+    public ContentWizardPanel clickOnMarkAsReadyAndDoPublish()
+    {
+        clickOnMarkAsReadyButton();
+        clickOnWizardPublishButton().clickOnPublishButton();
+        return this;
+    }
+
     public ContentUnpublishDialog selectUnPublishMenuItem()
     {
         if ( !isUnPublishMenuItemEnabled() )
@@ -282,6 +319,18 @@ public class ContentWizardPanel
         return !getAttribute( getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
             "disabled" );
     }
+
+    public boolean isPublishMenuItemEnabled()
+    {
+        if ( !isElementDisplayed( PUBLISH_MENU_ITEM ) )
+        {
+            saveScreenshot( "err_unpublish_menu_item_not_visible " );
+            throw new TestFrameworkException( "'Publish' menu item is not visible!" );
+        }
+        return !getAttribute( getDisplayedElement( By.xpath( PUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
+            "disabled" );
+    }
+
 
     /*
      * clicks on the toggler for 'Inspection Panel' and waits until the panel is shown
@@ -337,12 +386,24 @@ public class ContentWizardPanel
     public boolean isContentInvalid()
     {
 
-        if ( !isElementDisplayed( By.xpath( THUMBNAIL_UPLOADER ) ) )
+        if ( !isElementDisplayed( By.xpath( CONTENT_STATE_ICON ) ) )
         {
-            saveScreenshot( NameHelper.uniqueName( "err_thumbnail)" ) );
-            throw new TestFrameworkException( "thumbnail icon was not found" );
+            saveScreenshot( NameHelper.uniqueName( "err_wizard_status)" ) );
+            throw new TestFrameworkException( "status icon was not found" );
         }
-        return waitAndCheckAttrValue( getDisplayedElement( By.xpath( THUMBNAIL_UPLOADER ) ), "class", "invalid",
+        return waitAndCheckAttrValue( getDisplayedElement( By.xpath( CONTENT_STATE_ICON ) ), "class", "invalid",
+                                      Application.EXPLICIT_NORMAL );
+    }
+
+    public boolean waitForContentInProgress()
+    {
+
+        if ( !isElementDisplayed( By.xpath( CONTENT_STATE_ICON ) ) )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_wizard_status)" ) );
+            throw new TestFrameworkException( "status icon was not found" );
+        }
+        return waitAndCheckAttrValue( getDisplayedElement( By.xpath( CONTENT_STATE_ICON ) ), "class", "in-progress",
                                       Application.EXPLICIT_NORMAL );
     }
 
@@ -530,6 +591,16 @@ public class ContentWizardPanel
     public boolean isPublishButtonEnabled()
     {
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+    }
+
+    public boolean isMarAsReadyEnabled()
+    {
+        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_MARK_AS_READY_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+    }
+
+    public void waitForMarkAsReadyButtonVisible()
+    {
+        waitUntilVisible( By.xpath( TOOLBAR_MARK_AS_READY_BUTTON_XPATH ) );
     }
 
     public boolean isPreviewButtonEnabled()
@@ -883,20 +954,14 @@ public class ContentWizardPanel
         return this;
     }
 
-    public String getOnlineToValidationMessage()
+    public String getScheduleValidationMessage()
     {
-        return getDisplayedString( ONLINE_TO_INPUT_ERROR_MESSAGE );
-    }
-
-    public String getOnlineFromValidationMessage()
-    {
-        return getDisplayedString( ONLINE_FROM_INPUT_ERROR_MESSAGE );
+        return getDisplayedString( SCHEDULE_VALIDATION_MESSAGE_XPATH );
     }
 
     /**
      * Gets Permissions from the Security tab
      *
-     * @return
      */
     public List<ContentAclEntry> getAclEntries()
     {

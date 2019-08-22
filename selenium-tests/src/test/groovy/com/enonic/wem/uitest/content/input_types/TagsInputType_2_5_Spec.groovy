@@ -18,7 +18,7 @@ class TagsInputType_2_5_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        contentWizardPanel.typeData( tagContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
+        contentWizardPanel.typeData( tagContent ).clickOnMarkAsReadyAndDoPublish(  );
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( tagContent.getName() );
@@ -73,7 +73,6 @@ class TagsInputType_2_5_Spec
         formViewPanel.isTagsInputDisplayed() && !isDisplayedBefore;
     }
 
-
     def "GIVEN creating new Tag-content 2:5 on root WHEN two tags added and button 'Save' and 'Publish' pressed  and just created content opened THEN two tags with correct name are present"()
     {
         given: "start to add a content with type 'Tag 2:5'"
@@ -91,7 +90,6 @@ class TagsInputType_2_5_Spec
         String[] tags = [TAG_1, TAG_2];
         List<String> fromUI = formViewPanel.getTagsText();
         fromUI.containsAll( tags.toList() );
-
     }
 
     def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN five tags added and 'Save' button pressed and just created content opened THEN five Tags with correct name are present in the wizard page"()
@@ -112,5 +110,4 @@ class TagsInputType_2_5_Spec
         String[] tags = [TAG_1, TAG_2, TAG_3, TAG_4, TAG_5];
         formViewPanel.getTagsText().containsAll( tags.toList() );
     }
-
 }

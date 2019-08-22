@@ -21,35 +21,35 @@ class Occurrences_Double_Spec
     @Shared
     String DOUBLE_MORE_THAN_MAX_VALUE = "9007199254740992"
 
-    def "GIVEN wizard for 'double' content(not required) is opened WHEN invalid value has been typed THEN input should be with red border BUT red icon should not be shown on the wizard page"()
+    def "GIVEN wizard for 'double' content(not required) is opened WHEN not valid value has been typed THEN input should be with red border BUT red icon should not be shown on the wizard page"()
     {
         given: " wizard for 'double' content(not required) is opened"
         Content doubleContent = buildDouble0_0_Content( WRONG_DOUBLE );
         ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
-        when: "invalid long value was typed"
+        when: "invalid long value has been typed"
         wizard.typeData( doubleContent );
         saveScreenshot( "test_double_invalid_not_req" );
 
         then: "input should be with red border"
         !doubleFormViewPanel.isValueInInputValid( 0 );
 
-        and: "'Publish' button on the wizard-toolbar is enabled, because input is not required"
-        wizard.isPublishButtonEnabled();
+        and: "'Publish' menu item should be enabled, because the input is not required"
+        wizard.showPublishMenu().isPublishMenuItemEnabled();
 
         and: "red icon should not be present on the wizard page, because the value is not required"
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN 'double'-wizard content(required) is opened WHEN MAX value has been typed THEN validation message should not be displayed AND Publish button should be enabled"()
+    def "GIVEN 'double'-wizard content(required) is opened WHEN MAX value has been typed THEN validation message should not be displayed AND Publish meni item should be enabled"()
     {
         given: " wizard for 'double' content(required) is opened"
         Content doubleContent = buildDouble1_1_Content( DOUBLE_MAX_VALUE );
         ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
-        when: "invalid long value was typed"
+        when: "MAX value has been typed"
         wizard.typeData( doubleContent );
         saveScreenshot( "test_double_max_req" );
 
@@ -57,28 +57,28 @@ class Occurrences_Double_Spec
         doubleFormViewPanel.isValueInInputValid( 0 );
 
         and: "'Publish' button on the wizard-toolbar should be enabled"
-        wizard.isPublishButtonEnabled();
+        wizard.showPublishMenu().isPublishMenuItemEnabled();
 
         and: "red icon should not be present on the wizard page, because the value is allowed"
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN 'double'-wizard content(required) is opened WHEN more than MAX value has been typed THEN validation message should be displayed AND Publish button should be disabled"()
+    def "GIVEN 'double'-wizard content(required) is opened WHEN more than MAX value has been typed THEN validation message should be displayed AND Publish menu item should be disabled"()
     {
         given: " wizard for 'double' content(required) is opened"
         Content doubleContent = buildDouble1_1_Content( DOUBLE_MORE_THAN_MAX_VALUE );
         ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() ).waitUntilWizardOpened();
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
-        when: "invalid long value was typed"
+        when: "more than MAX value has been typed"
         wizard.typeData( doubleContent );
         saveScreenshot( "test_double_more_max_req" );
 
         then: "input should be with the green border"
         !doubleFormViewPanel.isValueInInputValid( 0 );
 
-        and: "'Publish' button on the wizard-toolbar should be disabled, because the field is required"
-        !wizard.isPublishButtonEnabled();
+        and: "'Publish' menu item should be disabled, because the value is more than max value"
+        !wizard.showPublishMenu().isPublishMenuItemEnabled();
 
         and: "red icon should not be present on the wizard page, because the value is not allowed"
         wizard.isContentInvalid();
@@ -101,7 +101,7 @@ class Occurrences_Double_Spec
         values.size() == 1;
 
         and: "actual value in the form view and expected should be equals"
-        values.get( 0 ).equals( TEST_DOUBLE );
+        values.get( 0 ) == TEST_DOUBLE;
 
         and: "validation message should not be displayed, because content is valid"
         !doubleFormViewPanel.isValidationMessagePresent();
@@ -122,7 +122,7 @@ class Occurrences_Double_Spec
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
-        when: "content was saved"
+        when: "content has been saved"
         wizard.save();
 
         then: "validation message should not be displayed"
@@ -135,7 +135,7 @@ class Occurrences_Double_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN creating a double content with a required value WHEN name typed AND save button pressed THEN validation message appears"()
+    def "GIVEN wizard for new double content(required value) is opened WHEN double input is empty AND content has been saved THEN validation message should appear"()
     {
         given: "adding of double content with empty value"
         Content doubleContent = buildDouble1_1_Content( null );
@@ -143,7 +143,7 @@ class Occurrences_Double_Spec
             doubleContent );
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
-        when: "content was saved"
+        when: "content has been saved"
         wizard.save();
         saveScreenshot( "test_double_save_confirm1" );
 
@@ -162,7 +162,7 @@ class Occurrences_Double_Spec
             doubleContent );
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
-        when: "content was saved"
+        when: "content has been saved"
         wizard.save();
         saveScreenshot( "test_double_save_confirm2" );
 
@@ -179,7 +179,7 @@ class Occurrences_Double_Spec
         Content doubleContent = buildDouble2_4_Content( TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
         ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() );
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
-        when: "three values were typed"
+        when: "values in three inputs has been typed"
         wizard.typeData( doubleContent );
 
         then: "'add' button should be displayed on the form"
@@ -192,7 +192,7 @@ class Occurrences_Double_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN creating of double content WHEN MAX value typed THEN validation message should not be displayed"()
+    def "GIVEN new wizard for double content is opened WHEN MAX value has been typed THEN validation message should not be displayed"()
     {
         given: "creating of double content"
         Content doubleContent = buildDouble1_1_Content( MAX_SAFE_INTEGER );
@@ -210,14 +210,14 @@ class Occurrences_Double_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN creating of double content WHEN value more than MAX was typed THEN validation message should be displayed"()
+    def "GIVEN new wizard for double content is opened WHEN value more than MAX has been typed THEN validation message should be displayed"()
     {
         given: "creating of double content"
         Content doubleContent = buildDouble1_1_Content( MORE_MAX_SAFE_INTEGER );
         ContentWizardPanel wizard = selectSitePressNew( doubleContent.getContentTypeName() );
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
 
-        when: "value more than MAX was typed"
+        when: "value more than MAX has been typed"
         wizard.typeData( doubleContent );
         saveScreenshot( "test_more_max_double" );
 

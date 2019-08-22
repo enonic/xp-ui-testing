@@ -33,8 +33,8 @@ public class IssueDetailsDialog
     private final String CLOSE_ISSUE_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Close Issue']]";
 
-    private final String PUBLISH_AND_CLOSE_BUTTON =
-        "//button[contains(@id,'ActionButton') and child::span[contains(.,'Publish & Close Issue')]]";
+    private final String PUBLISH_BUTTON =
+        "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish...')]]";
 
     private final String ISSUE_STATUS_SELECTOR = DIALOG_CONTAINER + "//div[contains(@id,'IssueStatusSelector')]";
 
@@ -81,8 +81,8 @@ public class IssueDetailsDialog
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     private WebElement cancelButtonTop;
 
-    @FindBy(xpath = PUBLISH_AND_CLOSE_BUTTON)
-    private WebElement publishAndCloseButton;
+    @FindBy(xpath = PUBLISH_BUTTON)
+    private WebElement publishButton;
 
     public IssueDetailsDialog( final TestSession session )
     {
@@ -230,9 +230,9 @@ public class IssueDetailsDialog
         return this;
     }
 
-    public IssueDetailsDialog clickOnPublishAndCloseButton()
+    public IssueDetailsDialog clickOnPublishButton()
     {
-        publishAndCloseButton.click();
+        publishButton.click();
         sleep( 500 );
         return this;
     }

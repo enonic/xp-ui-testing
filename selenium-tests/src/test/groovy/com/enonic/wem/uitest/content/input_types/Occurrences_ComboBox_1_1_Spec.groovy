@@ -129,7 +129,8 @@ class Occurrences_ComboBox_1_1_Spec
         when: "content with selected option has been published"
         comboBox1_1 = buildComboBox1_1_Content( 1 );
         ContentWizardPanel wizard = selectSitePressNew( comboBox1_1.getContentTypeName() );
-        wizard.typeData( comboBox1_1 ).save().clickOnWizardPublishButton().clickOnPublishButton();
+        wizard.typeData( comboBox1_1 ).showPublishMenu().clickOnMarkAsReadyMenuItem();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( comboBox1_1.getName() );
@@ -162,10 +163,10 @@ class Occurrences_ComboBox_1_1_Spec
         given: "not valid content with status is 'Deleted'"
         filterPanel.typeSearchText( comboBox1_1.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( comboBox1_1.getName() );
-        ContentPublishDialog dialog = contentBrowsePanel.clickToolbarPublish();
+
 
         when: "content was selected and 'Publish' button pressed"
-        dialog.clickOnPublishButton();
+        contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem(  ).clickOnUnpublishButton(  );
         saveScreenshot( "invalid_cb_1_1_published" );
 
         then: "content should not be deleted"

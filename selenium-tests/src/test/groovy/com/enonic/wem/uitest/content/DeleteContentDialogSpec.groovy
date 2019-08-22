@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -95,7 +96,7 @@ class DeleteContentDialogSpec
         saveScreenshot( "one_content_in_dialog" );
 
         and: "correct display name of content is displayed"
-        CONTENT1.getDisplayName().equals( displayNamesFromUI.get( 0 ) )
+        CONTENT1.getDisplayName()== displayNamesFromUI.get( 0 );
     }
 
 
@@ -103,7 +104,10 @@ class DeleteContentDialogSpec
     {
         given: "existing content is selected"
         findAndSelectContent( CONTENT1.getName() );
+
         and: "the content has been published"
+        ConfirmationDialog confirm = contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
+        confirm.pressYesButton();
         contentBrowsePanel.clickToolbarPublish().clickOnPublishButton().waitForDialogClosed();
 
         when: "the content is selected and 'Delete' button has been pressed"

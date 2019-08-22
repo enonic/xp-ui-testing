@@ -10,7 +10,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 4/26/2017.
- * Tasks:enonic/xp-ui-testing#41 Add Selenium test to verify enonic/xp#4817(Publish Dialog )
  * */
 @Stepwise
 class ContentPublishDialog_Sibling_Folders_Spec
@@ -28,8 +27,8 @@ class ContentPublishDialog_Sibling_Folders_Spec
         given: "folder has been added in root directory"
         FOLDER1 = buildFolderContent( "folder", "publishing test1" );
         FOLDER2 = buildFolderContent( "folder", "publishing test2" );
-        addContent( FOLDER1 );
-        addContent( FOLDER2 );
+        addReadyContent( FOLDER1 );
+        addReadyContent( FOLDER2 );
 
         when: "Both folders were selected and 'Publish' button clicked"
         findAndSelectContent( FOLDER1.getName() )

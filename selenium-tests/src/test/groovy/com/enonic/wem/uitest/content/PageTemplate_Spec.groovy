@@ -13,8 +13,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 4/5/2017.
- * Tasks:
- * enonic/xp-ui-testing#36  Add Selenium tests for already fixed bugs
  *
  * Verifies:
  * Page Template Wizard- button 'Edit' in the support-selected option does not open the content in new wizard tab #4745
@@ -153,7 +151,7 @@ class PageTemplate_Spec
         and: "the version with selected 'support' option has been expanded"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         and: "the version is restored"
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         contentBrowsePanel.switchToBrowserTabByTitle( TEST_TEMPLATE.getDisplayName() );
 
         then: "'support' option filter should be displayed"

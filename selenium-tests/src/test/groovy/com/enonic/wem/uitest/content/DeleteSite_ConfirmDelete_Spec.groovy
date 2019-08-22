@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
@@ -104,27 +105,32 @@ class DeleteSite_ConfirmDelete_Spec
         then:
         !contentBrowsePanel.exists(SITE.getName());
     }
-    // this test verifies the XP-3428
-    def "GIVEN existing site with 'online' status WHEN site selected and Delete pressed AND 'Instantly delete' checkbox checked THEN site not listed"() {
-        given: "existing site selected AND delete button pressed"
-        Content onlineSite = buildSiteWithNameAndDispalyNameAndDescription("site", "confirm delete online", "description");
-        addContent(onlineSite);
-        findAndSelectContent( onlineSite.getName() ).clickToolbarPublish().clickOnPublishButton();
 
-        when: "site selected and Delete pressed AND 'Instantly delete' checkbox checked"
+    def "GIVEN existing site with 'online' status WHEN site selected and Delete pressed AND 'Instantly delete' checkbox checked THEN site should be deleted"() {
+        given: "new site has been added"
+        Content site = buildSiteWithNameAndDispalyNameAndDescription("site", "confirm delete online", "description");
+        addContent(site);
+
+        and:"the site has been published"
+        findAndSelectContent( site.getName() );
+        ConfirmationDialog confirm = contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
+        confirm.pressYesButton();
+        contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
+
+        when: "site selected and Delete pressed AND 'Instantly delete' checkbox has been checked"
         contentBrowsePanel.clickToolbarDelete().clickOnInstantlyCheckbox().clickOnDeleteButton();
         ConfirmContentDeleteDialog confirmDialog = new ConfirmContentDeleteDialog(getSession());
 
-        and: "correct number of resources was typed"
+        and: "correct number of resources has been typed"
         confirmDialog.typeNumber("2").clickOnConfirmButton();
         saveScreenshot("test_confirm_delete_site_online");
 
-        then: "correct notification message should appears"
-        contentBrowsePanel.waitExpectedNotificationMessage("Item \"" + onlineSite.getName() + "\" is deleted.", 1)
+        then: "expected notification message should appears"
+        contentBrowsePanel.waitExpectedNotificationMessage("Item \"" + site.getName() + "\" is deleted.", 1)
 
 
         and: "site successfully deleted"
-        !contentBrowsePanel.exists(onlineSite.getName());
+        !contentBrowsePanel.exists(site.getName());
     }
 
     private ConfirmContentDeleteDialog openConfirmDeleteDialog(String siteName) {

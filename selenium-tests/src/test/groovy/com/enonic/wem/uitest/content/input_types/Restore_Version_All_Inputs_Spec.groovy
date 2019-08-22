@@ -111,7 +111,7 @@ class Restore_Version_All_Inputs_Spec
         when: "the previous version has been restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "all_inputs_restored" );
 
         and: "content is opened"

@@ -62,7 +62,7 @@ class Restore_Version_Crop_Image_Spec
 
         when: "version with original image was restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion();
 
         and: "the image is opened"
         contentBrowsePanel.clickToolbarEdit();
@@ -88,7 +88,7 @@ class Restore_Version_Crop_Image_Spec
 
         when: "version of image with cropped size has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion();
 
         and: "the image is opened"
         contentBrowsePanel.clickToolbarEdit();
@@ -110,12 +110,12 @@ class Restore_Version_Crop_Image_Spec
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
         wizard.switchToBrowsePanelTab();
 
-        when: "version panel was opened"
+        when: "version panel has been opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         and: "original version is restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion();
         saveScreenshot( "image_reverted_to_zoomed" );
 
         and: "switch to the wizard-tab again"
@@ -132,15 +132,15 @@ class Restore_Version_Crop_Image_Spec
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN_IMAGE ).clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
 
-        when: "version panel was opened"
+        when: "version panel has been opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         and: "cropped version has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "zoomed_version_of_image_reverted" );
 
-        and: "wizard-tab is activated again"
+        and: "switch to the wizard-tab again"
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 

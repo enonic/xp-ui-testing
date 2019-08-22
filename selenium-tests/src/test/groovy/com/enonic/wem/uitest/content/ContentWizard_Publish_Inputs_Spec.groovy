@@ -1,8 +1,10 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.SchedulePublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TimeUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -12,8 +14,6 @@ import spock.lang.Stepwise
 /**
  * Created on 27.12.2016.
  *
- * Tasks:
- *  XP-4562 Add selenium tests for Time-based publishing
  * */
 @Stepwise
 class ContentWizard_Publish_Inputs_Spec
@@ -32,7 +32,11 @@ class ContentWizard_Publish_Inputs_Spec
         and: "'Online From' input is not displayed"
         boolean isDisplayedBeforePublish = wizard.isOnlineFromInputDisplayed();
 
-        when: "'Publish' button has been pressed and the content published"
+        when: "the folder has been marked as ready"
+        wizard.showPublishMenu().clickOnMarkAsReadyMenuItem();
+
+
+        and: "'Publish' button has been pressed and the content published"
         wizard.clickOnWizardPublishButton().clickOnPublishButton();
         String nowDate = TimeUtils.getNowDate();
 
@@ -61,11 +65,9 @@ class ContentWizard_Publish_Inputs_Spec
         wizard.typeOnlineTo( TimeUtils.getYesterdayDateTime() );
         saveScreenshot( "schedule_wizard_validation_message" )
 
-        then: "correct validation messages appear"
-        wizard.getOnlineToValidationMessage() == wizard.ONLINE_TO_VALIDATION_MESSAGE;
+        then: "expected validation messages appears"
+        wizard.getScheduleValidationMessage() == wizard.SCHEDULE_VALIDATION_MESSAGE;
 
-        and: ""
-        wizard.getOnlineFromValidationMessage() == wizard.ONLINE_FROM_VALIDATION_MESSAGE;
     }
 
     def "GIVEN existing published folder WHEN the folder is opened 'Online from' is cleared and 'Online to' has been set THEN correct notification message appears"()
@@ -89,7 +91,7 @@ class ContentWizard_Publish_Inputs_Spec
     {
         given: "existing published folder"
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
-        sleep(1000);
+        sleep( 1000 );
 
         when: "the folder has been unpublished"
         wizard.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
@@ -105,14 +107,15 @@ class ContentWizard_Publish_Inputs_Spec
         !wizard.isOnlineToInputDisplayed();
     }
 
-    def "GIVEN existing offline folder WHEN 'Online from' set in the future AND Publish button pressed THEN folder is getting 'Online Pending'"()
+    def "GIVEN existing Unpublished folder WHEN 'Online from' set in the future AND Publish button pressed THEN folder is getting 'Online Pending'"()
     {
         given: "existing published folder"
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
 
         when: "the folder has been unpublished"
-        SchedulePublishDialog schedulePublishDialog = wizard.clickOnWizardPublishButton().showPublishMenu().clickOnScheduleMenuItem();
-        schedulePublishDialog.typeOnlineFrom( TimeUtils.getTomorrowDateTime() ).hideTimePickerPopup().clickOnScheduleButton();
+        ContentPublishDialog publishDialog = wizard.clickOnWizardPublishButton();
+        publishDialog.clickOnAddScheduleButton();
+        publishDialog.typeOnlineFrom( TimeUtils.getTomorrowDateTime() ).clickOnScheduleButton();
 
         then: "status is getting 'Published(Pending)'"
         wizard.waitStatus( ContentStatus.PUBLISHED_PENDING, Application.EXPLICIT_NORMAL );

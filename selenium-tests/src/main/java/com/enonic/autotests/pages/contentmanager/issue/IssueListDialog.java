@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -26,37 +27,44 @@ public class IssueListDialog
 
     private String ISSUE_BY_TITLE = ISSUES_LIST + NAMES_VIEW_BY_DISPLAY_NAME;
 
-    private final String OPEN_TAB_ITEM = DIALOG_CONTAINER + "//li[contains(@id,'TabBarItem') and descendant::a[contains(.,'Open')]]";
+    private final String ASSIGNED_DROPDOWN_HANDLE = DIALOG_CONTAINER + "//div[contains(@id,'RowSelector')]" + DROP_DOWN_HANDLE_BUTTON;
 
-    private final String SHOW_CLOSED_ISSUES_LINK =
-        DIALOG_CONTAINER + "//li[contains(@id,'TabBarItem') and descendant::a[contains(.,'Show closed issues')]]";
+    private final String SHOW_CLOSED_ISSUES_BUTTON =
+        DIALOG_CONTAINER + "//button[contains(@id,'OnOffButton') and child::span[contains(.,'Show closed issues')]]";
 
     private final String NEW_ISSUE_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='New Issue...']]";
 
-    private final String ASSIGNED_TO_ME_CHECKBOX = "//div[contains(@id,'Checkbox') and descendant::label[contains(.,'Assigned to Me')]]";
+    private final String SHOW_ISSUES_SELECTOR = DIALOG_CONTAINER + "//div[contains(@id,'RowSelector')]";
 
-    private final String MY_ISSUES_CHECKBOX = "//div[contains(@id,'Checkbox') and descendant::label[contains(.,'My Issues')]]";
+    private final String SELECTED_OPTIONS = "//div[contains(@class,'selected-options')]";
+
+    private final String ISSUES_TAB = "//li[contains(@id,'api.ui.tab.TabBarItem') and child::a[ contains(.,'Issues')]]";
+
+    private final String ALL_ISSUES_TAB_ITEM =
+        DIALOG_CONTAINER + "//li[contains(@id,'api.ui.tab.TabBarItem') and child::a[contains(.,'All issues')]]";
+
+    private final String PUBLISH_REQUESTS_TAB_ITEM =
+        DIALOG_CONTAINER + "//li[contains(@id,'api.ui.tab.TabBarItem')and child::a[ contains(.,'Publish requests')]]";
+
+    private final String ISSUES_TAB_ITEM = DIALOG_CONTAINER + "//li[contains(@id,'api.ui.tab.TabBarItem') and child::a[ contains(.,'Issues')]]";
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
     @FindBy(xpath = NEW_ISSUE_BUTTON)
     private WebElement newIssueButton;
 
-    @FindBy(xpath = ASSIGNED_TO_ME_CHECKBOX)
-    private WebElement assignedToMeCheckbox;
+    @FindBy(xpath = ISSUES_TAB_ITEM)
+    private WebElement issuesTab;
 
-    @FindBy(xpath = MY_ISSUES_CHECKBOX)
-    private WebElement myIssuesCheckbox;
-
-    @FindBy(xpath = OPEN_TAB_ITEM)
-    private WebElement openTab;
-
-    @FindBy(xpath = SHOW_CLOSED_ISSUES_LINK)
-    private WebElement showClosedIssuesLink;
+    @FindBy(xpath = SHOW_CLOSED_ISSUES_BUTTON)
+    private WebElement showClosedIssuesButton;
 
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     private WebElement cancelButtonTop;
+
+    @FindBy(xpath = ASSIGNED_DROPDOWN_HANDLE)
+    private WebElement assignedDropDownHandle;
 
     public IssueListDialog( final TestSession session )
     {
@@ -78,9 +86,11 @@ public class IssueListDialog
         }
     }
 
-    public boolean isAssignedToMeCheckboxDisabled()
+    //Show assigned combobox
+    public String getAssignedSelectedOption()
     {
-        return waitAndCheckAttrValue( assignedToMeCheckbox, "class", "disabled", 1 );
+        String selector = SHOW_ISSUES_SELECTOR + SELECTED_OPTIONS + "//div[contains(@class,'option-value')]";
+        return this.getDisplayedString( selector );
     }
 
     public boolean isIssuePresent( String displayName )
@@ -89,50 +99,53 @@ public class IssueListDialog
         return isElementDisplayed( By.xpath( xpath ) );
     }
 
-    public boolean isMyIssuesCheckboxDisabled()
+
+    public boolean isIssuesTabDisplayed()
     {
-        return waitAndCheckAttrValue( myIssuesCheckbox, "class", "disabled", 1 );
+        return isElementDisplayed( ISSUES_TAB_ITEM );
     }
 
-    public boolean isOpenTabPresent()
+    public boolean isShowClosedIssuesButtonDisplayed()
     {
-        return isElementDisplayed( OPEN_TAB_ITEM );
+        return isElementDisplayed( SHOW_CLOSED_ISSUES_BUTTON );
     }
 
-    public boolean isShowClosedIssuesLinkVisible()
+    public boolean isAllIssuesTabActive()
     {
-        return isElementDisplayed( SHOW_CLOSED_ISSUES_LINK );
+        return waitAndCheckAttrValue( findElement( By.xpath( ALL_ISSUES_TAB_ITEM ) ), "class", "active", 1 );
     }
 
-    public boolean isOpenTabActive()
+    public boolean isIssuesTabActive()
     {
-        return waitAndCheckAttrValue( findElement( By.xpath( OPEN_TAB_ITEM ) ), "class", "active", 1 );
+        return waitAndCheckAttrValue( findElement( By.xpath( ISSUES_TAB_ITEM ) ), "class", "active", 1 );
     }
 
-    public boolean isClosedTabActive()
+    public IssueListDialog clickOnIssuesTab()
     {
-        return waitAndCheckAttrValue( findElement( By.xpath( SHOW_CLOSED_ISSUES_LINK ) ), "class", "active", 1 );
-    }
-
-    public IssueListDialog clickOnOpenTab()
-    {
-        openTab.click();
+        issuesTab.click();
+        sleep( 300 );
         return this;
     }
 
     public IssueListDialog clickOnShowClosedIssues()
     {
-        showClosedIssuesLink.click();
+        showClosedIssuesButton.click();
         return this;
     }
 
-    public IssueListDialog setAssignedToMeCheckbox( boolean checked )
+    public void clickOnAssignedToMeOption()
     {
-        String id = assignedToMeCheckbox.getAttribute( "id" );
-        String script = String.format( "window.api.dom.ElementRegistry.getElementById('%s')" + ".setChecked(%b)", id, checked );
-        getJavaScriptExecutor().executeScript( script );
-        sleep( 700 );
-        return this;
+        assignedDropDownHandle.click();
+        String optionXpath =
+            "//div[contains(@class,'slick-row') and descendant::div[contains(@id,'RowOptionDisplayValueViewer') and contains(.,'Assigned to Me')]]";
+        boolean isVisible = waitUntilVisibleNoException( By.xpath( optionXpath ), Application.EXPLICIT_NORMAL );
+        sleep( 400 );
+        if ( !isVisible )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_option" ) );
+            throw new TestFrameworkException( "option was not found! " + optionXpath );
+        }
+        getDisplayedElement( By.xpath( optionXpath ) ).click();
     }
 
     public IssueDetailsDialog clickOnIssue( String tittle )

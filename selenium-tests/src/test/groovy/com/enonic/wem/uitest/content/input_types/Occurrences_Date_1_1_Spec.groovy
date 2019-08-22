@@ -77,12 +77,13 @@ class Occurrences_Date_1_1_Spec
     {
         given: "start to add a content with type 'Date'"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
-        ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
+        ContentWizardPanel contentWizard = selectSitePressNew( dateContent.getContentTypeName() );
 
         when: "data was typed and saved and the content has been published"
-        contentWizardPanel.typeData( dateContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
+        contentWizard.typeData( dateContent ).showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
+        contentWizard.clickOnWizardPublishButton().clickOnPublishButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
-        contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
+        contentWizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( dateContent.getName() );
 
         then: "content should be 'Published'"

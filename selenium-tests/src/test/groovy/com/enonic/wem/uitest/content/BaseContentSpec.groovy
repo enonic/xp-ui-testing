@@ -292,6 +292,17 @@ class BaseContentSpec
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 
+    void addReadyContent( Content content )
+    {
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
+        wizard.typeData( content );
+        //MARK AS READY button gets visible on the wizard-toolbar
+        wizard.clickOnMarkAsReadyButton();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
+        sleep( 1000 );
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+    }
+
     ContentBrowsePanel findAndSelectContent( String name )
     {
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );

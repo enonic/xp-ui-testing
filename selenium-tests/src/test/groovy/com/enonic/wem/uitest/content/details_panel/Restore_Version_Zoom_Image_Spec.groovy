@@ -58,7 +58,7 @@ class Restore_Version_Zoom_Image_Spec
 
         when: "version with original image is restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
 
         and: "image is opened in the wizard"
         contentBrowsePanel.clickToolbarEdit();
@@ -79,7 +79,7 @@ class Restore_Version_Zoom_Image_Spec
 
         when: "version with zoomed image is restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "zoomed_image_reverted_to_original" );
 
         and: "image is opened in the wizard"
@@ -104,7 +104,7 @@ class Restore_Version_Zoom_Image_Spec
 
         and: "original version is restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "image_reverted_to_zoomed" );
 
         and: "wizard-tab activated again"
@@ -128,7 +128,7 @@ class Restore_Version_Zoom_Image_Spec
 
         and: "version with zoomed image is restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "image_reverted_to_zoomed" );
 
         and: "wizard-tab activated again"

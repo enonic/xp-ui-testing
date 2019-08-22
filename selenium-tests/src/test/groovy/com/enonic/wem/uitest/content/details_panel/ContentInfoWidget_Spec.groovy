@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.details_panel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentInfoTerms
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentInfoWidget
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
@@ -60,9 +61,11 @@ class ContentInfoWidget_Spec
 
     def "GIVEN existing folder that is 'New' WHEN folder was published THEN new correct status is shown"()
     {
-        given: "existing folder that is 'New'"
+        given: "existing folder that is 'New' and 'Marked as ready'"
         filterPanel.typeSearchText( FOLDER.getName() )
-        contentBrowsePanel.selectContentInTable( FOLDER.getName() )
+        contentBrowsePanel.selectContentInTable( FOLDER.getName() );
+        ConfirmationDialog confirm = contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
+        confirm.pressYesButton();
 
         when: "the folder has been published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
@@ -80,9 +83,9 @@ class ContentInfoWidget_Spec
         props.get( ContentInfoTerms.FIRST_PUBLISHED.getValue() ).contains( LocalDate.now().toString() );
     }
 
-    def "GIVEN existing folder with 'Online' status  WHEN the folder has been changed THEN content has got a 'Modified' status"()
+    def "GIVEN existing folder with 'Published' status  WHEN the folder has been changed THEN content has got a 'Modified' status"()
     {
-        given: "existing folder with 'Online' status is opened"
+        given: "existing folder with 'Published' status is opened"
         ContentWizardPanel wizard = findAndSelectContent( FOLDER.getName() ).clickToolbarEditAndSwitchToWizardTab();
 
         when: "content has been updated"

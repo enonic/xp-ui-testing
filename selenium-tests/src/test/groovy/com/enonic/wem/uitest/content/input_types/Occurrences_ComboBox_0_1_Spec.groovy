@@ -36,7 +36,7 @@ class Occurrences_ComboBox_0_1_Spec
         formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "GIVEN new ComboBox0_1 is saved AND one option is selected WHEN content has been opened THEN one selected option should be present on the page and options filter input is disabled"()
+    def "GIVEN new wizard for ComboBox0_1 is opened AND one option has been selected WHEN content has been re-opened THEN one selected option should be present and options-filter input should be disabled"()
     {
         given: "new ComboBox0_1 is saved"
         content_with_opt = buildComboBox0_1_Content( 1 );
@@ -51,19 +51,20 @@ class Occurrences_ComboBox_0_1_Spec
         then: "one option value  present in form view"
         optValues.size() == 1;
 
-        and: "option with correct text should be displayed"
+        and: "option with expected text should be displayed"
         optValues.get( 0 ) == "option A";
 
         and: "options filter input should be disabled"
         !formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "GIVEN existing ComboBox 0:1 with one option is opened WHEN the content has been published THEN content's status is getting 'Published'"()
+    def "GIVEN existing ComboBox 0:1 with (one selected option) is opened WHEN the content has been published THEN content's status is getting 'Published'"()
     {
         given: "existing ComboBox 0:0 with options'"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );
 
         when: "the content has been published"
+        wizard.showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
         wizard.clickOnWizardPublishButton().clickOnPublishButton().waitForDialogClosed();
         wizard.closeBrowserTab().switchToBrowsePanelTab(); ;
         filterPanel.typeSearchText( content_with_opt.getName() );
@@ -72,7 +73,7 @@ class Occurrences_ComboBox_0_1_Spec
         contentBrowsePanel.getContentStatus( content_with_opt.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
-    def "GIVEN existing ComboBox-content(0:1) with selected option is opened and the option is removed AND content saved WHEN content has been opened THEN options should not be selected on the page"()
+    def "GIVEN existing ComboBox-content(0:1) AND selected option has been removed WHEN content has been re-opened THEN options should not be selected on the page"()
     {
         given: "content with one option is opened "
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );

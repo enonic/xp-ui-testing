@@ -22,7 +22,7 @@ class ContentPublishDelete_Spec
     {
         given: "new folder is added"
         content = buildFolderContent( "publish", DISPLAY_NAME );
-        addContent( content );
+        addReadyContent( content );
 
         when: "the folder has been published"
         filterPanel.typeSearchText( content.getName() )

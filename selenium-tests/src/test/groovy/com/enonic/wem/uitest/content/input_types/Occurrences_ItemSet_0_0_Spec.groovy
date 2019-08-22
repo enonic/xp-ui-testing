@@ -16,7 +16,6 @@ import spock.lang.Stepwise
 /**
  * Created  on 10.11.2016.
  * Verifies Bug: XP-4422 ItemSet content wizard - 'save before close' should appear, when there are unsaved changes
- *
  * */
 @Stepwise
 class Occurrences_ItemSet_0_0_Spec
@@ -135,7 +134,7 @@ class Occurrences_ItemSet_0_0_Spec
         wizard.waitIsAlertDisplayed();
     }
 
-    def "GIVEN creating of ItemSet with data WHEN data typed and saved THEN content is getting valid"()
+    def "GIVEN new wizard for ItemSet is opened WHEN all requred data has been typed and saved THEN content is getting valid"()
     {
         given: "wizard for adding of new ItemSet content is opened"
         ITEM_SET_WITH_DATA = buildItemSetWithOneTextLineAndHtmlArea();
@@ -150,40 +149,39 @@ class Occurrences_ItemSet_0_0_Spec
         and: "Save button has been pressed"
         wizard.save();
 
-        then: "Publish button should be enabled"
-        wizard.isPublishButtonEnabled();
+        then: "Publish menu item should be enabled"
+        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "content should be valid, because all required inputs are filled"
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN existing ItemSet-content with saved data WHEN content opened THEN correct text is present in the text-line and html-area inputs"()
+    def "WHEN existing ItemSet-content is opened THEN expected text should be present in the text-line and in html-area inputs"()
     {
-        when: "wizard for adding of new ItemSet content is opened"
+        when: "existing ItemSet-content is opened"
         ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
-        then: "correct text is present in html-area inputs"
+        then: "expected text is present in html-area inputs"
         itemSetViewPanel.getInnerTextFromHtmlAreas().get( 0 ) == TEST_TEXT_HTML_AREA;
 
-        and: "correct text is displayed in the text-line"
+        and: "expected text is displayed in the text-line"
         itemSetViewPanel.getTextFromTextLines().get( 0 ) == TEST_TEXT_TEXT_LINE;
 
         and: "content is valid, because all required inputs are filled"
         !wizard.isContentInvalid();
 
-        and: "Publish button is enabled"
-        wizard.isPublishButtonEnabled();
+        and: "Publish menu item should be enabled"
+        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
-    def "GIVEN existing ItemSet-content with saved valid data WHEN the content has been published THEN 'online' status is displayed"()
+    def "GIVEN existing ItemSet-content is opened WHEN the content has been published THEN 'Published' status should be displayed"()
     {
         given: "existing ItemSet-content with saved valid data"
         ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
 
         when: "the content has been published"
-        wizard.clickOnWizardPublishButton().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL ).clickOnPublishButton().waitForDialogClosed();
+        wizard.clickOnMarkAsReadyAndDoPublish(  );
 
         then: "'Published' status should be displayed"
         wizard.getStatus() == ContentStatus.PUBLISHED.getValue();
@@ -218,7 +216,7 @@ class Occurrences_ItemSet_0_0_Spec
         when: "when the previous version has been restored"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
 
         and: "navigated to the wizard-tab again"
         contentBrowsePanel.switchToBrowserTabByTitle( ITEM_SET_WITH_DATA.getDisplayName() );

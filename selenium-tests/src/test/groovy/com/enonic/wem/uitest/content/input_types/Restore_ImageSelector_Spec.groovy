@@ -53,7 +53,7 @@ class Restore_ImageSelector_Spec
         when: "valid version of content with two images is restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "image_selector_valid_version" );
 
         then: "the content is valid in the grid as well"
@@ -87,7 +87,7 @@ class Restore_ImageSelector_Spec
         when: "version with one images has been restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "image_selector_not_valid_version" );
 
         then: "the content should be valid in the grid"

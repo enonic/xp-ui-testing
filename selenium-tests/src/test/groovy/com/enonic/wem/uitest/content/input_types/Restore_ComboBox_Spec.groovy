@@ -48,7 +48,7 @@ class Restore_ComboBox_Spec
         when: "valid version with two selected options is restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         sleep(1000);
 
         then: "content should be displayed as valid in the grid"
@@ -72,8 +72,8 @@ class Restore_ComboBox_Spec
         then: "two options should be displayed on the form"
         formViewPanel.getSelectedOptionValues().size() == 2;
 
-        and: "'publish' button is getting enabled"
-        wizard.isPublishButtonEnabled();
+        and: "'Mark as ready' button is getting visible"
+        wizard.isMarAsReadyEnabled();
 
         and: "red icon should not be present on the wizard"
         !wizard.isContentInvalid();
@@ -89,7 +89,7 @@ class Restore_ComboBox_Spec
         when: "not valid version of content is restored, one required image missed"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "combobox_not_valid_version" );
 
         then: "the content should be displayed as invalid in the grid"

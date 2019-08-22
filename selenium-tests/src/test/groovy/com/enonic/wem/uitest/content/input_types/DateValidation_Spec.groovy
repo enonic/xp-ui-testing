@@ -51,9 +51,10 @@ class DateValidation_Spec
         when: "time with wrong format has been typed"
         wizard.typeData( timeContent );
         saveScreenshot( "test_wrong_time" );
+        wizard.showPublishMenu();
 
-        then: "'Publish' button should be enabled, because input is not required"
-        wizard.isPublishButtonEnabled();
+        then: "'Publish...' menu item should be enabled, because input is not required"
+        wizard.isPublishMenuItemEnabled(  );
 
         and: "time input should be displayed with the red border"
         formViewPanel.isTimeInvalid();
@@ -66,28 +67,30 @@ class DateValidation_Spec
         ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
 
-        when: "correct time typed "
+        when: "correct time typed"
         wizard.typeData( timeContent );
 
-        then: "'Publish' button should be enabled"
-        wizard.isPublishButtonEnabled();
+        then: "'Publish' menu item should be enabled"
+        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "time input should not be with red border"
         !formViewPanel.isTimeInvalid();
     }
 
-    def "GIVEN wizard for required 'Time 1:1' is opened WHEN name has been typed BUT time input is clear THEN 'Publish' button should be disabled"()
+    def "GIVEN wizard 'Time 1:1' is opened WHEN name has been typed BUT time input is empty THEN 'Publish' menu item should be disabled"()
     {
-        given: "start to add a content with type 'Time 1:1'"
+        given: "new wizard for 'Time 1:1' is opened"
         Content timeContent = buildTime1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
 
-        when: "Display name has been typed "
+        when: "Display name has been typed"
         wizard.typeDisplayName( timeContent.getDisplayName() );
+        wizard.showPublishMenu(  );
         saveScreenshot( "required-time-publish-disabled" );
 
-        then: "'Publish' button should be disabled, because required input not filled"
-        !wizard.isPublishButtonEnabled();
+
+        then: "'Publish' menu item should be disabled, because required input are not filled"
+        !wizard.isPublishMenuItemEnabled(  );
     }
 
     def "GIVEN wizard for required 'DateTime 1:1' is opened WHEN datetime is not correct THEN 'Publish' button should be disabled, because incorrect datetime typed in the required input"()
@@ -97,7 +100,7 @@ class DateValidation_Spec
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        when: "date-time with wrong format has been typed "
+        when: "date-time with wrong format has been typed"
         wizard.typeData( dateTimeContent );
         saveScreenshot( "wrong-date-time" );
 
@@ -108,35 +111,35 @@ class DateValidation_Spec
         formViewPanel.isDateTimeInvalid();
     }
 
-    def "GIVEN wizard for required 'DateTime 1:1' is opened WHEN correct date-time has been typed THEN 'Publish' button should be enabled"()
+    def "GIVEN wizard for required 'DateTime 1:1' is opened WHEN correct date-time has been typed THEN 'Publish' menu item should be enabled"()
     {
         given: "start to add a content with type 'DateTime(1:1)'"
         Content dateTimeContent = buildDateTime1_1_Content( CORRECT_DATE_TIME );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        when: "only the name typed and dateTime not typed and 'Publish' button clicked"
+        when: "the name has been typed and dateTime is empty"
         wizard.typeData( dateTimeContent );
         saveScreenshot( "correct-date-time" );
 
-        then: "'Publish' button should be enabled"
-        wizard.isPublishButtonEnabled();
+        then: "'Publish..' menu item should be enabled"
+        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "DateTime input should be without red border"
         !formViewPanel.isDateTimeInvalid();
     }
 
-    def "GIVEN wizard for required 'DateTime 2:4' is opened WHEN name has been typed but dateTime input is empty THEN 'Publish' button should be disabled"()
+    def "GIVEN wizard for 'DateTime 2:4' is opened WHEN name has been typed but dateTime input is empty THEN 'Publish' button should be disabled"()
     {
-        given: "wizard for required 'DateTime 2:4' is opened"
+        given: "wizard for 'DateTime 2:4' is opened"
         Content dateTimeContent = buildDateTime2_4_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
-        when: "only a 'name' has been typed BUT datetime input is empty"
+        when: "'name' has been typed BUT datetime input is empty"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
         saveScreenshot( "required-date-time" );
 
-        then: "'Publish' button should be disabled"
-        !wizard.isPublishButtonEnabled();
+        then: "'Publish' menu item should be disabled"
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled();
     }
 }

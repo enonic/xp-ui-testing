@@ -123,7 +123,7 @@ class Occurrences_ImageSelector_0_0_Spec
         formViewPanel.isEditButtonDisplayed();
     }
     //Verifies XP-4863 Content Wizard - Mod+S won't save content when image selector has focus
-    def "GIVEN content is opened WHEN image has been clicked AND keyboard shortcut to 'Save' is pressed THEN correct notification message should appear"()
+    def "GIVEN existing content is opened WHEN image has been clicked AND keyboard shortcut to 'Save' is pressed THEN expected notification message should appear"()
     {
         given: "content with a image-selector is opened(4 images is selected)"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
@@ -137,7 +137,7 @@ class Occurrences_ImageSelector_0_0_Spec
         wizard.pressSaveKeyboardShortcut();
         String expectedMessage = String.format( Application.CONTENT_SAVED, TEST_IMAGE_SELECTOR_CONTENT.getName() );
 
-        then: "correct notification message should appear"
+        then: "expected notification message should appear"
         wizard.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
     }
 

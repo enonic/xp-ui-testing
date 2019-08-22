@@ -21,6 +21,7 @@ import com.enonic.autotests.pages.contentmanager.DuplicateContentDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel;
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog;
 import com.enonic.autotests.pages.contentmanager.issue.IssueListDialog;
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ItemViewPanelPage;
 import com.enonic.autotests.services.NavigatorHelper;
@@ -76,6 +77,9 @@ public class ContentBrowsePanel
     private final String PUBLISH_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish...']]";
 
+    private final String MARK_AS_READY_BUTTON_XPATH =
+        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Mark as ready']]";
+
     private final String UNDO_DELETE_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
 
@@ -84,11 +88,6 @@ public class ContentBrowsePanel
 
     protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//button[contains(@id,'NonMobileContextPanelToggleButton')]";
 
-    private final String UNPUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish...']";
-
-    private final String CREATE_ISSUE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Create Issue...']";
-
-    private final String PUBLISH_TREE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree...']";
 
     @FindBy(xpath = DELETE_BUTTON_XPATH)
     protected WebElement deleteButton;
@@ -116,6 +115,9 @@ public class ContentBrowsePanel
 
     @FindBy(xpath = PUBLISH_BUTTON_XPATH)
     private WebElement publishButton;
+
+    @FindBy(xpath = MARK_AS_READY_BUTTON_XPATH)
+    private WebElement markAsReadyButton;
 
     @FindBy(xpath = PUBLISH_MENU_DROPDOWN_HANDLER)
     private WebElement publishMenuDropDownHandler;
@@ -259,6 +261,21 @@ public class ContentBrowsePanel
         return dialog;
     }
 
+    public ConfirmationDialog clickOnMarkAsReadyMenuItem()
+    {
+        if ( !isMarkAsReadyMenuItemEnabled() )
+        {
+            saveScreenshot( "err_mark_as_ready_menu_item" );
+            throw new TestFrameworkException( "menu item is not enabled" );
+        }
+        getDisplayedElement( By.xpath( MARK_AS_READY_MENU_ITEM ) ).click();
+        sleep( 300 );
+        ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
+        dialog.waitForOpened();
+        dialog.waitForClosed();
+        return dialog;
+    }
+
     public CreateIssueDialog selectCreateIssueMenuItem()
     {
         if ( !isCreateIssueMenuItemEnabled() )
@@ -302,6 +319,17 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "'unpublish' menu item is not visible!" );
         }
         return !getAttribute( getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
+            "disabled" );
+    }
+
+    public boolean isMarkAsReadyMenuItemEnabled()
+    {
+        if ( !isElementDisplayed( MARK_AS_READY_MENU_ITEM ) )
+        {
+            saveScreenshot( "err_mark_as_ready_menu_item_not_visible " );
+            throw new TestFrameworkException( "'mark as ready' menu item is not visible!" );
+        }
+        return !getAttribute( getDisplayedElement( By.xpath( MARK_AS_READY_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
             "disabled" );
     }
 
@@ -554,6 +582,22 @@ public class ContentBrowsePanel
         return dialog;
     }
 
+    public void clickOnMarkAsReadyOnToolbarAndConfirm()
+    {
+        waitForPublishButtonVisible( Application.EXPLICIT_NORMAL );
+        if ( !isElementDisplayed( MARK_AS_READY_BUTTON_XPATH ) )
+        {
+            saveScreenshot( "err_publish_button" );
+            throw new TestFrameworkException( "Publish button is not visible on the toolbar" );
+        }
+        markAsReadyButton.click();
+        ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
+        dialog.waitForOpened();
+        dialog.pressYesButton();
+        dialog.waitForClosed();
+        sleep( 500 );
+    }
+
     public ContentBrowsePanel clickToolbarUndodelete()
     {
         waitUntilVisibleNoException( By.xpath( UNDO_DELETE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
@@ -629,7 +673,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "button 'new' is not clickable!" );
         }
         newButton.click();
-        sleep( 500 );
+        sleep( 200 );
         NewContentDialog newContentDialog = new NewContentDialog( getSession() );
         boolean isLoaded = newContentDialog.waitUntilDialogLoaded( Application.EXPLICIT_NORMAL );
         if ( !isLoaded )

@@ -53,7 +53,7 @@ class Restore_DateTime_Spec
         when: "the previous version is restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "date_time_restored" );
 
         and: "content opened"

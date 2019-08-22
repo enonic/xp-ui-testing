@@ -9,9 +9,6 @@ import spock.lang.Shared
 
 /**
  * Created on 3/28/2017.
- *
- * Tasks:
- * enonic/xp-ui-testing#32  Add Selenium tests for Undo Delete action for parent and child contents
  * */
 class ContentBrowsePanel_Parent_UndoDelete_Spec
     extends BaseContentSpec
@@ -27,10 +24,10 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         given: "parent folder has been added"
         PARENT_FOLDER = buildFolderContent( "folder", "undo delete parent with child" );
         CHILD_FOLDER = buildFolderContent( "folder", "undo delete child content" );
-        addContent( PARENT_FOLDER );
+        addReadyContent( PARENT_FOLDER );
         findAndSelectContent( PARENT_FOLDER.getName() );
         and: "child folder has been added"
-        addContent( CHILD_FOLDER );
+        addReadyContent( CHILD_FOLDER );
         and: "both contents are published"
         contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
 

@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -80,24 +81,26 @@ class ContentWizardPanel_Toolbar_Spec
     def "GIVEN folder wizard is opened WHEN content saved AND published THEN 'online' status appears in the wizard AND publish-button should be disabled now"()
     {
         given: "wizard is opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
-        wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
+        wizard.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
 
         when: "content has been published"
-        wizardPanel.clickOnWizardPublishButton().clickOnPublishButton();
+        ConfirmationDialog confirm = wizard.showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
+        confirm.pressYesButton();
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
         saveScreenshot( "folder_published_in_wizard" );
 
         then: "'Delete' button should be enabled"
-        wizardPanel.isDeleteButtonEnabled();
+        wizard.isDeleteButtonEnabled();
 
         and: "'Saved' button should be disabled"
-        !wizardPanel.isSavedButtonEnabled();
+        !wizard.isSavedButtonEnabled();
 
         and: "'Publish' button should be disabled"
-        !wizardPanel.isPublishButtonEnabled();
+        !wizard.isPublishButtonEnabled();
 
         and: "content status should be 'online'"
-        wizardPanel.getStatus() == ContentStatus.PUBLISHED.getValue();
+        wizard.getStatus() == ContentStatus.PUBLISHED.getValue();
     }
 
     def "GIVEN existing folder is opened WHEN delete button has been pressed and deleting confirmed THEN wizard closes and content should not be present in the grid"()

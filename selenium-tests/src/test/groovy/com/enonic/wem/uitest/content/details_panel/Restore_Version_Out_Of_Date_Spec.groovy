@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -30,24 +31,26 @@ class Restore_Version_Out_Of_Date_Spec
             NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the folder has been published"
+        ConfirmationDialog confirm = contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
+        confirm.pressYesButton();
         contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
 
         and: "one of the previous versions was restored"
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion( );
 
         and: "the version view has been expanded"
         allContentVersionsView.clickOnVersionAndExpand( 1 );
         saveScreenshot( "versions_out_of_date" );
 
         then: "'out-of-date' status displayed in the version view"
-        versionItem.getContentStatus( versionItem.getId() ) == ContentStatus.OUT_OF_DATE.getValue();
+        versionItem.getContentStatus(1  ) == ContentStatus.OUT_OF_DATE.getValue();
 
         and: "'out-of-date' status should be displayed in the Browse panel"
         contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.OUT_OF_DATE.getValue();
     }
-    //verifies the  XP-4156
+
     def "GIVEN existing content with 'out-of-date' status  AND version history is opened WHEN the content selected and 'Unpublish' menu item was clicked THEN spinner automatically disappears after a short interval "()
     {
         given: "existing content with 'out-of-date' status"

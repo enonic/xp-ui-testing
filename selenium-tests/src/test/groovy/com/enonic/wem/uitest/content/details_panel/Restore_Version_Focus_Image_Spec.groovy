@@ -27,15 +27,15 @@ class Restore_Version_Focus_Image_Spec
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         formViewPanel.waitUntilImageLoaded();
 
-        when: "focus was moved"
+        when: "focus has been moved"
         ImageEditor imageEditor = formViewPanel.clickOnFocusButton();
         imageEditor.doDragAndChangeFocus( -50 );
         saveScreenshot( "image_was_focused" );
 
-        and: "changes were applied"
+        and: "the changes has been applied"
         imageEditor.getToolbar().clickOnApplyButton();
 
-        and: "content saved in the wizard and closed"
+        and: "content has been saved and wizard closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         sleep( 1000 );
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
@@ -53,11 +53,11 @@ class Restore_Version_Focus_Image_Spec
         and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version with original image is restored"
+        when: "version with original image has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
 
-        and: "image is opened in the wizard"
+        and: "image has been opened in the wizard"
         contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         formViewPanel.waitUntilImageLoaded();
@@ -66,7 +66,7 @@ class Restore_Version_Focus_Image_Spec
         then: "red circle should not be displayed on the image-editor"
         !imageEditor.isFocusCircleDisplayed();
 
-        and: "button 'reset' is not present on the wizard page"
+        and: "button 'reset' should not be present in the wizard page"
         !formViewPanel.isButtonResetPresent();
     }
 
@@ -75,14 +75,14 @@ class Restore_Version_Focus_Image_Spec
         given: "existing image with several versions"
         findAndSelectContent( IMPORTED_SPUMANS_IMAGE );
 
-        and: "version panel opened"
+        and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version of image with focus was restored"
+        when: "version of image with focus has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
 
-        and: "image is opened in the wizard"
+        and: "image has been opened in the wizard"
         contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         formViewPanel.waitUntilImageLoaded();
@@ -92,7 +92,7 @@ class Restore_Version_Focus_Image_Spec
         then: "red circle(focus) should be displayed"
         imageEditor.isFocusCircleDisplayed();
 
-        and: "button 'reset' should not be present on the wizard page"
+        and: "button 'reset' should not be present in the wizard page"
         formViewPanel.isButtonResetPresent();
     }
 }

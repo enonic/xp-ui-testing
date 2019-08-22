@@ -24,7 +24,7 @@ class ContentUnpublishDialog_Spec
     def "GIVEN Content BrowsePanel WHEN content without child is selected and 'Publish' button was pressed THEN 'Content publish' dialog should appear without 'Include child' checkbox"() {
         given: "content is added"
         PARENT_CONTENT = buildFolderContent("parent", "content unpublish dialog");
-        addContent(PARENT_CONTENT);
+        addReadyContent(PARENT_CONTENT);
         and: "the content has been published"
         findAndSelectContent( PARENT_CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();
 
@@ -90,13 +90,13 @@ class ContentUnpublishDialog_Spec
         !contentBrowsePanel.isPublishButtonEnabled();
     }
 
-    def "GIVEN 'modified' content is selected AND ContentUnpublishDialog is opened WHEN 'unpublish' menu item was selected THEN the content is getting 'offline'"() {
+    def "GIVEN 'modified' content is selected AND ContentUnpublishDialog is opened WHEN 'unpublish' menu item was selected THEN the content is getting 'Unpublished'"() {
         given:
         findAndSelectContent(PARENT_CONTENT.getName()).clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
                 NEW_DISPLAY_NAME).save().closeBrowserTab().switchToBrowsePanelTab();
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
 
-        when: "content selected and 'Unpublish' menu item clicked"
+        when: "content selected and 'Unpublish' menu item has been clicked"
         contentUnPublishDialog.clickOnUnpublishButton();
 
         then: "wait until the dialog closed"
@@ -109,16 +109,16 @@ class ContentUnpublishDialog_Spec
         and: "publish button on the toolbar should be enabled"
         contentBrowsePanel.isPublishButtonEnabled();
 
-        and: "correct notification message should appear"
+        and: "Message 'Item is unpublished'  should appears "
         message == String.format(Application.ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE, PARENT_CONTENT.getName());
     }
 
-    def "GIVEN parent and child content are 'online' WHEN parent content was selected and 'Unpublish' menu item clicked THEN parent and child contents are getting 'offline'"() {
+    def "GIVEN parent and child content are 'Published' WHEN parent content has been selected and 'Unpublish' menu item clicked THEN parent and child contents are getting 'Unpublished'"() {
         given: "parent and child content are 'online'"
         CHILD_CONTENT = buildFolderContentWithParent("child", "child for unpublishing", PARENT_CONTENT.getName());
-        findAndSelectContent(PARENT_CONTENT.getName());
-        addContent(CHILD_CONTENT);
-        and: "both contents has been published"
+        findAndSelectContent(PARENT_CONTENT.getName()).clickOnMarkAsReadyOnToolbarAndConfirm(  );
+        addReadyContent(CHILD_CONTENT);
+        and: "both contents should be published"
         contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
 
         when: "parent content was selected and 'Unpublish' menu item has been clicked"
@@ -159,7 +159,7 @@ class ContentUnpublishDialog_Spec
     def "GIVEN two existing 'New' contents WHEN both are selected in the BrowsePanel THEN 'Unpublish' menu item should be disabled"() {
         given: "first content is added"
         Content first = buildFolderContent("unpublish", "test unpublish menu item");
-        addContent(first);
+        addReadyContent(first);
         and: "the second content is added in ROOT"
         Content second = buildFolderContent("unpublish", "test unpublish menu item");
         addContent(second);

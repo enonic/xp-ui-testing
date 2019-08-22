@@ -74,18 +74,18 @@ class Occurrences_CustomSelector_1_1_Spec
         formViewPanel.getSelectedOptions().contains( OPTION_1 );
     }
 
-    def "GIVEN existing content with one selected option WHEN content opened and the option removed THEN 'options filter input' appears"()
+    def "GIVEN existing content (one selected option) is opened WHEN the option has  been removed THEN 'options filter input' appears"()
     {
         given:
         ContentWizardPanel wizard = findAndSelectContent( TEST_CONTENT.getName() ).clickToolbarEdit();
         CustomSelectorFormViewPanel formViewPanel = new CustomSelectorFormViewPanel( getSession() );
 
-        when:
+        when:"the option has been removed"
         formViewPanel.removeOption( OPTION_1 );
         wizard.save();
         saveScreenshot( "custom_selector_option_removed" );
 
-        then: "there are no any selected options"
+        then: "no any selected options should be in the form"
         formViewPanel.getSelectedOptions().size() == 0;
 
         and: "'options filter input' appears"

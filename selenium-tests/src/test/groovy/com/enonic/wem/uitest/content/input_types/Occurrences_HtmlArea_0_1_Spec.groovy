@@ -9,12 +9,6 @@ import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-/*
-Tasks:
- XP-4746 Add selenium test to verify XP-4698
- xp-ui-testing#4 Check fixed application's bugs and add Selenium tests for each fixed bugs
- */
-
 @Stepwise
 class Occurrences_HtmlArea_0_1_Spec
     extends Base_InputFields_Occurrences
@@ -149,7 +143,7 @@ class Occurrences_HtmlArea_0_1_Spec
         then: "modal dialog should not be displayed"
         insertLinkModalDialog.waitForDialogClosed();
     }
-    // verifies the XP-4698
+
     def "GIVEN 'Insert Link' modal dialog is opened WHEN the Text has been typed but the required 'URL' field is empty AND 'Insert' button pressed THEN correct validation message appears on the dialog "()
     {
         given: "'Insert Link' modal dialog is opened "

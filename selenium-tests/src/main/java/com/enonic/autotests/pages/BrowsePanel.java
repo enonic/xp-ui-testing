@@ -72,6 +72,7 @@ public abstract class BrowsePanel
 
     protected String CONTEXT_MENU_ITEM =
         "//ul[contains(@id,'TreeGridContextMenu')]//li[contains(@id,'api.ui.menu.MenuItem') and contains(.,'%s')]";
+    protected final String UNPUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish...']";
 
     @FindBy(xpath = SHOW_FILTER_PANEL_BUTTON)
     protected WebElement showFilterPanelButton;
@@ -125,8 +126,7 @@ public abstract class BrowsePanel
         }
         sleep( 300 );
         showFilterPanelButton.click();
-        //getDisplayedElement( By.xpath( SHOW_FILTER_PANEL_BUTTON ) ).click();
-        sleep( 700 );
+        sleep( 500 );
         return this;
     }
 

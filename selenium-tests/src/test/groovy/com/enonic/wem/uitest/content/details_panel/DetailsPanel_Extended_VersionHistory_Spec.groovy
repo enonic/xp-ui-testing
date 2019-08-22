@@ -32,10 +32,10 @@ class DetailsPanel_Extended_VersionHistory_Spec
 
         when: "latest 'version item' has been clicked"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        allContentVersionsView.clickOnVersionAndExpand( 0 );
 
-        then: "'version info' panel should be shown"
-        versionItem.isVersionInfoDisplayed();
+        then: "'version item' should be expanded or active"
+        allContentVersionsView.isVersionInfoExpanded( 0 );
     }
 
     def "GIVEN existing content is selected AND 'Version History' is opened WHEN latest 'version item' has been expanded THEN expected 'version info' should be displayed"()
@@ -47,31 +47,17 @@ class DetailsPanel_Extended_VersionHistory_Spec
         when: "'Version History' option opened and first item expanded"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        String versionId = versionItem.getId();
         saveScreenshot( "version-history-expanded" );
 
-        then: "expected display name should be shown"
-        versionItem.getDisplayName() == folderContent.getDisplayName();
+        then: "Super User should be owner in the vew"
+        versionItem.getOwnerName(0) == "Super User";
 
-        and: "version-id should be present"
-        !versionId.isEmpty();
 
-        and: "'close' button for the version view should be displayed"
-        versionItem.isCloseButtonDisplayed( versionId );
-
-        and: "'this version is active' should be present"
-        versionItem.getVersionStatus( versionId ) == ContentVersionInfoView.ACTIVE_VERSION;
-
-        and: "timestamp should be displayed on the info-view"
-        String timestamp = versionItem.getTimeStamp( versionId );
-        timestamp != null;
-
-        and: "string successfully parsed to date time"
-        LocalDateTime.parse( timestamp, DateTimeFormatter.ofPattern( "yyy-MM-dd HH:mm:ss" ) );
+        and: "'this version should be active"
+        allContentVersionsView.isVersionActive( 0 );
     }
 
-
-    def "GIVEN existing content is selected and version history opened  WHEN first version item has been expanded THEN required version-info should be displayed"()
+    def "GIVEN existing content is selected and version history is opened WHEN first version item has been expanded THEN version-info should be expanded AND Restore button gets visible"()
     {
         given: "existing content is selected and version history opened"
         findAndSelectContent( folderContent.getName() );
@@ -80,26 +66,22 @@ class DetailsPanel_Extended_VersionHistory_Spec
         when: "'Version History' option opened and first item expanded"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        String versionId = versionItem.getId();
         saveScreenshot( "version-history-expanded-no-display-name" );
 
 
         then: "two versions should be displayed on the panel"
         allContentVersionsView.getAllVersions().size() == 2;
-        and: "correct display name should be empty"
-        versionItem.getDisplayName() == "";
+
 
         and: "correct version id should be displayed"
-        !versionId.isEmpty();
+        allContentVersionsView.isVersionInfoExpanded( 1 );
 
-        and: "close button for the version view should be displayed"
-        versionItem.isCloseButtonDisplayed( versionId );
+        and: "Restore button should be displayed in the expanded view"
+        versionItem.isRestoreButtonDisplayed();
 
-        and:
-        versionItem.getVersionStatus( versionId ) == ContentVersionInfoView.RESTORE_THIS;
     }
 
-    def "GIVEN content was selected AND version info expanded  WHEN 'close info' button has been clicked THEN 'version info' is getting hidden"()
+    def "GIVEN folder is selected AND a version info is expanded  WHEN this version item has been clicked THEN 'version item' gets collapsed"()
     {
         given: "content is selected and version history is opened"
         findAndSelectContent( folderContent.getName() );
@@ -107,29 +89,17 @@ class DetailsPanel_Extended_VersionHistory_Spec
 
         and: "version history panel has been opened "
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        String versionId = versionItem.getId();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+
 
         when: "'close version info' button was clicked"
-        versionItem.doCloseVersionInfo( versionId );
-        saveScreenshot( "version-history-collapsed" );
+        allContentVersionsView.clickOnVersionAndCloseView( 1 );
+        saveScreenshot( "version-history-item-collapsed" );
 
-        then: "'version info' is getting hidden"
-        !versionItem.isVersionInfoDisplayed();
-    }
+        then: "'Restore' button gets  hidden"
+        !versionItem.isRestoreButtonDisplayed();
 
-    def "GIVEN existing content AND version info is opened WHEN content was changed THEN new display name should be present on the 'version info'"()
-    {
-        when: "existing content is opened new display name typed"
-        findAndSelectContent( folderContent.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
-            NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
-        and: "details panel has been opened"
-        contentBrowsePanel.openContentDetailsPanel();
-
-        then: "new display name should be present on the 'version info"
-        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        saveScreenshot( "version-history-new-display-name" );
-        versionItem.getDisplayName() == NEW_DISPLAY_NAME;
+        and: "version item gets collapsed"
+        !allContentVersionsView.isVersionInfoExpanded( 1 );
     }
 }

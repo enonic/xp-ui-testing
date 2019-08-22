@@ -44,17 +44,17 @@ class Occurrences_RadioButtons_Spec
         formViewPanel.getSelectedOption().isEmpty();
     }
 
-    def "GIVEN saving of not required 'Radio Buttons content' without selected option WHEN 'Publish' button pressed THEN status should be 'Published'"()
+    def "GIVEN content with not required 'Radio Buttons' is created WHEN 'Publish' button pressed THEN status should be 'Published'"()
     {
-        given: "new content with type 'Radio Buttons'"
+        given: "new 'Radio Buttons' content is added"
         String option = null;
         Content radioButtonsContent = buildRadioButtonsContent( option );
         ContentWizardPanel wizard = selectSitePressNew( radioButtonsContent.getContentTypeName() ).typeData( radioButtonsContent )
-        wizard.save().clickOnWizardPublishButton().clickOnPublishButton();
+        wizard.clickOnMarkAsReadyAndDoPublish(  );
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.close( radioButtonsContent.getDisplayName() );
 
-        when: "content has been opened"
+        when: "content has been selected in the grid"
         filterPanel.typeSearchText( radioButtonsContent.getName() );
 
         then:

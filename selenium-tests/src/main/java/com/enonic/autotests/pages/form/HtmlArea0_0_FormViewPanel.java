@@ -50,18 +50,13 @@ public class HtmlArea0_0_FormViewPanel
         {
             throw new TestFrameworkException( "no one text input was not found" );
         }
-        //Iterator<String> it = data.getStrings( STRINGS_PROPERTY ).iterator();
-        //editors.forEach( el->setTextInCKE(el.getAttribute( "id" ),it.next()) );
-        //sleep( 300 );
-
         int i = 0;
         for ( final String sourceString : data.getStrings( STRINGS_PROPERTY ) )
         {
-            //buildActions().click( frames.get( i ) ).build().perform();
             sleep( 500 );
             setTextInCKE( editors.get( i ).getAttribute( "id" ), sourceString );
             sleep( 300 );
-            buildActions().click( editors.get( i ) ).build().perform();
+            //buildActions().moveToElement( editors.get( i ) ).click( editors.get( i ) ).build().perform();
             i++;
             if ( i >= numberOfEditors )
             {
@@ -91,8 +86,6 @@ public class HtmlArea0_0_FormViewPanel
         {
             Actions builder = new Actions( getDriver() );
             builder.moveToElement( buttons.get( buttons.size() - 1 ) ).click().build().perform();
-            //builder.click( buttons.get( buttons.size() - 1 ).getLocation(). ) .build().perform();
-            //buttons.get( buttons.size() - 1 ).click();
             sleep( 700 );
             return this;
         }

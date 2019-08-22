@@ -67,7 +67,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().clickOnPublishButton();
+        wizard.clickOnMarkAsReadyAndDoPublish(  );
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "text component has been removed"
@@ -104,7 +104,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().clickOnPublishButton();
+        wizard.clickOnMarkAsReadyAndDoPublish(  );
         saveScreenshot( "site_published_in_wizard" );
 
         when: "language was changed"

@@ -13,8 +13,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 5/15/2017.
- * Tasks:
- * xp-ui-testing#40 Add Selenium tests for content that contains Set in Set
  * */
 @Stepwise
 class Set_In_Set_Validation_Spec
@@ -158,7 +156,7 @@ class Set_In_Set_Validation_Spec
         }
 
         Content tinyMceContent = Content.builder().
-            name( NameHelper.uniqueName( "se-in-set" ) ).
+            name( NameHelper.uniqueName( "set-in-set" ) ).
             displayName( "set in set content" ).
             parent( ContentPath.from( SITE_NAME ) ).
             contentType( ALL_CONTENT_TYPES_APP_NAME + "set-in-set" ).data( data ).

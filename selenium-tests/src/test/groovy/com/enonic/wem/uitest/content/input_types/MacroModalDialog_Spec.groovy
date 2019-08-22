@@ -146,7 +146,7 @@ class MacroModalDialog_Spec
         dialog.isRemoveMacroButtonPresent();
     }
 
-    def "GIVEN MacroModalDialog opened WHEN 'Cancel' button has been pressed THEN the modal dialog is closed"()
+    def "GIVEN MacroModalDialog is opened WHEN 'Cancel' button has been pressed THEN the modal dialog is closed"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
@@ -159,25 +159,5 @@ class MacroModalDialog_Spec
 
         then: "the modal dialog is closed"
         dialog.waitForClosed();
-    }
-    //  'youtube' moved to the separated app
-    @Ignore
-    def "GIVEN MacroModalDialog opened AND YouTube macro selected WHEN 'remove macro' button has been pressed THEN macro-view removed"()
-    {
-        given: "existing content with html-area is opened"
-        findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
-        and: "MacroDialog opened"
-        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-        and: "youtube macro selected"
-        MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
-        dialog.selectOption( MacroType.YOUTUBE );
-        saveScreenshot( "test_youtube_macro_added" );
-
-        when: "youtube-macro removed"
-        dialog.clickOnRemoveMacroButton();
-        saveScreenshot( "test_youtube_macro_removed" );
-
-        then: "the filter-options appears again"
-        dialog.isOptionFilterDisplayed();
     }
 }

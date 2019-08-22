@@ -76,7 +76,7 @@ class Occurrences_Local_DateTime_0_1_Spec
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        when: "content opened for edit"
+        when: "content has been opened"
         wizard.save();
         saveScreenshot( "wizard-datetime01-valid" );
 
@@ -84,7 +84,7 @@ class Occurrences_Local_DateTime_0_1_Spec
         !formViewPanel.isValidationMessagePresent();
 
         and: "'Publish' button is enabled"
-        wizard.isPublishButtonEnabled();
+        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
     def "GIVEN 'date time' wizard is opened WHEN 'date time' is empty and content was saved and wizard closed THEN content should be displayed as valid in the grid"()

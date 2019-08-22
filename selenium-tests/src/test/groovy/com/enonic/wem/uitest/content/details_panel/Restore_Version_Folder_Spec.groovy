@@ -58,7 +58,7 @@ class Restore_Version_Folder_Spec
 
         when: "the folder selected AND previous version has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
         saveScreenshot( "folder_display_name_restored" );
 
         then: "content with original display name should be present"
@@ -80,15 +80,15 @@ class Restore_Version_Folder_Spec
         and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "the folder selected AND previous version of the folder was restored"
+        when: "the folder has been selected AND the previous version has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( versionItem.getId() );
+        versionItem.doRestoreVersion(  );
 
         and: "folder is opened"
         contentBrowsePanel.clickToolbarEdit();
         saveScreenshot( "folder_language_restored" );
 
-        then: "original language should be restored on the wizard page"
+        then: "original language should be restored in the wizard page"
         form.getLanguage() == NORSK_LANGUAGE;
     }
 

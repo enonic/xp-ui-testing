@@ -34,44 +34,44 @@ class ItemSet_Swap_Values_Spec
     @Shared
     Content ITEM_SET_WITH_DATA;
 
-    def "GIVEN creating of ItemSet content with 2 sets WHEN data typed AND Save button pressed THEN content is valid and publish button is getting enabled"()
+    def "GIVEN wizard for ItemSet content with 2 sets is opened WHEN data typed AND Save button pressed THEN content is valid and publish button is getting enabled"()
     {
-        given: "wizard for adding of new ItemSet content is opened"
+        given: "wizard for new ItemSet content is opened"
         ITEM_SET_WITH_DATA = buildItemSetWithTwoTextLineAndHtmlArea();
         ContentWizardPanel wizard = selectSitePressNew( ITEM_SET_WITH_DATA.getContentTypeName() );
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
-        when: "2 item sets was added"
+        when: "2 item sets has been added"
         itemSetViewPanel.clickOnAddButton();
         itemSetViewPanel.clickOnAddButton();
 
         and: "data has been typed"
         wizard.typeData( ITEM_SET_WITH_DATA );
 
-        and: "Save button pressed"
+        and: "Save button has been pressed"
         wizard.save();
         saveScreenshot( "itemset_two_items_saved" );
 
         then: "content is valid, because all required inputs are filled"
         !itemSetViewPanel.isValidationMessagePresent();
 
-        and: "Publish button is enabled"
-        wizard.isPublishButtonEnabled();
+        and: "Publish menu item gets enabled"
+        wizard.showPublishMenu().isPublishMenuItemEnabled();
 
         and: ""
         itemSetViewPanel.getNumberOfSets() == 2;
     }
 
-    def "GIVEN existing itemSet content WHEN content opened THEN correct data is displayed on both sets"()
+    def "GIVEN existing itemSet content is opened WHEN content opened THEN correct data is displayed on both sets"()
     {
         when: "existing itemSet content is opened"
         findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
-        then: "correct data is displayed on both sets"
-        itemSetViewPanel.getInnerTextFromHtmlAreas().contains( "<p>"+HTML_AREA_TEXT1 +"</p>")
+        then: "correct data should be displayed in both sets"
+        itemSetViewPanel.getInnerTextFromHtmlAreas().contains( "<p>" + HTML_AREA_TEXT1 + "</p>" )
         and:
-        itemSetViewPanel.getInnerTextFromHtmlAreas().contains("<p>"+ HTML_AREA_TEXT2 +"</p>");
+        itemSetViewPanel.getInnerTextFromHtmlAreas().contains( "<p>" + HTML_AREA_TEXT2 + "</p>" );
         and:
         itemSetViewPanel.getTextFromTextLines().contains( TEXT_LINE_TEXT1 );
         and:
@@ -79,12 +79,12 @@ class ItemSet_Swap_Values_Spec
 
     }
 
-    def "GIVEN existing ItemSet content with 2 sets WHEN sets have been swapped THEN texts displayed in correct order"()
+    def "GIVEN existing ItemSet content with 2 sets is opened WHEN sets have been swapped THEN texts displayed in correct order"()
     {
         given: "existing itemSet content is opened"
         findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
-        sleep(3000);
+        sleep( 3000 );
 
         when: "2 sets have been swapped"
         itemSetViewPanel.doSwapItems();

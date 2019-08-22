@@ -15,6 +15,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
+import com.enonic.autotests.utils.TestUtils;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -108,12 +109,13 @@ public class SortContentDialog
             throw new TestFrameworkException(
                 "Sort Content Dialog: drag and drop failed. items were not found: " + sourceName + " " + targetName );
         }
-        WebElement element = findElements( By.xpath( sourceItem ) ).get( 0 );
+        WebElement source = findElements( By.xpath( sourceItem ) ).get( 0 );
         WebElement target = findElements( By.xpath( targetItem ) ).get( 0 );
 
+        //sleep( 1000 );
         Actions builder = new Actions( getDriver() );
-        builder.clickAndHold( element ).build().perform();
-        // builder.moveToElement( target, 0, -20 ).build().perform();;
+        builder.clickAndHold( source ).build().perform();
+        builder.moveToElement( target, 0, -20 ).build().perform();;
         builder.release( target );
         builder.build().perform();
         sleep( 2000 );

@@ -19,12 +19,12 @@ class ManualSortContent_Spec
         saveScreenshot( "manual_sort_before" );
 
         when: "two contents has been swapped"
-        sortContentDialog.dragAndSwapItems( "nord.jpg", "whale.jpg" )
+        sortContentDialog.dragAndSwapItems( "renault.jpg", "cape.jpg" )
         LinkedList<String> manuallySortedList = sortContentDialog.getContentNames();
         saveScreenshot( "manual_sort_swapped" );
 
         then: "contents should be correctly sorted in the dialog-grid"
-        defaultSortingList.indexOf( "nord.jpg" ) == manuallySortedList.indexOf( "whale.jpg" );
+        defaultSortingList.indexOf( "renault.jpg" ) == manuallySortedList.indexOf( "cape.jpg" );
         and: "'Manually Sorted' should be current sorting name"
         sortContentDialog.getCurrentSortingName() == SortMenuItem.MANUALLY_SORTED.getValue();
     }

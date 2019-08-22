@@ -88,7 +88,7 @@ class Occurrences_HtmlArea_0_2_Spec
         beforeRemoving == 2;
     }
 
-    def "GIVEN content with type 'HtmlArea 0:2'  has been added and two strings were typed WHEN the content is opened THEN both strings saved correctly"()
+    def "GIVEN 'HtmlArea 0:2' content has been added AND two strings were typed WHEN the content is opened THEN both strings saved correctly"()
     {
         given: "content with type 'HtmlArea 0:2' has been added"
         Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1, TEST_TEXT2 );
@@ -101,7 +101,7 @@ class Occurrences_HtmlArea_0_2_Spec
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         List<String> strings = formViewPanel.getDataFromCKEAreas();
 
-        then: "correct values of strings are showed in both text areas"
+        then: "expected values should be present in both text areas"
         strings.get( 0 ).contains( DEFAULT_EXPECTED_TEXT1 );
         and:
         strings.get( 1 ).contains( DEFAULT_EXPECTED_TEXT2 );

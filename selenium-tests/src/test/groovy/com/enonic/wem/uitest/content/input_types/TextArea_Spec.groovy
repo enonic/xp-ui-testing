@@ -26,8 +26,8 @@ class TextArea_Spec
         and: "the content is valid, because the input is not required"
         !wizard.isContentInvalid();
 
-        and: "'Publish' button should be enabled, because the input is not required"
-        wizard.isPublishButtonEnabled();
+        and: "'Publish' menu item should be enabled, because the input is not required"
+        wizard.showPublishMenu().isPublishMenuItemEnabled();
     }
 
     def "GIVEN new wizard for TextArea-content(required) is opened WHEN display name is typed THEN red icon should be displayed on the wizard page, because the input is required"()
@@ -54,7 +54,7 @@ class TextArea_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( textAreaContent.getContentTypeName() );
 
         when: "text area is empty and the content has been published"
-        contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
+        contentWizardPanel.typeData( textAreaContent ).clickOnMarkAsReadyAndDoPublish();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textAreaContent.getName() );
@@ -70,7 +70,7 @@ class TextArea_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( textAreaContent.getContentTypeName() );
 
         when: "data has been typed and the content published"
-        contentWizardPanel.typeData( textAreaContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
+        contentWizardPanel.typeData( textAreaContent ).clickOnMarkAsReadyAndDoPublish();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textAreaContent.getName() );

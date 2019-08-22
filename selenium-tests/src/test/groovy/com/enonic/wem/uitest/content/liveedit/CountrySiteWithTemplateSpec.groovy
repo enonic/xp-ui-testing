@@ -244,7 +244,7 @@ class CountrySiteWithTemplateSpec
     {
         given: "city content changed and 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnWizardPublishButton().clickOnPublishButton();
+        wizard.clickOnMarkAsReadyAndDoPublish(  );
         contentBrowsePanel.waitForNotificationMessage();
         sleep( 1000 );
 

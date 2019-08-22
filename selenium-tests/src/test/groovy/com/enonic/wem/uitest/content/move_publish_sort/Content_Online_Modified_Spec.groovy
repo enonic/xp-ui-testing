@@ -20,7 +20,7 @@ class Content_Online_Modified_Spec
     {
         given: "new folder added in root"
         CONTENT = buildFolderContent( "publish", "folder-content" );
-        addContent( CONTENT );
+        addReadyContent( CONTENT );
 
         when: "the content has been published"
         findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();
@@ -51,7 +51,7 @@ class Content_Online_Modified_Spec
         Content content = buildFolderContent( "publish", "folder-content" );
         addContent( content );
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
-        wizard.clickOnWizardPublishButton().clickOnPublishButton();
+        wizard.clickOnMarkAsReadyAndDoPublish(  );
 
         when: "new display name has ben typed"
         wizard.typeDisplayName( NEW_DISPLAY_NAME ).save();

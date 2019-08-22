@@ -20,10 +20,6 @@ import spock.lang.Stepwise
 /**
  * Created on 7/26/2017.
  *
- * Tasks:
- * xp-ui-testing#73  Add Selenium tests for an Issue with dependants-list
- * xp-ui-testing#68 Add Selenium tests for an issue without an item(deleted)
- *
  * verifies:
  *  xp#5391 Issue Dialog - handle removed assignee
  *  xp#5372 List of dependant items is not refreshed after deletion in the Issue Dialog

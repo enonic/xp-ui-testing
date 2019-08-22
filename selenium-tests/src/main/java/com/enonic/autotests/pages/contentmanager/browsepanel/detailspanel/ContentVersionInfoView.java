@@ -1,7 +1,10 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel;
 
 
+import java.util.List;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
@@ -16,123 +19,56 @@ public class ContentVersionInfoView
 
     public static final String RESTORE_THIS = "Restore this version";
 
-    private String ITEM_BY_ID = "//li[contains(@class,'content-version-item') and descendant::span[text()='%s']]";
+    private String EXPANDED_VERSION_ITEM = "//li[contains(@class,'content-version-item') and contains(@class,'expanded')]";
 
-    private final String VERSION_INFO_DIV = "//div[contains(@class,'version-info')]";
+    private String VERSION_ITEM = "//ul[contains(@id,'VersionsView')]//li[contains(@class,'content-version-item')]";
 
-    private final String CLOSE_INFO_VIEW_BUTTON = ITEM_BY_ID + "//div[contains(@class,'close-version-info-button')]";
+    private final String VERSION_EXPANDED_DIV = "//div[contains(@class,'version-info')]";
 
-    private final String VERSION_INFO_DISPLAY_NAME = "//div[@class='version-info-display-name']/span[2]";
+    private String RESTORE_BUTTON = EXPANDED_VERSION_ITEM + "//button";
 
-    private final String VERSION_INFO_ID = "//div[@class='version-info-version-id']/span[2]";
-
-    private String RESTORE_BUTTON = ITEM_BY_ID + "//button";
-
-    private String RESTORE_BUTTON_TEXT = ITEM_BY_ID + "//button/span";
-
-    private String TIMESTAMP_VALUE = ITEM_BY_ID + "//div[@class='version-info-timestamp']/span[2]";
-
-    private String OWNER_NAME_VALUE = ITEM_BY_ID + "//div[@class='viewer description']" + H6_MAIN_NAME;
+    private String OWNER_NAME_VALUE = VERSION_ITEM + "//div[contains(@id,'ContentVersionViewer')]" + H6_MAIN_NAME;
 
     public ContentVersionInfoView( final TestSession session )
     {
         super( session );
     }
 
-    public void doCloseVersionInfo( String versionId )
+    public void doRestoreVersion()
     {
-        String closeXpath = String.format( CLOSE_INFO_VIEW_BUTTON, versionId );
-        if ( !isElementDisplayed( closeXpath ) )
-        {
-            saveScreenshot( "err_close_version_info" );
-            throw new TestFrameworkException( "'close info' button not displayed! " + versionId );
-        }
-        getDisplayedElement( By.xpath( closeXpath ) ).click();
-        sleep( 200 );
-    }
-
-    public void doRestoreVersion( String versionId )
-    {
-        getDisplayedElement( By.xpath( String.format( RESTORE_BUTTON, versionId ) ) ).click();
+        waitUntilVisibleNoException( By.xpath( RESTORE_BUTTON ), EXPLICIT_NORMAL );
+        getDisplayedElement( By.xpath( RESTORE_BUTTON ) ).click();
         sleep( 1000 );
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 
-    public void isVersionInfoExpanded( String versionId )
+    public boolean isRestoreButtonDisplayed()
     {
-        String itemXpath = String.format( ITEM_BY_ID, versionId );
-        if ( findElements( By.xpath( itemXpath ) ).size() == 0 )
-        {
-            throw new TestFrameworkException( "version info item was not found! " + versionId );
-        }
+        return isElementDisplayed( RESTORE_BUTTON );
     }
 
-    public String getId()
+    public String getOwnerName( int index )
     {
-        if ( !isElementDisplayed( VERSION_INFO_ID ) )
+        List<WebElement> allOwners = findElements( By.xpath( OWNER_NAME_VALUE ) );
+        if ( allOwners.size() == 0 )
         {
-            saveScreenshot( "err_det_panel_version_id" );
-            throw new TestFrameworkException( "version id was not found! " );
+            throw new TestFrameworkException( "owner name was not found! " + index );
         }
-        return getDisplayedString( VERSION_INFO_ID );
+        return allOwners.get( index ).getText();
     }
 
-    public String getDisplayName()
+    //New, Published....
+    public String getContentStatus( int index )
     {
-        if ( isElementDisplayed( VERSION_INFO_DISPLAY_NAME ) )
-        {
-            return getDisplayedString( VERSION_INFO_DISPLAY_NAME );
-        }
-        else
+        List<WebElement> items = findElements( By.xpath( VERSION_ITEM ) );
+        List<WebElement> status = items.get( index ).findElements( By.xpath( "./div[contains(@class,'status')]" ) );
+        if ( status.size() == 0 )
         {
             return "";
         }
-    }
-
-    public String getOwnerName( String versionId )
-    {
-        String ownerName = String.format( OWNER_NAME_VALUE, versionId );
-        if ( !isElementDisplayed( ownerName ) )
+        else
         {
-            throw new TestFrameworkException( "owner name was not found! " + versionId );
+            return status.get( 0 ).getText();
         }
-        return getDisplayedString( ownerName );
-    }
-
-    public String getTimeStamp( String versionId )
-    {
-        String timestampXpath = String.format( TIMESTAMP_VALUE, versionId );
-        if ( !isElementDisplayed( timestampXpath ) )
-        {
-            throw new TestFrameworkException( "timestamp was not found! " + versionId );
-        }
-        return getDisplayedString( timestampXpath );
-    }
-
-    public boolean isVersionInfoDisplayed()
-    {
-        return isElementDisplayed( VERSION_INFO_DIV );
-    }
-
-    public boolean isCloseButtonDisplayed( String versionId )
-    {
-        String closeXpath = String.format( CLOSE_INFO_VIEW_BUTTON, versionId );
-        return isElementDisplayed( closeXpath );
-    }
-
-    public String getVersionStatus( String versionId )
-    {
-        return getDisplayedString( String.format( RESTORE_BUTTON_TEXT, versionId ) );
-    }
-
-    public String getContentStatus( String versionId )
-    {
-        String status = String.format( ITEM_BY_ID + "/div[contains(@class,'status')]", versionId );
-        if ( !isElementDisplayed( status ) )
-        {
-            saveScreenshot( "err_version_info_status" );
-            throw new TestFrameworkException( "status was not found!" );
-        }
-        return getDisplayedString( String.format( ITEM_BY_ID + "/div[contains(@class,'status')]", versionId ) );
     }
 }

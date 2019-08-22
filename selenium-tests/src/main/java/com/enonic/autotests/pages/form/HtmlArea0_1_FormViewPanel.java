@@ -1,9 +1,6 @@
 package com.enonic.autotests.pages.form;
 
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -27,15 +24,11 @@ public class HtmlArea0_1_FormViewPanel
         String text = data.getString( STRING_PROPERTY );
         if ( text != null )
         {
-            //WebElement htmlArea = findElement( By.xpath( TINY_MCE ) );
             WebElement htmlArea =
                 findElement( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
-            buildActions().click( htmlArea ).build().perform();
             sleep( 500 );
-            //setTextIntoArea( htmlArea.getAttribute( "id" ), text );
             setTextInCKE( htmlArea.getAttribute( "id" ), text );
-            //buildActions().click( htmlArea ).build().perform();
-            sleep( 1000 );
+            sleep( 500 );
         }
         return this;
     }

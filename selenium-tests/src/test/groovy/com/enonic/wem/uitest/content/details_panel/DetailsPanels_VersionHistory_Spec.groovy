@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
 import spock.lang.Shared
@@ -53,25 +54,27 @@ class DetailsPanels_VersionHistory_Spec
         allVersions.getFirst().getModified().contains( "minute ago" );
     }
 
-    def "GIVEN existing content is selected WHEN the content has been published THEN the latest versions should has 'online' badge"()
+    def "GIVEN existing content is selected WHEN the content has been marked as ready AND published THEN the latest versions should has 'Published' badge"()
     {
         given: "existing content is selected"
         findAndSelectContent( folderContent.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel()
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        ConfirmationDialog confirm = contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
+        confirm.pressYesButton();
 
         when: "content has been published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
         saveScreenshot( "history_panel_content_was_published" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
-        then: "the number of versions should be the same"
-        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS;
+        then: "the number of versions should be increased, because this content was marked as ready"
+        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS+ 1;
 
         and: "latest version should has 'published' status"
         contentVersions.getFirst().getStatus().equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
-    def "GIVEN existing 'online' content was changed and content is getting 'Modified' WHEN versions panel is opened THEN three versions should be present. The older one with green 'online' badge and the newer one with a gray 'Modified' badge."()
+    def "GIVEN existing 'Published' content was changed and content is getting 'Modified' WHEN versions panel is opened THEN three versions should be present. The older one with green 'online' badge and the newer one with a gray 'Modified' badge."()
     {
         given: "existing 'online' content was changed and content is getting 'Modified'"
         findAndSelectContent( folderContent.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
@@ -83,7 +86,7 @@ class DetailsPanels_VersionHistory_Spec
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "number of versions should be increased by 1"
-        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS + 1;
+        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS + 2;
 
         and: "the latest version has a 'modified' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );

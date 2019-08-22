@@ -76,16 +76,17 @@ class Occurrences_DateTime_1_1_Spec
     def "GIVEN wizard for new DateTime1:1  WHEN date has been typed and 'Save' and 'Publish' are pressed THEN the content is getting 'Published'"() {
         given: "start to add a content with type 'DateTime1 1:1'"
         Content dateTimeContent = buildDateTime1_1_Content(TEST_DATE_TIME1);
-        ContentWizardPanel contentWizardPanel = selectSitePressNew(dateTimeContent.getContentTypeName());
+        ContentWizardPanel contentWizard = selectSitePressNew(dateTimeContent.getContentTypeName());
 
-        when: "data typed and 'Save' and  'Publish' has been pressed"
-        contentWizardPanel.typeData( dateTimeContent ).save().clickOnWizardPublishButton().clickOnPublishButton();
+        when: "data has been typed and 'Save' and  'Publish' has been pressed"
+        contentWizard.typeData( dateTimeContent ).showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
+        contentWizard.clickOnWizardPublishButton().clickOnPublishButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage(Application.EXPLICIT_NORMAL);
-        contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
+        contentWizard.closeBrowserTab().switchToBrowsePanelTab();
         and: "the name of the content has been typed in the search input"
         filterPanel.typeSearchText(dateTimeContent.getName());
 
-        then: "status of the content should be 'Published'"
+        then: "the content should be 'Published' in the grid"
         contentBrowsePanel.getContentStatus(dateTimeContent.getName()).equalsIgnoreCase(ContentStatus.PUBLISHED.getValue());
 
         and: "expected notification should appear"

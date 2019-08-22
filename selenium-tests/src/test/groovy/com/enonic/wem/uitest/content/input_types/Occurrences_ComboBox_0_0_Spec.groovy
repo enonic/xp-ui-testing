@@ -3,12 +3,14 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -121,12 +123,13 @@ class Occurrences_ComboBox_0_0_Spec
         optValues.containsAll( options.toList() );
     }
 
-    def "GIVEN existing ComboBox 0:0 with options is opened WHEN the content has been published THEN content's  status is getting 'Online'"()
+    def "GIVEN existing ComboBox 0:0 (options are selected) is opened WHEN the content has been published THEN content's  status is getting 'Published'"()
     {
-        given: "existing new ComboBox 0:0 with options'"
+        given: "existing new ComboBox 0:0 is opened'"
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( COMBOBOX_0_0_CONTENT );
 
         when: "the content has been published"
+        wizard.showPublishMenu().clickOnMarkAsReadyMenuItem();
         wizard.clickOnWizardPublishButton().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL ).clickOnPublishButton().waitForDialogClosed();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
@@ -142,7 +145,8 @@ class Occurrences_ComboBox_0_0_Spec
         Content comboBoxContent = buildComboBox0_0_Content( 0 );
         filterPanel.typeSearchText( SITE_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE_NAME ).clickToolbarNew().selectContentType(
-            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent ).save();
+            comboBoxContent.getContentTypeName() ).typeData( comboBoxContent );
+        wizard.showPublishMenu().clickOnMarkAsReadyMenuItem();
 
         when: "the content has been published in the wizard"
         wizard.clickOnWizardPublishButton().waitUntilDialogShown(

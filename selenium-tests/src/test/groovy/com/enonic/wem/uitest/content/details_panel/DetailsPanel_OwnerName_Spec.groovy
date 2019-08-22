@@ -135,11 +135,11 @@ class DetailsPanel_OwnerName_Spec
         when: "the first 'version history' item has been expanded"
         AllContentVersionsView allContentVersionsView = contentBrowsePanel.getContentDetailsPanel().openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        String versionId = versionItem.getId();
+
 
         then: "expected 'owner name' should be displayed"
         saveScreenshot( "test_owner_version-history_user_name" );
-        versionItem.getOwnerName( versionId ) == TEST_USER.getDisplayName();
+        versionItem.getOwnerName( 0 ) == TEST_USER.getDisplayName();
     }
 
     def "WHEN the copy of the existing folder is opened THEN correct owner should be displayed in settings"()

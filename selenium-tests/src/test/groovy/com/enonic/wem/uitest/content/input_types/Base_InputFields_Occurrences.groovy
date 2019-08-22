@@ -116,8 +116,11 @@ class Base_InputFields_Occurrences
         if ( !contentBrowsePanel.exists( SITE_NAME ) )
         {
             site = buildSiteWithAllTypes();
-            contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
-                site ).save().closeBrowserTab().switchToBrowsePanelTab();
+            ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
+                site );
+            wizard.showPublishMenu().clickOnMarkAsReadyMenuItem();
+            //dialog.pressYesButton();
+            wizard.closeBrowserTab().switchToBrowsePanelTab();
         }
     }
 
@@ -799,5 +802,4 @@ class Base_InputFields_Occurrences
     {
         return TestItemSet.builder().textLineText( textLine ).htmlAreaText( htmlareaText ).build();
     }
-
 }

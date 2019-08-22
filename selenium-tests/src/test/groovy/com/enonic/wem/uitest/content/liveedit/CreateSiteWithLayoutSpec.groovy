@@ -138,6 +138,7 @@ class CreateSiteWithLayoutSpec
         given: "existing site with the layout is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit().waitUntilWizardOpened()
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        wizard.clickOnMarkAsReadyButton(  );
 
         when: "site is published with its children"
         ContentPublishDialog modalDialog = wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishButton();

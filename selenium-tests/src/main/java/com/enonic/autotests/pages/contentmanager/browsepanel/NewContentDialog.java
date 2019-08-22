@@ -1,18 +1,5 @@
 package com.enonic.autotests.pages.contentmanager.browsepanel;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,14 +8,12 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.google.common.io.Files;
 
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel;
 import com.enonic.autotests.utils.NameHelper;
-import com.enonic.autotests.utils.TextTransfer;
 import com.enonic.xp.schema.content.ContentTypeName;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -44,14 +29,16 @@ public class NewContentDialog
 
     public static final String LIST_ITEMS_SITES = "//div[contains(@id,'NewContentDialog')]//ul/li[@class='content-types-list-item site']";
 
-    public static final String SEARCH_INPUT = CONTAINER+ "//div[contains(@id,'FileInput')]/input";
+    public static final String SEARCH_INPUT = CONTAINER + "//div[contains(@id,'FileInput')]/input";
 
     private final static String DIALOG_TITLE_XPATH =
         "//div[contains(@class,'modal-dialog')]/div[contains(@class,'dialog-header') and contains(.,'Create Content')]";
 
     public static String CONTENT_TYPE_DISPLAY_NAME =
         CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::h6[contains(@class,'main-name') and text()='%s']]";
-    public static String CONTENT_TYPE_BY_DESCRIPTION =CONTAINER+"//li[contains(@class,'content-types-list-item') and descendant::p[contains(@class,'sub-name') and text()='%s']]";
+
+    public static String CONTENT_TYPE_BY_DESCRIPTION =
+        CONTAINER + "//li[contains(@class,'content-types-list-item') and descendant::p[contains(@class,'sub-name') and text()='%s']]";
 
     private final String AVAILABLE_CONTENT_TYPES = CONTAINER + "//ul[contains(@id,'FilterableItemsList')]" + "//li" + P_NAME;
 
@@ -82,7 +69,6 @@ public class NewContentDialog
     public boolean isMostPopularBlockDisplayed()
     {
         return waitUntilVisibleNoException( By.xpath( MOST_POPULAR_BLOCK ), Application.EXPLICIT_NORMAL );
-        //return isElementDisplayed( MOST_POPULAR_BLOCK );
     }
 
     public List<String> getContentTypesNames()
@@ -93,45 +79,6 @@ public class NewContentDialog
     public List<String> getMostPopularItemsNames()
     {
         return getDisplayedStrings( By.xpath( MOST_POPULAR_ITEM_NAME ) );
-    }
-
-    public static File createFileInTmp( String resName, final String fileName )
-    {
-        OutputStream outStream = null;
-        File file = null;
-        InputStream inputStream = NewContentDialog.class.getClassLoader().getResourceAsStream( resName );
-        if ( inputStream == null )
-        {
-            throw new TestFrameworkException( resName + " not found" );
-        }
-        try
-        {
-            file = new File( Files.createTempDir(), fileName );
-            outStream = new FileOutputStream( file );
-            file.deleteOnExit();
-            byte[] buf = new byte[1024];
-            for ( int len; ( len = inputStream.read( buf ) ) != -1; )
-            {
-                outStream.write( buf, 0, len );
-            }
-            outStream.close();
-        }
-        catch ( IOException e )
-        {
-            throw new TestFrameworkException( resName + " " + e.getMessage() );
-        }
-        finally
-        {
-            try
-            {
-                inputStream.close();
-            }
-            catch ( IOException e1 )
-            {
-                throw new TestFrameworkException( resName + " " + e1.getMessage() );
-            }
-        }
-        return file;
     }
 
     public NewContentDialog clearSearchInput()
@@ -160,7 +107,6 @@ public class NewContentDialog
     }
 
     /**
-     * Waits until 'AddNewContentWizard' is opened.
      *
      * @return true if dialog opened, otherwise false.
      */
@@ -174,9 +120,10 @@ public class NewContentDialog
         clearAndType( searchInput, text );
         return this;
     }
+
     public NewContentDialog typeSearchTextInHiddenInput( String text )
     {
-        buildActions().sendKeys( text).build().perform();
+        buildActions().sendKeys( text ).build().perform();
         return this;
     }
 
@@ -195,57 +142,6 @@ public class NewContentDialog
         waitUntilElementEnabledNoException( By.xpath( SEARCH_INPUT ), Application.EXPLICIT_NORMAL );
     }
 
-    public ContentBrowsePanel doUploadFile( String path, String fileName )
-        throws AWTException
-    {
-        uploadButton.click();
-        sleep( 1000 );
-        //TestUtils.createScreenCaptureWithRobot( "upload_image" );
-        File file = createFileInTmp( path, fileName );
-        insertPathToFileToSystemDialog( file.getAbsolutePath() );
-        return new ContentBrowsePanel( getSession() );
-    }
-
-    public ContentBrowsePanel doUploadFile( String pathToFile )
-        throws AWTException
-    {
-        String absolutePath = null;
-        URL resource = NewContentDialog.class.getResource( pathToFile );
-        try
-        {
-            absolutePath = Paths.get( resource.toURI() ).toString();
-        }
-        catch ( URISyntaxException e )
-        {
-            e.printStackTrace();
-        }
-        uploadButton.click();
-        sleep( 1000 );
-       // TestUtils.createScreenCaptureWithRobot( "upload_image" );
-        TextTransfer transfer = new TextTransfer();
-        transfer.typePathToFileToSystemDialog( absolutePath );
-        return new ContentBrowsePanel( getSession() );
-    }
-
-    private void insertPathToFileToSystemDialog( String absolutePath )
-        throws AWTException
-    {
-        StringSelection ss = new StringSelection( absolutePath );
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents( ss, null );
-        sleep( 1500 );
-        Robot robot = new Robot();
-        robot.waitForIdle();
-        robot.keyPress( KeyEvent.VK_CONTROL );
-        robot.keyPress( KeyEvent.VK_V );
-        sleep( 500 );
-        robot.keyRelease( KeyEvent.VK_V );
-        robot.keyRelease( KeyEvent.VK_CONTROL );
-        sleep( 2000 );
-        robot.keyPress( KeyEvent.VK_ENTER );
-        robot.keyRelease( KeyEvent.VK_ENTER );
-        sleep( 1000 );
-    }
-
     /**
      * Select content type by name or description.
      *
@@ -255,9 +151,8 @@ public class NewContentDialog
     {
         //String searchString = contentTypeDisplayName.substring( contentTypeDisplayName.indexOf( ":" ) + 1 );
         //waitUntilElementEnabled( By.xpath( SEARCH_INPUT ), Application.EXPLICIT_NORMAL );
-        buildActions().sendKeys( type).build().perform();
-        //clearAndType( searchInput, searchString );
-        sleep( 700 );
+        buildActions().sendKeys( type ).build().perform();
+        sleep( 500 );
         String ctypeXpath = String.format( CONTENT_TYPE_DISPLAY_NAME, type );
         boolean isContentTypePresent = isElementDisplayed( ctypeXpath );
         if ( !isContentTypePresent )
@@ -301,17 +196,9 @@ public class NewContentDialog
         return findElements( By.xpath( ALL_LIST_ITEMS ) ).stream().map( WebElement::isDisplayed ).collect( Collectors.toList() ).size();
     }
 
-    public int getNumberSitesFromList()
+    public NewContentDialog showSearchInput()
     {
-        boolean isPresentList = waitUntilVisibleNoException( By.xpath( ALL_LIST_ITEMS ), Application.EXPLICIT_NORMAL );
-        if ( !isPresentList )
-        {
-            getLogger().info( "list of content types is empty" );
-        }
-        return findElements( By.xpath( LIST_ITEMS_SITES ) ).size();
-    }
-    public NewContentDialog showSearchInput(){
-        buildActions().sendKeys( "a").build().perform();
+        buildActions().sendKeys( "a" ).build().perform();
         return this;
     }
 }

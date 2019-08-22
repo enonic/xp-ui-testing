@@ -11,8 +11,6 @@ import spock.lang.Shared
 
 /**
  * Created on 24.10.2016.
- *
- * XP-4314 Up-to-date selenium tests for notification messages
  * */
 class Delete_Published_Parent_Folder_Spec
     extends BaseContentSpec
@@ -24,7 +22,7 @@ class Delete_Published_Parent_Folder_Spec
     {
         given:
         PARENT_FOLDER = buildFolderContent( "publish", "parent folder" );
-        addContent( PARENT_FOLDER );
+        addReadyContent( PARENT_FOLDER );
         findAndSelectContent( PARENT_FOLDER.getName() );
         Content child = buildFolderContent( "child", "child folder" );
         addContent( child );
