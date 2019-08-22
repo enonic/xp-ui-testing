@@ -50,8 +50,8 @@ class Attachments_Content_Spec
         and: "correct validation message is displayed"
         attachmentsFormView.getValidationMessage() == Application.REQUIRED_MESSAGE;
 
-        and: "'Publish' button should be disabled"
-        !wizard.isPublishButtonEnabled();
+        and: "'Publish' menu item should be disabled"
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
     def "GIVEN wizard for adding an attachments-content with 2 required occurrences is opened WHEN 'Save' button has been pressed AND the required attachment is not selected THEN validation message is present"()
@@ -71,7 +71,7 @@ class Attachments_Content_Spec
         attachmentsFormView.getValidationMessage() == String.format( Application.MIN_OCCURRENCES_REQUIRED_MESSAGE, 2 );
 
         and: "'Publish' button should be disabled"
-        !wizard.isPublishButtonEnabled();
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
 }

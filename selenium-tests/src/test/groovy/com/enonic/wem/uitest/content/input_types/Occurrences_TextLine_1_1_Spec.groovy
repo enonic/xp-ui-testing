@@ -102,7 +102,7 @@ class Occurrences_TextLine_1_1_Spec
         saveScreenshot( "req_textline_is_empty" );
 
         then: "'Publish' button should be disabled on the wizard-toolbar"
-        !wizard.isPublishButtonEnabled();
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "the content should be displayed with red icon on the wizard page"
         wizard.isContentInvalid();

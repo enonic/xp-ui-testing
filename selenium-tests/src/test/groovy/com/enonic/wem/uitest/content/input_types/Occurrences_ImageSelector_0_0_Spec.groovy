@@ -177,8 +177,8 @@ class Occurrences_ImageSelector_0_0_Spec
         when: "data typed AND image not selected"
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
 
-        then: "'Publish' button on the wizard-toolbar should be enabled, because image-inputs are not required"
-        wizard.isPublishButtonEnabled();
+        then: "'Publish' menu item should be enabled, because image-inputs are not required"
+        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "red icon should not be displayed on the wizard page"
         !wizard.isContentInvalid();

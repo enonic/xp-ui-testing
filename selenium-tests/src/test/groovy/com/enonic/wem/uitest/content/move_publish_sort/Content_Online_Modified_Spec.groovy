@@ -60,11 +60,8 @@ class Content_Online_Modified_Spec
         then: "content is getting 'modified'"
         wizard.getStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
 
-        and: "Publish button is enabled on the wizard-toolbar"
-        wizard.isPublishButtonEnabled();
-
-        and: "Publish menu should be enabled on the wizard-toolbar"
-        wizard.isPublishMenuAvailable();
+        and: "Publish menu item should be enabled on the wizard-toolbar"
+        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
     def "GIVEN existing 'Modified'-folder in root WHEN the content has been selected and published THEN folder has got a 'Published' status"()

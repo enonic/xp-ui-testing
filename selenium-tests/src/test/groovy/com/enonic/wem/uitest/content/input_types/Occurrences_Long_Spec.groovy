@@ -91,8 +91,8 @@ class Occurrences_Long_Spec
         and: "validation message should be displayed, because this input is required and value is not allowed"
         longFormViewPanel.isValidationMessagePresent();
 
-        and: "'Publish' button on the wizard-toolbar is disabled, because input is required"
-        !wizard.isPublishButtonEnabled();
+        and: "'Publish' menu item should be disabled, because input is required"
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
     def "GIVEN wizard for long content(required) WHEN name has been typed AND 'Save' button has been pressed THEN 'confirmation' dialog should not appear"()

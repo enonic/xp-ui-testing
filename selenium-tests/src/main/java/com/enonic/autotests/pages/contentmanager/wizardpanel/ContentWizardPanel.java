@@ -588,9 +588,9 @@ public class ContentWizardPanel
         return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_SAVED_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
-    public boolean isPublishButtonEnabled()
+    public void isPublishButtonEnabled()
     {
-        return waitUntilElementEnabledNoException( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+         waitUntilElementEnabled( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
     public boolean isMarAsReadyEnabled()

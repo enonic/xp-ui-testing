@@ -106,7 +106,7 @@ class Occurrences_DefaultRelation_2_4_Spec
         ContentWizardPanel wizard = findAndSelectContent( TEST_RELATIONSHIP_CONTENT.getName(  ) ).clickToolbarEdit(  );
 
         then: "'Publish' button should be enabled, because content is valid"
-        wizard.isPublishButtonEnabled();
+        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
     def "GIVEN valid content selected in the grid and 'Publish' button on toolbar pressed WHEN content published THEN the content with 'online' status should be displayed"()
@@ -132,8 +132,8 @@ class Occurrences_DefaultRelation_2_4_Spec
         formViewPanel.removeSelectedFile( MAN_IMAGE_DISPLAY_NAME );
         wizard.save();
 
-        then: "'Publish' button should be disabled, because content is not valid"
-        !wizard.isPublishButtonEnabled();
+        then: "'Publish...' menu item should be disabled, because content is not valid"
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "red icon should be present on the wizard page"
         wizard.isContentInvalid();

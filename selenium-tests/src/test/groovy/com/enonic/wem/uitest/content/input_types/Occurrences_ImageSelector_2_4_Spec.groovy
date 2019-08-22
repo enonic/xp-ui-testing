@@ -112,7 +112,7 @@ class Occurrences_ImageSelector_2_4_Spec
         formViewPanel.isValidationMessagePresent();
 
         and: "'Publish button' is disabled now"
-        !wizard.isPublishButtonEnabled();
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "red circle should be displayed on the wizard page"
         wizard.isContentInvalid();

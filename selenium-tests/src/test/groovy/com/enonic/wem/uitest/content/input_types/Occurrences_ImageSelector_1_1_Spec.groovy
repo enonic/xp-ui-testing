@@ -56,7 +56,7 @@ class Occurrences_ImageSelector_1_1_Spec
         formViewPanel.isValidationMessagePresent();
 
         and: "'Publish' button on the wizard-toolbar should be disabled"
-        !wizard.isPublishButtonEnabled();
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "the content is not valid, because an image is required"
         wizard.isContentInvalid();

@@ -28,8 +28,8 @@ class Publish_InvalidContent_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( invalidFolder.getContentTypeName() ).typeData(
             invalidFolder ).save();
 
-        then: "'Publish' button should be disabled"
-        !wizard.isPublishButtonEnabled();
+        then: "'Publish...' menu item should be disabled"
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "red icon should be displayed on the wizard page"
         wizard.isContentInvalid();

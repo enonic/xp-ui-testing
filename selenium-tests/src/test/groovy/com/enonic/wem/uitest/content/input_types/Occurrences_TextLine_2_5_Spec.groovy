@@ -160,8 +160,8 @@ class Occurrences_TextLine_2_5_Spec
         formViewPanel.clearAllInputs();
         saveScreenshot("text_lines_cleared");
 
-        then: "'Publish' button should be disabled"
-        !wizard.isPublishButtonEnabled();
+        then: "'Publish...' menu item should be disabled"
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "content is getting invalid"
         wizard.isContentInvalid();

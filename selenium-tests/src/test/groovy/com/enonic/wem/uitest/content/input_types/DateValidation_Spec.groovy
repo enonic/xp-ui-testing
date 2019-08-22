@@ -105,7 +105,7 @@ class DateValidation_Spec
         saveScreenshot( "wrong-date-time" );
 
         then: "'Publish' button should be disabled, because wrong datetime was typed in the required input"
-        !wizard.isPublishButtonEnabled();
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "time input should be with red border"
         formViewPanel.isDateTimeInvalid();

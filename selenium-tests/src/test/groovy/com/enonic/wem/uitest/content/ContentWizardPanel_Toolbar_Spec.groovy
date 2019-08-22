@@ -13,45 +13,45 @@ class ContentWizardPanel_Toolbar_Spec
     def "WHEN folder-wizard is opened AND all inputs are empty THEN all buttons on toolbar have correct state"()
     {
         when: "content wizard is opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
 
         then: "'Delete' button should be enabled"
-        wizardPanel.isDeleteButtonEnabled();
+        wizard.isDeleteButtonEnabled();
 
         and: "'Save' button should be disabled, because name input is empty"
-        !wizardPanel.isSaveButtonEnabled();
+        !wizard.isSaveButtonEnabled();
 
         and: "'Publish' button should be disabled"
-        !wizardPanel.isPublishButtonEnabled();
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "'Duplicate' button should be enabled"
-        wizardPanel.isDuplicateButtonEnabled();
+        wizard.isDuplicateButtonEnabled();
 
         and: "content status should be 'New' because the folder just created"
-        wizardPanel.getStatus() == ContentStatus.NEW.getValue();
+        wizard.getStatus() == ContentStatus.NEW.getValue();
     }
 
     def "GIVEN content wizard is opened WHEN name has been typed but not saved yet THEN all buttons on toolbar have correct state"()
     {
         given: "content wizard is opened"
-        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ));
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ));
         when: "display name is typed"
-        wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) );
+        wizard.typeDisplayName( NameHelper.uniqueName( "toolbar" ) );
 
         then: "'Delete' button should be enabled"
-        wizardPanel.isDeleteButtonEnabled();
+        wizard.isDeleteButtonEnabled();
 
         and: "'Save' button should be enabled"
-        wizardPanel.isSaveButtonEnabled();
+        wizard.isSaveButtonEnabled();
 
         and: "'Publish' button should be enabled"
-        wizardPanel.isPublishButtonEnabled();
+        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "'Duplicate' button should be enabled"
-        wizardPanel.isDuplicateButtonEnabled();
+        wizard.isDuplicateButtonEnabled();
 
         and: "content status should be 'New'"
-        wizardPanel.getStatus() == ContentStatus.NEW.getValue();
+        wizard.getStatus() == ContentStatus.NEW.getValue();
     }
 
     def "GIVEN folder-wizard opened WHEN a name has been typed and content saved THEN all buttons on toolbar have correct state"()
@@ -68,8 +68,8 @@ class ContentWizardPanel_Toolbar_Spec
         and: "'Saved' button should be disabled"
         wizardPanel.isSavedButtonDisplayed();
 
-        and: "'Publish' button should be enabled"
-        wizardPanel.isPublishButtonEnabled();
+        and: "'Publish' menu item should be enabled"
+        wizardPanel.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "'Duplicate' button should be enabled"
         wizardPanel.isDuplicateButtonEnabled();
@@ -85,8 +85,8 @@ class ContentWizardPanel_Toolbar_Spec
         wizard.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
 
         when: "content has been published"
-        ConfirmationDialog confirm = wizard.showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
-        confirm.pressYesButton();
+        wizard.showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
+
         wizard.clickOnWizardPublishButton().clickOnPublishButton();
         saveScreenshot( "folder_published_in_wizard" );
 
@@ -96,8 +96,8 @@ class ContentWizardPanel_Toolbar_Spec
         and: "'Saved' button should be disabled"
         !wizard.isSavedButtonEnabled();
 
-        and: "'Publish' button should be disabled"
-        !wizard.isPublishButtonEnabled();
+        and: "'Publish' menu item should be disabled"
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "content status should be 'online'"
         wizard.getStatus() == ContentStatus.PUBLISHED.getValue();

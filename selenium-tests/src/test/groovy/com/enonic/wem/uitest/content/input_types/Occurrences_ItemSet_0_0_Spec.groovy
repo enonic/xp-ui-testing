@@ -78,7 +78,7 @@ class Occurrences_ItemSet_0_0_Spec
         wizard.isContentInvalid();
 
         and: "Publish button should be disabled"
-        !wizard.isPublishButtonEnabled();
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
         and: "one Item Set should be displayed"
         itemSetViewPanel.getNumberOfSets() == 1;

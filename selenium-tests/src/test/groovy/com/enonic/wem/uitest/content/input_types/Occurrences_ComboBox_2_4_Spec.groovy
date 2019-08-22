@@ -31,7 +31,7 @@ class Occurrences_ComboBox_2_4_Spec
         formViewPanel.getSelectedOptionValues().size() == 0;
 
         and: "content should be invalid, because required option was not selected"
-        !wizard.isPublishButtonEnabled();
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
     def "GIVEN new ComboBox2_4 is added (options are not selected) WHEN content has been opened THEN no one selected options should be present on the page"()

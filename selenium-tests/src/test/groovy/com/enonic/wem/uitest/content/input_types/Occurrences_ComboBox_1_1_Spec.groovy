@@ -68,7 +68,7 @@ class Occurrences_ComboBox_1_1_Spec
         wizard.isContentInvalid();
 
         and: "button 'Publish' should be disabled"
-        !wizard.isPublishButtonEnabled();
+        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
     def "GIVEN ComboBox-content (1:1) with one option is saved WHEN the content has been opened THEN one selected option should be present and options filter input is disabled"()
