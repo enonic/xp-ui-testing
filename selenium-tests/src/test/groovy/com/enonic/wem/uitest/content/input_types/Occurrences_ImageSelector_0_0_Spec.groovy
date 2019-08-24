@@ -184,11 +184,11 @@ class Occurrences_ImageSelector_0_0_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN creating of new content(0,0) AND no one image was selected WHEN 'Publish' button was pressed THEN the content should be with 'online' status"()
+    def "GIVEN new ImageSelector content(0,0) AND no one image was selected WHEN 'Publish' button has been pressed THEN the content should be with 'PUBLISHED' status"()
     {
         given: "creating of new content AND no one image was selected"
         Content imageSelectorContent = buildImageSelector0_0_Content( null );
-        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
+        ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).clickOnMarkAsReadyButton();
         and: "Publish button has been pressed"
         wizard.clickOnWizardPublishButton().clickOnPublishButton();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
