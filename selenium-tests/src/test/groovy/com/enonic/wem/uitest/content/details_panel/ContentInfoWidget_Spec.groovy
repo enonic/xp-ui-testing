@@ -64,8 +64,7 @@ class ContentInfoWidget_Spec
         given: "existing folder that is 'New' and 'Marked as ready'"
         filterPanel.typeSearchText( FOLDER.getName() )
         contentBrowsePanel.selectContentInTable( FOLDER.getName() );
-        ConfirmationDialog confirm = contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
-        confirm.pressYesButton();
+        contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
 
         when: "the folder has been published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();

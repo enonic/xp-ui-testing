@@ -31,7 +31,7 @@ class SchedulePublishDialog_Spec
     {
         given: "existing folder in root"
         TEST_FOLDER = buildFolderContent( "folder", "schedule dialog" );
-        addContent( TEST_FOLDER );
+        addReadyContent( TEST_FOLDER );
 
         when: "Drop down has been clicked and 'Schedule' menu item selected"
         findAndSelectContent( TEST_FOLDER.getName() )

@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -21,10 +22,12 @@ class Site_With_Invalid_Child_Publish_Spec
         given: "site has been added"
         SITE = buildSiteWithApps( APP_CONTENT_TYPES_DISPLAY_NAME );
         CHILD = buildImageSelector1_1_Content( SITE.getName(), null );
-        addContent( SITE );
+        addReadyContent( SITE );
 
         and: "content with image-selector has been added(image was not selected)"
-        selectSitePressNew( SITE.getName(), CHILD.getContentTypeName() ).typeData( CHILD ).save().close( CHILD.getDisplayName() );
+        ContentWizardPanel wizard = selectSitePressNew( SITE.getName(), CHILD.getContentTypeName() ).typeData( CHILD );
+        wizard.clickOnMarkAsReadyButton();
+        wizard.close( CHILD.getDisplayName() );
 
         expect: "the site should be present in the grid"
         contentBrowsePanel.exists( SITE.getName() );

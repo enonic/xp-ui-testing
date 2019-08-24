@@ -57,8 +57,9 @@ class Publish_InvalidContent_Spec
         and: "child folder has been added"
         findAndSelectContent( parentFolder.getName() );
         Content childContent = buildFolderContentWithParent( "not_valid", null, parentFolder.getName() );
-        contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).typeData( childContent ).save().
-            closeBrowserTab().switchToBrowsePanelTab();
+        ContentWizardPanel wizardPanel= contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).typeData( childContent );
+        wizardPanel.clickOnMarkAsReadyButton(  );
+        wizardPanel.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "parent content has been selected and 'Publish' button pressed"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(

@@ -107,6 +107,7 @@ class ContentWizard_Publish_Inputs_Spec
         !wizard.isOnlineToInputDisplayed();
     }
 
+    //TODO
     def "GIVEN existing Unpublished folder WHEN 'Online from' set in the future AND Publish button pressed THEN folder is getting 'Online Pending'"()
     {
         given: "existing published folder"

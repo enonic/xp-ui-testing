@@ -59,8 +59,7 @@ class DetailsPanels_VersionHistory_Spec
         given: "existing content is selected"
         findAndSelectContent( folderContent.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
-        ConfirmationDialog confirm = contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
-        confirm.pressYesButton();
+        contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
 
         when: "content has been published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
