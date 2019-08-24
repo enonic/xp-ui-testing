@@ -285,7 +285,7 @@ public class ContentWizardPanel
     {
         waitUntilVisible( By.xpath( TOOLBAR_MARK_AS_READY_BUTTON_XPATH ));
         getDisplayedElement( By.xpath( TOOLBAR_MARK_AS_READY_BUTTON_XPATH ) ).click();
-        sleep( 300 );
+        sleep( 700 );
         return waitForNotificationMessage();
     }
 
