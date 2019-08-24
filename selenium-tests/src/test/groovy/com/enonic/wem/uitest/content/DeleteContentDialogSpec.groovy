@@ -106,8 +106,7 @@ class DeleteContentDialogSpec
         findAndSelectContent( CONTENT1.getName() );
 
         and: "the content has been published"
-        ConfirmationDialog confirm = contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
-        confirm.pressYesButton();
+        contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
         contentBrowsePanel.clickToolbarPublish().clickOnPublishButton().waitForDialogClosed();
 
         when: "the content is selected and 'Delete' button has been pressed"

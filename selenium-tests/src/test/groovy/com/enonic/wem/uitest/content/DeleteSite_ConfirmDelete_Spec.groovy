@@ -113,8 +113,7 @@ class DeleteSite_ConfirmDelete_Spec
 
         and:"the site has been published"
         findAndSelectContent( site.getName() );
-        ConfirmationDialog confirm = contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
-        confirm.pressYesButton();
+        contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
         contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
 
         when: "site selected and Delete pressed AND 'Instantly delete' checkbox has been checked"
