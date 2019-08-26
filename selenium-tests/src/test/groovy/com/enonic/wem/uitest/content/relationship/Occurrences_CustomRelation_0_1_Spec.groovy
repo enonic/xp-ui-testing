@@ -103,10 +103,10 @@ class Occurrences_CustomRelation_0_1_Spec
     def "GIVEN the citation content is selected AND publish button pressed WHEN 'Approve' button pressed THEN citation should be with 'PUBLISHED'"()
     {
         given: "the citation content is selected and Publish dialog opened"
-        ContentPublishDialog contentPublishDialog = findAndSelectContent(
-            RELATIONSHIP_CONTENT.getName() ).showPublishMenu().clickOnMarkAsReadyMenuItem();
+        findAndSelectContent( RELATIONSHIP_CONTENT.getName() ).showPublishMenu().clickOnMarkAsReadyMenuItem();
         sleep( 1000 );
-        contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
+            Application.EXPLICIT_NORMAL );
 
         when: "content has been published"
         contentPublishDialog.clickOnPublishButton();
