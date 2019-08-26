@@ -980,4 +980,17 @@ public class ContentWizardPanel
         }
         return entries;
     }
+    public ContentPublishDialog clickOnPublishMenuItem()
+    {
+        if ( !isPublishMenuItemEnabled() )
+        {
+            saveScreenshot( "err_publish_menu_item" );
+            throw new TestFrameworkException( "menu item is not enabled" );
+        }
+        getDisplayedElement( By.xpath( PUBLISH_MENU_ITEM ) ).click();
+        sleep( 300 );
+        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        return dialog;
+    }
 }

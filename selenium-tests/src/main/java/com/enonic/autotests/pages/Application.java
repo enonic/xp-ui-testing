@@ -21,7 +21,13 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class Application
     extends Page
 {
-    protected final String SCRIPT_SET_CKE = "CKEDITOR.instances[arguments[0]].setData(arguments[1])";
+    protected static final String WORKFLOW_STATE_WORK_IN_PROGRESS = "Work in progress";
+
+    protected static final String WORKFLOW_STATE_READY_FOR_PUBLISHING = "Ready for publishing";
+
+    protected static final String WORKFLOW_STATE_PUBLISHED = "Published";
+
+    protected static final String SCRIPT_SET_CKE = "CKEDITOR.instances[arguments[0]].setData(arguments[1])";
 
     protected final String CKE_HTML_AREA = "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'api.ui.text.TextArea')]";
 
@@ -189,6 +195,7 @@ public class Application
 
 
     protected final String PUBLISH_TREE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree...']";
+
     protected final String PUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish...']";
 
     public Application( TestSession session )

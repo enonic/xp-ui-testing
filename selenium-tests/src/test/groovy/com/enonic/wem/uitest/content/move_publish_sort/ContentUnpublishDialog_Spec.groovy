@@ -116,7 +116,7 @@ class ContentUnpublishDialog_Spec
     def "GIVEN parent and child content are 'Published' WHEN parent content has been selected and 'Unpublish' menu item clicked THEN parent and child contents are getting 'Unpublished'"() {
         given: "parent and child content are 'online'"
         CHILD_CONTENT = buildFolderContentWithParent("child", "child for unpublishing", PARENT_CONTENT.getName());
-        findAndSelectContent(PARENT_CONTENT.getName()).clickOnMarkAsReadyOnToolbarAndConfirm(  );
+        findAndSelectContent(PARENT_CONTENT.getName()).clickOnMarkAsReadySingleContent(  );
         addReadyContent(CHILD_CONTENT);
         and: "both contents should be published"
         contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishButton();

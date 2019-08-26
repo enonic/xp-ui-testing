@@ -14,10 +14,6 @@ import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-/*
-one test for task " XP-4368 Add tests to verify the XP-4367'
- */
-
 @Stepwise
 class CreateSiteWithLayoutSpec
     extends BaseContentSpec
@@ -63,7 +59,7 @@ class CreateSiteWithLayoutSpec
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN existing site, based on 'Simple site' app WHEN site was expanded and templates folder selected AND page-template added  THEN new template should be present in a 'Templates' folder"()
+    def "GIVEN existing site WHEN site has been expanded and templates folder selected AND page-template added THEN new template should be added in a 'Templates' folder"()
     {
         given: "existing site"
         pageTemplate = buildPageTemplate( MAIN_REGION_PAGE_DESCRIPTOR_NAME, SUPPORTS, SITE_DISPLAY_NAME, SITE.getName() );
@@ -71,9 +67,12 @@ class CreateSiteWithLayoutSpec
         and: "the site is expanded"
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
 
-        when: "'Templates' folder selected and new page-template added"
-        contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
-            pageTemplate.getContentTypeName() ).typeData( pageTemplate ).closeBrowserTab().switchToBrowsePanelTab();
+        when: "'Templates' folder has been selected and new page-template has been added(Marked as Ready)"
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+            pageTemplate.getContentTypeName() );
+        wizard.typeData( pageTemplate );
+        wizard.clickOnMarkAsReadyButton();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
         contentBrowsePanel.expandContent( ContentPath.from( "_templates" ) );
@@ -81,11 +80,13 @@ class CreateSiteWithLayoutSpec
 
         then: "new template should be listed beneath a 'Templates' folder"
         contentBrowsePanel.exists( pageTemplate.getName() );
+        and:"workflow state is Ready for publishing"
+        contentBrowsePanel.getWorkflowState(pageTemplate.getName(  )) == Application.WORKFLOW_STATE_READY_FOR_PUBLISHING;
     }
 
-    def "GIVEN 'Page Components' opened WHEN menu for 'main region' clicked and 'insert' menu-item selected AND 'Text'-item clicked THEN new text present on the live edit frame"()
+    def "GIVEN existing page template is opened WHEN new text component has been inserted THEN new text should be present in the live edit frame"()
     {
-        given: "'Page Components' opened"
+        given: "'Page Components' dialog is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
@@ -111,7 +112,7 @@ class CreateSiteWithLayoutSpec
 
     def "GIVEN 'Page Components' is opened WHEN menu for 'main region' is opened and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout should be present on the live edit frame"()
     {
-        given: "site is opened and 'Page Components' opened as well"
+        given: "site is opened and 'Page Components' is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
@@ -133,12 +134,25 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getLayoutColumnNumber() == 3;
     }
 
-    def "GIVEN existing site with the layout is opened WHEN site is published with its children THEN site should be with 'online' status on the wizard page"()
+    def "GIVEN existing page template is selected WHEN Mark as Ready button has been clicked THEN the template gets 'Ready to publish'"()
+    {
+        given: "existing page template is selected"
+        findAndSelectContent( pageTemplate.getName() );
+
+        when: "Mark as Ready button has been clicked"
+        contentBrowsePanel.clickOnMarkAsReadySingleContent();
+        sleep( 2000 );
+
+        then: "the template gets 'Ready to publish'"
+        contentBrowsePanel.getWorkflowState(pageTemplate.getName()) == Application.WORKFLOW_STATE_READY_FOR_PUBLISHING;
+    }
+
+    def "GIVEN existing site is opened WHEN site is published with its children THEN site should be with 'PUBLISHED' status in the wizard page"()
     {
         given: "existing site with the layout is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit().waitUntilWizardOpened()
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        wizard.clickOnMarkAsReadyButton(  );
+        wizard.clickOnMarkAsReadyButton();
 
         when: "site is published with its children"
         ContentPublishDialog modalDialog = wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishButton();
@@ -150,7 +164,7 @@ class CreateSiteWithLayoutSpec
         wizard.getStatus() == ContentStatus.PUBLISHED.getValue();
     }
 
-    def "GIVEN page-template is opened and 'Page Components' is opened WHEN menu for 'left region' is opened and 'insert' menu-item selected AND 'image'-item clicked THEN new image should be present in the left region"()
+    def "GIVEN page-template is opened WHEN an image has been inserted in the left region THEN the image should be present in the layout"()
     {
         given: "template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
@@ -158,7 +172,7 @@ class CreateSiteWithLayoutSpec
         and: "and 'Page Components' view is opened"
         PageComponentsViewDialog pageComponentsView = templateWizard.showComponentView();
 
-        when: "menu for 'left region' is opened and 'insert' menu-item selected AND 'image'-item clicked"
+        when: "an image has been inserted in the left region"
         pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         templateWizard.switchToLiveEditFrame();
@@ -181,7 +195,7 @@ class CreateSiteWithLayoutSpec
         statusAfterInsertingImage == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN template is opened and 'Page Components' is opened WHEN menu for 'center region' is opened and 'insert' menu-item selected AND 'image'-item clicked THEN new image should be present in the center-region "()
+    def "GIVEN template is opened WHEN an image has been inserted in the center region THEN the image should be present in the layout"()
     {
         given: "template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
@@ -189,7 +203,7 @@ class CreateSiteWithLayoutSpec
         and: "and 'Page Components' view is opened"
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "menu for 'center region' is opened and 'insert' menu-item selected AND 'image'-item clicked"
+        when: "an image has been inserted in the center region"
         pageComponentsView.openMenu( "center" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
@@ -200,13 +214,12 @@ class CreateSiteWithLayoutSpec
         wizard.switchToLiveEditFrame();
         saveScreenshot( "center_region_inserted" );
 
-        then: "new image should be present in the center-region "
-
+        then: "the image should be present in the layout"
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 2;
     }
 
-    def "GIVEN 'Page Components' opened WHEN menu for 'right region' is opened and 'insert' menu-item selected AND 'image'-item is clicked THEN new image should be displayed on the right-region"()
+    def "GIVEN existing page template is opened WHEN an image has been inserted in the right region THEN the image should be displayed in the lauot"()
     {
         given: "template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
@@ -214,7 +227,7 @@ class CreateSiteWithLayoutSpec
         and: "and 'Page Components' view is opened"
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "menu for right region is opened and 'insert' menu-item selected AND 'image'-item has been clicked"
+        when: "an image has been inserted in the right region"
         pageComponentsView.openMenu( "right" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
@@ -224,12 +237,12 @@ class CreateSiteWithLayoutSpec
         and: "the template should be saved automatically"
         saveScreenshot( "right_region_inserted" );
 
-        then: "new image should be displayed on the right-region"
+        then: "new image should be displayed in the layout"
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.getNumberImagesInLayout() == 3;
     }
 
-    def "GIVEN layout with 3 inserted images  WHEN menu for one of them images selected AND 'reset' menu-item selected THEN removed image not present in layout"()
+    def "GIVEN layout with 3 inserted images WHEN one image has been 'reset' THEN the image should not be present in the layout"()
     {
         given: "page template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
@@ -237,23 +250,23 @@ class CreateSiteWithLayoutSpec
         and: "and 'Page Components' view is opened"
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
-        when: "menu for image was clicked and 'reset' menu-item is selected"
+        when: "'reset' menu-item has been clicked"
         pageComponentsView.openMenu( TEST_IMAGE_DISPLAY_NAME ).selectMenuItem( "Reset" );
         wizardPanel.switchToLiveEditFrame();
 
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         saveScreenshot( "image_was_reset" );
 
-        then: "number of images in layout should be reduced"
+        then: "number of images should be reduced"
         liveFormPanel.getNumberImagesInLayout() == 2;
 
         and: "but number of components should not be changed"
         liveFormPanel.getNumberImageComponentsInLayout() == 3;
-        and: "image with the required name no longer present on LiveEdit"
+        and: "image with that name no longer present in the layout"
         !liveFormPanel.isImagePresentInLayout( TEST_IMAGE_DISPLAY_NAME );
     }
 
-    def "GIVEN layout with 3 inserted images  WHEN menu for one of them images selected AND 'duplicate' menu-item selected THEN two images with the same name should be present in the layout"()
+    def "GIVEN existing page template is opened WHEN an image-component has been selected AND 'duplicate' menu-item has been clicked THEN two images with the same name should be present in the layout"()
     {
         given: "page template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
@@ -261,22 +274,22 @@ class CreateSiteWithLayoutSpec
         and: "and 'Page Components' view is opened"
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
-        when: "menu for image is opened and 'duplicate' menu-item selected"
+        when: "'duplicate' menu-item has been clicked"
         pageComponentsView.openMenu( TEST_IMAGE_DISPLAY_NAME ).selectMenuItem( "Duplicate" );
         wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         saveScreenshot( "image_was_duplicated" );
 
-        then: "number of images in layout should be increased"
+        then: "number of images should be increased"
         liveFormPanel.getNumberImagesInLayout() == 4;
 
-        and: "but number of components should be increased"
+        and: "number of components should be increased"
         liveFormPanel.getNumberImageComponentsInLayout() == 4;
         and: "two images with same name should be present in the layout"
         liveFormPanel.getNumberOfImagesByName( TEST_IMAGE_DISPLAY_NAME ) == 2;
     }
 
-    def "GIVEN layout with 4 images AND 'Page Components' view opened WHEN menu for one of them images selected AND 'remove' menu-item selected THEN number of images reduced in the layout"()
+    def "GIVEN layout with 4 images WHEN one image component has been selected AND 'remove' menu-item clicked THEN number of images should be reduced"()
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )

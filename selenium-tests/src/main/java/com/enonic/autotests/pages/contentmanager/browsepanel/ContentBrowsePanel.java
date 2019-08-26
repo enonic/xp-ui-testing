@@ -584,17 +584,30 @@ public class ContentBrowsePanel
 
     public void clickOnMarkAsReadyOnToolbarAndConfirm()
     {
-        waitForPublishButtonVisible( Application.EXPLICIT_NORMAL );
+        waitUntilVisibleNoException( By.xpath( MARK_AS_READY_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( MARK_AS_READY_BUTTON_XPATH ) )
         {
-            saveScreenshot( "err_publish_button" );
-            throw new TestFrameworkException( "Publish button is not visible on the toolbar" );
+            saveScreenshot( "err_mark_as_ready_button1" );
+            throw new TestFrameworkException( "Mark As Ready button is not visible on the toolbar" );
         }
         markAsReadyButton.click();
         ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
         dialog.waitForOpened();
         dialog.pressYesButton();
         dialog.waitForClosed();
+        sleep( 500 );
+    }
+
+    //waits for Mark as Ready button gets visible on the toolbar, then clicks on it
+    public void clickOnMarkAsReadySingleContent()
+    {
+        waitUntilVisibleNoException( By.xpath( MARK_AS_READY_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isElementDisplayed( MARK_AS_READY_BUTTON_XPATH ) )
+        {
+            saveScreenshot( "err_mark_as_ready_button2" );
+            throw new TestFrameworkException( "Mark As Ready button is not visible on the toolbar" );
+        }
+        markAsReadyButton.click();
         sleep( 500 );
     }
 
@@ -1068,6 +1081,30 @@ public class ContentBrowsePanel
         String message = findElement( By.xpath( PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH ) ).getText();
         getLogger().info( "Publish Notification message " + message );
         return message;
+    }
+
+    public String getWorkflowState( String displayName )
+    {
+        String xpath = String.format( CONTENT_SUMMARY_VIEWER, displayName );
+        waitUntilVisible( By.xpath( xpath ) );
+        WebElement elem = findElement( By.xpath( xpath ) );
+        String attrClass = this.getAttribute( elem, "class", EXPLICIT_QUICK );
+        if ( attrClass.contains( "in-progress" ) )
+        {
+            return WORKFLOW_STATE_WORK_IN_PROGRESS;
+        }
+        else if ( attrClass.contains( "ready" ) )
+        {
+            return WORKFLOW_STATE_READY_FOR_PUBLISHING;
+        }
+        else if ( attrClass == "viewer content-summary-and-compare-status-viewer" )
+        {
+            return WORKFLOW_STATE_PUBLISHED;
+        }
+        else
+        {
+            throw new TestFrameworkException( "Error when getting content's state, class is:" + attrClass );
+        }
     }
 
     /**
