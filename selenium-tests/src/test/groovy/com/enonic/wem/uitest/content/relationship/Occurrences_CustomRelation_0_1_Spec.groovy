@@ -28,10 +28,11 @@ class Occurrences_CustomRelation_0_1_Spec
 
     def "setup: add a article content"()
     {
-        when: "article-content was added"
+        when: "article-content has been added"
         TEST_ARTICLE_CONTENT = buildArticle_Content( "articletest", "title", "body" );
-        selectSitePressNew( TEST_ARTICLE_CONTENT.getContentTypeName() ).typeData( TEST_ARTICLE_CONTENT ).save().close(
-            TEST_ARTICLE_CONTENT.getDisplayName() );
+        ContentWizardPanel wizard = selectSitePressNew( TEST_ARTICLE_CONTENT.getContentTypeName() ).typeData( TEST_ARTICLE_CONTENT );
+        wizard.clickOnMarkAsReadyButton();
+        wizard.close( TEST_ARTICLE_CONTENT.getDisplayName() );
         then: "it should be listed in the grid"
         filterPanel.typeSearchText( TEST_ARTICLE_CONTENT.getName() );
         contentBrowsePanel.exists( TEST_ARTICLE_CONTENT.getName() );
@@ -99,11 +100,13 @@ class Occurrences_CustomRelation_0_1_Spec
         names.get( 0 ).contains( TEST_ARTICLE_CONTENT.getName() );
     }
 
-    def "GIVEN the citation content is selected AND publish button pressed WHEN 'Approve' button pressed THEN citation should be with 'online' status"()
+    def "GIVEN the citation content is selected AND publish button pressed WHEN 'Approve' button pressed THEN citation should be with 'PUBLISHED'"()
     {
         given: "the citation content is selected and Publish dialog opened"
         ContentPublishDialog contentPublishDialog = findAndSelectContent(
-            RELATIONSHIP_CONTENT.getName() ).clickToolbarPublish().waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+            RELATIONSHIP_CONTENT.getName() ).showPublishMenu().clickOnMarkAsReadyMenuItem();
+        sleep( 1000 );
+        contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown( Application.EXPLICIT_NORMAL );
 
         when: "content has been published"
         contentPublishDialog.clickOnPublishButton();

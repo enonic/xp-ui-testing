@@ -261,7 +261,7 @@ public class ContentBrowsePanel
         return dialog;
     }
 
-    public ConfirmationDialog clickOnMarkAsReadyMenuItem()
+    public void clickOnMarkAsReadyMenuItem()
     {
         if ( !isMarkAsReadyMenuItemEnabled() )
         {
@@ -270,10 +270,7 @@ public class ContentBrowsePanel
         }
         getDisplayedElement( By.xpath( MARK_AS_READY_MENU_ITEM ) ).click();
         sleep( 300 );
-        ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
-        dialog.waitForOpened();
-        dialog.waitForClosed();
-        return dialog;
+
     }
 
     public CreateIssueDialog selectCreateIssueMenuItem()
