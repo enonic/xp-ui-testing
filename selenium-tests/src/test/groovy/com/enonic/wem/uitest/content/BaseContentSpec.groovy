@@ -90,6 +90,10 @@ class BaseContentSpec
     String IMPORTED_ELEPHANT_IMAGE = "elephant.jpg";
 
     @Shared
+    String IMPORTED_BRO_IMAGE = "bro.jpg";
+
+
+    @Shared
     String ELEPHANT_IMAGE_DISPLAY_NAME = "elephant";
 
     @Shared

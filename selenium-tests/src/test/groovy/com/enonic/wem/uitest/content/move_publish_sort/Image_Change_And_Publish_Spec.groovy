@@ -10,9 +10,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 28.10.2016.
- *
- * Task:XP-4352 Add selenium test to verify the XP-4351
- * Bug: XP-4351 Status of published content changes from "Modified" to "Online" after save
  * */
 @Stepwise
 class Image_Change_And_Publish_Spec
@@ -22,10 +19,11 @@ class Image_Change_And_Publish_Spec
     def "GIVEN existing 'Published' image WHEN the image has been zoomed AND changes were applied THEN status is getting 'Modified'"()
     {
         given: "existing 'online' image"
-        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_ELEPHANT_IMAGE ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BRO_IMAGE ).clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         formViewPanel.waitUntilImageLoaded();
-        wizard.clickOnMarkAsReadyAndDoPublish(  );
+        wizard.clickOnWizardPublishButton().clickOnPublishButton();
+        sleep( 1000 );
         formViewPanel.waitUntilImageLoaded();
 
         when: "the image has been zoomed "
@@ -46,9 +44,9 @@ class Image_Change_And_Publish_Spec
     def "GIVEN 'Published' image that has been zoomed WHEN the image has been selected in the grid THEN 'Modified' status should be displayed in grid"()
     {
         when: "online image that has been zoomed is selected"
-        findAndSelectContent( IMPORTED_ELEPHANT_IMAGE );
+        findAndSelectContent( IMPORTED_BRO_IMAGE );
 
         then: "Modified status is displayed in the grid for this content"
-        contentBrowsePanel.getContentStatus( IMPORTED_ELEPHANT_IMAGE ) == ContentStatus.MODIFIED.getValue();
+        contentBrowsePanel.getContentStatus( IMPORTED_BRO_IMAGE ) == ContentStatus.MODIFIED.getValue();
     }
 }

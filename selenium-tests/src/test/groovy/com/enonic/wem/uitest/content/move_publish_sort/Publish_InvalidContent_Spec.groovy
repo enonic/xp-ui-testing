@@ -9,9 +9,7 @@ import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-/**
- * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
- **/
+
 @Stepwise
 class Publish_InvalidContent_Spec
     extends BaseContentSpec
@@ -35,7 +33,7 @@ class Publish_InvalidContent_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN existing content without a displayName WHEN the content has been selected THEN 'Publish' button on the grid-toolbar should be disabled"()
+    def "GIVEN existing folder (displayName is empty) WHEN the content has been selected THEN 'CREATE ISSUE' button on the grid-toolbar should be displayed"()
     {
         given: "existing content without a displayName"
         filterPanel.typeSearchText( invalidFolder.getName() );
@@ -44,21 +42,20 @@ class Publish_InvalidContent_Spec
         when: "the content has been selected"
         contentBrowsePanel.clickCheckboxAndSelectRow( invalidFolder.getName() );
 
-        then: "'Publish' button on the grid-toolbar should be disabled"
-        !contentBrowsePanel.isPublishButtonEnabled();
+        then: "'Create Issue' button on the grid-toolbar should be displayed"
+        contentBrowsePanel.isCreateIssueButtonDisplayed();
     }
 
-    def "GIVEN existing parent folder with not valid child WHEN parent content has been selected and 'Publish' button clicked THEN 'Publish' button on the modal dialog should be disabled"()
+    def "GIVEN existing parent folder with not valid child WHEN parent content has been selected and 'Publish' button clicked THEN 'Publish Now' button on the modal dialog should be disabled"()
     {
         setup: "parent folder has been added"
         Content parentFolder = buildFolderContent( "folder", "publish not valid content" );
-        addContent( parentFolder );
+        addReadyContent( parentFolder );
 
-        and: "child folder has been added"
+        and: "not valid child folder has been added"
         findAndSelectContent( parentFolder.getName() );
         Content childContent = buildFolderContentWithParent( "not_valid", null, parentFolder.getName() );
         ContentWizardPanel wizardPanel= contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).typeData( childContent );
-        wizardPanel.clickOnMarkAsReadyButton(  );
         wizardPanel.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "parent content has been selected and 'Publish' button pressed"
@@ -67,10 +64,10 @@ class Publish_InvalidContent_Spec
         and: "'include child' icon was clicked"
         contentPublishDialog.includeChildren( true );
 
-        then: "'Publish' button on the 'Content publish' dialog should be disabled"
+        then: "'Publish Now' button on the 'Content publish' dialog should be disabled"
         !contentPublishDialog.isPublishButtonEnabled();
 
-        and: "warning message should be displayed on the modal dialog"
-        contentPublishDialog.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;
+        //and: "warning message should be displayed on the modal dialog"
+        //contentPublishDialog.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;
     }
 }

@@ -77,6 +77,9 @@ public class ContentBrowsePanel
     private final String PUBLISH_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish...']]";
 
+    private final String CREATE_ISSUE_BUTTON_XPATH =
+        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Create Issue...']]";
+
     private final String MARK_AS_READY_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Mark as ready']]";
 
@@ -1212,5 +1215,10 @@ public class ContentBrowsePanel
     public boolean isPreviewButtonEnabled()
     {
         return previewButton.isEnabled();
+    }
+
+    public void isCreateIssueButtonDisplayed()
+    {
+        waitUntilVisible( By.xpath( CREATE_ISSUE_BUTTON_XPATH ) );
     }
 }
