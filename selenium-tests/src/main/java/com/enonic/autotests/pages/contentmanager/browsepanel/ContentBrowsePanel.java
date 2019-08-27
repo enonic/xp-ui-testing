@@ -180,7 +180,6 @@ public class ContentBrowsePanel
 
     /**
      * Keyboard shortcut to open the 'New content' dialog
-     *
      */
     public void pressNewContentKeyboardShortcut()
     {
@@ -250,6 +249,19 @@ public class ContentBrowsePanel
         return dialog;
     }
 
+    public ContentPublishDialog clickOnPublishMenuItem()
+    {
+        if ( !isPublishMenuItemEnabled() )
+        {
+            throw new TestFrameworkException( "menu item is not enabled" );
+        }
+        getDisplayedElement( By.xpath( PUBLISH_MENU_ITEM ) ).click();
+        sleep( 300 );
+        ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
+        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        return dialog;
+    }
+
     public ContentUnpublishDialog selectUnPublishMenuItem()
     {
         if ( !isUnPublishMenuItemEnabled() )
@@ -272,7 +284,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "menu item is not enabled" );
         }
         getDisplayedElement( By.xpath( MARK_AS_READY_MENU_ITEM ) ).click();
-        sleep( 300 );
+        sleep( 1000 );
 
     }
 
@@ -321,6 +333,18 @@ public class ContentBrowsePanel
         return !getAttribute( getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
             "disabled" );
     }
+
+    public boolean isPublishMenuItemEnabled()
+    {
+        if ( !isElementDisplayed( PUBLISH_MENU_ITEM ) )
+        {
+            saveScreenshot( "err_publish_menu_item_not_enabled " );
+            throw new TestFrameworkException( "'unpublish' menu item is not visible!" );
+        }
+        return !getAttribute( getDisplayedElement( By.xpath( PUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
+            "disabled" );
+    }
+
 
     public boolean isMarkAsReadyMenuItemEnabled()
     {
