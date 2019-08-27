@@ -138,8 +138,7 @@ class Occurrences_ImageSelector_0_0_Spec
         String expectedMessage = String.format( Application.CONTENT_SAVED, TEST_IMAGE_SELECTOR_CONTENT.getName() );
 
         then: "expected notification message should appear"
-        true;
-        //wizard.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
+        wizard.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
     }
 
     def "GIVEN content with an image-selector is opened WHEN checkbox for one of the images was clicked THEN label for button 'Remove' has a correct number"()
@@ -206,20 +205,20 @@ class Occurrences_ImageSelector_0_0_Spec
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
     }
 
-    def "GIVEN 'Image Selector 0:0' content with one image was saved WHEN 'Publish' button pressed THEN the content with 'Online' status should be listed"()
+    def "GIVEN 'Image Selector 0:0' content with one image is saved WHEN 'Publish' menu item has been clicked THEN 'PUBLISHED' status should be in the brose panel"()
     {
-        given: "new content with type 'Image Selector 0:0'"
+        given: "new content 'Image Selector 0:0' is saved"
         Content imageSelectorContent = buildImageSelector0_0_Content( BOOK_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
 
-        when: "the content has been published(from the wizard)"
-        wizard.clickOnWizardPublishButton().clickOnPublishButton();
+        when: "the content has been published(marked as ready automatically)"
+        wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         and: "name of the content is typed in the search input"
         filterPanel.typeSearchText( imageSelectorContent.getName() );
 
-        then: "the content with 'Published' status should be listed"
+        then: "this content with 'Published' status should be listed"
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
     }

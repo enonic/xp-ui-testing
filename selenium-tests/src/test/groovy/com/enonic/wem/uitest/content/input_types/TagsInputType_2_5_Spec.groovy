@@ -10,15 +10,14 @@ class TagsInputType_2_5_Spec
     extends Base_InputFields_Occurrences
 
 {
-
-    def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN no one tag added and  'Save' and 'Publish' buttons pressed THEN new content with status 'online' appears "()
+    def "GIVEN new wizard for Tag-content 2:5 is opened WHEN two tags has been added AND the content has been published THEN that content should be 'PUBLISHED'"()
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 2 );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        contentWizardPanel.typeData( tagContent ).clickOnMarkAsReadyAndDoPublish(  );
+        contentWizardPanel.typeData( tagContent ).clickOnMarkAsReadyAndDoPublish();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( tagContent.getName() );
@@ -27,7 +26,7 @@ class TagsInputType_2_5_Spec
         contentBrowsePanel.getContentStatus( tagContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
-    def "GIVEN creating new Tag-content 2:5 on root WHEN only one tag added and button 'Publish' pressed THEN 'Publish button is disabled and content is invalid'"()
+    def "GIVEN new wizard for Tag-content 2:5 is opened WHEN one tag has been added AND 'Publish-menu' has been opened THEN 'Publish menu item should be disabled AND content is not valid'"()
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 1 );
@@ -36,14 +35,14 @@ class TagsInputType_2_5_Spec
         when: "data typed and number of tags less, than required"
         contentWizardPanel.typeData( tagContent );
 
-        then: "'Publish' button should be disabled"
-        !contentWizardPanel.isPublishButtonEnabled();
+        then: "'Publish' menu item should be disabled, because 2 tags are required!"
+        !contentWizardPanel.showPublishMenu().isPublishMenuItemEnabled();
 
         and: "content should be invalid"
-        contentWizardPanel.isContentInvalid(  );
+        contentWizardPanel.isContentInvalid();
     }
 
-    def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN five tags added  THEN input text becomes disabled and impossible to add one more tag"()
+    def "GIVEN new wizard for Tag-content 2:5 is opened WHEN five tags has been added THEN tags-input becomes hidden and impossible to add one more tag"()
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );
@@ -51,14 +50,14 @@ class TagsInputType_2_5_Spec
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
-        when: "five tags added, input text becomes disabled(display: none)"
+        when: "five tags has been"
         contentWizardPanel.typeData( tagContent )
 
         then: "input text becomes disabled and impossible to add one more tag"
         !formViewPanel.isTagsInputDisplayed() && isDisplayedBefore;
     }
 
-    def "GIVEN five tags added in input is disabled WHEN one of the fives tags removed THEN input text becomes enabled again"()
+    def "GIVEN five tags added has been added WHEN one of the fives tags has been removed THEN input text becomes enabled again"()
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );
@@ -66,16 +65,16 @@ class TagsInputType_2_5_Spec
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
-        when: "one of the fives tags removed"
+        when: "one of the fives tags has been removed"
         formViewPanel.removeLastTag();
 
         then: "input text becomes enabled again"
         formViewPanel.isTagsInputDisplayed() && !isDisplayedBefore;
     }
 
-    def "GIVEN creating new Tag-content 2:5 on root WHEN two tags added and button 'Save' and 'Publish' pressed  and just created content opened THEN two tags with correct name are present"()
+    def "GIVEN new wizard for Tag-content 2:5 is opened WHEN two tags has been added  'Saved' AND 'Published'  THEN two tags with expected text should be present"()
     {
-        given: "start to add a content with type 'Tag 2:5'"
+        given: "new wizard for Tag-content 2:5 is opened"
         Content tagContent = buildTag_2_5_Content( 2 );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
@@ -84,7 +83,7 @@ class TagsInputType_2_5_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
-        then: "two tags with correct name are present"
+        then: "two tags with expected text should be present"
         formViewPanel.getNumberOfTags() == 2;
         and:
         String[] tags = [TAG_1, TAG_2];
@@ -92,7 +91,7 @@ class TagsInputType_2_5_Spec
         fromUI.containsAll( tags.toList() );
     }
 
-    def "GIVEN wizard for adding a Tag-content (2:5) opened WHEN five tags added and 'Save' button pressed and just created content opened THEN five Tags with correct name are present in the wizard page"()
+    def "GIVEN new wizard for Tag-content 2:5 is opened WHEN five tags has been added and 'Save' button pressed THEN five Tags with expected text should be present"()
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );

@@ -206,15 +206,16 @@ public class ContentWizardPanel
      */
     public ContentWizardPanel pressSaveKeyboardShortcut()
     {
+
         String os = System.getProperty( "os.name" ).toLowerCase();
 
         if ( os.indexOf( "mac" ) >= 0 )
         {
-            buildActions().sendKeys( Keys.chord( Keys.COMMAND, "s" ) ).build().perform();
+            buildActions().keyDown( Keys.COMMAND ).sendKeys( "s" ).build().perform();
         }
         else
         {
-            buildActions().sendKeys( Keys.chord( Keys.CONTROL, "s" ) ).build().perform();
+            buildActions().keyDown( Keys.CONTROL ).sendKeys( "s" ).build().perform();
         }
         return this;
     }

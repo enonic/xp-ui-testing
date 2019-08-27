@@ -268,6 +268,7 @@ public class TestUtils
     {
         Actions builder = new Actions( driver );
         builder.clickAndHold( source ).build().perform();
+        builder.moveToElement( target ).build().perform();
         builder.release( target );
         builder.build().perform();
     }
