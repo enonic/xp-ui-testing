@@ -229,11 +229,13 @@ public class ContentWizardPanel
 
         if ( os.indexOf( "mac" ) >= 0 )
         {
-            buildActions().sendKeys( Keys.chord( Keys.COMMAND, Keys.ENTER ) ).build().perform();
+            buildActions().keyDown( Keys.COMMAND ).sendKeys( Keys.ENTER ).build().perform();
+            //buildActions().sendKeys( Keys.chord( Keys.COMMAND, Keys.ENTER ) ).build().perform();
         }
         else
         {
-            buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.ENTER ) ).build().perform();
+            buildActions().keyDown( Keys.CONTROL ).sendKeys( Keys.ENTER ).build().perform();
+            //buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.ENTER ) ).build().perform();
         }
         return this;
     }

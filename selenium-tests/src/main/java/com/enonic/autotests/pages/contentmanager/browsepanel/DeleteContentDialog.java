@@ -35,7 +35,8 @@ public class DeleteContentDialog
 
     private final String DEPENDANT_LIST = CONTAINER_DIV + "//ul[contains(@id,'DialogDependantList')]";
 
-    private final String HIDE_DEPENDANT_ITEM_LINK = CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header' and contains(.,'Hide dependent items')]";
+    private final String HIDE_DEPENDANT_ITEM_LINK =
+        CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header' and contains(.,'Hide dependent items')]";
 
     private final String SHOW_DEPENDANT_ITEM_LINK =
         CONTAINER_DIV + "//div[@class='dependants']//h6[@class='dependants-header' and contains(.,'Show dependent items')]";
@@ -142,6 +143,7 @@ public class DeleteContentDialog
         sleep( 1000 );
         return this;
     }
+
     public DeleteContentDialog clickOnHideDependentItemsLink()
     {
         if ( !isHideDependantItemsLinkDisplayed() )
@@ -198,9 +200,9 @@ public class DeleteContentDialog
         return waitsElementNotVisible( By.xpath( TITLE_HEADER_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
-    public boolean waitForOpened()
+    public void waitForOpened()
     {
-        return waitUntilVisibleNoException( By.xpath( TITLE_HEADER_XPATH ), Application.EXPLICIT_NORMAL );
+        waitUntilVisible( By.xpath( TITLE_HEADER_XPATH ) );
     }
 
     public boolean isOpened()

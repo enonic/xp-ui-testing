@@ -73,6 +73,12 @@ public abstract class Page
         sleep( 100 );
         input.sendKeys( text );
         sleep( 200 );
+        String textInInput = input.getAttribute( "value" );
+        if ( textInInput.isEmpty() )
+        {
+            input.sendKeys( text );
+        }
+        sleep( 200 );
         logger.info( "text in input: " + text );
     }
 

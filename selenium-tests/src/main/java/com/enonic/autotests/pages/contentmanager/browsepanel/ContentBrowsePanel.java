@@ -181,11 +181,11 @@ public class ContentBrowsePanel
     /**
      * Keyboard shortcut to open the 'New content' dialog
      *
-     * @param itemName
      */
-    public void pressNewContentKeyboardShortcut( String itemName )
+    public void pressNewContentKeyboardShortcut()
     {
-        buildActions().sendKeys( Keys.chord( Keys.ALT, "n" ) ).build().perform();
+        //buildActions().sendKeys( Keys.chord( Keys.ALT, "n" ) ).build().perform();
+        buildActions().keyDown( Keys.ALT ).sendKeys( "n" ).build().perform();
         sleep( 500 );
     }
 
@@ -195,15 +195,18 @@ public class ContentBrowsePanel
     public ContentWizardPanel pressEditSelectedContentKeyboardShortcut()
     {
         String os = System.getProperty( "os.name" ).toLowerCase();
-
+        sleep( 2000 );
         if ( os.indexOf( "mac" ) >= 0 )
         {
-            buildActions().sendKeys( Keys.chord( Keys.COMMAND, "e" ) ).build().perform();
+            buildActions().keyDown( Keys.COMMAND ).sendKeys( "e" ).build().perform();
+            //buildActions().sendKeys( Keys.chord( Keys.COMMAND, "e" ) ).build().perform();
         }
         else
         {
-            buildActions().sendKeys( Keys.chord( Keys.CONTROL, "e" ) ).build().perform();
+            buildActions().keyDown( Keys.CONTROL ).sendKeys( "e" ).build().perform();
+            //buildActions().sendKeys( Keys.chord( Keys.CONTROL, "e" ) ).build().perform();
         }
+        sleep( 2000 );
         switchToContentWizardTabBySelectedContent();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
         wizard.waitUntilWizardOpened();
@@ -221,11 +224,11 @@ public class ContentBrowsePanel
 
         if ( os.indexOf( "mac" ) >= 0 )
         {
-            buildActions().sendKeys( Keys.chord( Keys.COMMAND, Keys.DELETE ) ).build().perform();
+            buildActions().keyDown( Keys.COMMAND ).sendKeys( Keys.DELETE ).build().perform();
         }
         else
         {
-            buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.DELETE ) ).build().perform();
+            buildActions().keyDown( Keys.CONTROL ).sendKeys( Keys.DELETE ).build().perform();
         }
         DeleteContentDialog deleteContentDialog = new DeleteContentDialog( getSession() );
         return deleteContentDialog;

@@ -180,11 +180,11 @@ public class ContentDetailsPanel
 
     public String getContentDisplayName()
     {
-        if ( !isElementDisplayed( DETAILS_PANEL + CONTENT_SUMMARY_VIEWER + H6_DISPLAY_NAME ) )
+        if ( !isElementDisplayed( DETAILS_PANEL + CONTENT_SUMMARY_COMPARE_STATUS_VIEWER + H6_DISPLAY_NAME ) )
         {
             saveScreenshot( "err_det_panel_displayname" );
             throw new TestFrameworkException( "display name was not found on the details panel!" );
         }
-        return getDisplayedString( DETAILS_PANEL + CONTENT_SUMMARY_VIEWER + H6_DISPLAY_NAME );
+        return getDisplayedString( DETAILS_PANEL + CONTENT_SUMMARY_COMPARE_STATUS_VIEWER + H6_DISPLAY_NAME );
     }
 }

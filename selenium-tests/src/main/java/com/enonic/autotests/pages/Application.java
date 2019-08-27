@@ -107,6 +107,8 @@ public class Application
 
     public final String CONTENT_SUMMARY_VIEWER = "//div[contains(@id,'ContentSummaryViewer')]";
 
+    public final String CONTENT_SUMMARY_COMPARE_STATUS_VIEWER = "//div[contains(@id,'ContentSummaryAndCompareStatusViewer')]";
+
     protected final String DROPDOWN_OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
 
     protected final String DROP_DOWN_HANDLE_BUTTON = "//button[contains(@id,'DropdownHandle')]";

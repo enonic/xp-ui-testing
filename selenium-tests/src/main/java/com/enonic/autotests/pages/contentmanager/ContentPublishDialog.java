@@ -72,8 +72,7 @@ public class ContentPublishDialog
 
     private final String PUBLISH_MENU_DROPDOWN_HANDLER = DIALOG_CONTAINER + "//div[contains(@id,'MenuButton')]" + DROP_DOWN_HANDLE_BUTTON;
 
-    private final String ADD_SCHEDULE_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@id,'ActionButton') and child::span[contains(.,'Add schedule')]]";
+    private final String ADD_SCHEDULE_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'ButtonEl') and contains(@class,'icon-calendar')]";
 
     private final String ONLINE_FROM_INPUT = DIALOG_CONTAINER +
         "//div[contains(@id,'DateTimePicker') and preceding-sibling::label[text()='Online from']]//input[contains(@id,'TextInput')]";
@@ -399,8 +398,16 @@ public class ContentPublishDialog
 
     public ContentPublishDialog clickOnScheduleButton()
     {
-        waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='Schedule']" ), EXPLICIT_NORMAL );
-        getDisplayedElement( By.xpath( DIALOG_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='Schedule']" ) ).click();
-        return this;
+        try
+        {
+            waitUntilElementEnabled( By.xpath( DIALOG_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='Schedule']" ),
+                                     EXPLICIT_NORMAL );
+            getDisplayedElement( By.xpath( DIALOG_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='Schedule']" ) ).click();
+            return this;
+        }
+        catch ( Exception e )
+        {
+            throw new TestFrameworkException( "Content Publish Dialog - Error when clicking on Schedule button" + e.getMessage() );
+        }
     }
 }

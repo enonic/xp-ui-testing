@@ -107,14 +107,13 @@ class ContentWizard_Publish_Inputs_Spec
         !wizard.isOnlineToInputDisplayed();
     }
 
-    //TODO
     def "GIVEN existing Unpublished folder WHEN 'Online from' set in the future AND Publish button pressed THEN folder is getting 'Online Pending'"()
     {
         given: "existing published folder"
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
 
         when: "the folder has been unpublished"
-        ContentPublishDialog publishDialog = wizard.clickOnWizardPublishButton();
+        ContentPublishDialog publishDialog = wizard.showPublishMenu().clickOnPublishMenuItem();
         publishDialog.clickOnAddScheduleButton();
         publishDialog.typeOnlineFrom( TimeUtils.getTomorrowDateTime() ).clickOnScheduleButton();
 
