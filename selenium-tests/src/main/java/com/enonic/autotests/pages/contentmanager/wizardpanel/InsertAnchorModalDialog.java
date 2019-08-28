@@ -9,6 +9,8 @@ import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.utils.NameHelper;
 
+import static com.enonic.autotests.utils.SleepHelper.sleep;
+
 /**
  * Created  on 2/28/2017.
  */
@@ -111,5 +113,13 @@ public class InsertAnchorModalDialog
     {
         insertButton.click();
         return this;
+    }
+
+    @Override
+    public void pressEscapeKey()
+    {
+        findElement( By.xpath( HEADER ) ).click();
+        sleep( 500 );
+        super.pressEscapeKey();
     }
 }

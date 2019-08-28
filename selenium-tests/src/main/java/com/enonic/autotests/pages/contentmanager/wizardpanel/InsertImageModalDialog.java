@@ -126,6 +126,12 @@ public class InsertImageModalDialog
     }
 
 
+    public void pressEscapeKey()
+    {
+        findElement( By.xpath( HEADER ) ).click();
+        sleep( 500 );
+        super.pressEscapeKey();
+    }
     public boolean waitForClosed()
     {
         return waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
