@@ -83,7 +83,7 @@ class Issue_Dependant_List_Spec
 
         and: "site has been added"
         SITE = buildSiteWithAllTypes();
-        addContent( SITE );
+        addReadyContent( SITE );
 
         and: "double content(not valid) has been added"
         DOUBLE_CONTENT = buildDouble1_1_Content( null );

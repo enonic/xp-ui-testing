@@ -70,7 +70,7 @@ class IssueListDialog_Spec
 
         and: "folder has been added"
         CONTENT = buildFolderContent( "folder", "issue list dialog test" )
-        addContent( CONTENT );
+        addReadyContent( CONTENT );
 
         List<String> assigneesList = new ArrayList<>();
         assigneesList.add( TEST_USER.getName() );
@@ -139,7 +139,6 @@ class IssueListDialog_Spec
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
         when: "'Assigned to Me' checkbox has been checked"
-        //issueListDialog.setAssignedToMeCheckbox( true );
         List<String> titles = issueListDialog.getIssueTitles();
 
         then: "one issue should be present in the list"
@@ -158,7 +157,7 @@ class IssueListDialog_Spec
         getTestSession().setUser( TEST_USER );
         NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-        // issueListDialog.setAssignedToMeCheckbox( true );
+
 
         when: "the issue has been clicked"
         issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
@@ -172,8 +171,11 @@ class IssueListDialog_Spec
         contentPublishDialog.clickOnPublishButton(  )
         saveScreenshot( "issue_published" );
 
-        then: "'Publish button on the dialog should be disabled, because the folder in "
-        !contentPublishDialog.isPublishButtonEnabled(  );
+        then: "Issue Details Dialog should be loaded"
+        details.waitForOpened();
+
+        and: "Close Issue button should be present"
+        details.isCloseIssueButtonPresent();
         // TODO uncommit it when bug will be fixed
         //contentBrowsePanel.waitExpectedNotificationMessage( String.format( Application.ISSUE_IS_CLOSED, TEST_ISSUE.getTitle() ), 1 );
         //contentBrowsePanel.waitExpectedNotificationMessage( "The issue is Closed.", 3 );

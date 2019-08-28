@@ -246,4 +246,14 @@ public class IssueDetailsDialog
         }
         return result;
     }
+
+    public IssueDetailsDialog waitForOpened()
+    {
+        if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL ) )
+        {
+            saveScreenshot( "err_open_issue_list_dialog" );
+            throw new TestFrameworkException( "'Update Issue' dialog was not opened!" );
+        }
+        return this;
+    }
 }

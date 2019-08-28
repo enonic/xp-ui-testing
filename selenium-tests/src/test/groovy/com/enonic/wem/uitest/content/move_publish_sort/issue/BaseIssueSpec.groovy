@@ -90,10 +90,11 @@ class BaseIssueSpec
     }
 
 
-    void addContent( Content content )
+    void addReadyContent( Content content )
     {
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
-        wizard.typeData( content ).save().closeBrowserTab().switchToBrowsePanelTab();
+        wizard.typeData( content ).clickOnMarkAsReadyButton();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 

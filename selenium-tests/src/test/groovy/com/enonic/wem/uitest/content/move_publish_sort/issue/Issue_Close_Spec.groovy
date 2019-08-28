@@ -68,7 +68,7 @@ class Issue_Close_Spec
 
         and: "folder has been added"
         CONTENT = buildFolderContent( "folder", "issue list dialog test" )
-        addContent( CONTENT );
+        addReadyContent( CONTENT );
 
         List<String> assigneesList = new ArrayList<>();
         assigneesList.add( TEST_USER.getName() );
