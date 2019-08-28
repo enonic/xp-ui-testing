@@ -90,6 +90,6 @@ class Occurrences_DateTime_1_1_Spec
         contentBrowsePanel.getContentStatus(dateTimeContent.getName()).equalsIgnoreCase(ContentStatus.PUBLISHED.getValue());
 
         and: "expected notification should appear"
-        publishMessage == String.format(Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, dateTimeContent.getName());
+        publishMessage == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, dateTimeContent.getName() );
     }
 }

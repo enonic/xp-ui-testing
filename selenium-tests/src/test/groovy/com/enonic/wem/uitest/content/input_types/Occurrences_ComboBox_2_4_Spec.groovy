@@ -138,6 +138,6 @@ class Occurrences_ComboBox_2_4_Spec
         then: "the content should be with 'Published'-status"
         contentBrowsePanel.getContentStatus( comboBoxContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
         and:
-        publishedMessage == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, comboBoxContent.getName() );
+        publishedMessage == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, comboBoxContent.getName() );
     }
 }

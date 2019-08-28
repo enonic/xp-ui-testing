@@ -33,7 +33,7 @@ class ContentPublishDelete_Spec
         filterPanel.typeSearchText( content.getName() )
         contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
         and: "correct notification message should be displayed"
-        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, content.getName() );
+        message == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, content.getName() );
     }
 
     def "GIVEN existing content with 'Published' status WHEN the content has been selected and 'Delete' button pressed THEN content is getting 'Deleted'"()

@@ -30,7 +30,7 @@ class Content_Online_Modified_Spec
         contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
         and: "correct notification message should be displayed"
-        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, CONTENT.getName() );
+        message == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, CONTENT.getName() );
     }
 
     def "GIVEN existing 'Published'-folder WHEN the folder has been updated THEN content becomes 'Modified' in the grid"()
@@ -45,7 +45,7 @@ class Content_Online_Modified_Spec
         contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
     }
 
-    def "GIVEN existing 'Modified'-folder in root WHEN the content has been selected and published THEN folder has got a 'Published' status"()
+    def "GIVEN existing 'Modified'-folder WHEN the content has been selected and published THEN folder becomes 'Published'"()
     {
         when: "modified content has been published"
         findAndSelectContent( CONTENT.getName() ).showPublishMenu().clickOnMarkAsReadyMenuItem();
@@ -55,8 +55,8 @@ class Content_Online_Modified_Spec
         then: "content-status is getting 'Published'"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
 
-        and: "expected notification message should appears"
-        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, CONTENT.getName() );
+        and: "expected notification message should appear"
+        message == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, CONTENT.getName() );
 
         and: "Publish button on the BrowsePanel-toolbar becomes disabled"
         !contentBrowsePanel.isPublishButtonEnabled();

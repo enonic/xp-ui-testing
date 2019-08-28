@@ -156,7 +156,7 @@ public class Application
 
     public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']/span";
 
-    public static String ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP = "Item \"%s\" is published.";
+    public static String ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE = "Item \"%s\" is published.";
 
     public static String CONTENTS_PUBLISHED_NOTIFICATION_MESSAGE = "%s items are published.";
 

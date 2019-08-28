@@ -174,12 +174,11 @@ class IssueListDialog_Spec
         then: "Issue Details Dialog should be loaded"
         details.waitForOpened();
 
-        and: "Close Issue button should be present"
+        and: "'Close Issue' button should be present"
         details.isCloseIssueButtonPresent();
-        // TODO uncommit it when bug will be fixed
-        //contentBrowsePanel.waitExpectedNotificationMessage( String.format( Application.ISSUE_IS_CLOSED, TEST_ISSUE.getTitle() ), 1 );
-        //contentBrowsePanel.waitExpectedNotificationMessage( "The issue is Closed.", 3 );
-        //and: "the issue should be present in the 'Closed'-tab"
-       // issueListDialog.isIssuePresent( TEST_ISSUE.getTitle() );
+        println "expected is:" + String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, TEST_ISSUE.getTitle() );
+        //"Item is published" message should appear
+        contentBrowsePanel.waitExpectedNotificationMessage(
+            String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, CONTENT.getName() ), 1 );
     }
 }

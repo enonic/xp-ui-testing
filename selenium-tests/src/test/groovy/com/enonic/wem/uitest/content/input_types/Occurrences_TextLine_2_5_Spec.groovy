@@ -146,7 +146,7 @@ class Occurrences_TextLine_2_5_Spec
         then: "content should be 'Published'"
         contentBrowsePanel.getContentStatus(textLineContent.getName()).equalsIgnoreCase(ContentStatus.PUBLISHED.getValue());
         and: "correct notification message was shown"
-        publishMessage == String.format(Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, textLineContent.getName());
+        publishMessage == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, textLineContent.getName() );
     }
 
     def "GIVEN wizard for TextLine2:5 is opened WHEN name has been typed but required text-lines cleared THEN content is getting invalid and the 'Publish' button should be disabled"() {

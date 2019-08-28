@@ -45,8 +45,8 @@ class ContentPublish_Child_Spec
         filterPanel.typeSearchText( childContent1.getName() );
         contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.NEW.getValue() );
 
-        and: "expected notification message is displayed"
-        message == String.format( Application.ONE_CONTENT_PUBLISHED_NOTIFICATION_MESSAGE_TMP, parentContent.getName() );
+        and: "expected notification message should be displayed"
+        message == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, parentContent.getName() );
     }
 
     def "GIVEN existing 'Published' folder with not published child WHEN the parent folder has been clicked THEN Publish-menu becomes available"()
