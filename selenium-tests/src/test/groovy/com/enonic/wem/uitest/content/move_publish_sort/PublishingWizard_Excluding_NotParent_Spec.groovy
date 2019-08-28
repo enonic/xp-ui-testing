@@ -7,8 +7,6 @@ import spock.lang.Shared
 
 /**
  * Created  on 3/1/2017.
- * Tasks:
- * xp-ui-testing#4 Check fixed application's bugs and add Selenium tests for each fixed bugs
  *
  * */
 class PublishingWizard_Excluding_NotParent_Spec
@@ -21,11 +19,11 @@ class PublishingWizard_Excluding_NotParent_Spec
     String TEST_IMAGE_DISPLAY_NAME = "seng"
 
     //XP-4890 Publishing Wizard - Enable excluding any item from the dependants list if it's not a parent to other items in the list
-    def "GIVEN shortcut to an image has benn added in the root WHEN the shortcut has been selected AND publishing wizard opened THEN the image should be displayed with the 'remove' icon"()
+    def "GIVEN new shortcut to an image has been added WHEN the shortcut has been selected AND publishing wizard opened THEN the image should be displayed with the 'remove' icon"()
     {
         given: " shortcut to an image was added in the root WHEN the shortcut is selected"
         SHORTCUT_CONTENT = buildShortcutWithTarget( "shortcut", null, "shortcut display name", TEST_IMAGE_DISPLAY_NAME );
-        addContent( SHORTCUT_CONTENT );
+        addReadyContent( SHORTCUT_CONTENT );
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
 
         when: "the shortcut has been selected AND publishing wizard is opened"

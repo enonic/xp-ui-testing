@@ -23,7 +23,7 @@ class Unpublish_Deleted_Content_Spec
     {
         given: "existing folder"
         CONTENT = buildFolderContent( "folder", "unpublish of deleted" )
-        addContent( CONTENT );
+        addReadyContent( CONTENT );
 
         when: "the folder has been published"
         findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();

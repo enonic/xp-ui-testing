@@ -2,9 +2,7 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
-import com.enonic.autotests.pages.contentmanager.SchedulePublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
-import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TimeUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -34,7 +32,6 @@ class ContentWizard_Publish_Inputs_Spec
 
         when: "the folder has been marked as ready"
         wizard.showPublishMenu().clickOnMarkAsReadyMenuItem();
-
 
         and: "'Publish' button has been pressed and the content published"
         wizard.clickOnWizardPublishButton().clickOnPublishButton();
@@ -121,5 +118,4 @@ class ContentWizard_Publish_Inputs_Spec
         wizard.waitStatus( ContentStatus.PUBLISHED_PENDING, Application.EXPLICIT_NORMAL );
         saveScreenshot( "schedule_wizard_online_pending" )
     }
-
 }

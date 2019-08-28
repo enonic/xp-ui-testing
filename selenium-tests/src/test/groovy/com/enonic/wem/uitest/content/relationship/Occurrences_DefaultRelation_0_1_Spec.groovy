@@ -22,7 +22,7 @@ class Occurrences_DefaultRelation_0_1_Spec
     @Shared
     String FOLDER_RELATION_NAME = NameHelper.uniqueName( "folder" );
 
-    def "Preconditions: child folder should be added for the site"()
+    def "Preconditions: new child folder should be added to the site"()
     {
         given: "wizard for new folder is opened"
         ContentWizardPanel wizard = selectSitePressNew( "Folder" );
@@ -35,9 +35,9 @@ class Occurrences_DefaultRelation_0_1_Spec
         wizard.waitForNotificationMessage();
     }
 
-    def "GIVEN  wizard for Default Relation(0:1) is opened WHEN one file is selected THEN option filter should be displayed and one selected file should be present "()
+    def "GIVEN wizard for Default Relation(0:1) is opened WHEN one file is selected THEN option filter should be displayed and one selected file should be present"()
     {
-        given: "start to add a content with type 'Relation 2:4'"
+        given: "wizard for Default Relation(0:1) is opened'"
         Content relationship = buildDefaultRelation0_1_Content( NORD_IMAGE_DISPLAY_NAME );
         selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
@@ -49,12 +49,11 @@ class Occurrences_DefaultRelation_0_1_Spec
         then: "No matching items  message should be displayed"
         saveScreenshot( "relation_external_content" );
         formViewPanel.isNoMatchingItemsVisible();
-
     }
 
     def "WHEN wizard for adding a content with Default Relation(0:1) is opened THEN option filter should be present and target should not be selected"()
     {
-        when: "site was clicked and 'Relation 0:1' content type selected in the New Content Dialog"
+        when: "site was clicked and 'Relation 0:1' content type has been selected in the New Content Dialog"
         Content relationship = buildDefaultRelation0_1_Content( FOLDER_RELATION_NAME );
         selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
@@ -69,25 +68,25 @@ class Occurrences_DefaultRelation_0_1_Spec
 
     def "GIVEN wizard for Default Relation(0:1) is opened WHEN one target has been selected THEN option filter should not be present and one target should be displayed"()
     {
-        given: "start to add a content with type 'Relation 0:1'"
+        given: "wizard for Default Relation(0:1) is opened"
         Content relationship = buildDefaultRelation0_1_Content( FOLDER_RELATION_NAME );
         ContentWizardPanel wizard = selectSitePressNew( relationship.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
 
-        when: "all correct data was typed"
+        when: "valid data has been typed"
         wizard.typeData( relationship );
 
         then: "one selected file should be displayed"
         formViewPanel.getNumberOfSelectedFiles() == 1;
         and: "option filter should not displayed"
         !formViewPanel.isOptionFilterDisplayed();
-        and: "correct name of selected file should be displayed"
+        and: "expected name should be present in selected options"
         formViewPanel.getNamesOfSelectedFiles().get( 0 ).contains( FOLDER_RELATION_NAME );
     }
 
     def "GIVEN saving a content with type Default Relation(0:1) WHEN content saved and opened for edit  THEN correct selected file displayed "()
     {
-        given: "saving a content with type 'Relation 0:1'"
+        given: "new content with type 'Relation 0:1' has been added"
         TEST_RELATIONSHIP_CONTENT = buildDefaultRelation0_1_Content( FOLDER_RELATION_NAME );
         ContentWizardPanel wizard = selectSitePressNew( TEST_RELATIONSHIP_CONTENT.getContentTypeName() );
         RelationshipFormView formViewPanel = new RelationshipFormView( getSession() );
@@ -105,7 +104,7 @@ class Occurrences_DefaultRelation_0_1_Spec
         formViewPanel.getNamesOfSelectedFiles().get( 0 ).contains( FOLDER_RELATION_NAME );
     }
 
-    def "GIVEN existing content with type Default Relation(0:1) is opened WHEN  selected option was removed THEN option filter should appear"()
+    def "GIVEN existing content with type Default Relation(0:1) is opened WHEN selected option has been removed THEN option filter should appear"()
     {
         given: "existing content with type Default Relation(0:1) is opened"
         findAndSelectContent( TEST_RELATIONSHIP_CONTENT.getName() ).clickToolbarEdit();
@@ -120,7 +119,7 @@ class Occurrences_DefaultRelation_0_1_Spec
         formViewPanel.isOptionFilterDisplayed();
     }
 
-    def "GIVEN existing content with type Default Relation(0:1) is opened WHEN selected option was removed AND content was saved and opened again THEN option filter should be displayed "()
+    def "GIVEN existing content with type Default Relation(0:1) is opened WHEN selected option has been removed AND content has been saved and reopened THEN option filter should be displayed"()
     {
         given: "existing content with type Default Relation(0:1) is opened"
         ContentWizardPanel wizard = findAndSelectContent( TEST_RELATIONSHIP_CONTENT.getName() ).clickToolbarEdit();
@@ -138,7 +137,7 @@ class Occurrences_DefaultRelation_0_1_Spec
         and: "option filter should be displayed"
         formViewPanel.isOptionFilterDisplayed();
 
-        and: "red icon should not be displayed, content is valid, because option is not required"
+        and: "red icon should not be displayed, content is valid, because the option is not required"
         !wizard.isContentInvalid();
     }
 

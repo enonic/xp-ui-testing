@@ -7,7 +7,8 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 
 /**
- * Created  on 5/24/2017.*/
+ * Created  on 5/24/2017.
+ * */
 class Site_With_Invalid_Child_Publish_Spec
     extends BaseContentSpec
 {
@@ -26,7 +27,7 @@ class Site_With_Invalid_Child_Publish_Spec
 
         and: "content with image-selector has been added(image was not selected)"
         ContentWizardPanel wizard = selectSitePressNew( SITE.getName(), CHILD.getContentTypeName() ).typeData( CHILD );
-        wizard.clickOnMarkAsReadyButton();
+        wizard.save();
         wizard.close( CHILD.getDisplayName() );
 
         expect: "the site should be present in the grid"
@@ -39,17 +40,17 @@ class Site_With_Invalid_Child_Publish_Spec
         findAndSelectContent( SITE.getName() );
 
         when: "Publish Wizard is opened"
-        ContentPublishDialog publishWizard = contentBrowsePanel.clickToolbarPublish();
+        ContentPublishDialog publishWizard = contentBrowsePanel.showPublishMenu().clickOnPublishMenuItem();
 
         and: "'Include child' icon has been clicked"
         publishWizard.includeChildren( true );
         saveScreenshot( "site_with_not_valid_child" );
 
-        then: "'Publish' button should be disabled, because child is not valid"
+        then: "'Publish now' button should be disabled, because its child is not valid"
         !publishWizard.isPublishButtonEnabled();
 
-        and: "correct warning should be displayed on the wizard"
-        publishWizard.getDialogSubHeader() == ContentPublishDialog.DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH;
+        and: "expected warning should be displayed on the wizard"
+        publishWizard.getDialogIsseesMessage() == ContentPublishDialog.DIALOG_ISSUE_MESSAGE_INVALID_CONTENT;
     }
 
     def "GIVEN existing site with not valid child WHEN the invalid content has been removed from the dialog THEN 'Publish' button should be enabled"()

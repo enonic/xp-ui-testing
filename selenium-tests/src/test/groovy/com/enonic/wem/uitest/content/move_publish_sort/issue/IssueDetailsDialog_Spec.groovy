@@ -120,7 +120,6 @@ class IssueDetailsDialog_Spec
 
         when: "'Assigned to Me' has been checked"
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-        //issueListDialog.setAssignedToMeCheckbox( true );
         saveScreenshot( "assigned_issue" + USER_NAME );
         List<String> titles = issueListDialog.getIssueTitles();
 
@@ -137,7 +136,6 @@ class IssueDetailsDialog_Spec
         NavigatorHelper.openContentStudioApp( getTestSession() );
         and: "'Assigned to Me' has been checked"
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-       // issueListDialog.setAssignedToMeCheckbox( true );
 
         when: "issue has been clicked"
         IssueDetailsDialog detailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
@@ -146,8 +144,8 @@ class IssueDetailsDialog_Spec
         then: "Issue Details dialog should be loaded"
         detailsDialog.waitForLoaded();
 
-        and: "correct creator should be displayed"
-        detailsDialog.getOpenedBy().contains( "user:system:su" );
+        and: "expected creator should be displayed"
+        detailsDialog.getOpenedBy( TEST_ISSUE.getTitle() ).contains( "user:system:su" );
     }
 
     def "GIVEN 'Issue details dialog' is opened WHEN Back button has been pressed THEN 'Issue List dialog' should be loaded"()
@@ -157,7 +155,6 @@ class IssueDetailsDialog_Spec
         NavigatorHelper.openContentStudioApp( getTestSession() );
         and: "'Assigned to Me' has been checked"
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-       // issueListDialog.setAssignedToMeCheckbox( true );
         IssueDetailsDialog detailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
 
         when: "'Back' button has been pressed"

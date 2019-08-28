@@ -18,8 +18,8 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentPublishDialog
     extends Application
 {
-
-    public static final String DIALOG_SUBHEADER_INVALID_CONTENT_PUBLISH = "Invalid item(s) prevent publishing";
+    public static final String DIALOG_ISSUE_MESSAGE_INVALID_CONTENT =
+        "Invalid content cannot be published, remove from list or fix this issue";
 
     public static final String DIALOG_TITLE = "Publishing Wizard";
 
@@ -60,25 +60,16 @@ public class ContentPublishDialog
 
     private String STATUS_OF_ITEM_TO_PUBLISH = ITEM_ROW_TO_PUBLISH_BY_DISPLAY_NAME + "//div[contains(@class,'status')]";
 
-    private final String DIALOG_INVALID_SUB_HEADER_XPATH =
-        DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h6[@class='sub-title']";
+    private final String PUBLISH_ISSUES_TEXT_PART2 =
+        DIALOG_CONTAINER + "//div[contains(@id,'PublishIssuesStateBar')]//span[@class='part2']";
 
     private final String STATUS_OF_CONTENT = ITEM_LIST +
         "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]/div[contains(@class,'status')][2]";
-
-    private final String CREATE_ISSUE_MENU_ITEM = DIALOG_CONTAINER + "//ul[contains(@id,'Menu')]//li[contains(.,'Create Issue...')]";
-
-    private final String SCHEDULE_MENU_ITEM = DIALOG_CONTAINER + "//ul[contains(@id,'Menu')]//li[contains(.,'Schedule...')]";
-
-    private final String PUBLISH_MENU_DROPDOWN_HANDLER = DIALOG_CONTAINER + "//div[contains(@id,'MenuButton')]" + DROP_DOWN_HANDLE_BUTTON;
 
     private final String ADD_SCHEDULE_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'ButtonEl') and contains(@class,'icon-calendar')]";
 
     private final String ONLINE_FROM_INPUT = DIALOG_CONTAINER +
         "//div[contains(@id,'DateTimePicker') and preceding-sibling::label[text()='Online from']]//input[contains(@id,'TextInput')]";
-
-    @FindBy(xpath = PUBLISH_MENU_DROPDOWN_HANDLER)
-    private WebElement publishMenuDropDownHandler;
 
     @FindBy(xpath = PUBLISH_BUTTON)
     private WebElement publishButton;
@@ -88,9 +79,6 @@ public class ContentPublishDialog
 
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     private WebElement cancelButtonTop;
-
-    @FindBy(xpath = CANCEL_BUTTON_BOTTOM)
-    private WebElement cancelButtonBottom;
 
     @FindBy(xpath = SHOW_DEPENDANT_ITEMS_LINK)
     private WebElement showDependantItemsLink;
@@ -120,63 +108,6 @@ public class ContentPublishDialog
         sleep( 400 );
     }
 
-    /**
-     * Clicks on the drop down handler and shows :'Create Issue' and 'Schedule' menu items
-     */
-    public ContentPublishDialog showPublishMenu()
-    {
-        publishMenuDropDownHandler.click();
-        sleep( 400 );
-        return this;
-    }
-
-    public SchedulePublishDialog clickOnScheduleMenuItem()
-    {
-        if ( !isScheduleMenuItemEnabled() )
-        {
-            saveScreenshot( "err_schedule_menu_item" );
-            throw new TestFrameworkException( "menu item was not found!" );
-        }
-        getDisplayedElement( By.xpath( SCHEDULE_MENU_ITEM ) ).click();
-        SchedulePublishDialog dialog = new SchedulePublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
-        return dialog;
-    }
-
-    public CreateIssueDialog clickOnCreateIssueMenuItem()
-    {
-        if ( !isCreateIssueMenuItemDisplayed() )
-        {
-            saveScreenshot( "err_create_issue_menu_item" );
-            throw new TestFrameworkException( "'create issue' menu item was not found!" );
-        }
-        getDisplayedElement( By.xpath( CREATE_ISSUE_MENU_ITEM ) ).click();
-        CreateIssueDialog dialog = new CreateIssueDialog( getSession() );
-        dialog.waitForOpened();
-        return dialog;
-    }
-
-    public boolean isCreateIssueMenuItemDisplayed()
-    {
-        return isElementDisplayed( CREATE_ISSUE_MENU_ITEM );
-    }
-
-    public boolean isScheduleMenuItemDisplayed()
-    {
-        return isElementDisplayed( SCHEDULE_MENU_ITEM );
-    }
-
-    public boolean isScheduleMenuItemEnabled()
-    {
-        findElements( By.xpath( SCHEDULE_MENU_ITEM ) );
-        if ( !isElementDisplayed( SCHEDULE_MENU_ITEM ) )
-        {
-            saveScreenshot( "err_schedule_menu_item_not_visible " );
-            throw new TestFrameworkException( "'schedule' menu item is not visible!" );
-        }
-        return !getAttribute( getDisplayedElement( By.xpath( SCHEDULE_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
-            "disabled" );
-    }
 
     public boolean isPublishItemRemovable( String itemDisplayName )
     {
@@ -241,14 +172,14 @@ public class ContentPublishDialog
         return getDisplayedString( status );
     }
 
-    public String getDialogSubHeader()
+    public String getDialogIsseesMessage()
     {
-        if ( !isElementDisplayed( DIALOG_INVALID_SUB_HEADER_XPATH ) )
+        if ( !isElementDisplayed( PUBLISH_ISSUES_TEXT_PART2 ) )
         {
             saveScreenshot( "err_publish_dlg_subheader" );
             throw new TestFrameworkException( "Publish dialog: subheader was not found!" );
         }
-        return getDisplayedString( DIALOG_INVALID_SUB_HEADER_XPATH );
+        return getDisplayedString( PUBLISH_ISSUES_TEXT_PART2 );
     }
 
     public List<String> getNamesOfContentsToPublish()
@@ -287,12 +218,6 @@ public class ContentPublishDialog
     public boolean isDependantsDisplayed()
     {
         return isElementDisplayed( OTHER_ITEMS_WILL_BE_PUBLISHED );
-    }
-
-    public void clickOnCancelBottomButton()
-    {
-        cancelButtonBottom.click();
-        sleep( 200 );
     }
 
     public ContentPublishDialog clickOnPublishButton()
@@ -356,11 +281,6 @@ public class ContentPublishDialog
     public void waitUntilPublishButtonEnabled( long timeout )
     {
         waitUntilElementEnabled( By.xpath( PUBLISH_BUTTON ), timeout );
-    }
-
-    public boolean isCancelButtonBottomEnabled()
-    {
-        return cancelButtonBottom.isEnabled();
     }
 
     public boolean isCancelButtonTopEnabled()

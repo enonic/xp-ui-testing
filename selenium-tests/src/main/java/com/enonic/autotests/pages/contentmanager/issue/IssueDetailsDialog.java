@@ -44,7 +44,7 @@ public class IssueDetailsDialog
 
     private final String BACK_BUTTON = DIALOG_CONTAINER + "//a[@class='back-button']";
 
-    private final String OPENED_BY = DIALOG_CONTAINER + "//span[@class='creator']";
+    private final String OPENED_BY = DIALOG_CONTAINER + "//div[contains(@id,'IssueStatusSelector')]";
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
@@ -140,9 +140,9 @@ public class IssueDetailsDialog
         return getDisplayedString( TITLE );
     }
 
-    public String getOpenedBy()
+    public String getOpenedBy( String issueName )
     {
-        return getDisplayedString( OPENED_BY );
+        return findElement( By.xpath( String.format( OPENED_BY, issueName ) ) ).getAttribute( "title" );
     }
 
     public IssueDetailsDialog clickOnStatusSelectorMenu()
