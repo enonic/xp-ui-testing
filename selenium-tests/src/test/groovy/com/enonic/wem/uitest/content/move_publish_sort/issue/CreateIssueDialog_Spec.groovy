@@ -20,7 +20,7 @@ class CreateIssueDialog_Spec
     {
         given: "existing folder"
         CONTENT = buildFolderContent( "folder", "create issue dialog test" )
-        addContent( CONTENT );
+        addReadyContent( CONTENT );
 
         when: "the folder has been published"
         CreateIssueDialog dialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().selectCreateIssueMenuItem();
