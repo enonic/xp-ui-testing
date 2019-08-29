@@ -206,15 +206,6 @@ public class IssueDetailsDialog
         return editIssueButton.isDisplayed();
     }
 
-    public UpdateIssueDialog clickOnEditButton()
-    {
-        editIssueButton.click();
-        sleep( 1000 );
-        UpdateIssueDialog updateIssueDialog = new UpdateIssueDialog( getSession() );
-        updateIssueDialog.waitForOpened();
-        return updateIssueDialog;
-    }
-
     public boolean isItemsTabBarItemDisplayed()
     {
         return itemsTabBarItem.isDisplayed();

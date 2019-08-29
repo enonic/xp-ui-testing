@@ -98,6 +98,14 @@ class BaseIssueSpec
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 
+    void addContent( Content content )
+    {
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
+        wizard.typeData( content ).save();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
+        contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+    }
+
     protected Content buildSiteWithAllTypes()
     {
         String siteName = NameHelper.uniqueName( "site" )

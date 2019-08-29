@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueDetailsDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueListDialog
-import com.enonic.autotests.pages.contentmanager.issue.UpdateIssueDialog
 import com.enonic.autotests.pages.usermanager.browsepanel.UserItemName
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel
 import com.enonic.autotests.services.NavigatorHelper
@@ -19,12 +18,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 7/26/2017.
- *
- * verifies:
- *  xp#5391 Issue Dialog - handle removed assignee
- *  xp#5372 List of dependant items is not refreshed after deletion in the Issue Dialog
- *  xp#5435 Create Issue dialog - Error message appears when a text has been typed in the items-option filter
- *  xp#5383  Update Issue Dialog - Excluded items are not removed from the list after save
  * */
 @Stepwise
 class Issue_Dependant_List_Spec
@@ -112,120 +105,5 @@ class Issue_Dependant_List_Spec
 
         then: "the content should be present in the dependants list of the 'Issue Details Dialog'"
         dependantsNames.get( 0 ).contains( DOUBLE_CONTENT.getName() );
-    }
-
-    @Ignore
-    def "GIVEN existing issue AND 'Update issue' dialog is opened WHEN one item has been removed from the dependants list AND Cancel button pressed THEN the changes should not be saved"()
-    {
-        setup: "existing issue"
-        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-        IssueDetailsDialog issueDetailsDialog = contentBrowsePanel.clickOnToolbarShowIssues().clickOnIssue( TEST_ISSUE.getTitle() );
-        and: "'Update issue' dialog is opened"
-        UpdateIssueDialog updateIssueDialog = issueDetailsDialog.clickOnEditButton();
-
-        when: "one item has been removed from the dependants list"
-        updateIssueDialog.removeDependantItem( DOUBLE_CONTENT.getName() );
-
-        and: "Cancel button on the UpdateIssue dialog has been pressed"
-        updateIssueDialog.clickOnCancelBottomButton();
-        issueDetailsDialog.clickOnItemsTabBarItem();
-        List<String> dependantsNames = issueDetailsDialog.getDependantNames();
-
-        then: "the removed content should be present in the dependants list of the 'Details Dialog', because 'Cancel' button was pressed"
-        dependantsNames.get( 0 ).contains( DOUBLE_CONTENT.getName() );
-    }
-
-    //verifies: List of dependant items is not refreshed after deletion in the Issue Dialog #5372
-    @Ignore
-    def "GIVEN existing issue AND one item was removed on the 'UpdateIssue dialog' and it did not saved WHEN UpdateIssue dialog has been opened THEN removed content should be present in the dependants"()
-    {
-        given: "existing issue"
-        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-        IssueDetailsDialog issueDetailsDialog = contentBrowsePanel.clickOnToolbarShowIssues().clickOnIssue( TEST_ISSUE.getTitle() );
-        UpdateIssueDialog updateIssueDialog = issueDetailsDialog.clickOnEditButton();
-        updateIssueDialog.removeDependantItem( DOUBLE_CONTENT.getName() );
-
-        and: "'Cancel' button on the 'UpdateIssue dialog' has been pressed and the dialog closed"
-        updateIssueDialog.clickOnCancelBottomButton();
-
-        when: "'Update issue' dialog has been opened"
-        issueDetailsDialog.clickOnEditButton();
-        saveScreenshot( "update_issue_dlg_removed_item_canceled" )
-
-        then: "the number of dependants should not be changed, because the changes were not saved"
-        updateIssueDialog.getDependantNames().size() == 2;
-
-        and: "the removed content should be present in the dependants list of the 'UpdateIssue Dialog', because 'Cancel' button was pressed"
-        updateIssueDialog.getDependantNames().get( 0 ).contains( DOUBLE_CONTENT.getName() );
-    }
-
-    //verifies the xp#5383 Update Issue Dialog - Excluded items are not removed from the list after save
-    @Ignore
-    def "GIVEN existing issue AND one item was removed on the 'UpdateIssue dialog' and Save button has been pressed WHEN UpdateIssue dialog has been opened THEN the removed content should not be present in the 'dependants list'"()
-    {
-        given: "existing issue"
-        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-        IssueDetailsDialog issueDetailsDialog = contentBrowsePanel.clickOnToolbarShowIssues().clickOnIssue( TEST_ISSUE.getTitle() );
-        UpdateIssueDialog updateIssueDialog = issueDetailsDialog.clickOnEditButton();
-        updateIssueDialog.removeDependantItem( DOUBLE_CONTENT.getName() );
-
-        and: "'Save' button on the 'UpdateIssue dialog' has been pressed and the dialog closed"
-        updateIssueDialog.clickOnSaveIssueButton();
-        sleep( 1000 );
-
-        when: "'Update issue' dialog has been opened again"
-        issueDetailsDialog.clickOnEditButton();
-        saveScreenshot( "update_issue_dlg_removed_item_saved" )
-
-        then: "the number of dependants should be changed, because the changes were saved"
-        updateIssueDialog.getDependantNames().size() == 1;
-
-        and: "the removed content should not be present in the 'dependants list' of the 'UpdateIssue Dialog', because 'Save' button was pressed"
-        !updateIssueDialog.getDependantNames().get( 0 ).contains( DOUBLE_CONTENT.getName() );
-    }
-
-    @Ignore
-    def "GIVEN existing issue and the item to publish has been deleted WHEN 'UpdateIssue' dialog has been opened THEN no any items to publish should be on the dialog"()
-    {
-        given: "existing issue and the item to publish has been deleted"
-        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-        openConfirmDeleteDialog( SITE.getName() ).typeNumber( "3" ).clickOnConfirmButton();
-
-        when: "'UpdateIssue' dialog has been opened"
-        IssueDetailsDialog issueDetailsDialog = contentBrowsePanel.clickOnToolbarShowIssues().clickOnIssue( TEST_ISSUE.getTitle() );
-        UpdateIssueDialog updateIssueDialog = issueDetailsDialog.clickOnEditButton();
-        saveScreenshot( "item_to_publish_was removed" );
-
-        then: "no any items to publish should be on the dialog"
-        updateIssueDialog.getItemNames().size() == 0;
-
-        and: "'One or more items from the issue cannot be found' - notification should be displayed"
-        contentBrowsePanel.waitExpectedNotificationMessage( Application.ISSUE_ITEM_DELETED, 2 );
-    }
-    //verifies: Create Issue dialog - Error message appears when a text has been typed in the items-option filter #5435
-    @Ignore
-    def "GIVEN existing user AND no any content is selected WHEN when an issue has been created and it assigned to the user THEN items to publish should be present on the Issue Details"()
-    {
-        setup: "Content Studio is opened"
-        contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-        List<String> assigneesList = new ArrayList<>();
-        assigneesList.add( TEST_USER.getName() );
-        List<String> itemsList = new ArrayList<>();
-        itemsList.add( FOLDER_DISPLAY_NAME );
-        and: "no any content is selected"
-        Issue issue = buildIssue( "select items", assigneesList, itemsList );
-        and: "'Show Issues' button has been pressed"
-        IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-        issueListDialog.waitForOpened();
-        CreateIssueDialog createIssueDialog = issueListDialog.clickOnNewIssueDialog();
-        and: "data has been typed and folder's name has been typed in the options-filter and item to publish selected"
-        createIssueDialog.typeData( issue );
-
-        when: "'Create' button has been pressed"
-        createIssueDialog.clickOnCreateIssueButton();
-        IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
-
-        then: "Item to publish should be present on the 'Details Dialog'"
-        issueDetailsDialog.getNamesOfItemToPublish().get( 0 ).contains( "All Content types images" )
     }
 }
