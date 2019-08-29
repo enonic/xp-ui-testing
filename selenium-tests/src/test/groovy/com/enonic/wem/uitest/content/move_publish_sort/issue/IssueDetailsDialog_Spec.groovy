@@ -144,7 +144,7 @@ class IssueDetailsDialog_Spec
         detailsDialog.waitForLoaded();
 
         and: "expected creator should be displayed"
-        detailsDialog.getOpenedBy( TEST_ISSUE.getTitle() ).contains( "user:system:su" );
+        detailsDialog.getOpenedBy().contains( "user:system:su" );
     }
 
     def "GIVEN 'Issue details dialog' is opened WHEN Back button has been pressed THEN 'Issue List dialog' should be loaded"()

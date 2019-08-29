@@ -87,25 +87,6 @@ class Issue_Close_Spec
         issueDetailsDialog.waitForClosed();
     }
 
-//    def "GIVEN the user is logged in WHEN the user has opened 'Issue Details' THEN 'Creator' should be displayed correctly"()
-//    {
-//        given: "existing assigned user is logged in"
-//        getTestSession().setUser( TEST_USER );
-//        NavigatorHelper.openContentStudioApp( getTestSession() );
-//        IssueListDialog dialog = contentBrowsePanel.clickOnToolbarShowIssues();
-//        //dialog.clickOnAssignedToMeOption();//setAssignedToMeCheckbox( true );
-//
-//        when: "issue has been clicked"
-//        IssueDetailsDialog issueDetailsDialog = dialog.clickOnIssue( TEST_ISSUE.getTitle() );
-//        saveScreenshot( "issue_creator_su" )
-//
-//        then: "status of the issue should be 'Stopped'"
-//        issueDetailsDialog.getCreator() == "user:system:su";
-//
-//        and: ""
-//        issueDetailsDialog.getStatusInfo().contains( "Opened by user:system:su" );
-//    }
-
     //verifies the xp#5300 Notification about unclosed issues doesn't disappear after publishing of the last open issue
     def "GIVEN the user is logged in WHEN the user has opened 'Issue Details' and stopped the issue THEN the issue should be 'Stopped' on the dialog"()
     {
@@ -126,6 +107,7 @@ class Issue_Close_Spec
 
         and: "correct notification message should be displayed"
         contentBrowsePanel.waitForNotificationMessage() == "The issue is Closed.";
+        issueDetailsDialog.clickOnCancelButtonTop();
         sleep( 2000 );
         saveScreenshot( "last_issue_closed" );
 
@@ -140,10 +122,13 @@ class Issue_Close_Spec
         NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
+        and: "Open the closed issues"
+        issueListDialog.clickOnShowClosedIssues();
+
         when: "issue details dialog has been opened"
         IssueDetailsDialog issueDetailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() )
 
-        then: "correct user-name should be present in the 'Closed by'"
+        then: "expected user-name should be present in the 'Closed by'"
         issueDetailsDialog.getStatusInfo().contains( String.format( "Closed by user:system:%s", TEST_USER.getName() ) );
     }
 }

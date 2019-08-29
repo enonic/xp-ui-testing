@@ -140,9 +140,9 @@ public class IssueDetailsDialog
         return getDisplayedString( TITLE );
     }
 
-    public String getOpenedBy( String issueName )
+    public String getOpenedBy()
     {
-        return findElement( By.xpath( String.format( OPENED_BY, issueName ) ) ).getAttribute( "title" );
+        return findElement( By.xpath( OPENED_BY ) ).getAttribute( "title" );
     }
 
     public IssueDetailsDialog clickOnStatusSelectorMenu()
@@ -175,7 +175,7 @@ public class IssueDetailsDialog
 
     public String getStatusInfo()
     {
-        return getDisplayedString( STATUS_INFO );
+        return findElement( By.xpath( OPENED_BY ) ).getAttribute( "title" );
     }
 
     public String getCreator()

@@ -9,7 +9,7 @@ import com.enonic.xp.data.PropertyTree;
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
 /**
- * Created by on 5/19/2017.
+ * Created on 5/19/2017.
  */
 public class FreeFormViewPanel
     extends FormViewPanel

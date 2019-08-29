@@ -58,7 +58,6 @@ class BaseIssueSpec
         return contentBrowsePanel;
     }
 
-
     Content buildFolderContent( String name, String displayName )
     {
         String generated = NameHelper.uniqueName( name );
@@ -88,7 +87,6 @@ class BaseIssueSpec
             build();
         return dateContent;
     }
-
 
     void addReadyContent( Content content )
     {
@@ -129,5 +127,4 @@ class BaseIssueSpec
         deleteContentDialog.clickOnDeleteButton();
         return new ConfirmContentDeleteDialog( getSession() );
     }
-
 }

@@ -130,6 +130,7 @@ public class IssueListDialog
     public IssueListDialog clickOnShowClosedIssues()
     {
         showClosedIssuesButton.click();
+        sleep( 500 );
         return this;
     }
 

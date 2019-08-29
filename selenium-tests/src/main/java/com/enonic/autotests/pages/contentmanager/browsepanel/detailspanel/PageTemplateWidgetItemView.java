@@ -6,7 +6,7 @@ import com.enonic.autotests.TestSession;
 import com.enonic.autotests.pages.Application;
 
 /**
- * Created by on 8/3/2017.
+ * Created on 8/3/2017.
  */
 public class PageTemplateWidgetItemView
     extends Application

@@ -9,9 +9,8 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
- * Created by  on 05.09.2017.
+ * Created on 05.09.2017.
  *
- * Tasks: xp-ui-testing#50 Add Selenium tests for inserting a fragment in a page-template
  * */
 @Stepwise
 class PageTemplate_Fragments_Spec
