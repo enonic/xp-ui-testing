@@ -141,9 +141,10 @@ public class SiteFormViewPanel
         WebElement target = findElements( By.xpath( targetItem ) ).get( 0 );
 
         Actions builder = new Actions( getDriver() );
-        builder.clickAndHold( source ).build().perform();
-        builder.moveToElement( target ).build().perform();
-        builder.release( target ).build().perform();
+        //builder.clickAndHold( source ).build().perform();
+        //builder.moveToElement( target ).build().perform();
+        //builder.release( target ).build().perform();
+        builder.dragAndDrop( source, target ).build().perform();
         sleep( 3000 );
         return this;
     }
