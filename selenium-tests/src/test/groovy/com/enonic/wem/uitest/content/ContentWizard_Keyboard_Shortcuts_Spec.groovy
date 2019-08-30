@@ -2,8 +2,10 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -53,12 +55,14 @@ class ContentWizard_Keyboard_Shortcuts_Spec
         contentBrowsePanel.exists( TEST_FOLDER.getName() );
     }
     //Close wizard tab Alt+W
+    @Ignore
     def "GIVEN existing folder is opened AND the display name is changed WHEN shortcut to 'Close wizard' has been pressed THEN 'Alert' dialog with warning message should appear"()
     {
         given: "existing folder is opened"
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
         and: "display name updated"
-        wizard.typeDisplayName( "test" );
+        SettingsWizardStepForm form = new SettingsWizardStepForm( getSession() );
+        //form.selectLanguage( ENGLISH_LANGUAGE );
 
         when: "shortcut to 'Close' has been pressed"
         wizard.pressCloseKeyboardShortcut();

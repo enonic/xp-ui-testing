@@ -245,7 +245,10 @@ public class ContentWizardPanel
      */
     public ContentWizardPanel pressCloseKeyboardShortcut()
     {
-        buildActions().sendKeys( Keys.chord( Keys.ALT, "w" ) ).build().perform();
+        buildActions().keyDown( Keys.ALT ).sendKeys( "w" ).build().perform();
+        //buildActions().keyDown( Keys.LEFT_ALT ).sendKeys( "w" ).build().perform();
+        sleep( 1000 );
+        //buildActions().sendKeys( Keys.chord( Keys.ALT, "w" ) ).build().perform();
         return this;
     }
 
