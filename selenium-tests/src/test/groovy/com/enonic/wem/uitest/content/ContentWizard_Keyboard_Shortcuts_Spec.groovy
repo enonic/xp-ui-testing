@@ -22,7 +22,8 @@ class ContentWizard_Keyboard_Shortcuts_Spec
     @Shared
     String NEW_DISPLAY_NAME = NameHelper.uniqueName( "test" );
 
-    //Ctrl(Cmd)+S
+    //Ctrl(Cmd)+S  This test is reimplemented in JS
+    @Ignore
     def "GIVEN existing folder is opened WHEN shortcut to 'Save' has been pressed THEN correct notification message should be displayed"()
     {
         given: "existing folder"
@@ -39,7 +40,8 @@ class ContentWizard_Keyboard_Shortcuts_Spec
         then: "correct notification message should be displayed"
         wizard.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
     }
-    // Save content and close wizard tab  Ctrl+Enter
+    // Save content and close wizard tab  Ctrl+Enter This test is reimplemented in JS
+    @Ignore
     def "GIVEN existing folder is opened AND the display name is changed WHEN shortcut to 'Save and Close' has been pressed THEN the wizard should be closed AND content should be listed with the new display name"()
     {
         given: "existing folder"
@@ -54,7 +56,7 @@ class ContentWizard_Keyboard_Shortcuts_Spec
         then: "the wizard should be closed AND content should be listed with the new display name"
         contentBrowsePanel.exists( TEST_FOLDER.getName() );
     }
-    //Close wizard tab Alt+W
+    //Close wizard tab Alt+W  This test is reimplemented in JS
     @Ignore
     def "GIVEN existing folder is opened AND the display name is changed WHEN shortcut to 'Close wizard' has been pressed THEN 'Alert' dialog with warning message should appear"()
     {
@@ -62,7 +64,7 @@ class ContentWizard_Keyboard_Shortcuts_Spec
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
         and: "display name updated"
         SettingsWizardStepForm form = new SettingsWizardStepForm( getSession() );
-        //form.selectLanguage( ENGLISH_LANGUAGE );
+        form.selectLanguage( ENGLISH_LANGUAGE );
 
         when: "shortcut to 'Close' has been pressed"
         wizard.pressCloseKeyboardShortcut();
