@@ -102,6 +102,7 @@ public abstract class WizardPanel<T>
         {
             return null;
         }
+        sleep( 500 );
         String message = findElement( By.xpath( NOTIFICATION_MESSAGE_XPATH ) ).getText();
         getLogger().info( "Notification message " + message );
         return message.trim();
