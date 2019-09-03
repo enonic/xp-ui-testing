@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertImageModalDialog
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 
 /**
  * Created  on 2/28/2017.
@@ -39,7 +40,8 @@ class HtmlArea_InsertImageDialog_Spec
         !insertImageModalDialog.isToolbarDisplayed();
 
     }
-    // verifies XP-4949 HTML Area - Modal dialogs must handle close on Esc
+    // verifies XP-4949 HTML Area - Modal dialogs must handle close on Esc test is reimplemented in JS
+    @Ignore
     def "GIVEN InsertImageModalDialog is opened WHEN 'Escape' key has been pressed THEN modal dialog should be closed"()
     {
         given: "wizard for html-area content is opened"

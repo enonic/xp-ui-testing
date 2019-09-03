@@ -3,6 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertAnchorModalDialog
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 
 /**
  * Created  on 3/1/2017.
@@ -51,7 +52,8 @@ class HtmlArea_InsertAnchorDialog_Spec
         then: "modal dialog should not be displayed"
         insertAnchorButton.waitForClosed();
     }
-    // verifies XP-4949 HTML Area - Modal dialogs must handle close on Esc
+    // verifies XP-4949 HTML Area - Modal dialogs must handle close on Esc (Test is reimplemented in JS)
+    @Ignore
     def "GIVEN  InsertAnchorModalDialog is opened WHEN 'Escape' key has been pressed THEN modal dialog should not be displayed"()
     {
         given: "wizard for html-area content is opened"
