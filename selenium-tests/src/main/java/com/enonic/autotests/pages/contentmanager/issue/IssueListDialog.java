@@ -42,7 +42,7 @@ public class IssueListDialog
     private final String ISSUES_TAB = "//li[contains(@id,'api.ui.tab.TabBarItem') and child::a[ contains(.,'Issues')]]";
 
     private final String ALL_ISSUES_TAB_ITEM =
-        DIALOG_CONTAINER + "//li[contains(@id,'api.ui.tab.TabBarItem') and child::a[contains(.,'All issues')]]";
+        DIALOG_CONTAINER + "//li[contains(@id,'api.ui.tab.TabBarItem') and child::a[contains(.,'All')]]";
 
     private final String PUBLISH_REQUESTS_TAB_ITEM =
         DIALOG_CONTAINER + "//li[contains(@id,'api.ui.tab.TabBarItem')and child::a[ contains(.,'Publish requests')]]";
