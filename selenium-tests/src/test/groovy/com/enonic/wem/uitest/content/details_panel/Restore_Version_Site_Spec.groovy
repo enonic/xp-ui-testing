@@ -29,7 +29,7 @@ class Restore_Version_Site_Spec
     String NEW_DISPLAY_NAME = "site-restore-version";
 
 
-    def "GIVEN existing site WHEN display name of the site changed THEN new 'version history item' appeared in the version-view"()
+    def "GIVEN existing site WHEN display name has been changed THEN new 'version history item' appeared in the version-view"()
     {
         given: "existing site"
         ContentSettings settings = ContentSettings.builder().language( NORSK_LANGUAGE ).build();
@@ -54,9 +54,9 @@ class Restore_Version_Site_Spec
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN site with updated 'display name' is selected WHEN the site selected AND previous version restored THEN correct display name appears in the grid"()
+    def "GIVEN site with updated 'display name' is selected WHEN the site selected AND previous version restored THEN expected display name appears in the grid"()
     {
-        given: "site with updated 'display name' is selcted"
+        given: "site with updated 'display name' is selected"
         findAndSelectContent( SITE.getName() );
 
         and: "version panel is opened"
@@ -116,7 +116,7 @@ class Restore_Version_Site_Spec
         form.getDisplayNamesOfAclEntries().contains( "Anonymous User" );
     }
 
-    def "GIVEN existing site with selected application opened WHEN application removed from the wizard THEN number of versions increased"()
+    def "GIVEN existing site with selected application opened WHEN application removed from the wizard THEN number of versions should be increased"()
     {
         given: "existing site with selected application opened"
         findAndSelectContent( SITE.getName() );

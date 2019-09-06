@@ -432,7 +432,15 @@ public abstract class BrowsePanel
         }
         if ( isSelectionPartial() || isSelectionControllerChecked() )
         {
-            clickOnSelectionController();
+            try
+            {
+                clickOnSelectionController();
+            }
+            catch ( Exception e )
+            {
+                saveScreenshot( NameHelper.uniqueName( "err_selection_controller_not_clickable" ) );
+                throw new TestFrameworkException( "Error - Selection Controller " + e.getMessage() );
+            }
             return this;
         }
         return this;
