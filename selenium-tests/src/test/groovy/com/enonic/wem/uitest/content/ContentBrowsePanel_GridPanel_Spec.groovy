@@ -1,10 +1,10 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import org.openqa.selenium.Keys
 import spock.lang.Ignore
-import spock.lang.IgnoreIf
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -27,7 +27,7 @@ class ContentBrowsePanel_GridPanel_Spec
         expect: "all rows should be white(unselected)"
         contentBrowsePanel.getSelectedRowsNumber() == 0 && rowNumber > 0;
 
-        and: "refresh button should be present on the tree grid toolbar"
+        and: "refresh button should be present in the tree grid toolbar"
         contentBrowsePanel.isRefreshButtonDisplayed();
     }
 
@@ -240,6 +240,7 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN existing content is selected and collapsed WHEN arrow right has been pressed THEN folder is getting expanded"()
     {
         given: " existing content is selected and collapsed"
+        contentBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
 
         when: "arrow right has been pressed"
@@ -253,6 +254,7 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN one content is selected WHEN hold the 'shift' and arrow down has been pressed 3-times THEN 4 selected rows should be in the grid"()
     {
         given: "one content is selected"
+        contentBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         contentBrowsePanel.selectContentInTable( IMPORTED_FOLDER_NAME );
         saveScreenshot( "test_arrow_down_shift_before" );
 
@@ -268,6 +270,7 @@ class ContentBrowsePanel_GridPanel_Spec
     {
         given: "one content has been selected"
         sleep( 500 );
+        contentBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         contentBrowsePanel.clickCheckboxAndSelectRow( 4 );
         saveScreenshot( "test_arrow_up_shift_before2" );
 
@@ -283,10 +286,12 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN row with the content is highlighted WHEN highlighting has been removed THEN 'Edit', 'Delete', 'Duplicate 'buttons  should be disabled on the toolbar"()
     {
         given: "row with the content is highlighted"
+        contentBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
 
         when: "click on the content and unhighlight it "
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
+        sleep( 1000 );
 
         then: "'Edit' button should be disabled"
         !contentBrowsePanel.isEditButtonEnabled();
