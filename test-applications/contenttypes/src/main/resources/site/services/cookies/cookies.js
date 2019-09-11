@@ -1,4 +1,4 @@
-var stk = require('stk/stk');
+var stk = require('/lib/stk/stk');
 
 exports.get = function (req) {
     return {

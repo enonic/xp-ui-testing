@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.portal
 
 import com.enonic.wem.uitest.content.BaseContentSpec
+import org.openqa.selenium.Cookie
 import spock.lang.Shared
 
 class Cookies_Service_Spec
@@ -13,7 +14,7 @@ class Cookies_Service_Spec
     String COOKIE_NAME = "JSESSIONID";
 
     @Shared
-    String APPLICATION_NAME = ALL_CONTENT_TYPES_APP_NAME;
+    String APPLICATION_NAME = "com.enonic.xp.ui_testing.contenttypes";
 
     def "GIVEN existing app-service that returns a cookie WHEN request was sent to service THEN correct cookie should be present in the response"()
     {
@@ -22,6 +23,7 @@ class Cookies_Service_Spec
         saveScreenshot( "cookie_service" );
 
         then: "correct cookie should be present in the response"
-        driver.manage().getCookieNamed( COOKIE_NAME ) != null;
+        Cookie cookie = driver.manage().getCookieNamed( COOKIE_NAME );
+        cookie.getName() == COOKIE_NAME;
     }
 }

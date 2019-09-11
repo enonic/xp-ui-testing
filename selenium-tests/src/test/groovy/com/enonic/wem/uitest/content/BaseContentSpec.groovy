@@ -470,7 +470,7 @@ class BaseContentSpec
 
     protected void getService( String serviceName, String appName )
     {
-        getDriver().navigate().to( browser.baseUrl + "portal/draft/_/service/" + appName + "/" + serviceName );
+        getDriver().navigate().to( browser.baseUrl + "site/default/draft/_/service/" + appName + "/" + serviceName );
     }
 
     protected void openHomePage()

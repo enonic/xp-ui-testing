@@ -48,7 +48,7 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
         and: "new template has been added"
         contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).showPageEditor().typeData( template ).closeBrowserTab().switchToBrowsePanelTab();
-        sleep( 2000 );
+        sleep( 3000 );
         saveScreenshot( "selection_controller1" );
         contentBrowsePanel.doClearSelection();
 
