@@ -2,7 +2,12 @@
 <page>
   <display-name>Page</display-name>
   <description>home page</description>
-  <config/>
+  <form>
+    <input type="TextLine" name="title">
+      <label>Title</label>
+      <occurrences minimum="0" maximum="1"/>
+    </input>
+  </form>
   <regions>
     <region name="main"/>
   </regions>
