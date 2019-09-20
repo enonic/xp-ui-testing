@@ -20,7 +20,8 @@ class DeleteSite_ConfirmDelete_Spec
     @Shared
     String INCORRECT_NUMBER_OF_CONTENT = "100";
 
-    def "GIVEN existing site WHEN site selected AND 'Delete'-toolbar button pressed AND 'Delete' on the dialog clicked THEN 'Confirm delete' dialog appears"() {
+    def "GIVEN existing is selected WHEN 'Delete' button has been pressed AND 'Delete' on the dialog clicked THEN 'Confirm delete' dialog appears"()
+    {
         given: "existing site is selected AND delete button pressed"
         SITE = buildSiteWithNameAndDispalyNameAndDescription("site", "confirm delete", "description");
         addContent(SITE);
@@ -56,7 +57,8 @@ class DeleteSite_ConfirmDelete_Spec
         contentBrowsePanel.exists(SITE.getName());
     }
 
-    def "GIVEN existing site WHEN new child content for the site has been added AND 'Confirm delete' has been opened THEN number of content to delete should be increased"() {
+    def "GIVEN existing site with child content WHEN 'Confirm delete' dialog has been opened THEN number of content to delete should be increased"()
+    {
         given: "existing site selected AND delete button pressed"
         Content child = buildFolderContentWithParent("child", "child content", SITE.getName());
         findAndSelectContent(SITE.getName());
@@ -106,7 +108,8 @@ class DeleteSite_ConfirmDelete_Spec
         !contentBrowsePanel.exists(SITE.getName());
     }
 
-    def "GIVEN existing site with 'online' status WHEN site selected and Delete pressed AND 'Instantly delete' checkbox checked THEN site should be deleted"() {
+    def "GIVEN existing site with 'Published' status WHEN site selected and Delete pressed AND 'Instantly delete' checkbox checked THEN site should be deleted"()
+    {
         given: "new site has been added"
         Content site = buildSiteWithNameAndDispalyNameAndDescription("site", "confirm delete online", "description");
         addContent(site);

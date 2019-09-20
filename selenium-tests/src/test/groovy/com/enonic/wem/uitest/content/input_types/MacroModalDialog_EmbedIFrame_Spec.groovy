@@ -71,7 +71,7 @@ class MacroModalDialog_EmbedIFrame_Spec
         ( (TextAreaConfigPanel) dialog.getMacroConfigPanel() ).getValidationMessage() == "This field is required"
     }
 
-    def "GIVEN MacroModalDialog opened WHEN 'Embed iframe' selected AND text not typed AND 'preview' link on the dialog clicked THEN warning message appears on the modal dialog"()
+    def "GIVEN MacroModalDialog is opened WHEN 'Embed iframe' has been selected AND text not typed AND 'preview' link on the dialog clicked THEN warning message appears on the modal dialog"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -84,16 +84,17 @@ class MacroModalDialog_EmbedIFrame_Spec
         and: "text in the text area not inserted"
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, " " );
         dialog.selectOption( MacroType.EMBED_IFRAME ).getMacroConfigPanel().typeData( data );
+        sleep( 400 );
 
-        and: "preview tab link clicked"
+        and: "preview tab link has been clicked"
         MacroPreviewPanel macroPreviewPanel = dialog.clickOnPreviewTabLink();
         saveScreenshot( "test_embedded_iframe_textarea_empty_preview" );
 
-        then: "correct preview message appears"
+        then: "expected preview message appears"
         macroPreviewPanel.getPreviewMessage() == MacroConfigPanel.NOT_COMPLETE_PREVIEW_MESSAGE;
     }
 
-    def "GIVEN MacroModalDialog opened WHEN 'Embed iframe' selected AND text typed in the textArea AND 'preview' link on the dialog clicked THEN correct info in the preview-content panel appears"()
+    def "GIVEN MacroModalDialog is opened WHEN 'Embed iframe' has been selected AND text typed in the textArea AND 'preview' link on the dialog clicked THEN expected info in the preview-content panel appears"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -106,16 +107,17 @@ class MacroModalDialog_EmbedIFrame_Spec
         and: "text in the text area not inserted"
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, "test text" );
         dialog.selectOption( MacroType.EMBED_IFRAME ).getMacroConfigPanel().typeData( data );
+        sleep( 400 );
 
         and: "preview tab link clicked"
         MacroPreviewPanel previewPanel = dialog.clickOnPreviewTabLink();
         saveScreenshot( "test_embedded_iframe_textarea_filled_preview" );
 
-        then: "correct info in the preview-content panel appears"
+        then: "expected info in the preview-content panel should appear"
         previewPanel.getPreviewContentMessage() == MacroPreviewPanel.EXPECTED_IFRAME_MESSAGE_PREVIEW_TAB;
     }
 
-    def "GIVEN MacroModalDialog opened WHEN 'Embed iframe' selected AND correct code typed in the textArea AND 'preview' link on the dialog clicked THEN correct html appears in the preview-content panel"()
+    def "GIVEN MacroModalDialog is opened WHEN 'Embed iframe' has been selected AND expected code typed in the textArea AND 'preview' link on the dialog clicked THEN correct html appears in the preview-content panel"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -128,12 +130,13 @@ class MacroModalDialog_EmbedIFrame_Spec
         and: "text in the text area not inserted"
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, ENONIC_IFRAME );
         dialog.selectOption( MacroType.EMBED_IFRAME ).getMacroConfigPanel().typeData( data );
+        sleep( 400 );
 
         and: "preview tab link clicked"
         MacroPreviewPanel previewPanel = dialog.clickOnPreviewTabLink();
         saveScreenshot( "test_embedded_iframe_enonic_preview" );
 
-        then: "expected text  should be present in the preview-tab panel"
+        then: "expected text should be present in the preview-tab panel"
         previewPanel.isIFrameEmbedded( "enonic.com" );
     }
 }
