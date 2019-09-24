@@ -102,11 +102,12 @@ public class MacroModalDialog
 
     public MacroPreviewPanel clickOnPreviewTabLink()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( PREVIEW_TAB_BAR_ITEM ), EXPLICIT_NORMAL ) )
-        {
-            saveScreenshot( "err_preview_tab" );
-            throw new TestFrameworkException( "Preview tab item was not found!" );
-        }
+//        if ( !waitUntilVisibleNoException( By.xpath( PREVIEW_TAB_BAR_ITEM ), EXPLICIT_NORMAL ) )
+//        {
+//            saveScreenshot( "err_preview_tab" );
+//            throw new TestFrameworkException( "Preview tab item was not found!" );
+//        }
+        sleep( 1000 );
         previewTabLink.click();
         sleep( 200 );
         return new MacroPreviewPanel( getSession() );

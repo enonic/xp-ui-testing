@@ -33,7 +33,7 @@ class MacroModalDialog_EmbedIFrame_Spec
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, ENONIC_IFRAME );
         dialog.selectOption( MacroType.EMBED_IFRAME ).getMacroConfigPanel().typeData( data );
         dialog.clickInsertButton();
-        //wizard.save();
+
         saveScreenshot( "test_embedded_iframe_macro_inserted" );
 
         then: "correct macro is displayed in the htmlarea"
