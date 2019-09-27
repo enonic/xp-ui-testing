@@ -29,9 +29,9 @@ class Content_Upper_Lower_Case_Spec
     String WARNING_MESSAGE = "Content [%s] could not be updated. A content with that name already exists"
 
 
-    def "GIVEN wizard for new folder is opened WHEN name in lower cases has been AND saved THEN expected notification message appears"()
+    def "GIVEN wizard for new folder is opened WHEN name in lower cases has been typed AND saved THEN expected notification message appears"()
     {
-        given: "creating new folder on root"
+        given: "creating new folder in root"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
         wizard.typeDisplayName( FOLDER_NAME_IN_LOWER_CASE );
 
@@ -43,7 +43,7 @@ class Content_Upper_Lower_Case_Spec
         contentBrowsePanel.waitExpectedNotificationMessage( message, 2 );
     }
 
-    def "GIVEN wizard for new folder is opened WHEN existing name but it is in upper cases has been typed AND saved THEN expected warning message appears"()
+    def "GIVEN wizard for new folder is opened WHEN existing name in upper cases has been typed AND saved THEN expected warning message appears"()
     {
         given: "creating new folder on root with the name in upper cases"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );

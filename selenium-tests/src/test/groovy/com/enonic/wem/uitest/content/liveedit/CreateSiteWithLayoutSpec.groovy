@@ -45,12 +45,12 @@ class CreateSiteWithLayoutSpec
     @Shared
     String TEXT_COMPONENT_TEXT = "test text";
 
-    def "GIVEN creating of new Site based on 'Simple site' WHEN the site is saved and wizard closed THEN new site should be listed int the grid"()
+    def "Preconditions: new site with 'Simple site' app should be added"()
     {
         given:
         SITE = buildSimpleSiteApp();
 
-        when: "data was typed and site saved "
+        when: "data has been typed and site saved "
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData(
             SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
 
@@ -59,7 +59,7 @@ class CreateSiteWithLayoutSpec
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN existing site WHEN site has been expanded and templates folder selected AND page-template added THEN new template should be added in a 'Templates' folder"()
+    def "WHEN existing site has been expanded and templates folder selected AND new page-template added THEN this template should be present in 'Templates' folder"()
     {
         given: "existing site"
         pageTemplate = buildPageTemplate( MAIN_REGION_PAGE_DESCRIPTOR_NAME, SUPPORTS, SITE_DISPLAY_NAME, SITE.getName() );

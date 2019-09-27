@@ -61,9 +61,9 @@ class ContextWindow_InspectionPanel_Spec
         source.contains( COUNTRY_SITE_HTML_HEADER );
     }
 
-    def "GIVEN 'Custom' renderer is selected WHEN Page controller has been changed to 'Country list' THEN correct page controller displayed in the selector"()
+    def "GIVEN 'existing site is opened WHEN Page controller has been changed to 'Country list' THEN expected page controller should be displayed in the selector"()
     {
-        given: "existing site with the selected page controller is opened"
+        given: "existing site is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
 
         and: "'Page' tab bar item has been clicked"
@@ -79,7 +79,7 @@ class ContextWindow_InspectionPanel_Spec
         dialog.pressYesButton();
         saveScreenshot( "test-inspection-new-controller-selected" );
 
-        then: "correct page controller should be displayed on the Inspect panel"
+        then: "expected page controller should be displayed in the Inspect panel"
         inspectPanel.getSelectedPageController() == COUNTRY_LIST_PAGE_CONTROLLER;
     }
 

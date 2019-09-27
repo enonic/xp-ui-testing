@@ -13,9 +13,7 @@ import com.enonic.xp.security.PrincipalKey
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-/**
- * Tasks:
- * enonic/xp-ui-testing#36 Add Selenium tests for already fixed bugs*/
+
 @Stepwise
 class ContentWizard_EditPermissionsDialog_Spec
     extends BaseContentSpec
@@ -157,20 +155,20 @@ class ContentWizard_EditPermissionsDialog_Spec
         !wizard.isAlertPresent();
     }
 
-    def "GIVEN 'Edit Permissions' dialog is opened WHEN one acl entry was removed THEN number of entries on the modal dialog should be reduced"()
+    def "GIVEN 'Edit Permissions' dialog is opened WHEN one acl entry has been removed THEN number of entries on the modal dialog should be reduced"()
     {
         given: "'Edit Permissions' dialog is opened"
         SecurityWizardStepForm securityForm = findAndSelectContent(
             content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink();
         EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
 
-        when: "one Role was removed"
+        when: "one Role has been removed"
         modalDialog.removeAclEntry( RoleName.SYSTEM_ADMIN.getValue() );
         saveScreenshot( "content-wizard-role-was-removed" );
         and: "Apply button has been pressed"
         modalDialog.clickOnApply();
 
-        and: "dialog has been opened again"
+        and: "dialog has been reopened again"
         securityForm.clickOnEditPermissionsButton();
 
         then: "number of entries on the modal dialog should be reduced"
