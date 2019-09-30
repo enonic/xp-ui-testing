@@ -18,7 +18,7 @@ class MyFirstApp_Spec
     @Shared
     Content USA_CONTENT;
 
-    def "GIVEN wizard for new Site based on 'My First App' is opened WHEN data was saved and wizard closed THEN new site should be listed"()
+    def "Precondidtions: new site based with 'My First App' is opened WHEN data was saved and wizard closed THEN new site should be listed"()
     {
         given:
         MY_FIRST_SITE = buildMyFirstAppSite( "country-site" );

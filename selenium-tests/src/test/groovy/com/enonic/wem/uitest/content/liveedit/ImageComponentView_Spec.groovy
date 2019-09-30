@@ -10,10 +10,6 @@ import spock.lang.Shared
 
 /**
  * Created on 2/2/2017.
- *
- * Tasks:
- * XP-4945 Add ui-test to verify the XP-4944
- * xp-ui-testing#66 Add selenium tests for expanding of a tree in the ImageSelector drop-down list
  * Verifies:
  * XP-4944 ImageComponentView - NullPointerException and Upload does not add new file
  * (NullPointerException thrown when dropdown Handler was clicked  when dropdown Handler was clicked)
@@ -24,7 +20,7 @@ class ImageComponentView_Spec
     @Shared
     String SITE_NAME;
 
-    def "GIVEN new site has been added and it opened WHEN  Image-component was inserted THEN Image Component View should be displayed on the page editor"()
+    def "GIVEN new site has been added and it is opened WHEN Image-component has been inserted THEN Image Component View should be added in the page editor"()
     {
         given: "new site has been added"
         SITE_NAME = NameHelper.uniqueName( "site" );
@@ -40,14 +36,14 @@ class ImageComponentView_Spec
         wizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
 
-        then: "the component should be displayed on the page"
+        then: "the component should be present in the Live Edit"
         imageComponentView.isDropDownHandlerDisplayed();
 
         and: "'Upload' button should be displayed"
         imageComponentView.isUploadButtonDisplayed();
     }
     //verifies XP-4944 ImageComponentView - NullPointerException and Upload does not add new file
-    def "GIVEN existing site with a controller is opened AND image component has been inserted WHEN dropdown handler was clicked THEN list of available options should be displayed"()
+    def "GIVEN existing site with a controller is opened AND image component has been inserted WHEN dropdown handler has been clicked THEN list of available options should be displayed"()
     {
         given: "existing site is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE_NAME ).clickToolbarEdit();
@@ -71,7 +67,7 @@ class ImageComponentView_Spec
 
     //verifies the XP-4944 -NullPointerException thrown when dropdownHandler was clicked
     //xp-ui-testing#66 Add selenium tests for expanding of a tree in the ImageSelector drop-down list
-    def "GIVEN existing site with a controller is opened WHEN Image component was inserted AND an image has been selected from the list of options THEN "()
+    def "GIVEN existing site with a controller is opened WHEN Image component has been inserted AND an image has been selected from the list of options THEN "()
     {
         given: "existing site is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE_NAME ).clickToolbarEdit();
