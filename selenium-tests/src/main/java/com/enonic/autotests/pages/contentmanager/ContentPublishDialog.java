@@ -323,6 +323,7 @@ public class ContentPublishDialog
             waitUntilElementEnabled( By.xpath( DIALOG_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='Schedule']" ),
                                      EXPLICIT_NORMAL );
             getDisplayedElement( By.xpath( DIALOG_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='Schedule']" ) ).click();
+            sleep( 500 );
             return this;
         }
         catch ( Exception e )

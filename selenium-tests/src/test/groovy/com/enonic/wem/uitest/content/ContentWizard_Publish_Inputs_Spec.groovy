@@ -114,8 +114,9 @@ class ContentWizard_Publish_Inputs_Spec
         publishDialog.clickOnAddScheduleButton();
         publishDialog.typeOnlineFrom( TimeUtils.getTomorrowDateTime() ).clickOnScheduleButton();
 
-        then: "status is getting 'Published(Pending)'"
+        then: "status gets 'Published(Pending)'"
+        saveScreenshot( "schedule_wizard_online_pending" );
         wizard.waitStatus( ContentStatus.PUBLISHED_PENDING, Application.EXPLICIT_NORMAL );
-        saveScreenshot( "schedule_wizard_online_pending" )
+
     }
 }
