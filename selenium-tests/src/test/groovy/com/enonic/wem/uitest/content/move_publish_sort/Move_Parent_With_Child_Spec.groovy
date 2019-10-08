@@ -8,8 +8,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 02.11.2016.
- *
- * Task: XP-4139 Add selenium tests for XP-4111
  * verifies: XP-4111 Incorrect filtering of options when parent and its child were selected for moving
  *
  * */

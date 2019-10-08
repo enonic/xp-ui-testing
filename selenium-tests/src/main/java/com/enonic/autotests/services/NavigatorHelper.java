@@ -21,7 +21,6 @@ import com.enonic.autotests.pages.HomePage;
 import com.enonic.autotests.pages.LoginPage;
 import com.enonic.autotests.pages.XpTourDialog;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
-import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
@@ -88,19 +87,6 @@ public class NavigatorHelper
         }
         UserBrowsePanel userBrowsePanel = home.openUsersApplication();
         userBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_LONG );
-        return userBrowsePanel;
-    }
-
-    public static ApplicationBrowsePanel openApplications( TestSession testSession )
-    {
-        HomePage home = loginAndOpenHomePage( testSession );
-        closeXpTourDialogIfPresent( testSession );
-        if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3, testSession ) )
-        {
-            TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
-            throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
-        }
-        ApplicationBrowsePanel userBrowsePanel = home.openApplications();
         return userBrowsePanel;
     }
 

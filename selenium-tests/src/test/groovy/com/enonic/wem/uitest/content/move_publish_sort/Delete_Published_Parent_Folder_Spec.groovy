@@ -60,7 +60,7 @@ class Delete_Published_Parent_Folder_Spec
         sleep( 1000 );
 
         when: "the folder has been selected AND 'Delete' button clicked"
-        contentBrowsePanel.clickToolbarDelete().clickOnDeleteButtonAndConfirm( "2" );
+        contentBrowsePanel.clickToolbarDelete().clickOnMarkAsDeletedMenuItemAndConfirm( "2" );
         def expectedMessage = String.format( Application.CONTENTS_DELETED_AND_MARKED_FOR_DELETION_MESSAGE, "2", "2" );
 
         then: "'Deleted 2 items ( Marked for deletion: 2 ).' - message should appear"

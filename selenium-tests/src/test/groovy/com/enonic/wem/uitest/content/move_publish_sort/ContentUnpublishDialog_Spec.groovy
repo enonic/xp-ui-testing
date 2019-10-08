@@ -90,7 +90,8 @@ class ContentUnpublishDialog_Spec
         !contentBrowsePanel.isPublishButtonEnabled();
     }
 
-    def "GIVEN 'modified' content is selected AND ContentUnpublishDialog is opened WHEN 'unpublish' menu item was selected THEN the content is getting 'Unpublished'"() {
+    def "GIVEN 'modified' content is selected AND Content Unpublish Dialog is opened WHEN 'unpublish' menu item was selected THEN the content is getting 'Unpublished'"()
+    {
         given:
         findAndSelectContent(PARENT_CONTENT.getName()).clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
                 NEW_DISPLAY_NAME).save().closeBrowserTab().switchToBrowsePanelTab();

@@ -8,10 +8,6 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-/**
- * verifies the "XP-4628 Add correct notification messages, when a parent folder with children has been removed or published"  will be fixed
- *
- * */
 @Stepwise
 class ContentPublish_Child_Spec
     extends BaseContentSpec
@@ -117,7 +113,7 @@ class ContentPublish_Child_Spec
     def "GIVEN existing 'Published' parent folder and child content is 'New' WHEN the parent folder has been selected and 'Delete' button pressed THEN 'New' child content should be removed, but parent folder and 'Published' child content should be 'Deleted' "()
     {
         when: "parent 'Published'-folder is selected and 'Delete' button pressed AND number of contents has been typed"
-        findAndSelectContent( parentContent.getName() ).clickToolbarDelete().clickOnDeleteButtonAndConfirm( "3" );
+        findAndSelectContent( parentContent.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItemAndConfirm( "3" );
         String message = contentBrowsePanel.waitForNotificationMessage();
         sleep( 1000 );
 

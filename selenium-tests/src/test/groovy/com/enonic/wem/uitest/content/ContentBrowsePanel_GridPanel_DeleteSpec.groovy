@@ -28,7 +28,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         findAndSelectContent( content1.getName() );
         findAndSelectContent( content2.getName() );
         DeleteContentDialog deleteContentDialog = contentBrowsePanel.clickToolbarDelete();
-        deleteContentDialog.clickOnDeleteButton();
+        deleteContentDialog.clickOnDeleteNowButton();
         and: "correct number of contents to delete is typed"
         ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
@@ -69,7 +69,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         when: "parent folder expanded and child content selected and 'Delete' button on toolbar pressed"
         DeleteContentDialog deleteContentDialog = contentBrowsePanel.expandContent( parent.getPath() ).selectContentInTable(
             contentList ).clickToolbarDelete();
-        deleteContentDialog.clickOnDeleteButton();
+        deleteContentDialog.clickOnDeleteNowButton();
 
         then: "child folder should not be displayed"
         !contentBrowsePanel.exists( childFolder.getName(), true );
@@ -95,7 +95,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         when: "parent folder expanded and child content selected and 'Delete' button on toolbar pressed"
         DeleteContentDialog deleteContentDialog = contentBrowsePanel.expandContent( parent.getPath() ).selectContentInTable(
             contentList ).clickToolbarDelete();
-        deleteContentDialog.clickOnDeleteButton();
+        deleteContentDialog.clickOnDeleteNowButton();
         and: "2 has been typed and deleting confirmed"
         ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();

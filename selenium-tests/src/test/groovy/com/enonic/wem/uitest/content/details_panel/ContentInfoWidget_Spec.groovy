@@ -106,7 +106,7 @@ class ContentInfoWidget_Spec
         filterPanel.typeSearchText( FOLDER.getName() )
 
         when: "content has been deleted"
-        contentBrowsePanel.selectContentInTable( FOLDER.getName() ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.selectContentInTable( FOLDER.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
         contentBrowsePanel.openContentDetailsPanel();
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "det_panel_content_deleted" )

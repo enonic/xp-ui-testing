@@ -42,7 +42,7 @@ class ContentPublishDelete_Spec
         filterPanel.typeSearchText( content.getName() )
 
         when: "content was selected and 'Delete' button pressed"
-        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
         String message = contentBrowsePanel.waitForNotificationMessage();
         saveScreenshot("content_should_be_pending");
 

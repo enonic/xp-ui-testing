@@ -108,16 +108,6 @@ public class TestSession
         return (User) session.get( CURRENT_USER );
     }
 
-    public XP_Windows getCurrentWindow()
-    {
-        return (XP_Windows) session.get( CURRENT_WINDOW_NAME );
-    }
-
-    public void setCurrentWindow( XP_Windows currentWindow )
-    {
-        session.put( CURRENT_WINDOW_NAME, currentWindow );
-    }
-
     public String getCurrentTabHandle()
     {
         return currentWindowHandle;

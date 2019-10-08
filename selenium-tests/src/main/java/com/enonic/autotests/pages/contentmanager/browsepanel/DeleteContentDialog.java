@@ -22,8 +22,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class DeleteContentDialog
     extends Application
 {
-    public static final String CHECKBOX_LABEL_TEXT = "Instantly delete published items";
-
     public static final String OTHER_ITEMS_WILL_BE_DELETED_TEXT = "Other items that will be deleted";
 
     public static final String DELETE_ITEM_WITH_CHILD_TITLE = "Delete selected items and its child content";
@@ -45,11 +43,6 @@ public class DeleteContentDialog
 
     private final String DEPENDANT_NAMES = DEPENDANT_LIST + "//div[contains(@id,'DependantItemViewer')]" + H6_MAIN_NAME;
 
-    private final String CHECKBOX_DELETE_PUBLISHED_ITEMS =
-        CONTAINER_DIV + "//div[contains(@id,'Checkbox') and contains(@class,'instant-delete-check')]";
-
-    private final String CHECKBOX_LABEL = CHECKBOX_DELETE_PUBLISHED_ITEMS + "//label";
-
     protected Logger logger = Logger.getLogger( this.getClass() );
 
     private final String ITEMS_TO_DELETE_BY_DISPLAY_NAME = CONTAINER_DIV + "//ul[contains(@id,'DialogItemList')]" + H6_DISPLAY_NAME;
@@ -59,20 +52,26 @@ public class DeleteContentDialog
 
     private final String TITLE_TEXT = CONTAINER_DIV + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
 
-    protected final String DELETE_BUTTON_XPATH = CONTAINER_DIV + "//button/span[contains(.,'Delete')]";
+    protected final String DELETE_NOW_BUTTON_XPATH = CONTAINER_DIV + "//button/span[contains(.,'Delete Now')]";
 
     protected final String CANCEL_BUTTON = CONTAINER_DIV + "//button/span[text()='Cancel']";
 
     private final String CANCEL_BUTTON_TOP = CONTAINER_DIV + APP_CANCEL_BUTTON_TOP;
 
-    @FindBy(xpath = DELETE_BUTTON_XPATH)
-    private WebElement deleteButton;
+    private final String MARK_AS_DELETED_MENU_ITEM = "//li[contains(@id,'MenuItem') and text()='Mark As Deleted']";
+
+    private final String DELETE_MENU = "//div[contains(@id,'MenuButton')]";
+
+    private final String DELETE_MENU_DROPDOWN = CONTAINER_DIV + DELETE_MENU + DROP_DOWN_HANDLE_BUTTON;
+
+    @FindBy(xpath = DELETE_NOW_BUTTON_XPATH)
+    private WebElement deleteNowButton;
 
     @FindBy(xpath = CANCEL_BUTTON)
     private WebElement cancelButton;
 
-    @FindBy(xpath = CHECKBOX_DELETE_PUBLISHED_ITEMS)
-    private WebElement checkBoxDiv;
+    @FindBy(xpath = DELETE_MENU_DROPDOWN)
+    private WebElement menuDropDown;
 
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     private WebElement cancelButtonTop;
@@ -87,9 +86,9 @@ public class DeleteContentDialog
         super( session );
     }
 
-    public boolean isDeleteButtonPresent()
+    public boolean isDeleteNowButtonPresent()
     {
-        return deleteButton.isDisplayed();
+        return deleteNowButton.isDisplayed();
     }
 
     public boolean isCancelButtonPresent()
@@ -97,32 +96,22 @@ public class DeleteContentDialog
         return cancelButton.isDisplayed();
     }
 
-    public boolean isCheckboxForDeletePublishedItemsDisplayed()
-    {
-        return isElementDisplayed( CHECKBOX_DELETE_PUBLISHED_ITEMS );
-    }
-
-    public String getCheckboxLabelText()
-    {
-        return getDisplayedString( CHECKBOX_LABEL );
-    }
-
     /**
-     * Clocks on the Delete button and waits until the wizard will be closed
+     * Clicks on 'Delete' button and waits until the wizard will be closed
      */
     public void doDelete()
     {
-        deleteButton.click();
+        deleteNowButton.click();
         waitForClosed();
         sleep( 1000 );
     }
 
     /**
-     * If content is not 'online', so need to switch to the browse panel and do not need to wait of closing the wizard
+     * Delete the content, close the wizard and switch to the grid:
      */
     public void doDeleteAndSwitchToBrowsePanel()
     {
-        deleteButton.click();
+        deleteNowButton.click();
         switchToBrowsePanelTab();
     }
 
@@ -156,31 +145,40 @@ public class DeleteContentDialog
         return this;
     }
 
-    public DeleteContentDialog clickOnDeleteButton()
+    public DeleteContentDialog clickOnMarkAsDeletedMenuItem()
     {
-        deleteButton.click();
+        waitUntilVisible( By.xpath( DELETE_MENU_DROPDOWN ) );
+        menuDropDown.click();
+        sleep( 300 );
+        String menuItem = CONTAINER_DIV + MARK_AS_DELETED_MENU_ITEM;
+        findElement( By.xpath( menuItem ) ).click();
+        this.waitForClosed();
         return this;
     }
 
-    public void clickOnDeleteButtonAndConfirm( String numberOfContent )
+    public DeleteContentDialog clickOnDeleteNowButton()
     {
-        deleteButton.click();
+        deleteNowButton.click();
+        sleep( 1000 );
+        return this;
+    }
+
+    public void clickOnDeleteNowButtonAndConfirm( String numberOfContent )
+    {
+        deleteNowButton.click();
         ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
         confirmContentDeleteDialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         confirmContentDeleteDialog.typeNumber( numberOfContent ).clickOnConfirmButton().waitUntilDialogClosed(
             Application.EXPLICIT_NORMAL );
     }
 
-    public DeleteContentDialog clickOnInstantlyCheckbox()
+    public void clickOnMarkAsDeletedMenuItemAndConfirm( String numberOfContent )
     {
-        checkBoxDiv.click();
-        return this;
-    }
-
-    public boolean isInstantlyDeleteCheckboxChecked()
-    {
-        String id = checkBoxDiv.getAttribute( "id" );
-        return TestUtils.isCheckBoxChecked( getSession(), id );
+        clickOnMarkAsDeletedMenuItem();
+        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
+        confirmContentDeleteDialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        confirmContentDeleteDialog.typeNumber( numberOfContent ).clickOnConfirmButton().waitUntilDialogClosed(
+            Application.EXPLICIT_NORMAL );
     }
 
     public void clickOnCancelButton()

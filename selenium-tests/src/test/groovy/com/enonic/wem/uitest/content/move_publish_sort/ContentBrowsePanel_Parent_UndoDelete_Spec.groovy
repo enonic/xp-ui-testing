@@ -22,8 +22,8 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
     def "GIVEN existing parent folder with a child WHEN the parent has been selected AND 'Delete' button has been pressed THEN confirmation dialog with input for number of contents to delete should be displayed"()
     {
         given: "parent folder has been added"
-        PARENT_FOLDER = buildFolderContent( "folder", "undo delete parent with child" );
-        CHILD_FOLDER = buildFolderContent( "folder", "undo delete child content" );
+        PARENT_FOLDER = buildFolderContent( "folder", "undo delete parent" );
+        CHILD_FOLDER = buildFolderContent( "folder", "undo delete child" );
         addReadyContent( PARENT_FOLDER );
         findAndSelectContent( PARENT_FOLDER.getName() );
         and: "child folder has been added"
@@ -32,7 +32,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
 
         when: "Delete button has been pressed and the deleting confirmed"
-        contentBrowsePanel.clickToolbarDelete().clickOnDeleteButton();
+        contentBrowsePanel.clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
         ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
         saveScreenshot( "parent_child_deleted" );
@@ -63,7 +63,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         !contentBrowsePanel.isDuplicateButtonDisplayed();
     }
 
-    def "GIVEN parent 'Deleted' folder is selected WHEN 'Undo delete' button was pressed THEN both folders are getting 'Online'"()
+    def "GIVEN parent 'Deleted' folder is selected WHEN 'Undo delete' button has been pressed THEN both folders get 'Published'"()
     {
         given: "parent folder with a child are 'Deleted' AND parent is selected"
         findAndSelectContent( PARENT_FOLDER.getName() );
@@ -89,7 +89,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
     {
         given: "both contents are published"
         findAndSelectContent( PARENT_FOLDER.getName() );
-        contentBrowsePanel.clickToolbarDelete().clickOnDeleteButtonAndConfirm( "2" )
+        contentBrowsePanel.clickToolbarDelete().clickOnMarkAsDeletedMenuItemAndConfirm( "2" )
 
         when: "child is selected AND 'Undo delete' button has been pressed"
         findAndSelectContent( CHILD_FOLDER.getName() ).clickToolbarUndodelete();

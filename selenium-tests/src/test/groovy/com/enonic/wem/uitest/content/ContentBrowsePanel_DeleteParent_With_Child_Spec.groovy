@@ -27,7 +27,7 @@ class ContentBrowsePanel_DeleteParent_With_Child_Spec
         addContent( CHILD_FOLDER );
 
         when: "Delete button has been pressed and deleting confirmed"
-        contentBrowsePanel.clickToolbarDelete().clickOnDeleteButton();
+        contentBrowsePanel.clickToolbarDelete().clickOnDeleteNowButton();
 
         then: "confirmation dialog should be displayed"
         ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
@@ -40,7 +40,7 @@ class ContentBrowsePanel_DeleteParent_With_Child_Spec
         findAndSelectContent( PARENT_FOLDER.getName() );
 
         when: "Delete button has been pressed and it confirmed"
-        contentBrowsePanel.clickToolbarDelete().clickOnDeleteButton();
+        contentBrowsePanel.clickToolbarDelete().clickOnDeleteNowButton();
         ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
         saveScreenshot( "parent_deleted" );

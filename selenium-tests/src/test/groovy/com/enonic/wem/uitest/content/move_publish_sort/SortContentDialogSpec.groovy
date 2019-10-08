@@ -127,7 +127,7 @@ class SortContentDialogSpec
     {
         given: "the parent folder is selected"
         findAndSelectContent( PARENT_FOLDER.getName() );
-        Content childFolder = buildFolderContent( "child-folder", "child folder" );
+        Content childFolder = buildFolderContent( "child-folder", "cContentInfoWidget_Spechild folder" );
 
         and: "child content has been added"
         addContent( childFolder );

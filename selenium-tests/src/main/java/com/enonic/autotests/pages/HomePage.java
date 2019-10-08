@@ -7,7 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel;
-import com.enonic.autotests.pages.modules.ApplicationBrowsePanel;
 import com.enonic.autotests.pages.usermanager.browsepanel.UserBrowsePanel;
 import com.enonic.autotests.services.NavigatorHelper;
 import com.enonic.autotests.utils.NameHelper;
@@ -99,11 +98,6 @@ public class HomePage
         NavigatorHelper.switchToBrowserTab( getSession(), USER_MANAGER_URL_PART );
     }
 
-    private void switchToApplicationsTab()
-    {
-        NavigatorHelper.switchToBrowserTab( getSession(), APPLICATIONS_URL_PART );
-    }
-
     public UserBrowsePanel openUsersApplication()
     {
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
@@ -129,19 +123,6 @@ public class HomePage
         return true;
     }
 
-    public ApplicationBrowsePanel openApplications()
-    {
-        LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        checkLauncher();
-        launcherPanel.clickOnApplications();
-        sleep( 500 );
-        switchToApplicationsTab();
-        ApplicationBrowsePanel panel = new ApplicationBrowsePanel( getSession() );
-        panel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        panel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
-        getLogger().info( "Applications App opened" );
-        return panel;
-    }
 
     public boolean isDisplayed()
     {

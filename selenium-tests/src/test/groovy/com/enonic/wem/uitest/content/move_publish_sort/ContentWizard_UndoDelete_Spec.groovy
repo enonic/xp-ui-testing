@@ -40,7 +40,7 @@ class ContentWizard_UndoDelete_Spec
         boolean isDisplayedBeforeDeleting = wizard.isUndoDeleteButtonDisplayed();
 
         when: "'Delete' button has been pressed and confirmed"
-        wizard.clickToolbarDelete().doDelete();
+        wizard.clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
         saveScreenshot( "deleted_status_wizard" );
 
         then: "'Deleted' status should be displayed on the wizard-page"

@@ -38,7 +38,7 @@ class Unpublish_Deleted_Content_Spec
         given: "existing 'deleted' content is opened"
         findAndSelectContent( CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
-        wizard.clickToolbarDelete().doDelete();
+        wizard.clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
 
         when: "'Unpublish' menu item has been clicked"
         wizard.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();

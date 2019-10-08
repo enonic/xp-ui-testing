@@ -73,7 +73,7 @@ class Delete_Duplicated_Moved_Content_Spec
     {
         DeleteContentDialog deleteContentDialog = findAndSelectContent( siteName ).clickToolbarDelete()
         deleteContentDialog.waitForOpened();
-        deleteContentDialog.clickOnDeleteButton();
+        deleteContentDialog.clickOnDeleteNowButton();
         return new ConfirmContentDeleteDialog( getSession() );
     }
 }

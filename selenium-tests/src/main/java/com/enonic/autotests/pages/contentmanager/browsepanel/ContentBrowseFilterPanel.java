@@ -9,7 +9,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.enonic.autotests.TestSession;
-import com.enonic.autotests.exceptions.ContentFilterException;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.BaseBrowseFilterPanel;
@@ -200,7 +199,7 @@ public class ContentBrowseFilterPanel
         {
             saveScreenshot( "err_" + contentTypeDisplayName );
             logError( "content type was not found in the search panel:" + contentTypeDisplayName );
-            throw new ContentFilterException( "content type was not found in the search panel:" + contentTypeDisplayName );
+            throw new TestFrameworkException( "content type was not found in the search panel:" + contentTypeDisplayName );
         }
         else
         {
@@ -220,7 +219,7 @@ public class ContentBrowseFilterPanel
         if ( element == null )
         {
             logError( "content type was not found in the search panel:" + contentTypeDisplayName );
-            throw new ContentFilterException( "content type was not found in the search panel:" + contentTypeDisplayName );
+            throw new TestFrameworkException( "content type was not found in the search panel:" + contentTypeDisplayName );
         }
         else
         {

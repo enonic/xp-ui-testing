@@ -72,7 +72,8 @@ class DeleteSite_ConfirmDelete_Spec
         confirmDialog.getNumberOfContentToDelete() == INITIAL_NUMBER_TO_DELETE + 1;
     }
 
-    def "GIVEN existing site with 2 children AND 'Confirm delete' has been opened WHEN incorrect number of content typed THEN 'Confirm' button is disabled"() {
+    def "GIVEN existing site with 2 children AND 'Confirm delete' has been opened WHEN incorrect number has been typed THEN 'Confirm' button should be disabled"()
+    {
         given: "existing site selected AND delete button pressed"
         ConfirmContentDeleteDialog confirmContentDeleteDialog = openConfirmDeleteDialog(SITE.getName());
 
@@ -84,19 +85,21 @@ class DeleteSite_ConfirmDelete_Spec
         !confirmContentDeleteDialog.isConfirmButtonButtonEnabled();
     }
 
-    def "GIVEN existing site with 2 children AND 'Confirm delete' has been opened WHEN correct number of content typed THEN 'Confirm' button is disabled"() {
+    def "GIVEN existing site is selected AND 'Confirm delete' has been opened WHEN required number of content has been typed THEN 'Confirm' button gets enabled"()
+    {
         given: "existing site selected AND delete button pressed"
         ConfirmContentDeleteDialog confirmContentDeleteDialog = openConfirmDeleteDialog(SITE.getName());
 
-        when: "correct number of resources typed"
+        when: "required number of resources has been typed"
         confirmContentDeleteDialog.typeNumber("3");
         saveScreenshot("test_site_number_to_delete_correct");
 
-        then: "'confirm' button on the dialog enabled"
+        then: "'confirm' button gets enabled"
         confirmContentDeleteDialog.waitUntilConfirmButtonEnabled();
     }
 
-    def "GIVEN existing site with 2 children AND 'Confirm delete' has been opened WHEN correct number of content typed AND 'Confirm' pressed THEN site not listed"() {
+    def "GIVEN existing site is selected AND 'Confirm delete' has been opened WHEN required number has been typed AND 'Confirm' pressed THEN site should be deleted"()
+    {
         given: "existing site selected AND delete button pressed"
         ConfirmContentDeleteDialog confirmContentDeleteDialog = openConfirmDeleteDialog(SITE.getName());
 
@@ -108,7 +111,7 @@ class DeleteSite_ConfirmDelete_Spec
         !contentBrowsePanel.exists(SITE.getName());
     }
 
-    def "GIVEN existing site with 'Published' status WHEN site selected and Delete pressed AND 'Instantly delete' checkbox checked THEN site should be deleted"()
+    def "GIVEN new site has been added then published WHEN the site has been selected and Delete pressed AND 'Delete now' button has been pressed THEN site should be deleted"()
     {
         given: "new site has been added"
         Content site = buildSiteWithNameAndDispalyNameAndDescription("site", "confirm delete online", "description");
@@ -119,11 +122,11 @@ class DeleteSite_ConfirmDelete_Spec
         contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
         contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
 
-        when: "site selected and Delete pressed AND 'Instantly delete' checkbox has been checked"
-        contentBrowsePanel.clickToolbarDelete().clickOnInstantlyCheckbox().clickOnDeleteButton();
+        when: "site selected and Delete pressed AND 'Delete now' button has been clicked"
+        contentBrowsePanel.clickToolbarDelete().clickOnDeleteNowButton();
         ConfirmContentDeleteDialog confirmDialog = new ConfirmContentDeleteDialog(getSession());
 
-        and: "correct number of resources has been typed"
+        and: "required number of resources has been typed"
         confirmDialog.typeNumber("2").clickOnConfirmButton();
         saveScreenshot("test_confirm_delete_site_online");
 
@@ -131,14 +134,14 @@ class DeleteSite_ConfirmDelete_Spec
         contentBrowsePanel.waitExpectedNotificationMessage("Item \"" + site.getName() + "\" is deleted.", 1)
 
 
-        and: "site successfully deleted"
+        and: "site should be deleted"
         !contentBrowsePanel.exists(site.getName());
     }
 
     private ConfirmContentDeleteDialog openConfirmDeleteDialog(String siteName) {
         DeleteContentDialog deleteContentDialog = findAndSelectContent(siteName).clickToolbarDelete()
         deleteContentDialog.waitForOpened();
-        deleteContentDialog.clickOnDeleteButton();
+        deleteContentDialog.clickOnDeleteNowButton();
         return new ConfirmContentDeleteDialog(getSession());
     }
 }
