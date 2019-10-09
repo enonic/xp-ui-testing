@@ -151,7 +151,7 @@ class Occurrences_ComboBox_1_1_Spec
 
         when: "content selected and 'Delete' has been pressed"
         filterPanel.typeSearchText( comboBox1_1.getName() );
-        contentBrowsePanel.clickToolbarDelete().doDelete();
+        contentBrowsePanel.clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
         then:
         contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
         and: "red icon should be present, because required option was removed"

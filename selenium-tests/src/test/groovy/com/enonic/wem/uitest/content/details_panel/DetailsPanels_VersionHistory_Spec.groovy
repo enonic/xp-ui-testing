@@ -94,17 +94,17 @@ class DetailsPanels_VersionHistory_Spec
         contentVersions.peek().getStatus().equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
-    def "GIVEN 'modified'-content was selected WHEN 'Delete' button on the toolbar was pressed THEN the newer one with a 'deleted' badge"()
+    def "GIVEN 'modified'-content is selected WHEN 'Mark as Deleted' menu item in the Delete Dialog has been pressed THEN 'Deleted' status get Deleted in the Details Panel"()
     {
-        given: "'modified' content was selected "
-        findAndSelectContent( folderContent.getName() ).clickToolbarDelete().doDelete();
+        given: "the content is selected and Delete content dialog is opened "
+        findAndSelectContent( folderContent.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
 
-        when: "'Delete' button on the toolbar was pressed"
+        when: "Versions panel has been opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         saveScreenshot( "version_panel_pending" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
-        then: "the latest version has a 'deleted' badge"
+        then: "the latest version has 'deleted' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.DELETED.getValue() );
     }
 }

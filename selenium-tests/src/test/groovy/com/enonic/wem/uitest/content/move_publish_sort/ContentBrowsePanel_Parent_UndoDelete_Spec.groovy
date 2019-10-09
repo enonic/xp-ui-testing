@@ -3,7 +3,9 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.autotests.vo.contentmanager.ContentVersion
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 
@@ -44,7 +46,22 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         findAndSelectContent( CHILD_FOLDER.getName() ).getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.DELETED.getValue();
     }
 
-    def "GIVEN existing 'deleted' folder WHEN the content has been selected THEN only two toolbar's items should be displayed"()
+    def "GIVEN existing published then 'deleted' folder is selected WHEN versions widget has been opened THEN the latest version should be Deleted"()
+    {
+        given: "published then 'deleted' folder is selected "
+        findAndSelectContent( PARENT_FOLDER.getName() );
+
+        when:
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        saveScreenshot( "version_panel_pending" )
+        LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
+
+        then: "the latest version has a 'deleted' badge"
+        contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.DELETED.getValue() );
+
+    }
+
+    def "GIVEN existing 'deleted' folder WHEN the content has been selected THEN Duplicate, Move, Edit buttons should not be displayed"()
     {
         when: "existing 'deleted' folder is selected"
         findAndSelectContent( PARENT_FOLDER.getName() );
@@ -81,7 +98,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         and: "parent folder should be 'Published'"
         contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
 
-        and: "child folder should be 'online'"
+        and: "child folder should be 'Published'"
         findAndSelectContent( CHILD_FOLDER.getName() ).getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
