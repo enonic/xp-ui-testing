@@ -288,6 +288,7 @@ class ContentBrowsePanel_GridPanel_Spec
         given: "row with the content is highlighted"
         contentBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
+        sleep( 1000 );
 
         when: "click on the content and unhighlight it "
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
