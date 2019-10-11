@@ -88,17 +88,17 @@ class Site_With_TemplatePageComponentDialog_Spec
         contextMenu.isOpened();
     }
 
-    def "GIVEN 'Page Components' view is opened WHEN button 'close' was clicked THEN dialog should not be present"()
+    def "GIVEN 'Page Components' view is opened WHEN button 'close' has been clicked THEN dialog should be closed"()
     {
         given: "'Page Components' view opened"
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit().showPageEditor().showComponentView();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
 
-        when: "button 'close' was clicked"
+        when: "button 'close' has been clicked"
         dialog.doCloseDialog();
         saveScreenshot( "page-comp-dialog-closed" );
 
-        then: "'page component view' dialog should not be present"
+        then: "'page component view' dialog should be closed"
         !dialog.isOpened()
     }
 }

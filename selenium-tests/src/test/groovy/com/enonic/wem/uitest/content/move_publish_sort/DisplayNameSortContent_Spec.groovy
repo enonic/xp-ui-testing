@@ -31,6 +31,7 @@ class DisplayNameSortContent_Spec
     }
 
     def "GIVEN sort content dialog is opened WHEN 'DisplayName - Descending' has been selected THEN items should be correctly sorted in the dialog-grid"() {
+
         given: "folder with contents is selected and 'Sort' button clicked"
         findAndSelectContent(IMPORTED_FOLDER_NAME);
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();

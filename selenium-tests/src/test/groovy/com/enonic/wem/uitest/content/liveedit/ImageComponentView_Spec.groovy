@@ -10,9 +10,6 @@ import spock.lang.Shared
 
 /**
  * Created on 2/2/2017.
- * Verifies:
- * XP-4944 ImageComponentView - NullPointerException and Upload does not add new file
- * (NullPointerException thrown when dropdown Handler was clicked  when dropdown Handler was clicked)
  * */
 class ImageComponentView_Spec
     extends BaseContentSpec
@@ -65,8 +62,6 @@ class ImageComponentView_Spec
         !imageComponentView.isErrorMessageDisplayed();
     }
 
-    //verifies the XP-4944 -NullPointerException thrown when dropdownHandler was clicked
-    //xp-ui-testing#66 Add selenium tests for expanding of a tree in the ImageSelector drop-down list
     def "GIVEN existing site with a controller is opened WHEN Image component has been inserted AND an image has been selected from the list of options THEN "()
     {
         given: "existing site is opened"
