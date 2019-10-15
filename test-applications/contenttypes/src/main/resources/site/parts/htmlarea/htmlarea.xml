@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<part xmlns="urn:enonic:xp:model:1.0">
+  <display-name>Html Area Example</display-name>
+  <description>Html Area Example</description>
+  <form>
+  </form>
+</part>
