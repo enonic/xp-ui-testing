@@ -89,10 +89,10 @@ class Fragment_Change_In_InspectionPanel_Spec
         then: "one option should be present in the list"
         List<String> options = fragmentInspectionPanel.getDropdownOptions();
         options.size() == 2;
-        and: "correct display name of fragment should be present"
+        and: "expected fragment's name should be present"
         options.get( 0 ) == PART_FRAGMENT_CITY_CREATION;
 
-        and: "correct display name of fragment should be present"
+        and: "expected fragment's name should be present"
         options.get( 1 ) == PART_FRAGMENT_CITY_LIST;
     }
 
@@ -146,7 +146,7 @@ class Fragment_Change_In_InspectionPanel_Spec
 
         when: "'Show Outbound' button has been pressed"
         dependenciesWidget.clickOnShowOutboundButton();
-        sleep( 2000 );
+        sleep( 3000 );
         NavigatorHelper.switchToNextTab( getTestSession() );
 
         then: "required fragment should be filtered"
