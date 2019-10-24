@@ -28,7 +28,7 @@ configurations {
 ext {
     testName = 'general'
     xpVersion = '7.2.0-SNAPSHOT'
-    csVersion = '2.2.0-SNAPSHOT'
+    csVersion = '2.3.0-SNAPSHOT'
     unpackDir = "$buildDir${File.separator}install"
     screenshotsDir = "$buildDir${File.separator}screenshots"
     reportsDir = "$buildDir${File.separator}reports"
