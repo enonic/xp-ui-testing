@@ -56,7 +56,7 @@ class Restore_Version_Zoom_Image_Spec
         and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version with original image is restored"
+        when: "version with original image has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion(  );
 
@@ -78,7 +78,7 @@ class Restore_Version_Zoom_Image_Spec
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         when: "version with zoomed image is restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion(  );
         saveScreenshot( "zoomed_image_reverted_to_original" );
 
@@ -127,7 +127,7 @@ class Restore_Version_Zoom_Image_Spec
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         and: "version with zoomed image is restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion(  );
         saveScreenshot( "image_reverted_to_zoomed" );
 
