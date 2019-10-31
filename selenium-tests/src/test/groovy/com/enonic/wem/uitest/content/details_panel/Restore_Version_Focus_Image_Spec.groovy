@@ -78,8 +78,8 @@ class Restore_Version_Focus_Image_Spec
         and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version of image with focus has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        when: "focused image has been reverted"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion(  );
 
         and: "image has been opened in the wizard"

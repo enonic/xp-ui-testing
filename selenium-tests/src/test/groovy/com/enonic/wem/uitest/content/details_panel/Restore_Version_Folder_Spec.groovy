@@ -66,7 +66,7 @@ class Restore_Version_Folder_Spec
         contentBrowsePanel.exists( FOLDER_CONTENT.getName() );
     }
 
-    def "GIVEN language is changed WHEN previous version has been restored THEN original language should be restored on the wizard page"()
+    def "GIVEN language is changed WHEN previous version has been restored THEN original language should be restored in the wizard page"()
     {
         given: "existing folder is opened"
         findAndSelectContent( FOLDER_CONTENT.getName() );
@@ -112,7 +112,7 @@ class Restore_Version_Folder_Spec
         saveScreenshot( "versions_number_permissions_updated" );
 
         then: "number of versions should not be changed, because only permissions were changed"
-        numberOfVersions == 4;
+        numberOfVersions == 6;
 
         and: "new ACL entry should be present"
         aclNames.contains( "Anonymous User" );

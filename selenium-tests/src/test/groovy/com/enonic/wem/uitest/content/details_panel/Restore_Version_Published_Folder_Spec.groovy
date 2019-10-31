@@ -9,19 +9,19 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
-class Restore_Version_Out_Of_Date_Spec
+class Restore_Version_Published_Folder_Spec
     extends BaseVersionHistorySpec
 {
     @Shared
     Content FOLDER_CONTENT;
 
     @Shared
-    String INITIAL_DISPLAY_NAME = "out-of-date-name";
+    String INITIAL_DISPLAY_NAME = "modified-name";
 
     @Shared
-    String NEW_DISPLAY_NAME = "restore-out-of-date";
+    String NEW_DISPLAY_NAME = "restore-modified";
 
-    def "GIVEN existing folder with several versions WHEN the folder has been published AND previous version restored THEN 'out-of-date' status displayed in the version view AND in the Browse panel"()
+    def "WHEN existing folder has been published AND previous version restored THEN 'Modified' status should be displayed in the version view AND in the Browse panel"()
     {
         given: "existing folder with several versions"
         FOLDER_CONTENT = buildFolderContent( "folder", INITIAL_DISPLAY_NAME );
@@ -41,27 +41,26 @@ class Restore_Version_Out_Of_Date_Spec
 
         and: "the version view has been expanded"
         allContentVersionsView.clickOnVersionAndExpand( 1 );
-        saveScreenshot( "versions_out_of_date" );
 
-        then: "'out-of-date' status displayed in the version view"
-        versionItem.getContentStatus(1  ) == ContentStatus.OUT_OF_DATE.getValue();
+        then: "'Modified' status is displayed for the current version"
+        versionItem.getContentStatus( 0 ) == ContentStatus.MODIFIED.getValue();
 
-        and: "'out-of-date' status should be displayed in the Browse panel"
-        contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.OUT_OF_DATE.getValue();
+        and: "'Modified' status should be displayed in the Browse panel"
+        contentBrowsePanel.getContentStatus( FOLDER_CONTENT.getName() ) == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing content with 'out-of-date' status  AND version history is opened WHEN the content selected and 'Unpublish' menu item was clicked THEN spinner automatically disappears after a short interval "()
+    def "GIVEN existing content with 'Modified' status  AND version history is opened WHEN the content selected and 'Unpublish' menu item was clicked THEN spinner automatically disappears after a short interval "()
     {
-        given: "existing content with 'out-of-date' status"
+        given: "existing content with 'Modified' status"
         findAndSelectContent( FOLDER_CONTENT.getName() );
 
-        and: " version history is opened "
+        and: "version history is opened "
         contentBrowsePanel.openContentDetailsPanel().openVersionHistory();
 
         when:
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
         contentUnPublishDialog.clickOnUnpublishButton();
-        saveScreenshot( "out_of_date_unpublished" );
+        saveScreenshot( "folder_modified_unpublished" );
 
         then: "spinner automatically disappears after a short interval"
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );

@@ -52,7 +52,7 @@ class Restore_Version_Crop_Image_Spec
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing image with several versions is selected WHEN version with original image is restored THEN button 'reset filter' should not be present on the wizard page"()
+    def "GIVEN existing cropped image is selected WHEN version with original image is restored THEN button 'reset filter' should not be present in the wizard"()
     {
         given: "existing image with several versions is selected"
         findAndSelectContent( IMPORTED_MAN_IMAGE );
@@ -60,7 +60,7 @@ class Restore_Version_Crop_Image_Spec
         and: "version panel opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version with original image was restored"
+        when: "version with original image has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion();
 
@@ -68,7 +68,7 @@ class Restore_Version_Crop_Image_Spec
         contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
-        saveScreenshot( "original_size_image_restored" );
+        saveScreenshot( "original_size_image_reverted" );
 
         then: "original height of the crop area should be restored "
         imageEditor.getCropAreaHeight() == ORIGINAL_CROP_AREA_HEIGHT;
@@ -87,24 +87,26 @@ class Restore_Version_Crop_Image_Spec
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         when: "version of image with cropped size has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion();
 
         and: "the image is opened"
         contentBrowsePanel.clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        //Click on Crop button and open the ImageEditor:
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
-        saveScreenshot( "cropped_image_restored" );
+        saveScreenshot( "cropped_image_restored1" );
 
         then: "cropped height of crop area should be restored"
         imageEditor.getCropAreaHeight() == CROPPED_IMAGE_HEIGHT;
+        //Close the ImageEditor:
         imageEditor.getToolbar().clickOnCloseButton();
 
         and: "button 'reset' should be present on the image editor"
         formViewPanel.isButtonResetPresent();
     }
     //Verifies bug: XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
-    def "GIVEN existing cropped image is opened WHEN original version is restored THEN 'Reset' button should not be present"()
+    def "GIVEN existing cropped image is opened WHEN original version has been restored THEN 'Reset' button should not be present"()
     {
         given: "existing zoomed image is opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN_IMAGE ).clickToolbarEditAndSwitchToWizardTab();
@@ -114,9 +116,9 @@ class Restore_Version_Crop_Image_Spec
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         and: "original version is restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 3 );
         versionItem.doRestoreVersion();
-        saveScreenshot( "image_reverted_to_zoomed" );
+        saveScreenshot( "image_reverted_to_original" );
 
         and: "switch to the wizard-tab again"
         contentBrowsePanel.switchToContentWizardTabBySelectedContent()
@@ -126,7 +128,7 @@ class Restore_Version_Crop_Image_Spec
         !formViewPanel.isButtonResetPresent();
     }
 
-    def "GIVEN existing image with several versions is opened WHEN version with cropped image is restored THEN Reset button should be present on the wizard page"()
+    def "GIVEN existing image with several versions is opened WHEN version with cropped image is reverted THEN Reset button should be present on the wizard page"()
     {
         given: "existing image with several versions is opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN_IMAGE ).clickToolbarEdit();
@@ -136,9 +138,9 @@ class Restore_Version_Crop_Image_Spec
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         and: "cropped version has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 3 );
         versionItem.doRestoreVersion(  );
-        saveScreenshot( "zoomed_version_of_image_reverted" );
+        saveScreenshot( "cropped_version_reverted2" );
 
         and: "switch to the wizard-tab again"
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
