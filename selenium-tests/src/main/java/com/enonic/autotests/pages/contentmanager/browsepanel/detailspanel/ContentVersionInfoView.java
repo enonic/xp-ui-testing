@@ -15,9 +15,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentVersionInfoView
     extends Application
 {
-    public static final String ACTIVE_VERSION = "This version is active";
-
-    public static final String RESTORE_THIS = "Restore this version";
 
     private String EXPANDED_VERSION_ITEM = "//li[contains(@class,'content-version-item') and contains(@class,'expanded')]";
 
@@ -25,7 +22,7 @@ public class ContentVersionInfoView
 
     private final String VERSION_EXPANDED_DIV = "//div[contains(@class,'version-info')]";
 
-    private String RESTORE_BUTTON = EXPANDED_VERSION_ITEM + "//button";
+    private String REVERT_BUTTON = EXPANDED_VERSION_ITEM + "//button[child::span[text()='Revert']]";
 
     private String OWNER_NAME_VALUE = VERSION_ITEM + "//div[contains(@id,'ContentVersionViewer')]" + H6_MAIN_NAME;
 
@@ -36,15 +33,15 @@ public class ContentVersionInfoView
 
     public void doRestoreVersion()
     {
-        waitUntilVisibleNoException( By.xpath( RESTORE_BUTTON ), EXPLICIT_NORMAL );
-        getDisplayedElement( By.xpath( RESTORE_BUTTON ) ).click();
+        waitUntilVisibleNoException( By.xpath( REVERT_BUTTON ), EXPLICIT_NORMAL );
+        getDisplayedElement( By.xpath( REVERT_BUTTON ) ).click();
         sleep( 1000 );
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 
-    public boolean isRestoreButtonDisplayed()
+    public boolean isRevertButtonDisplayed()
     {
-        return isElementDisplayed( RESTORE_BUTTON );
+        return isElementDisplayed( REVERT_BUTTON );
     }
 
     public String getOwnerName( int index )

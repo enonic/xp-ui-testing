@@ -8,9 +8,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-/**
- * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
- **/
 @Stepwise
 class Restore_ImageSelector_Spec
     extends Base_InputFields_Occurrences
@@ -42,7 +39,7 @@ class Restore_ImageSelector_Spec
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
-    def "GIVEN existing content with image-selector ( missed required image) WHEN version with two images has been restored THEN content becomes valid"()
+    def "GIVEN existing content with image-selector ( missed required image) WHEN version with two images has been reverted THEN content becomes valid"()
     {
         given: "version of the content with one missed required image is current"
         ContentWizardPanel wizard = findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
@@ -50,7 +47,7 @@ class Restore_ImageSelector_Spec
         wizard.switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "valid version of content with two images is restored"
+        when: "valid version with two images is reverted"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion(  );
@@ -67,7 +64,7 @@ class Restore_ImageSelector_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN content with two images is restored WHEN content has been opened THEN two images should be present on the wizard"()
+    def "GIVEN content with two images is restored WHEN content has been opened THEN two images should be present in the wizard"()
     {
         when: "version of content with two images is restored"
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
@@ -77,16 +74,16 @@ class Restore_ImageSelector_Spec
         formViewPanel.getSelectedImages().size() == 2;
     }
 
-    def "GIVEN content with two images WHEN version of content with one images is restored THEN red icon should appears on the wizard tab"()
+    def "GIVEN content with two images WHEN version of content with one images is reverted THEN red icon should appear in the wizard tab"()
     {
         given: "content with two images is selected"
         ContentWizardPanel wizard = findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "version with one images has been restored"
+        when: "version with one images has been reverted"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion(  );
         saveScreenshot( "image_selector_not_valid_version" );
 
@@ -98,7 +95,7 @@ class Restore_ImageSelector_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN version with one image is restored WHEN content has been opened THEN one image should be present on the wizard"()
+    def "GIVEN version with one image is reverted WHEN content has been opened THEN one image should be present in the wizard"()
     {
         when: "content has been opened"
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();

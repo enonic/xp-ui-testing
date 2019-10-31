@@ -7,9 +7,6 @@ import com.enonic.autotests.pages.form.TagFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
-/**
- * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
- **/
 class Restore_Tags_Spec
     extends Base_InputFields_Occurrences
 {
@@ -38,39 +35,47 @@ class Restore_Tags_Spec
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
-    def "GIVEN tag-content (one required tag is missed) WHEN previous version has been restored THEN content becomes valid"()
+    def "GIVEN tag-content (one required tag is missed) WHEN version with 2 selected tags have been restored THEN content becomes valid"()
     {
         given: "tag-content (one required tag is missed)"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "previous version has been restored"
+        when: "version with 2 selected tags have been restored"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        versionItem.doRestoreVersion();
+
+        then: "number of version is increased"
+        allContentVersionsView.getAllVersions().size() == 4;
         contentBrowsePanel.switchToBrowserTabByTitle( TAG_CONTENT.getDisplayName() );
         saveScreenshot( "tag_valid_version" );
 
-        then: "content becomes valid"
-        !wizard.isContentInvalid()
+        and: "the content becomes valid"
+        !wizard.isContentInvalid();
     }
 
-    def "GIVEN tag-content is valid AND wizard is opened WHEN 'AppHomeButton' clicked AND version with not valid content has been restored THEN red icon should appear in the wizard tab"()
+    def "GIVEN tag-content is valid AND it is opened WHEN 'AppHomeButton' clicked AND version with one selected tag has been restored THEN red icon should appear in the wizard tab"()
     {
         given: "current version of content is valid"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "not valid version of content is restored"
+        when: "version with one selected tag has been restored"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        versionItem.doRestoreVersion(  );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+        versionItem.doRestoreVersion();
+
+        then: "number of version is increased to 5"
+        allContentVersionsView.getAllVersions().size() == 5;
         contentBrowsePanel.switchToBrowserTabByTitle( TAG_CONTENT.getDisplayName() );
         saveScreenshot( "tag_not_valid_restored" );
 
-        then: "red icon should appear on the wizard tab, the content becomes not valid"
-        wizard.isContentInvalid()
+        and: "red icon should appear in the wizard tab, the content becomes not valid"
+        wizard.isContentInvalid();
+
+
     }
 }

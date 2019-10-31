@@ -1,8 +1,4 @@
-buildscript {
-    ext {
-        xpVersion = '7.2.0-SNAPSHOT'
-    }
-}
+
 
 plugins {
     id 'maven'
@@ -25,7 +21,7 @@ dependencies {
     compile "com.enonic.xp:core-api:${xpVersion}"
     compile "com.enonic.xp:portal-api:${xpVersion}"
     include "com.enonic.xp:lib-portal:${xpVersion}"
-    include 'com.enonic.lib:lib-thymeleaf:2.0.0-RC1'
+    include 'com.enonic.lib:lib-thymeleaf:2.0.0'
     
 }
 

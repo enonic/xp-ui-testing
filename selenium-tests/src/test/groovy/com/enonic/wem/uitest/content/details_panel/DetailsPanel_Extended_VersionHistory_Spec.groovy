@@ -76,8 +76,8 @@ class DetailsPanel_Extended_VersionHistory_Spec
         and: "correct version id should be displayed"
         allContentVersionsView.isVersionInfoExpanded( 1 );
 
-        and: "Restore button should be displayed in the expanded view"
-        versionItem.isRestoreButtonDisplayed();
+        and: "Revert button should be displayed in the expanded view"
+        versionItem.isRevertButtonDisplayed();
 
     }
 
@@ -96,8 +96,8 @@ class DetailsPanel_Extended_VersionHistory_Spec
         allContentVersionsView.clickOnVersionAndCloseView( 1 );
         saveScreenshot( "version-history-item-collapsed" );
 
-        then: "'Restore' button gets  hidden"
-        !versionItem.isRestoreButtonDisplayed();
+        then: "'Revert' button gets  hidden"
+        !versionItem.isRevertButtonDisplayed();
 
         and: "version item gets collapsed"
         !allContentVersionsView.isVersionInfoExpanded( 1 );

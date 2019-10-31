@@ -35,7 +35,7 @@ class Restore_ComboBox_Spec
         allContentVersionsView.getAllVersions().size() == INITIAL_NUMBER_OF_VERSIONS + 1;
     }
 
-    def "GIVEN existing combobox content with 3 versions WHEN valid version with two selected options is restored THEN content displayed as valid in the grid"()
+    def "GIVEN existing combobox content with 3 versions WHEN valid version with two selected options has been reverted THEN content displayed as valid in the grid"()
     {
         given: "existing combobox content with 3 versions is selected "
         ContentWizardPanel wizard = findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
@@ -45,7 +45,7 @@ class Restore_ComboBox_Spec
         and: "version history panel is expanded"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "valid version with two selected options is restored"
+        when: "valid version with two selected options has been reverted"
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion(  );
@@ -63,7 +63,7 @@ class Restore_ComboBox_Spec
         !formViewPanel.isValidationMessagePresent();
     }
 
-    def "GIVEN version of content with two images has been restored WHEN content has been opened THEN two options should be displayed on the wizard"()
+    def "GIVEN version with two images has been reverted WHEN content has been opened THEN two options should be displayed in the wizard"()
     {
         when: "version of content with two options has been restored and content opened"
         ContentWizardPanel wizard = findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
@@ -88,7 +88,7 @@ class Restore_ComboBox_Spec
 
         when: "not valid version of content is restored, one required image missed"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion(  );
         saveScreenshot( "combobox_not_valid_version" );
 
@@ -101,7 +101,7 @@ class Restore_ComboBox_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN version of content with one images is restored WHEN content opened THEN one image should be displayed on the wizard"()
+    def "GIVEN version with one images has been reverted WHEN content has been opened THEN one image should be displayed in the wizard"()
     {
         when: "version of content with one option has been restored and content is opened "
         findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();

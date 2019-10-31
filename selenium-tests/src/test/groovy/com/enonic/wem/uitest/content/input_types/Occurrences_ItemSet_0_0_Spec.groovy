@@ -230,8 +230,8 @@ class Occurrences_ItemSet_0_0_Spec
         and: "required text should be reverted in the text-line"
         itemSetViewPanel.getTextFromTextLines().get( 0 ) == TEST_TEXT_TEXT_LINE;
 
-        then: "'Published' status should be displayed"
-        wizard.getStatus() == ContentStatus.PUBLISHED.getValue();
+        then: "'Modified' status should be displayed in the wizard"
+        wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
     private Content buildItemSetWithOneTextLineAndHtmlArea()

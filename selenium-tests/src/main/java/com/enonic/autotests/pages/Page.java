@@ -21,6 +21,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.utils.NameHelper;
 import com.enonic.autotests.utils.TestUtils;
 import com.enonic.autotests.utils.WaitHelper;
@@ -287,7 +288,15 @@ public abstract class Page
 
     protected WebElement getDisplayedElement( By by )
     {
-        return findElements( by ).stream().filter( WebElement::isDisplayed ).findFirst().get();
+        try
+        {
+            return findElements( by ).stream().filter( WebElement::isDisplayed ).findFirst().get();
+        }
+        catch ( Exception e )
+        {
+            throw new TestFrameworkException( "Element is not displayed: " + by + " " + e.getMessage() );
+        }
+
     }
 
     protected List<WebElement> getDisplayedElements( By by )
