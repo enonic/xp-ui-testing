@@ -38,7 +38,7 @@ class Restore_Version_Site_Spec
         findAndSelectContent( SITE.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
-        saveScreenshot( "versions_before_changing_dname_site" );
+        saveScreenshot( "site_versions_1" );
 
 
         when: "display name of the site has been changed"
@@ -48,13 +48,13 @@ class Restore_Version_Site_Spec
 
         and: "navigated to 'Version history' panel again"
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
-        saveScreenshot( "versions_after_changing_dname_site" );
+        saveScreenshot( "site_versions_2" );
 
         then: "new 'version history item' appeared in the version-view"
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN site with updated 'display name' is selected WHEN the site selected AND previous version restored THEN expected display name appears in the grid"()
+    def "GIVEN site with updated 'display name' is selected WHEN previous version has been reverted THEN expected display name should appear in the grid"()
     {
         given: "site with updated 'display name' is selected"
         findAndSelectContent( SITE.getName() );
@@ -65,14 +65,14 @@ class Restore_Version_Site_Spec
         when: "the previous version has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion();
-        saveScreenshot( "site_display_name_restored" );
+        saveScreenshot( "site_versions_reverted1" );
 
         then: "previous display name should appear in the grid"
         filterPanel.typeSearchText( INITIAL_DISPLAY_NAME );
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN new acl-entry has been added WHEN previous version has been restored THEN acl entry should not be present in the content wizard"()
+    def "GIVEN new acl-entry has been added WHEN previous version has been restored THEN new added acl entry should be present in the content wizard"()
     {
         given: "new acl entry has been added and Save pressed"
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
@@ -87,12 +87,13 @@ class Restore_Version_Site_Spec
 
         when: "the previous version has been restored"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion();
+        and:
+        SecurityWizardStepForm stepForm = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink();
 
-        then: "acl-entry must not be displayed after the restoring of version without this role"
-        !contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink().getDisplayNamesOfAclEntries().contains(
-            "Anonymous User" );
+        then: "acl-entry should be displayed after the reverting of previous version"
+        stepForm.getDisplayNamesOfAclEntries().contains( "Anonymous User" );
 
         and: "the entry was present before the restoring"
         beforeRestoring.contains( "Anonymous User" );
@@ -116,7 +117,7 @@ class Restore_Version_Site_Spec
         form.getDisplayNamesOfAclEntries().contains( "Anonymous User" );
     }
 
-    def "GIVEN existing site with selected application opened WHEN application removed from the wizard THEN number of versions should be increased"()
+    def "GIVEN existing site with selected application opened WHEN application removed in the wizard THEN number of versions should be increased"()
     {
         given: "existing site with selected application opened"
         findAndSelectContent( SITE.getName() );

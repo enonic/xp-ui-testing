@@ -45,7 +45,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         and: "child folder should be 'Deleted'"
         findAndSelectContent( CHILD_FOLDER.getName() ).getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.DELETED.getValue();
     }
-
+    // verifies bug - https://github.com/enonic/app-contentstudio/issues/1080
     def "GIVEN existing published then 'deleted' folder is selected WHEN versions widget has been opened THEN the latest version should be Deleted"()
     {
         given: "published then 'deleted' folder is selected "
