@@ -26,7 +26,7 @@ class HomePage_Spec
         NavigatorHelper.closeXpTourDialogIfPresent( getSession() );
     }
 
-    def "WHEN home page opened THEN dashboard toolbar is present"()
+    def "WHEN home page is opened THEN dashboard toolbar is present"()
     {
         when: "home page opened"
         HomePage homePage = new HomePage( getSession() );
@@ -48,9 +48,9 @@ class HomePage_Spec
     }
 
     @Ignore
-    def "GIVEN home page opened WHEN 'XP Tour' pressed THEN modal dialog appears"()
+    def "GIVEN home page is opened WHEN 'XP Tour' has been pressed THEN modal dialog appears"()
     {
-        given: "home page opened"
+        given: "home page is opened"
         HomePage homePage = new HomePage( getSession() );
 
         when: "'XP Tour' pressed"
@@ -63,17 +63,17 @@ class HomePage_Spec
         and: "cancel button displayed"
         dialog.isCancelButtonDisplayed();
 
-        and: "skip button displayed"
+        and: "skip button should be displayed"
         dialog.isSkipButtonDisplayed();
 
-        and: "Next button displayed"
+        and: "Next button should be displayed"
         dialog.isNextButtonDisplayed();
     }
 
     @Ignore
-    def "GIVEN Xp Tour dialog opened WHEN cancel button clicked THEN modal dialog has been closed"()
+    def "GIVEN Xp Tour dialog is opened WHEN cancel button clicked THEN modal dialog has been closed"()
     {
-        given: " Xp Tour dialog opened"
+        given: " Xp Tour dialog is opened"
         HomePage homePage = new HomePage( getSession() );
         XpTourDialog dialog = homePage.clickOnXpTourLink();
 
@@ -85,54 +85,48 @@ class HomePage_Spec
     }
 
     @Ignore
-    def "GIVEN Xp Tour dialog opened WHEN Skip button clicked THEN modal dialog has been closed"()
+    def "GIVEN Xp Tour dialog is opened WHEN Skip button has been clicked THEN modal should be closed"()
     {
-        given: "Xp Tour dialog opened"
+        given: "Xp Tour dialog is opened"
         HomePage homePage = new HomePage( getSession() );
         XpTourDialog dialog = homePage.clickOnXpTourLink();
 
         when:
         dialog.clickOnSkipTourButton();
 
-        then: "modal dialog has been closed"
+        then: "modal dialog should be closed"
         !dialog.isOpened()
     }
 
-    def "GIVEN home page opened WHEN 'About' pressed THEN modal dialog appears"()
+    def "GIVEN home page is opened WHEN 'About' button has been pressed THEN modal dialog should appear"()
     {
-        given: "home page opened"
+        given: "home page is opened"
         HomePage homePage = new HomePage( getSession() );
 
         when:
         AboutDialog dialog = homePage.clickOnAboutLink();
         saveScreenshot( "about_dialog" );
 
-        then: "About dialog displayed on the page"
+        then: "About dialog should appear"
         dialog.isOpened();
 
-        and: "cancel button displayed"
+        and: "cancel button should be displayed"
         dialog.isCancelButtonDisplayed();
 
-        and: "Downloads link displayed"
-        dialog.isDownloadsLinkDisplayed();
-
-        and: "Source Code link displayed"
-        dialog.isSourceCodeLinkDisplayed();
-
-        and: "Licensing link displayed"
-        dialog.isLicensingLinkDisplayed();
+        and: "Licensing button should be displayed"
+        dialog.isLicensingButtonDisplayed();
     }
 
-    def "GIVEN About dialog opened WHEN cancel button clicked THEN modal dialog has been closed"()
+    def "GIVEN About dialog is opened WHEN 'cancel' button has been clicked THEN modal dialog should be closed"()
     {
-        given: "About dialog opened"
+        given: "About dialog is opened"
         HomePage homePage = new HomePage( getSession() );
         AboutDialog dialog = homePage.clickOnAboutLink();
 
         when: "cancel button pressed"
         dialog.clickOnCancelButton();
 
-        then: "'About' dialog has been closed"
+        then: "'About' dialog should be closed"
         !dialog.isOpened()
     }
 }

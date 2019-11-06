@@ -19,17 +19,19 @@ public class AboutDialog
 
     private final String CANCEL_BUTTON = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
+    private final String LICENSING_BUTTON = DIALOG_CONTAINER + "//button[child::span[text()='Licensing']]";
+
     @FindBy(xpath = CANCEL_BUTTON)
     private WebElement cancelButtonTop;
 
-    @FindBy(linkText = "Licensing")
-    private WebElement licensingLink;
+    @FindBy(xpath = LICENSING_BUTTON)
+    private WebElement licensingButton;
 
-    @FindBy(linkText = "Source Code")
-    private WebElement sourceCodeLink;
+    //@FindBy(linkText = "Source Code")
+    // private WebElement sourceCodeLink;
 
-    @FindBy(linkText = "Downloads")
-    private WebElement downloadsLink;
+    //@FindBy(linkText = "Downloads")
+    //private WebElement downloadsLink;
 
 
     public AboutDialog( final TestSession session )
@@ -63,18 +65,8 @@ public class AboutDialog
         return cancelButtonTop.isDisplayed();
     }
 
-    public boolean isDownloadsLinkDisplayed()
+    boolean isLicensingButtonDisplayed()
     {
-        return downloadsLink.isDisplayed();
-    }
-
-    public boolean isLicensingLinkDisplayed()
-    {
-        return licensingLink.isDisplayed();
-    }
-
-    public boolean isSourceCodeLinkDisplayed()
-    {
-        return sourceCodeLink.isDisplayed();
+        return licensingButton.isDisplayed();
     }
 }
