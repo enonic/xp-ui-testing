@@ -56,7 +56,7 @@ class Fragment_Create_From_Layout_Spec
         wizard.showComponentView();
         pageComponentsView.openMenu( LAYOUT_3_COL_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue() );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
-        sleep( 2000 );
+        sleep( 4000 );
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( LAYOUT_3_COL_DISPLAY_NAME );
         saveScreenshot( "fragment_wizard" );
 

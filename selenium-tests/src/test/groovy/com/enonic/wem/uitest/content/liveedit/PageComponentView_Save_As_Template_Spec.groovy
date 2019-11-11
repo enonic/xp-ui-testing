@@ -11,10 +11,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 8/15/2017.
- *
- * Tasks: xp-ui-testing#74 Add Selenium tests for 'Save as Template' menu item
- *        xp-ui-testing#76 Add Selenium tests for 'Save as Template' button on the Inspection panel
- *
  * verifies : #5393 Page Template Wizard - 'Save as Template' menu item should not be displayed
  * */
 @Stepwise
