@@ -196,7 +196,7 @@ class Restore_Version_Site_Spec
         wizard.switchToBrowsePanelTab();
 
         when: "version of the site in which the controller was not selected has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 2 );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 3 );
         versionItem.doRestoreVersion();
         sleep( 300 );
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
