@@ -17,9 +17,9 @@ public class SingleSelectionOptionSetView
     private final String CONTAINER =
         "//div[contains(@id,'api.form.FormView')]//div[contains(@id,'FormOptionSetView') and descendant::div[text()='Single selection']]";
 
-    private final String RADIO_1 = CONTAINER + "//span[contains(@id,'api.ui.RadioButton') and child::label[text()='Option 1']]";
+    private final String RADIO_1 = CONTAINER + "//span[contains(@id,'RadioButton') and child::label[text()='Option 1']]";
 
-    private final String RADIO_2 = CONTAINER + "//span[contains(@id,'api.ui.RadioButton') and child::label[text()='Option 2']]";
+    private final String RADIO_2 = CONTAINER + "//span[contains(@id,'RadioButton') and child::label[text()='Option 2']]";
 
     private final String OPTION_SET_NAME_INPUT =
         CONTAINER + "//div[contains(@id,'InputView') and descendant::div[text()='Name']]" + TEXT_INPUT;
