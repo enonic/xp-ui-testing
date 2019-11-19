@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel

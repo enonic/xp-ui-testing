@@ -105,8 +105,8 @@ class IssueListDialog_Spec
         then: "Show Closed Issues button should be present"
         issueListDialog.isShowClosedIssuesButtonDisplayed();
 
-        and: "'Assigned by Me' option should be selected"
-        issueListDialog.getAssignedSelectedOption().contains( "Created by Me" );
+        and: "'All' option should be selected by default"
+        issueListDialog.getAssignedSelectedOption().contains( "All" );
 
         and: "'All issues' tab should be activate by default"
         issueListDialog.isAllIssuesTabActive(  );
