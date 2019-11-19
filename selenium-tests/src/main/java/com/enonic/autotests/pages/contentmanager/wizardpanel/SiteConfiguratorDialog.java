@@ -21,7 +21,7 @@ public class SiteConfiguratorDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'SiteConfiguratorDialog')]";
 
-    protected final String HTML_AREA = DIALOG_CONTAINER + "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'api.ui.text.TextArea')]";
+    protected final String HTML_AREA = DIALOG_CONTAINER + "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'TextArea')]";
 
     protected final String POSTS_OPTION_FILTER_INPUT =
         DIALOG_CONTAINER + "//div[contains(@id,'LoaderComboBox') and @name='postsFolder']" + COMBOBOX_OPTION_FILTER_INPUT;

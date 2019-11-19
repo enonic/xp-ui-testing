@@ -17,7 +17,7 @@ public class SaveBeforeCloseDialog
     private final String DIALOG_DIV = "//div[contains(@id,'SaveBeforeCloseDialog')]";
 
     private final String YES_BUTTON_XPATH =
-        DIALOG_DIV + "//button[contains(@id,'api.ui.dialog.DialogButton') and child::span[contains(.,'es')]]";
+        DIALOG_DIV + "//button[contains(@id,'DialogButton') and child::span[contains(.,'es')]]";
 
     private final String NO_BUTTON_XPATH = DIALOG_DIV + "//button[contains(@id,'DialogButton') and child::span[contains(.,'o')]]";
 

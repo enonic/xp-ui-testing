@@ -13,7 +13,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ConfirmationDialog
     extends Application
 {
-    private final String DIALOG_CONTAINER = "//div[contains(@id,'api.ui.dialog.ConfirmationDialog')]";
+    private final String DIALOG_CONTAINER = "//div[contains(@id,'ConfirmationDialog')]";
 
     public final String YES_BUTTON_XPATH = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Yes']]";
 

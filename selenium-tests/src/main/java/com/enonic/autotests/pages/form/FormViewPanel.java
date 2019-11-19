@@ -65,7 +65,7 @@ public abstract class FormViewPanel
     public List<String> getDataFromCKEAreas()
     {
         List<WebElement> editors =
-            findElements( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
+            findElements( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'TextArea')]" ) );
         return editors.stream().map( e -> getCKEData( e.getAttribute( "id" ) ) ).collect( Collectors.toList() );
     }
 

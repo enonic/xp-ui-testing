@@ -29,7 +29,7 @@ public class Application
 
     protected static final String SCRIPT_SET_CKE = "CKEDITOR.instances[arguments[0]].setData(arguments[1])";
 
-    protected final String CKE_HTML_AREA = "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'api.ui.text.TextArea')]";
+    protected final String CKE_HTML_AREA = "//div[contains(@id,'HtmlArea')]//textarea[contains(@id,'TextArea')]";
 
     protected final String SCRIPT_DATA_CKE = "return CKEDITOR.instances[arguments[0]].getData()";
 
@@ -150,7 +150,7 @@ public class Application
 
     protected final String P_NAME = NAMES_VIEW + P_SUB_NAME;
 
-    protected final String CHECKBOX_ELEMENT = "//div[contains(@id,'api.ui.Checkbox')]";
+    protected final String CHECKBOX_ELEMENT = "//div[contains(@id,'Checkbox')]";
 
     public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
 
