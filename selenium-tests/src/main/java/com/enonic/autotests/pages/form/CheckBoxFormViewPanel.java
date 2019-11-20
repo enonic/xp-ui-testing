@@ -17,7 +17,7 @@ public class CheckBoxFormViewPanel
     public static String CHECKBOX_PROPERTY = "checkbox";
 
 
-    @FindBy(xpath = FORM_VIEW + "//div[contains(@id,'api.form.InputView')]//div[contains(@id,'Checkbox')]")
+    @FindBy(xpath = FORM_VIEW + "//div[contains(@id,'InputView')]//div[contains(@id,'api.ui.Checkbox')]")
     private WebElement checkBox;
 
 

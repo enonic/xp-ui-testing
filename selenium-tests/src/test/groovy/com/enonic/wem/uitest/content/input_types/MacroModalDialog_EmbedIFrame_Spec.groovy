@@ -24,7 +24,7 @@ class MacroModalDialog_EmbedIFrame_Spec
         HTML_AREA_CONTENT = buildHtmlArea0_1_Content( null );
 
         and: "MacroDialog opened"
-        ContentWizardPanel wizard = selectSitePressNew( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
+        selectSitePressNew( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         when: "'embedded code' selected from the options"
@@ -48,7 +48,7 @@ class MacroModalDialog_EmbedIFrame_Spec
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-        and: "MacroModalDialog opened"
+        and: "MacroModalDialog is opened"
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
 
         when: "'embedded code' selected from the options"

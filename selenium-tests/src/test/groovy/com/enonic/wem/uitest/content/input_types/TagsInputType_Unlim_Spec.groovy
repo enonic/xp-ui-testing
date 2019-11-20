@@ -15,13 +15,13 @@ class TagsInputType_Unlim_Spec
 
 {
 
-    def "GIVEN wizard for adding a Tag-content (unlimited) opened WHEN no one tag added and 'Save' and 'Publish' buttons pressed and wizard closed THEN new content with status 'online' appears "()
+    def "GIVEN new Tag-content-wizard (unlimited) is opened WHEN no one tag is added and 'Save' and 'Publish' buttons pressed THEN new content with 'PUBLISHED' status appears"()
     {
-        given: "start to add a content with type 'Tag unlimited'"
+        given: "new wizard (tag-unlimited) is opened"
         Content tagContent = buildTag_Unlim_Content( 0 );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
-        when: "type a data and 'save' and 'publish'"
+        when: "data has been typed then 'save' and 'publish'"
         contentWizardPanel.typeData( tagContent ).clickOnMarkAsReadyAndDoPublish(  );
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.close( tagContent.getDisplayName() );
@@ -31,7 +31,7 @@ class TagsInputType_Unlim_Spec
         contentBrowsePanel.getContentStatus( tagContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
-    def "GIVEN wizard for adding a Tag-content (unlimited) opened WHEN one tag added and 'Save' button pressed and just created content opened THEN only one Tag with correct name present on wizard "()
+    def "GIVEN new Tag-content-wizard (unlimited) is opened AND one tag added and 'Save' button pressed and just created WHEN the content has been reopened THEN only one Tag should be present in wizard "()
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 1 );
@@ -42,7 +42,7 @@ class TagsInputType_Unlim_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
-        then: "one tag with correct text present on the page"
+        then: "one tag with expected text should be present in the page"
         formViewPanel.getNumberOfTags() == 1;
         and:
         formViewPanel.getTagsText().contains( TAG_1 );
