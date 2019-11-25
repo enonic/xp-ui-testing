@@ -34,8 +34,8 @@ public class CreateIssueDialog
 
     private final String CANCEL_BUTTON_BOTTOM = DIALOG_CONTAINER + "//button[contains(@class,'button-bottom')]";
 
-    private final String CREATE_ISSUE_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Create Issue']]";
+    private final String CREATE_TASK_BUTTON =
+        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Create Task']]";
 
     private final String TITLE_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Title']]//input[@type='text']";
 
@@ -60,8 +60,8 @@ public class CreateIssueDialog
     @FindBy(xpath = DESCRIPTION_TEXT_AREA)
     private WebElement descriptionTextArea;
 
-    @FindBy(xpath = CREATE_ISSUE_BUTTON)
-    private WebElement createIssueButton;
+    @FindBy(xpath = CREATE_TASK_BUTTON)
+    private WebElement createTaskButton;
 
     @FindBy(xpath = TITLE_INPUT)
     private WebElement titleTextInput;
@@ -206,14 +206,14 @@ public class CreateIssueDialog
         return assigneesOptionFilterInput.isDisplayed();
     }
 
-    public boolean isCreateIssueButtonDisplayed()
+    public boolean isCreateTaskButtonDisplayed()
     {
-        return createIssueButton.isDisplayed();
+        return createTaskButton.isDisplayed();
     }
 
-    public void clickOnCreateIssueButton()
+    public void clickOnCreateTaskButton()
     {
-        createIssueButton.click();
+        createTaskButton.click();
         sleep( 700 );
     }
 

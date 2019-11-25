@@ -191,7 +191,7 @@ public class Application
 
     protected final String MARK_AS_READY_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Mark as ready']";
 
-    protected final String CREATE_ISSUE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Create Issue...']";
+    protected final String CREATE_TASK_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Create Task...']";
 
 
     protected final String PUBLISH_TREE_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Publish Tree...']";

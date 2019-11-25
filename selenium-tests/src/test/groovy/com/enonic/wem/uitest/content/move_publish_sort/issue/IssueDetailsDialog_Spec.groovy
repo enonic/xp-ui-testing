@@ -32,7 +32,7 @@ class IssueDetailsDialog_Spec
     Content CONTENT;
 
     @Shared
-    Issue TEST_ISSUE;
+    Issue TEST_TASK;
 
     @Shared
     String NEW_TITLE = "new issue-title";
@@ -64,7 +64,7 @@ class IssueDetailsDialog_Spec
         userBrowsePanel.exists( TEST_USER.getDisplayName(), true );
     }
 
-    def "GIVEN create issue dialog is opened WHEN data has been typed AND 'Create' button has been pressed THEN Issue Details dialog should be correctly displayed"()
+    def "GIVEN Сreate Task dialog is opened WHEN data has been typed AND 'Create Task' button has been pressed THEN Issue Details dialog should be correctly displayed"()
     {
         setup: "Content Studio is opened"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -77,13 +77,13 @@ class IssueDetailsDialog_Spec
         List<String> assigneesList = new ArrayList<>();
         assigneesList.add( TEST_USER.getName() );
 
-        and: "create issue dialog is opened and data has been typed"
-        TEST_ISSUE = buildIssue( "issue 1", assigneesList, null );
-        CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().selectCreateIssueMenuItem();
-        createIssueDialog.typeData( TEST_ISSUE );
+        and: "create task dialog is opened and data has been typed"
+        TEST_TASK = buildIssue( "task 1", assigneesList, null );
+        CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().clickOnCreateTaskMenuItem();
+        createIssueDialog.typeData( TEST_TASK );
 
-        when: "'Create' button has been pressed"
-        createIssueDialog.clickOnCreateIssueButton();
+        when: "'Create Task' button has been pressed"
+        createIssueDialog.clickOnCreateTaskButton();
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
         saveScreenshot( "issue_details_dialog" )
 
@@ -98,7 +98,7 @@ class IssueDetailsDialog_Spec
         issueDetailsDialog.getIssueStatus() == "Open"
     }
 
-    def "GIVEN existing user and an issue was assigned to him WHEN the user is logged in THEN 'You have unclosed Publishing Issues' message should be present on the toolbar"()
+    def "GIVEN existing user and an issue was assigned to him WHEN the user is logged in THEN 'Assigned to Me' button should be present in the toolbar"()
     {
         given: "existing assigned user"
         getTestSession().setUser( TEST_USER );
@@ -107,7 +107,7 @@ class IssueDetailsDialog_Spec
         NavigatorHelper.openContentStudioApp( getTestSession() );
         saveScreenshot( "logged_home" + USER_NAME );
 
-        then: "'You have unclosed Publishing Issues' message should be present on the toolbar"
+        then: "'Assigned to Me' button should be present in the toolbar"
         contentBrowsePanel.hasAssignedIssues();
     }
 
@@ -122,10 +122,10 @@ class IssueDetailsDialog_Spec
         saveScreenshot( "assigned_issue" + USER_NAME );
         List<String> titles = issueListDialog.getIssueTitles();
 
-        then: "one issue with the correct name should be displayed"
+        then: "one issue with expected name should be displayed"
         titles.size() == 1;
         and:
-        titles.get( 0 ).contains( TEST_ISSUE.getTitle() );
+        titles.get( 0 ).contains( TEST_TASK.getTitle() );
     }
 
     def "GIVEN existing user and an issue was assigned to him AND 'Issue List' dialog is opened WHEN issue has been clicked THEN 'Issue details dialog' should be opened"()
@@ -136,14 +136,14 @@ class IssueDetailsDialog_Spec
         and: "'Assigned to Me' has been checked"
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
-        when: "issue has been clicked"
-        IssueDetailsDialog detailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
+        when: "the task has been clicked"
+        IssueDetailsDialog detailsDialog = issueListDialog.clickOnIssue( TEST_TASK.getTitle() );
         saveScreenshot( "issue_clicked" );
 
         then: "Issue Details dialog should be loaded"
         detailsDialog.waitForLoaded();
 
-        and: "expected creator should be displayed"
+        and: "expected creator should be present"
         detailsDialog.getOpenedBy().contains( "user:system:su" );
     }
 }

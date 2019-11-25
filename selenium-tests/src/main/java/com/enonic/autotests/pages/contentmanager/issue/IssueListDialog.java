@@ -27,44 +27,30 @@ public class IssueListDialog
 
     private String ISSUE_BY_TITLE = ISSUES_LIST + NAMES_VIEW_BY_DISPLAY_NAME;
 
-    private final String ASSIGNED_DROPDOWN_HANDLE = DIALOG_CONTAINER + "//div[contains(@id,'RowSelector')]" + DROP_DOWN_HANDLE_BUTTON;
+    private final String TYPE_FILTER = "//div[contains(@id,'TypeFilter')]";
 
-    private final String SHOW_CLOSED_ISSUES_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@id,'OnOffButton') and child::span[contains(.,'Show closed issues')]]";
+    private final String TYPE_FILTER_DROPDOWN_HANDLE = DIALOG_CONTAINER + "//div[contains(@id,'TypeFilter')]" + DROP_DOWN_HANDLE_BUTTON;
 
-    private final String NEW_ISSUE_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='New Issue...']]";
+    private final String CLOSED_TASKS_BUTTON =
+        DIALOG_CONTAINER + "//button[contains(@id,'StatusFilterButton') and child::span[contains(.,'Closed')]]";
 
-    private final String SHOW_ISSUES_SELECTOR = DIALOG_CONTAINER + "//div[contains(@id,'RowSelector')]";
+    private final String NEW_TASK_BUTTON =
+        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='New task']]";
 
-    private final String SELECTED_OPTIONS = "//div[contains(@class,'selected-options')]";
-
-    private final String ISSUES_TAB = "//li[contains(@id,'api.ui.tab.TabBarItem') and child::a[ contains(.,'Issues')]]";
-
-    private final String ALL_ISSUES_TAB_ITEM =
-        DIALOG_CONTAINER + "//li[contains(@id,'api.ui.tab.TabBarItem') and child::a[contains(.,'All')]]";
-
-    private final String PUBLISH_REQUESTS_TAB_ITEM =
-        DIALOG_CONTAINER + "//li[contains(@id,'api.ui.tab.TabBarItem')and child::a[ contains(.,'Publish requests')]]";
-
-    private final String ISSUES_TAB_ITEM = DIALOG_CONTAINER + "//li[contains(@id,'api.ui.tab.TabBarItem') and child::a[ contains(.,'Issues')]]";
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 
-    @FindBy(xpath = NEW_ISSUE_BUTTON)
-    private WebElement newIssueButton;
+    @FindBy(xpath = NEW_TASK_BUTTON)
+    private WebElement newTaskButton;
 
-    @FindBy(xpath = ISSUES_TAB_ITEM)
-    private WebElement issuesTab;
-
-    @FindBy(xpath = SHOW_CLOSED_ISSUES_BUTTON)
-    private WebElement showClosedIssuesButton;
+    @FindBy(xpath = CLOSED_TASKS_BUTTON)
+    private WebElement closedTasksButton;
 
     @FindBy(xpath = CANCEL_BUTTON_TOP)
     private WebElement cancelButtonTop;
 
-    @FindBy(xpath = ASSIGNED_DROPDOWN_HANDLE)
-    private WebElement assignedDropDownHandle;
+    @FindBy(xpath = TYPE_FILTER_DROPDOWN_HANDLE)
+    private WebElement typeFilterDropDownHandle;
 
     public IssueListDialog( final TestSession session )
     {
@@ -86,10 +72,10 @@ public class IssueListDialog
         }
     }
 
-    //Show assigned combobox
-    public String getAssignedSelectedOption()
+    //Type Filter:
+    public String getTypeFilterSelectedOption()
     {
-        String selector = SHOW_ISSUES_SELECTOR + SELECTED_OPTIONS + "//div[contains(@class,'option-value')]";
+        String selector = DIALOG_CONTAINER + TYPE_FILTER + "//button/span";
         return this.getDisplayedString( selector );
     }
 
@@ -100,43 +86,21 @@ public class IssueListDialog
     }
 
 
-    public boolean isIssuesTabDisplayed()
+    public boolean isClosedTasksButtonDisplayed()
     {
-        return isElementDisplayed( ISSUES_TAB_ITEM );
+        return isElementDisplayed( CLOSED_TASKS_BUTTON );
     }
 
-    public boolean isShowClosedIssuesButtonDisplayed()
+    public IssueListDialog clickOnClosedTasks()
     {
-        return isElementDisplayed( SHOW_CLOSED_ISSUES_BUTTON );
-    }
-
-    public boolean isAllIssuesTabActive()
-    {
-        return waitAndCheckAttrValue( findElement( By.xpath( ALL_ISSUES_TAB_ITEM ) ), "class", "active", 1 );
-    }
-
-    public boolean isIssuesTabActive()
-    {
-        return waitAndCheckAttrValue( findElement( By.xpath( ISSUES_TAB_ITEM ) ), "class", "active", 1 );
-    }
-
-    public IssueListDialog clickOnIssuesTab()
-    {
-        issuesTab.click();
-        sleep( 300 );
-        return this;
-    }
-
-    public IssueListDialog clickOnShowClosedIssues()
-    {
-        showClosedIssuesButton.click();
+        closedTasksButton.click();
         sleep( 500 );
         return this;
     }
 
     public void clickOnAssignedToMeOption()
     {
-        assignedDropDownHandle.click();
+        typeFilterDropDownHandle.click();
         String optionXpath =
             "//div[contains(@class,'slick-row') and descendant::div[contains(@id,'RowOptionDisplayValueViewer') and contains(.,'Assigned to Me')]]";
         boolean isVisible = waitUntilVisibleNoException( By.xpath( optionXpath ), Application.EXPLICIT_NORMAL );
@@ -164,14 +128,14 @@ public class IssueListDialog
         return issueDetailsDialog;
     }
 
-    public boolean isNewIssueButtonDisplayed()
+    public boolean isNewTaskButtonDisplayed()
     {
-        return newIssueButton.isDisplayed();
+        return newTaskButton.isDisplayed();
     }
 
-    public CreateIssueDialog clickOnNewIssueDialog()
+    public CreateIssueDialog clickOnNewTaskButton()
     {
-        newIssueButton.click();
+        newTaskButton.click();
         CreateIssueDialog createIssueDialog = new CreateIssueDialog( getSession() );
         createIssueDialog.waitForOpened();
         return createIssueDialog;

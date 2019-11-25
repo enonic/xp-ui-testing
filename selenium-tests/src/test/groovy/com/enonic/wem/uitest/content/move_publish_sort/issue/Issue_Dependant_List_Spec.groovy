@@ -89,13 +89,13 @@ class Issue_Dependant_List_Spec
 
         and: "create issue dialog is opened and data has been typed"
         TEST_ISSUE = buildIssue( "description: issue to close", assigneesList, null );
-        CreateIssueDialog createIssueDialog = contentBrowsePanel.showPublishMenu().selectCreateIssueMenuItem();
+        CreateIssueDialog createIssueDialog = contentBrowsePanel.showPublishMenu().clickOnCreateTaskMenuItem();
         createIssueDialog.typeData( TEST_ISSUE );
         and: "'Include Children' link has been pressed"
         createIssueDialog.clickOnIncludeChildrenToggler();
 
         when: "'Create' button has been pressed"
-        createIssueDialog.clickOnCreateIssueButton();
+        createIssueDialog.clickOnCreateTaskButton();
 
         and: "Items- link hqs been clicked"
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );

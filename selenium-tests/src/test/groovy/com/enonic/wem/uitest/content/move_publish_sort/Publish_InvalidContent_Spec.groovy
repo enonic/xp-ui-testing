@@ -43,7 +43,7 @@ class Publish_InvalidContent_Spec
         contentBrowsePanel.clickCheckboxAndSelectRow( invalidFolder.getName() );
 
         then: "'Create Issue' button on the grid-toolbar should be displayed"
-        contentBrowsePanel.isCreateIssueButtonDisplayed();
+        contentBrowsePanel.isCreateTaskButtonDisplayed();
     }
 
     def "GIVEN existing parent folder with not valid child WHEN parent content has been selected and 'Publish' button clicked THEN 'Publish Now' button on the modal dialog should be disabled"()

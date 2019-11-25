@@ -36,7 +36,7 @@ class BaseIssueSpec
 
     protected Issue buildIssue( String description, List<String> assigneesDisplayName, List<String> itemsToPublish )
     {
-        String generated = NameHelper.uniqueName( "Issue" );
+        String generated = NameHelper.uniqueName( "task" );
         Issue issue = Issue.builder().title( generated ).description( description ).assignees( assigneesDisplayName ).items(
             itemsToPublish ).build();
         return issue;

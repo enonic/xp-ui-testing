@@ -38,7 +38,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentBrowsePanel
     extends BrowsePanel
 {
-    public static final String UNCLOSED_ISSUES_MESSAGE = "You have unclosed Publishing Issues";
 
     protected final String CONTENT_BROWSE_TOOLBAR_XPATH = "//div[contains(@id,'ContentBrowseToolbar')]";
 
@@ -54,7 +53,7 @@ public class ContentBrowsePanel
 
     private final String NEW_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='New...']]";
 
-    private final String SHOW_ISSUE_DIALOG_BUTTON = APP_BAR + "//button[contains(@id,'ShowIssuesDialogButton')]";
+    private final String OPEN_TASKS_TOOLBAR_BUTTON = APP_BAR + "//button[contains(@id,'ShowIssuesDialogButton')]";
 
     private final String DUPLICATE_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Duplicate...']]";
@@ -77,8 +76,8 @@ public class ContentBrowsePanel
     private final String PUBLISH_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Publish...']]";
 
-    private final String CREATE_ISSUE_BUTTON_XPATH =
-        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Create Issue...']]";
+    private final String CREATE_TASK_BUTTON_XPATH =
+        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Create Task...']]";
 
     private final String MARK_AS_READY_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Mark as ready']]";
@@ -125,8 +124,8 @@ public class ContentBrowsePanel
     @FindBy(xpath = PUBLISH_MENU_DROPDOWN_HANDLER)
     private WebElement publishMenuDropDownHandler;
 
-    @FindBy(xpath = SHOW_ISSUE_DIALOG_BUTTON)
-    private WebElement showIssuesButton;
+    @FindBy(xpath = OPEN_TASKS_TOOLBAR_BUTTON)
+    private WebElement openTasksButton;
 
     @FindBy(xpath = DETAILS_TOGGLE_BUTTON)
     WebElement detailsToggleButton;
@@ -168,12 +167,12 @@ public class ContentBrowsePanel
 
     public boolean hasAssignedIssues()
     {
-        return waitAndCheckAttrValue( showIssuesButton, "class", "has-assigned-issues", 1l );
+        return waitAndCheckAttrValue( openTasksButton, "class", "has-assigned-issues", 1l );
     }
 
     protected boolean waitForAssignedIssuesIconNotVisible()
     {
-        return WaitHelper.waitAttrHasNoValue( getDriver(), showIssuesButton, "class", "has-assigned-issues", Application.EXPLICIT_NORMAL );
+        return WaitHelper.waitAttrHasNoValue( getDriver(), openTasksButton, "class", "has-assigned-issues", Application.EXPLICIT_NORMAL );
     }
 
     public String getTextInIssuesButton()
@@ -291,14 +290,14 @@ public class ContentBrowsePanel
 
     }
 
-    public CreateIssueDialog selectCreateIssueMenuItem()
+    public CreateIssueDialog clickOnCreateTaskMenuItem()
     {
         if ( !isCreateIssueMenuItemEnabled() )
         {
-            saveScreenshot( "err_create_issue_menu_item" );
+            saveScreenshot( "err_create_task_menu_item" );
             throw new TestFrameworkException( "menu item is disabled!" );
         }
-        getDisplayedElement( By.xpath( CREATE_ISSUE_MENU_ITEM ) ).click();
+        getDisplayedElement( By.xpath( CREATE_TASK_MENU_ITEM ) ).click();
         CreateIssueDialog dialog = new CreateIssueDialog( getSession() );
         dialog.waitForOpened();
         return dialog;
@@ -362,12 +361,12 @@ public class ContentBrowsePanel
 
     public boolean isCreateIssueMenuItemEnabled()
     {
-        if ( !isElementDisplayed( CREATE_ISSUE_MENU_ITEM ) )
+        if ( !isElementDisplayed( CREATE_TASK_MENU_ITEM ) )
         {
             saveScreenshot( "err_create_issue_menu_item_not_visible " );
             throw new TestFrameworkException( "'create issue' menu item is not visible!" );
         }
-        return !getAttribute( getDisplayedElement( By.xpath( CREATE_ISSUE_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
+        return !getAttribute( getDisplayedElement( By.xpath( CREATE_TASK_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(
             "disabled" );
     }
 
@@ -830,7 +829,7 @@ public class ContentBrowsePanel
 
     public IssueListDialog clickOnToolbarShowIssues()
     {
-        showIssuesButton.click();
+        openTasksButton.click();
         sleep( 500 );
         IssueListDialog issueListDialog = new IssueListDialog( getSession() );
         issueListDialog.waitForOpened();
@@ -1182,11 +1181,6 @@ public class ContentBrowsePanel
         return moveButton.isDisplayed();
     }
 
-    public boolean isShowIssuesButtonDisplayed()
-    {
-        return showIssuesButton.isDisplayed();
-    }
-
     public boolean isEditButtonEnabled()
     {
         return editButton.isEnabled();
@@ -1217,8 +1211,8 @@ public class ContentBrowsePanel
         return previewButton.isEnabled();
     }
 
-    public void isCreateIssueButtonDisplayed()
+    public void isCreateTaskButtonDisplayed()
     {
-        waitUntilVisible( By.xpath( CREATE_ISSUE_BUTTON_XPATH ) );
+        waitUntilVisible( By.xpath( CREATE_TASK_BUTTON_XPATH ) );
     }
 }

@@ -40,7 +40,7 @@ class IssueListDialog_Spec
         go "admin"
     }
 
-    def "setup: add a test user to the system user store"()
+    def "Preconditions: add a test user in the system user store"()
     {
         setup: "'Users' app is opened"
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
@@ -62,7 +62,7 @@ class IssueListDialog_Spec
         userBrowsePanel.exists( TEST_USER.getDisplayName(), true );
     }
 
-    def "GIVEN create issue dialog is opened WHEN data has been typed AND 'Create' button has been pressed THEN Issue Details dialog should be correctly displayed"()
+    def "GIVEN create issue dialog is opened WHEN data has been typed AND 'Create Task' button has been pressed THEN Issue Details dialog should be correctly displayed"()
     {
         setup: "Content Studio is opened"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -75,11 +75,11 @@ class IssueListDialog_Spec
         List<String> assigneesList = new ArrayList<>();
         assigneesList.add( TEST_USER.getName() );
 
-        and: "create issue dialog is opened and data has been typed"
+        and: "create task dialog is opened and data has been typed"
         TEST_ISSUE = buildIssue( "issue 1", assigneesList, null );
-        CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().selectCreateIssueMenuItem();
+        CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().clickOnCreateTaskMenuItem();
         createIssueDialog.typeData( TEST_ISSUE );
-        createIssueDialog.clickOnCreateIssueButton();
+        createIssueDialog.clickOnCreateTaskButton();
         String message = contentBrowsePanel.waitForNotificationMessage();
         saveScreenshot( "issue_created_issue_list" )
 
@@ -102,17 +102,16 @@ class IssueListDialog_Spec
         when:
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
-        then: "Show Closed Issues button should be present"
-        issueListDialog.isShowClosedIssuesButtonDisplayed();
+        then: "'Closed' button should be present"
+        issueListDialog.isClosedTasksButtonDisplayed();
 
         and: "'All' option should be selected by default"
-        issueListDialog.getAssignedSelectedOption().contains( "All" );
+        issueListDialog.getTypeFilterSelectedOption().contains( "All" );
 
-        and: "'All issues' tab should be activate by default"
-        issueListDialog.isAllIssuesTabActive(  );
 
-        and: "'New Issue' button should be present"
-        issueListDialog.clickOnIssuesTab(  ).isNewIssueButtonDisplayed();
+
+        and: "'New task' button should be present"
+        issueListDialog.isNewTaskButtonDisplayed();
 
         and: "just added issue should be present in the list"
         issueListDialog.isIssuePresent( TEST_ISSUE.getTitle() );
@@ -148,7 +147,7 @@ class IssueListDialog_Spec
         titles.get( 0 ).contains( TEST_ISSUE.getTitle() );
 
         and: "'Assigned to Me' option should be selected"
-        issueListDialog.getAssignedSelectedOption().contains( "Assigned to Me" );
+        issueListDialog.getTypeFilterSelectedOption().contains( "Assigned to Me" );
     }
 
     def "GIVEN existing user is logged in WHEN assigned issue has been clicked AND it has been published THEN the issue should be 'closed' AND 'closed'-tab should be opened"()

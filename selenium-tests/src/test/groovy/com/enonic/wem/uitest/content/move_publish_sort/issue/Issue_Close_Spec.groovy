@@ -73,11 +73,11 @@ class Issue_Close_Spec
         List<String> assigneesList = new ArrayList<>();
         assigneesList.add( TEST_USER.getName() );
 
-        and: "create issue dialog is opened and data has been typed"
+        and: "create task dialog is opened and data has been typed"
         TEST_ISSUE = buildIssue( "issue to close", assigneesList, null );
-        CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().selectCreateIssueMenuItem();
+        CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().clickOnCreateTaskMenuItem();
         createIssueDialog.typeData( TEST_ISSUE );
-        createIssueDialog.clickOnCreateIssueButton();
+        createIssueDialog.clickOnCreateTaskButton();
 
         when: "'Create' button has been pressed"
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
@@ -115,17 +115,17 @@ class Issue_Close_Spec
         contentBrowsePanel.getTextInIssuesButton() == "No open issues";
     }
 
-    def "GIVEN existing issue is closed by the user AND SU is 'logged in' WHEN 'issue details' dialog has been opened THEN correct user-name should be present in the 'Closed by'"()
+    def "GIVEN existing issue is closed by the user AND SU is 'logged in' WHEN 'task details' dialog has been opened THEN correct user-name should be present in the 'Closed by'"()
     {
         given: "SU is logged in"
         getTestSession().setUser( null );
         NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
-        and: "Open the closed issues"
-        issueListDialog.clickOnShowClosedIssues();
+        and: "Click on Closed button:"
+        issueListDialog.clickOnClosedTasks();
 
-        when: "issue details dialog has been opened"
+        when: "click on the closed task:(Open Task Details dialog)"
         IssueDetailsDialog issueDetailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() )
 
         then: "expected user-name should be present in the 'Closed by'"
