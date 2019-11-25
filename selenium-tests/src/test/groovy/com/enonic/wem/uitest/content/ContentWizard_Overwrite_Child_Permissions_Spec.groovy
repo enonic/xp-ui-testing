@@ -15,11 +15,6 @@ import spock.lang.Stepwise
 /**
  * Created on 1/31/2017.
  *
- * Tasks:
- * XP-2845 Create selenium tests for "Overwrite child permission" feature(Edit Permissions Dialog)
- * xp-ui-testing#4 Check fixed application's bugs and add Selenium tests for each fixed bugs
- * xp-ui-testing#54 Add selenium tests to verify xp#5063
- *
  * Verifies:
  * XP-4932 Impossible to save changes when 'Overwrite child permissions' was set in true
  * XP-4930 Security wizard-step-form not refreshed in a child content, when permissions were changed in the parent content

@@ -146,21 +146,4 @@ class IssueDetailsDialog_Spec
         and: "expected creator should be displayed"
         detailsDialog.getOpenedBy().contains( "user:system:su" );
     }
-
-    def "GIVEN 'Issue details dialog' is opened WHEN Back button has been pressed THEN 'Issue List dialog' should be loaded"()
-    {
-        given: "existing assigned user is logged in"
-        getTestSession().setUser( TEST_USER );
-        NavigatorHelper.openContentStudioApp( getTestSession() );
-        and: "'Assigned to Me' has been checked"
-        IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
-        IssueDetailsDialog detailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
-
-        when: "'Back' button has been pressed"
-        IssueListDialog listDialog = detailsDialog.clickOnBackToListButton();
-        saveScreenshot( "issue_clicked" );
-
-        then: "Issue List dialog should be loaded"
-        listDialog.waitForOpened();
-    }
 }

@@ -30,6 +30,7 @@ class Restore_Tags_Spec
 
         and:
         AllContentVersionsView allContentVersionsView = openVersionPanel();
+        saveScreenshot( "tag_valid_version_browse_panel" );
 
         then: "number of versions increased by one"
         allContentVersionsView.getAllVersions().size() == 3;
@@ -48,9 +49,10 @@ class Restore_Tags_Spec
         versionItem.doRestoreVersion();
 
         then: "number of version is increased"
+        saveScreenshot( "tag_valid_version" );
         allContentVersionsView.getAllVersions().size() == 4;
         contentBrowsePanel.switchToBrowserTabByTitle( TAG_CONTENT.getDisplayName() );
-        saveScreenshot( "tag_valid_version" );
+
 
         and: "the content becomes valid"
         !wizard.isContentInvalid();
