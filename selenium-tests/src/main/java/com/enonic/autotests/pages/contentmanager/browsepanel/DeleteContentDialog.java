@@ -153,6 +153,7 @@ public class DeleteContentDialog
         String menuItem = CONTAINER_DIV + MARK_AS_DELETED_MENU_ITEM;
         findElement( By.xpath( menuItem ) ).click();
         this.waitForClosed();
+        sleep( 900 );
         return this;
     }
 
