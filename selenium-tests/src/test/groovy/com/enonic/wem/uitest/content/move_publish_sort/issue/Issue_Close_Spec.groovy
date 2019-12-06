@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.move_publish_sort.issue
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueDetailsDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueListDialog
@@ -31,7 +32,7 @@ class Issue_Close_Spec
     Content CONTENT;
 
     @Shared
-    Issue TEST_ISSUE;
+    Issue TEST_TASK;
 
     def setup()
     {
@@ -74,9 +75,9 @@ class Issue_Close_Spec
         assigneesList.add( TEST_USER.getName() );
 
         and: "create task dialog is opened and data has been typed"
-        TEST_ISSUE = buildIssue( "issue to close", assigneesList, null );
+        TEST_TASK = buildIssue( "task to close", assigneesList, null );
         CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().clickOnCreateTaskMenuItem();
-        createIssueDialog.typeData( TEST_ISSUE );
+        createIssueDialog.typeData( TEST_TASK );
         createIssueDialog.clickOnCreateTaskButton();
 
         when: "'Create' button has been pressed"
@@ -95,27 +96,27 @@ class Issue_Close_Spec
         NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueListDialog dialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
-        when: "issue has been clicked"
-        IssueDetailsDialog issueDetailsDialog = dialog.clickOnIssue( TEST_ISSUE.getTitle() );
+        when: "task has been clicked"
+        IssueDetailsDialog taskDetailsDialog = dialog.clickOnIssue( TEST_TASK.getTitle() );
 
-        and: "issue has been stopped"
-        issueDetailsDialog.clickOnStatusSelectorMenu().doStopIssue();
+        and: "task has been stopped"
+        taskDetailsDialog.clickOnStatusSelectorMenu().doStopTask();
 
         then: "status of the issue should be 'Stopped'"
-        issueDetailsDialog.waitForClosedStatus();
-        saveScreenshot( "issue_stopped_by_user" );
+        taskDetailsDialog.waitForClosedStatus();
+        saveScreenshot( "task_stopped_by_user" );
 
         and: "correct notification message should be displayed"
-        contentBrowsePanel.waitForNotificationMessage() == "The issue is Closed.";
-        issueDetailsDialog.clickOnCancelButtonTop();
+        contentBrowsePanel.waitForNotificationMessage() == Application.TASK_IS_CLOSED;
+        taskDetailsDialog.clickOnCancelButtonTop();
         sleep( 2000 );
-        saveScreenshot( "last_issue_closed" );
+        saveScreenshot( "last_task_closed" );
 
-        and: "'Has Assigned issues' icon should not be displayed"
-        contentBrowsePanel.getTextInIssuesButton() == "No open issues";
+        // and: "'Has Assigned issues' icon should not be displayed"
+        // contentBrowsePanel.getTextInIssuesButton() == "No open issues";
     }
 
-    def "GIVEN existing issue is closed by the user AND SU is 'logged in' WHEN 'task details' dialog has been opened THEN correct user-name should be present in the 'Closed by'"()
+    def "GIVEN existing task is closed by the user AND SU is 'logged in' WHEN 'task details' dialog has been opened THEN correct user-name should be present in the 'Closed by'"()
     {
         given: "SU is logged in"
         getTestSession().setUser( null );
@@ -126,7 +127,7 @@ class Issue_Close_Spec
         issueListDialog.clickOnClosedTasks();
 
         when: "click on the closed task:(Open Task Details dialog)"
-        IssueDetailsDialog issueDetailsDialog = issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() )
+        IssueDetailsDialog issueDetailsDialog = issueListDialog.clickOnIssue( TEST_TASK.getTitle() )
 
         then: "expected user-name should be present in the 'Closed by'"
         issueDetailsDialog.getStatusInfo().contains( String.format( "Closed by user:system:%s", TEST_USER.getName() ) );

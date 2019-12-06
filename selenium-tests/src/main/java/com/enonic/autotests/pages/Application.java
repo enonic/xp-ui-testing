@@ -72,9 +72,9 @@ public class Application
 
     public static String ISSUE_ITEM_DELETED = "One or more items from the issue cannot be found.";
 
-    public static String ISSUE_IS_CREATED_MESSAGE = "New issue created successfully.";
+    public static String TASK_IS_CREATED_MESSAGE = "New task created successfully.";
 
-    public static String ISSUE_IS_CLOSED = "Issue \"%s\" is closed.";
+    public static String TASK_IS_CLOSED = "The task is Closed.";
 
     public static String CONTENT_SAVED = "Item \"%s\" is saved.";
 

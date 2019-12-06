@@ -64,7 +64,7 @@ class IssueDetailsDialog_Spec
         userBrowsePanel.exists( TEST_USER.getDisplayName(), true );
     }
 
-    def "GIVEN Сreate Task dialog is opened WHEN data has been typed AND 'Create Task' button has been pressed THEN Issue Details dialog should be correctly displayed"()
+    def "GIVEN 'Create Task' dialog is opened WHEN data has been typed AND 'Create Task' button has been pressed THEN Issue Details dialog should be correctly displayed"()
     {
         setup: "Content Studio is opened"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -77,25 +77,25 @@ class IssueDetailsDialog_Spec
         List<String> assigneesList = new ArrayList<>();
         assigneesList.add( TEST_USER.getName() );
 
-        and: "create task dialog is opened and data has been typed"
+        and: "Create task dialog is opened and data has been typed"
         TEST_TASK = buildIssue( "task 1", assigneesList, null );
         CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().clickOnCreateTaskMenuItem();
         createIssueDialog.typeData( TEST_TASK );
 
         when: "'Create Task' button has been pressed"
         createIssueDialog.clickOnCreateTaskButton();
-        IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
+        IssueDetailsDialog taskDetailsDialog = new IssueDetailsDialog( getSession() );
         saveScreenshot( "issue_details_dialog" )
 
-        then: "Issue details dialog should be displayed"
-        issueDetailsDialog.waitForLoaded();
+        then: "Task details dialog should be displayed"
+        taskDetailsDialog.waitForLoaded();
 
-        and: "'Close Issue' button should be present"
-        issueDetailsDialog.isCloseIssueButtonPresent();
+        and: "'Close Task' button should be present"
+        taskDetailsDialog.isCloseTaskButtonPresent();
         and: "'Back' button should be present"
-        issueDetailsDialog.isBackButtonDisplayed();
+        taskDetailsDialog.isBackButtonDisplayed();
         and: "status of the issue should be 'Open'"
-        issueDetailsDialog.getIssueStatus() == "Open"
+        taskDetailsDialog.getIssueStatus() == "Open"
     }
 
     def "GIVEN existing user and an issue was assigned to him WHEN the user is logged in THEN 'Assigned to Me' button should be present in the toolbar"()

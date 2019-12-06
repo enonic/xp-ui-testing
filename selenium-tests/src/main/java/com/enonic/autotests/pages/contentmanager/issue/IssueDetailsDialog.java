@@ -30,8 +30,8 @@ public class IssueDetailsDialog
     private final String EDIT_ISSUE_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Edit Issue']]";
 
-    private final String CLOSE_ISSUE_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Close Issue']]";
+    private final String CLOSE_TASK_BUTTON =
+        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Close Task']]";
 
     private final String PUBLISH_BUTTON =
         "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish...')]]";
@@ -68,8 +68,8 @@ public class IssueDetailsDialog
     @FindBy(xpath = EDIT_ISSUE_BUTTON)
     private WebElement editIssueButton;
 
-    @FindBy(xpath = CLOSE_ISSUE_BUTTON)
-    private WebElement closeIssueButton;
+    @FindBy(xpath = CLOSE_TASK_BUTTON)
+    private WebElement closeTaskButton;
 
 
     @FindBy(xpath = ITEMS_TAB_BAR_ITEM)
@@ -89,14 +89,9 @@ public class IssueDetailsDialog
         super( session );
     }
 
-    public boolean isEditIssueButtonDisplayed()
+    public boolean isCloseTaskButtonPresent()
     {
-        return editIssueButton.isDisplayed();
-    }
-
-    public boolean isCloseIssueButtonPresent()
-    {
-        return closeIssueButton.isDisplayed();
+        return closeTaskButton.isDisplayed();
     }
 
     public void clickOnCancelButtonTop()
@@ -157,7 +152,7 @@ public class IssueDetailsDialog
         return waitAndCheckAttrValue( stopButton, "class", "active", 1 );
     }
 
-    public IssueDetailsDialog doStopIssue()
+    public IssueDetailsDialog doStopTask()
     {
         if ( isStopButtonActive() )
         {
@@ -199,11 +194,6 @@ public class IssueDetailsDialog
         IssueListDialog dialog = new IssueListDialog( getSession() );
         dialog.waitForOpened();
         return dialog;
-    }
-
-    public boolean isEditIssueButtonPresent()
-    {
-        return editIssueButton.isDisplayed();
     }
 
     public boolean isItemsTabBarItemDisplayed()

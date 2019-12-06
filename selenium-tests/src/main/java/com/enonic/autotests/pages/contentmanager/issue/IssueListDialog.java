@@ -35,7 +35,7 @@ public class IssueListDialog
         DIALOG_CONTAINER + "//button[contains(@id,'StatusFilterButton') and child::span[contains(.,'Closed')]]";
 
     private final String NEW_TASK_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='New task']]";
+        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='New Task']]";
 
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;

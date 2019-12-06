@@ -87,11 +87,11 @@ class IssueListDialog_Spec
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
         issueDetailsDialog.clickOnCancelButtonTop();
 
-        then: "Issue details dialog should be closed"
+        then: "Task details dialog should be closed"
         issueDetailsDialog.waitForClosed();
 
-        and: "'New issue created successfully.' message should be displayed"
-        message == Application.ISSUE_IS_CREATED_MESSAGE;
+        and: "'New task created successfully.' message should be displayed"
+        message == Application.TASK_IS_CREATED_MESSAGE;
     }
 
     def "GIVEN issue is assigned to the user WHEN 'show Issues Dialog' toolbar-button has been pressed THEN Issues List dialog should appear"()
@@ -173,8 +173,8 @@ class IssueListDialog_Spec
         then: "Issue Details Dialog should be loaded"
         details.waitForOpened();
 
-        and: "'Close Issue' button should be present"
-        details.isCloseIssueButtonPresent();
+        and: "'Close Task' button should be present"
+        details.isCloseTaskButtonPresent();
         println "expected is:" + String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, TEST_ISSUE.getTitle() );
         //"Item is published" message should appear
         contentBrowsePanel.waitExpectedNotificationMessage(
