@@ -29,7 +29,7 @@ class Restore_Version_Site_Spec
     String NEW_DISPLAY_NAME = "site-restore-version";
 
 
-    def "GIVEN existing site WHEN display name has been changed THEN new 'version history item' appeared in the version-view"()
+    def "GIVEN existing site WHEN display name has been changed THEN new 'version history item' appears in the version-view"()
     {
         given: "existing site"
         ContentSettings settings = ContentSettings.builder().language( NORSK_LANGUAGE ).build();
@@ -54,7 +54,7 @@ class Restore_Version_Site_Spec
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN site with updated 'display name' is selected WHEN previous version has been reverted THEN expected display name should appear in the grid"()
+    def "GIVEN site with updated 'display name' is selected WHEN previous version has been reverted THEN display name should be reverted"()
     {
         given: "site with updated 'display name' is selected"
         findAndSelectContent( SITE.getName() );
@@ -72,7 +72,7 @@ class Restore_Version_Site_Spec
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN new acl-entry has been added WHEN previous version has been restored THEN new added acl entry should be present in the content wizard"()
+    def "GIVEN new acl-entry has been added WHEN previous version has been reverted THEN new added acl entry should be present in the content wizard"()
     {
         given: "new acl entry has been added and Save pressed"
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
@@ -99,7 +99,7 @@ class Restore_Version_Site_Spec
         beforeRestoring.contains( "Anonymous User" );
     }
 
-    def "GIVEN the site is selected AND version panel is opened WHEN version with the acl-entry restored THEN acl-entry should appear again in the content wizard"()
+    def "GIVEN the site is selected AND version panel is opened WHEN previous version has been reverted THEN the acl-entry stil should be present"()
     {
         given: "the site is selected AND version panel is opened"
         findAndSelectContent( SITE.getName() );
@@ -117,7 +117,7 @@ class Restore_Version_Site_Spec
         form.getDisplayNamesOfAclEntries().contains( "Anonymous User" );
     }
 
-    def "GIVEN existing site with selected application opened WHEN application removed in the wizard THEN number of versions should be increased"()
+    def "GIVEN existing site is opened WHEN application has been removed THEN number of versions should be increased"()
     {
         given: "existing site with selected application opened"
         findAndSelectContent( SITE.getName() );
