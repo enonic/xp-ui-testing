@@ -52,7 +52,6 @@ class DetailsPanel_Extended_VersionHistory_Spec
         then: "Super User should be owner in the vew"
         versionItem.getOwnerName(0) == "Super User";
 
-
         and: "'this version should be active"
         allContentVersionsView.isVersionActive( 0 );
     }
@@ -68,17 +67,14 @@ class DetailsPanel_Extended_VersionHistory_Spec
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         saveScreenshot( "version-history-expanded-no-display-name" );
 
-
         then: "two versions should be displayed on the panel"
         allContentVersionsView.getAllVersions().size() == 2;
-
 
         and: "correct version id should be displayed"
         allContentVersionsView.isVersionInfoExpanded( 1 );
 
         and: "Revert button should be displayed in the expanded view"
         versionItem.isRevertButtonDisplayed();
-
     }
 
     def "GIVEN folder is selected AND a version info is expanded  WHEN this version item has been clicked THEN 'version item' gets collapsed"()
@@ -90,7 +86,6 @@ class DetailsPanel_Extended_VersionHistory_Spec
         and: "version history panel has been opened "
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-
 
         when: "'close version info' button was clicked"
         allContentVersionsView.clickOnVersionAndCloseView( 1 );

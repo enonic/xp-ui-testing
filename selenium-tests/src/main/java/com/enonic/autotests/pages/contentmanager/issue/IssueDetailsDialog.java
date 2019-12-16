@@ -33,6 +33,9 @@ public class IssueDetailsDialog
     private final String CLOSE_TASK_BUTTON =
         DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Close Task']]";
 
+    private final String REOPEN_TASK_BUTTON =
+        DIALOG_CONTAINER + "//button[contains(@class,'dialog-button') and child::span[text()='Reopen Task']]";
+
     private final String PUBLISH_BUTTON =
         "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish...')]]";
 
@@ -71,6 +74,8 @@ public class IssueDetailsDialog
     @FindBy(xpath = CLOSE_TASK_BUTTON)
     private WebElement closeTaskButton;
 
+    @FindBy(xpath = REOPEN_TASK_BUTTON)
+    private WebElement reopenTaskButton;
 
     @FindBy(xpath = ITEMS_TAB_BAR_ITEM)
     private WebElement itemsTabBarItem;
@@ -92,6 +97,11 @@ public class IssueDetailsDialog
     public boolean isCloseTaskButtonPresent()
     {
         return closeTaskButton.isDisplayed();
+    }
+
+    public boolean isReopenTaskButtonPresent()
+    {
+        return reopenTaskButton.isDisplayed();
     }
 
     public void clickOnCancelButtonTop()

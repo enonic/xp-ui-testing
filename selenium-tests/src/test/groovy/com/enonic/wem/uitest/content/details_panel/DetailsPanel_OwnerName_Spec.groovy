@@ -68,7 +68,7 @@ class DetailsPanel_OwnerName_Spec
         userBrowsePanel.exists( TEST_USER.getDisplayName(), true );
     }
 
-    def "GIVEN SU user is logged in WHEN new folder was added THEN the folder should be listed in the grid"()
+    def "GIVEN SU user is logged in WHEN new folder has been added THEN the folder should be listed in the grid"()
     {
         setup: "'SU' is logged in"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -155,7 +155,7 @@ class DetailsPanel_OwnerName_Spec
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
         saveScreenshot( "test_owner_wizard" );
 
-        then: "correct 'owner' should be shown in settings"
+        then: "expected 'owner' should be shown in settings"
         form.getOwner() == TEST_USER.getDisplayName();
     }
 

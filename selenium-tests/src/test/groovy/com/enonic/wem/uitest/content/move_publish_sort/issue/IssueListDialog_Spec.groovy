@@ -173,8 +173,8 @@ class IssueListDialog_Spec
         then: "Issue Details Dialog should be loaded"
         details.waitForOpened();
 
-        and: "'Close Task' button should be present"
-        details.isCloseTaskButtonPresent();
+        and: "'Reopen Task' button should be present"
+        details.isReopenTaskButtonPresent();
         println "expected is:" + String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, TEST_ISSUE.getTitle() );
         //"Item is published" message should appear
         contentBrowsePanel.waitExpectedNotificationMessage(
