@@ -33,7 +33,7 @@ class FieldSet_Spec
 
     def "GIVEN adding a content with a fieldset WHEN all required fields are typed THEN content should be displayed as valid"()
     {
-        given: "'fieldset' content with all required values was added"
+        given: "'fieldset' content with all required values is saved"
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
         ContentWizardPanel wizard = selectSitePressNew( FIELDSET_CONTENT.getContentTypeName() );
         wizard.typeData( FIELDSET_CONTENT ).save();

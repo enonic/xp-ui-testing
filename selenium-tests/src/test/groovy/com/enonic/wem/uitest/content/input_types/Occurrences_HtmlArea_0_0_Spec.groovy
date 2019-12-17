@@ -10,9 +10,7 @@ import com.enonic.xp.data.PropertyTree
 import spock.lang.Ignore
 import spock.lang.Shared
 
-/**
- *
- * */
+
 class Occurrences_HtmlArea_0_0_Spec
     extends Base_InputFields_Occurrences
 
@@ -52,14 +50,14 @@ class Occurrences_HtmlArea_0_0_Spec
         !formViewPanel.isSourceCodeButtonDisplayed();
     }
 
-    def "GIVEN HtmlArea(0:0) content with a text was added WHEN the content is opened THEN expected text should be present in the editor"()
+    def "GIVEN HtmlArea(0:0) content with a text is added WHEN the content has been opened THEN expected text should be present in the editor"()
     {
-        given: "new HtmlArea content was added'"
+        given: "new HtmlArea content is added'"
         Content tinyMceContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );
         ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "the content is opened"
+        when: "the content has been opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         List<String> actual = formViewPanel.getDataFromCKEAreas();

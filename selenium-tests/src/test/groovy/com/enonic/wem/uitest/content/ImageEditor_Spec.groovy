@@ -7,8 +7,6 @@ import com.enonic.autotests.pages.form.ImageFormViewPanel
 
 /**
  * Created on 28.09.2016.
- * XP-4201 Add selenium tests for ImageEditor dialog
- * XP-4226 Add selenium tests for 'Reset Mask' and 'Reset Autofocus' links on the ImageEditor's tollbar
  * */
 class ImageEditor_Spec
     extends BaseContentSpec
@@ -40,66 +38,66 @@ class ImageEditor_Spec
         and: "'zoom knob' button present"
         imageEditor.getZoomKnobValue() == 0;
 
-        and: "'Focus Circle' not displayed"
+        and: "'Focus Circle' should not be displayed"
         !imageEditor.isFocusCircleDisplayed();
 
-        and: "'Reset Mask' link is not displayed"
+        and: "'Reset Mask' link should not be displayed"
         !toolbar.isResetMaskDisplayed();
     }
 
-    def "GIVEN image content opened AND 'Crop' button was pressed THEN image was cropped THEN 'Reset Mask' link appears on the toolbar "()
+    def "GIVEN image content is opened WHEN 'Crop' button has been pressed THEN image should be cropped AND 'Reset Mask' link appears in the toolbar "()
     {
-        given: "content wizard opened"
+        given: "content wizard is opened"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = new ImageEditor( getSession() );
 
-        when: "'Crop' button was pressed"
+        when: "'Crop' button has been pressed"
         imageFormViewPanel.clickOnCropButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
         and: "image was cropped"
         imageEditor.doDragCropButtonAndChangeHeightCropArea( -40 );
 
-        then: "'Reset Mask' link is displayed"
+        then: "'Reset Mask' link should appear"
         toolbar.isResetMaskDisplayed();
 
-        and: "'Apply' button is present"
+        and: "'Apply' button should be present"
         toolbar.isApplyButtonDisplayed();
 
-        and: "'Close' button is present"
+        and: "'Close' button should be present"
         toolbar.isCloseButtonDisplayed();
     }
 
-    def "GIVEN a cropped image WHEN 'Reset Mask' was pressed THEN the button is getting hidden AND image's size is not changed"()
+    def "GIVEN a cropped image WHEN 'Reset Mask' has been pressed THEN the button gets hidden AND initial size should be restored"()
     {
-        given: "content wizard opened"
+        given: "content wizard is opened"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = new ImageEditor( getSession() );
 
-        and: "crop button pressed"
+        and: "crop button has been pressed:"
         imageFormViewPanel.clickOnCropButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
         def cropAreaBefore = imageEditor.getCropAreaHeight();
 
-        and: "the image has been cropped"
+        and: "the image has been cropped:"
         imageEditor.doDragCropButtonAndChangeHeightCropArea( -40 );
 
-        when: "'Reset Mask' button was pressed"
+        when: "'Reset Mask' button has been pressed"
         toolbar.clickOnResetMaskButton();
         def cropAreaHeightAfter = imageEditor.getCropAreaHeight();
 
-        then: "toolbar still displayed"
+        then: "toolbar should be displayed"
         toolbar.isDisplayed();
 
-        and: "'Reset Mask' is getting hidden"
+        and: "'Reset Mask' gets hidden"
         !toolbar.isResetMaskDisplayed();
 
-        and: "crop area is not changed"
+        and: "initial crop area is restored"
         cropAreaBefore == cropAreaHeightAfter;
     }
 
-    def "GIVEN 'Image Editor' dialog opened WHEN 'Close' button was pressed THEN the dialog closes"()
+    def "GIVEN 'Image Editor' dialog is opened WHEN 'Close' button has been pressed THEN the dialog closes"()
     {
         given: "'Image Editor' dialog opened"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();

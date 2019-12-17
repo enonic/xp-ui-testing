@@ -8,10 +8,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-/**
- * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
- *
- */
 @Stepwise
 class Restore_Date_Spec
     extends Base_InputFields_Occurrences
@@ -26,7 +22,7 @@ class Restore_Date_Spec
     @Shared
     Content DATE_CONTENT
 
-    def "GIVEN existing date content WHEN date was changed THEN new 'version item' should appear in the version history panel"()
+    def "GIVEN existing date content WHEN date has been changed THEN new 'version item' should appear in the version history panel"()
     {
         given: "existing date content"
         DATE_CONTENT = buildDate1_1_Content( DATE_V1 );
