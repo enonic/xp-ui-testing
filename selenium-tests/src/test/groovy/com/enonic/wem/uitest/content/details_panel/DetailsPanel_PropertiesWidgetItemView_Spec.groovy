@@ -27,9 +27,9 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
     @Shared
     String EXECUTABLE_APP_NAME = "executable";
 
-    def "GIVEN existing '*.bat' WHEN the file was selected THEN correct info should be displayed on the widget"()
+    def "WHEN existing '*.bat' has been selected THEN expected info should be displayed in the widget"()
     {
-        when: "executable file is selected"
+        when: "executable file has been selected"
         findAndSelectContent( EXECUTABLE_BAT );
         and: "Details Panel is opened"
         contentBrowsePanel.openContentDetailsPanel();
@@ -43,9 +43,9 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         view.getType() == EXECUTABLE_APP_NAME;
     }
 
-    def "GIVEN existing '*.sh' WHEN file was selected THEN correct info should be displayed on the widget"()
+    def "WHEN existing '*.sh' file has been selected THEN expected info should be displayed in the widget"()
     {
-        when: "executable file was selected"
+        when: "executable file has been selected"
         findAndSelectContent( EXECUTABLE_SH );
         and: "Details Panel is opened"
         contentBrowsePanel.openContentDetailsPanel();
@@ -59,9 +59,9 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         view.getType() == EXECUTABLE_APP_NAME;
     }
 
-    def "GIVEN existing '*.exe' WHEN the file was selected THEN correct info should be displayed on the widget"()
+    def "WHEN existing '*.exe' file has been selected THEN expected info should be displayed in the widget"()
     {
-        when: "executable file was selected"
+        when: "executable file has been selected"
         findAndSelectContent( EXECUTABLE_EXE );
         and: "Details Panel is opened"
         contentBrowsePanel.openContentDetailsPanel();
@@ -75,71 +75,41 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         view.getType() == EXECUTABLE_APP_NAME;
     }
 
-    def "GIVEN folder was added an it selected WHEN details panel was opened THEN correct properties should be displayed in the PropertiesWidgetItemView "()
+    def "GIVEN new folder is added an it selected WHEN details panel has been opened THEN expected properties should be displayed in the PropertiesWidgetItemView "()
     {
-        given: "folder was added"
+        given: "new folder is added"
         ContentSettings settings = ContentSettings.builder().language( NORSK_LANGUAGE ).build();
         FOLDER_CONTENT = buildFolderWithSettingsContent( "folder", "properties-test", settings );
         addContent( FOLDER_CONTENT );
         and:"the folder is selected"
         findAndSelectContent( FOLDER_CONTENT.getName() );
 
-        when: "details panel was opened"
-        contentBrowsePanel.openContentDetailsPanel();
-        PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
-
-        then: "'Id' should be present on the widget"
-        view.isIdPresent();
-
-        and: "'Created' should be present on the widget"
-        view.isCreatedPresent();
-
-        and: "'Modified' should be present on the widget"
-        view.isIdModifiedPresent();
-
-        and: "'Application-name' present on the widget"
-        view.isApplicationNamePresent();
-
-        and: "'Owner' should be present on the widget"
-        view.isOwnerPresent();
-
-        and: "'Type' should be present on the widget"
-        view.isTypePresent();
-
-        and: "'Language' should be present on the widget"
-        view.isLanguagePresent();
-    }
-
-    def "GIVEN existing folder is selected WHEN details panel is opened THEN correct values for properties should be shown on the PropertiesWidgetItemView "()
-    {
-        given: "existing folder is selected"
-        findAndSelectContent( FOLDER_CONTENT.getName() );
 
         when: "PropertiesWidgetItemView is shown"
         contentBrowsePanel.openContentDetailsPanel();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "folder_info_properties" );
 
-        then: "correct 'created' date should be displayed"
+        then: "expected 'created' date should be displayed"
         view.getCreated().contains( LocalDate.now().toString() );
 
-        and: "correct 'modified' date should be displayed"
+        and: "expected 'modified' date should be displayed"
         view.getModified().contains( LocalDate.now().toString() );
 
-        and: "correct application-name should be displayed"
+        and: "expected application-name should be displayed"
         view.getApplicationName() == BASE_APP_NAME;
 
-        and: "correct owner should be displayed"
+        and: "expected owner should be displayed"
         view.getOwner() == "su";
 
-        and: "correct type should be displayed"
+        and: "expected type should be displayed"
         view.getType() == "folder";
 
         and: "correct language should be displayed"
         view.getLanguage() == "no";
     }
 
-    def "WHEN image content was selected and details panel opened THEN correct type an app-name are shown in PropertiesWidgetItemView"()
+    def "WHEN image content has been selected and details panel is opened THEN expected type and app-name should be shown in PropertiesWidgetItemView"()
     {
         when: "image content was selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
@@ -177,7 +147,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         view.getOwner() == "anonymous";
     }
 
-    def "GIVEN existing shortcut has been selected WHEN details panel is opened THEN correct type of the content should be displayed"()
+    def "GIVEN existing shortcut has been selected WHEN details panel is opened THEN expected content type should be displayed in the widget"()
     {
         given: "existing shortcut has been selected"
         Content shortcut = buildShortcut( "shortcut", null, "test-properties" );
@@ -199,7 +169,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         view.getApplicationName() == BASE_APP_NAME;
     }
 
-    def "GIVEN existing site has been selected WHEN details panel is opened THEN correct type of the content should be displayed"()
+    def "GIVEN existing site has been selected WHEN details panel has been opened THEN expected content type should be displayed in the widget"()
     {
         given: "existing site has been selected"
         Content site = buildSiteWithNameAndDispalyNameAndDescription( "site", "test-site", "properties test" );

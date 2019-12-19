@@ -16,19 +16,19 @@ class ContentWizardPanel_Settings_Spec
     @Shared
     Content content;
 
-    def "WHEN content wizard is opened THEN language should be not selected AND option filter-input should be present"()
+    def "WHEN new wizard is opened THEN language should not be selected AND option filter-input should be present"()
     {
         when: "content wizard is opened"
-        contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
+        contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
         SettingsWizardStepForm form = new SettingsWizardStepForm( getSession() );
 
         then: "language 'option filter' is present"
         form.isLanguageInputFilterPresent();
 
-        and: "language not selected"
+        and: "language should not be selected"
         form.getLanguage() == null;
 
-        and:
+        and: "Owner should be selected by default:"
         form.getOwner() == SUPER_USER;
     }
 

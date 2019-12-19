@@ -13,6 +13,7 @@ class TextArea_Spec
     def "WHEN new wizard for TextArea-content(not required) is opened AND display name is typed THEN TextArea should be empty AND Publish button should be enabled"()
     {
         when: "wizard is opened(text area is not required )"
+
         Content textAreaContent = build_TextArea0_1_Content( "test" );
         ContentWizardPanel wizard = selectSitePressNew( textAreaContent.getContentTypeName() );
 

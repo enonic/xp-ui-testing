@@ -41,7 +41,7 @@ class ContentWizardPanel_Owner_Removed_Spec
     Content TEST_FOLDER;
 
 
-    def "setup: add a test user to the system user store"()
+    def "setup: add new test user in System ID Provider"()
     {
         setup: "'Users' app is opened"
         go "admin"
@@ -64,14 +64,14 @@ class ContentWizardPanel_Owner_Removed_Spec
         userBrowsePanel.exists( TEST_USER.getDisplayName(), true );
     }
 
-    def "GIVEN existing user WHEN the user was set as 'owner' in the folder THEN correct display name of the user should be displayed in the settings"()
+    def "GIVEN existing folder is opened WHEN just created user has been select in 'owner' form THEN expected user's name should be present in the settings"()
     {
         given: "creating of the new folder"
         TEST_FOLDER = buildFolderContent( "folder", "owner test 2" );
 
         go "admin"
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
 
         when: "the user was set as 'owner' in the folder"
@@ -83,7 +83,7 @@ class ContentWizardPanel_Owner_Removed_Spec
         form.getOwner() == TEST_USER.getDisplayName();
     }
 
-    def "GIVEN existing folder with the 'owner' WHEN the user has been removed THEN the user should not be displayed beneath the Users-folder"()
+    def "GIVEN Users app is opened WHEN the user has been removed THEN the user should not be displayed in browse panel"()
     {
         go "admin"
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
@@ -93,11 +93,11 @@ class ContentWizardPanel_Owner_Removed_Spec
         when: "user has been deleted"
         userBrowsePanel.clickToolbarDelete().doDelete();
 
-        then: "the user should not be displayed beneath the Users-folder"
+        then: "the user should not be present"
         !userBrowsePanel.exists( TEST_USER.getDisplayName() );
     }
 
-    def "GIVEN existing folder and 'owner'-user was removed WHEN the folder is opened THEN the user should be displayed as 'removed' on the wizard form"()
+    def "GIVEN existing folder and owner was deleted WHEN the folder is opened THEN the user should be displayed as 'removed' in the wizard form"()
     {
         go "admin"
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -120,7 +120,7 @@ class ContentWizardPanel_Owner_Removed_Spec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( BaseContentType.FOLDER.getDisplayName(  ) ).
+            contentType( BaseContentType.FOLDER.getDisplayName() ).
             parent( ContentPath.ROOT ).
             build();
         return content;
