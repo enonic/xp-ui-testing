@@ -89,11 +89,14 @@ class ImageEditor_Zoom_Reset_Spec
     def "GIVEN existing zoomed image WHEN it opened THEN 'Reset' button should be displayed on the wizard"()
     {
         when: "existing zoomed image"
-        findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
 
-        then: "'Reset' button should be displayed on the wizard"
+        then: "'Reset' button should be displayed in the wizard"
         formViewPanel.isButtonResetPresent();
+
+        and: "Save button should be disabled"
+        !wizard.isSaveButtonEnabled();
     }
 
     def "GIVEN existing zoomed image WHEN it opened AND 'Reset' button was pressed AND 'close' button pressed THEN 'Alert' dialog with warning messages should appear"()
