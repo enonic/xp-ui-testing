@@ -18,7 +18,7 @@ class ContentPublishDelete_Spec
     @Shared
     Content content;
 
-    def "GIVEN new folder is added WHEN the folder has been selected and 'Publish' button on toolbar pressed THEN notification message should appear and content is getting 'Published'"()
+    def "GIVEN new folder is added WHEN the folder has been selected and 'Publish' button pressed THEN notification message should appear and content gets 'Published'"()
     {
         given: "new folder is added"
         content = buildFolderContent( "publish", DISPLAY_NAME );
@@ -41,7 +41,7 @@ class ContentPublishDelete_Spec
         given: "existing content with 'Published' status"
         filterPanel.typeSearchText( content.getName() )
 
-        when: "content was selected and 'Delete' button pressed"
+        when: "content has been selected and 'Delete' button pressed"
         contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
         String message = contentBrowsePanel.waitForNotificationMessage();
         saveScreenshot("content_should_be_pending");
@@ -52,7 +52,7 @@ class ContentPublishDelete_Spec
         message == String.format( Application.ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE, content.getName() );
     }
 
-    def "GIVEN existing content with 'Deleted' status WHEN content is selected and 'Delete' button pressed THEN 'Undo deleted' button should be displayed"()
+    def "GIVEN existing 'Deleted' content WHEN content is selected and 'Delete' button pressed THEN 'Undo deleted' button should be displayed"()
     {
         when: "existing content with 'Deleted' status"
         filterPanel.typeSearchText( content.getName() )

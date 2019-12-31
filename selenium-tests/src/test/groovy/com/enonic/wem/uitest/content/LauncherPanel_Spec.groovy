@@ -53,12 +53,12 @@ class LauncherPanel_Spec
     }
 
 
-    def "WHEN 'content studio' has been opened THEN 'Content Studio' link should be active in 'Launcher Panel'"()
+    def "GIVEN 'content studio' is opened WHEN Launcher Panel toggler has been clicked THEN Launcher Panel gets visible AND 'Content Studio' link should be active in 'Launcher Panel'"()
     {
-        when: "'content studio' has been opened"
+        given: "'content studio' is opened"
         NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        and: "toggler has been pressed and launcher panel is opened"
+        when: "toggler has been pressed and launcher panel gets visible"
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
         launcherPanel.openPanel().waitUntilPanelLoaded();
 

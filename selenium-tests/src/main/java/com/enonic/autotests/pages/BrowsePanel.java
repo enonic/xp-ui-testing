@@ -56,7 +56,7 @@ public abstract class BrowsePanel
     protected String ROW_CHECKBOX_BY_DISPLAY_NAME =
         NAMES_VIEW_BY_DISPLAY_NAME + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
 
-    protected final String DIV_WITH_NAME = "//div[contains(@id,'api.ui.grid.Grid') and not(contains(@style,'display: none'))]" + NAMES_VIEW;
+    protected final String DIV_WITH_NAME = "//div[contains(@id,'Grid') and not(contains(@style,'display: none'))]" + NAMES_VIEW;
 
     protected final String SELECTION_CONTROLLER_CHECKBOX = TREEGRID_TOOLBAR_XPATH + "//div[contains(@id,'SelectionController')]";
 
@@ -71,7 +71,7 @@ public abstract class BrowsePanel
         APP_BAR_TAB_MENU + "//li[contains(@id,'AppBarTabMenuItem') and descendant::span[contains(.,'%s')]]";
 
     protected String CONTEXT_MENU_ITEM =
-        "//ul[contains(@id,'TreeGridContextMenu')]//li[contains(@id,'api.ui.menu.MenuItem') and contains(.,'%s')]";
+        "//ul[contains(@id,'TreeGridContextMenu')]//li[contains(@id,'MenuItem') and contains(.,'%s')]";
     protected final String UNPUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish...']";
 
     @FindBy(xpath = SHOW_FILTER_PANEL_BUTTON)
@@ -454,8 +454,9 @@ public abstract class BrowsePanel
 
     public boolean isSelectionControllerChecked()
     {
-        WebElement checkbox = findElement( By.xpath( SELECTION_CONTROLLER_CHECKBOX ) );
-        return TestUtils.isCheckBoxChecked( getSession(), checkbox.getAttribute( "id" ) );
+        WebElement checkbox = findElement( By.xpath( SELECTION_CONTROLLER_CHECKBOX+ "//input[@type='checkbox']" ) );
+        //return TestUtils.isCheckBoxChecked( getSession(), checkbox.getAttribute( "id" ) );
+        return checkbox.isSelected();
     }
 
     public void clickOnSelectionController()

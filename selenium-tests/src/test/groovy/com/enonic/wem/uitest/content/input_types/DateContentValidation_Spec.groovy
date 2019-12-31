@@ -22,7 +22,7 @@ class DateContentValidation_Spec
     String WRONG_DAY_DATE = "2015-15-32";
 
 
-    def "GIVEN new wizard for Date content is opened WHEN date with wrong format has been typed THEN input's border becomes red"()
+    def "GIVEN new wizard for Date content is opened WHEN date in wrong format has been typed THEN input's border becomes red"()
     {
         given: "date wizard is opened"
         Content dateContent = buildDate0_1_Content( BAD_FORMAT_DATE );
@@ -43,7 +43,7 @@ class DateContentValidation_Spec
         Content dateContent = buildDate0_1_Content( WRONG_DAY_DATE );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( dateContent.getContentTypeName() );
 
-        when: "wrong day of month typed"
+        when: "wrong day of month has been typed"
         contentWizardPanel.typeData( dateContent );
         DateFormViewPanel dateFormViewPanel = new DateFormViewPanel( getSession() );
         saveScreenshot( "date_wrong_day" );

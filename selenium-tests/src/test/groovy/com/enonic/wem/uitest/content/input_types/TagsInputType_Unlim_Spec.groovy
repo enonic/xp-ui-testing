@@ -31,7 +31,7 @@ class TagsInputType_Unlim_Spec
         contentBrowsePanel.getContentStatus( tagContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
-    def "GIVEN new Tag-content-wizard (unlimited) is opened AND one tag added and 'Save' button pressed and just created WHEN the content has been reopened THEN only one Tag should be present in wizard "()
+    def "GIVEN new Tag-content-wizard (unlimited) is opened AND one tag is added WHEN the content has been reopened THEN expected Tag should be present in wizard "()
     {
         given: "start to add a content with type 'Tag unlimited'"
         Content tagContent = buildTag_Unlim_Content( 1 );
@@ -42,7 +42,7 @@ class TagsInputType_Unlim_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
-        then: "one tag with expected text should be present in the page"
+        then: "one expected tag should be present in the page"
         formViewPanel.getNumberOfTags() == 1;
         and:
         formViewPanel.getTagsText().contains( TAG_1 );

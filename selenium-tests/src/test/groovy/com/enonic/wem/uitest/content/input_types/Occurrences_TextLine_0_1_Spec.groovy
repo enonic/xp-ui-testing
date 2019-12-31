@@ -15,9 +15,9 @@ class Occurrences_TextLine_0_1_Spec
     String TEST_TEXT = "test text 0:1";
 
 
-    def "WHEN wizard for adding a TextLine-content (0:1) is opened THEN one 'text input' should be present"()
+    def "WHEN wizard for new TextLine-content (0:1) is opened THEN one 'text input' should be present"()
     {
-        when: "wizard for adding a TextLine-content (0:1) is opened"
+        when: "wizard for new TextLine-content (0:1) is opened"
         Content textLineContent = buildTextLine0_1_Content( TEST_TEXT );
         ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
@@ -25,7 +25,7 @@ class Occurrences_TextLine_0_1_Spec
         and: "display name has been typed"
         wizard.typeDisplayName( textLineContent.getDisplayName() );
 
-        then: "one text input should be displayed on the form view"
+        then: "one text input should be displayed in the form view"
         formViewPanel.getNumberOfTextInputs() == 1;
 
         and: "button 'Add' should not be present on the page"
@@ -38,9 +38,9 @@ class Occurrences_TextLine_0_1_Spec
         formViewPanel.getNumberOfDisplayedRemoveButtons() == 0;
     }
 
-    def "GIVEN wizard for adding a TextLine-content (0:1) is opened WHEN data was saved and wizard closed THEN content should be listed AND saved text showed when the content is opened"()
+    def "GIVEN wizard for new TextLine-content (0:1) is opened WHEN data has been saved and wizard closed THEN content should be listed AND saved text showed when the content is reopened"()
     {
-        given: "wizard for adding a TextLine-content (0:1) is opened"
+        given: "wizard for new TextLine-content (0:1) is opened"
         Content textLineContent = buildTextLine0_1_Content( TEST_TEXT );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine0_1_FormViewPanel formViewPanel = new TextLine0_1_FormViewPanel( getSession() );
@@ -51,17 +51,17 @@ class Occurrences_TextLine_0_1_Spec
 
         then: "actual text in the text line should be equals with the expected"
         String valueFromUI = formViewPanel.getTextLineValue();
-        valueFromUI.equals( TEST_TEXT );
+        valueFromUI == TEST_TEXT;
     }
 
     def "GIVEN creating new TextLine0:1 on root WHEN data typed and 'Save' and  'Publish' are pressed THEN new content with status equals 'Online' listed"()
     {
-        given: "wizard for adding a TextLine-content (0:1) is opened"
+        given: "wizard for new TextLine-content (0:1) is opened"
         Content textLineContent = buildTextLine0_1_Content( TEST_TEXT );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( textLineContent.getContentTypeName() );
 
         when: "all data has been typed and the content published"
-        contentWizardPanel.typeData( textLineContent ).clickOnMarkAsReadyAndDoPublish(  );
+        contentWizardPanel.typeData( textLineContent ).clickOnMarkAsReadyAndDoPublish();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( textLineContent.getName() );

@@ -83,7 +83,7 @@ public class ContentBrowseFilterPanel
 
     public void doCloseDependenciesSection()
     {
-        waitUntilVisibleNoException( By.xpath( CLOSE_DEPENDENCIES_SECTION_BUTTON ),Application.EXPLICIT_NORMAL );
+        waitUntilVisibleNoException( By.xpath( CLOSE_DEPENDENCIES_SECTION_BUTTON ), Application.EXPLICIT_NORMAL );
         getDisplayedElement( By.xpath( CLOSE_DEPENDENCIES_SECTION_BUTTON ) ).click();
     }
 
@@ -178,7 +178,8 @@ public class ContentBrowseFilterPanel
     {
         WebElement filterPanel = getDisplayedElement( By.xpath( FILTER_PANEL_DIV ) );
         return (Boolean) getJavaScriptExecutor().executeScript(
-            "return window.api.dom.ElementRegistry.getElementById(arguments[0]).hasFilterSet()", filterPanel.getAttribute( "id" ) );
+            "return libAdmin.store.map.get('ElementRegistry').elements.get(arguments[0]).hasFilterSet()",
+            filterPanel.getAttribute( "id" ) );
     }
 
     /**
@@ -206,7 +207,7 @@ public class ContentBrowseFilterPanel
             if ( !isEntrySelected( contentTypeDisplayName ) )
             {
                 getDynamicElement( By.xpath( itemXpath ), 2 ).click();
-                waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+                waitInvisibilityOfSpinner( Application.EXPLICIT_LONG );
             }
         }
         return getDynamicElement( By.xpath( itemXpath ), 2 ).getText();
@@ -239,7 +240,7 @@ public class ContentBrowseFilterPanel
     {
         WebElement filterPanel = getDisplayedElement( By.xpath( FILTER_PANEL_DIV ) );
         List list = (ArrayList) getJavaScriptExecutor().executeScript(
-            "return window.api.dom.ElementRegistry.getElementById(arguments[0]).getSearchInputValues().getSelectedValuesForAggregationName('contentTypes')",
+            "return libAdmin.store.map.get('ElementRegistry').elements.get(arguments[0]).getSearchInputValues().getSelectedValuesForAggregationName('contentTypes')",
             filterPanel.getAttribute( "id" ) );
         Iterator it = list.iterator();
         String value = null;

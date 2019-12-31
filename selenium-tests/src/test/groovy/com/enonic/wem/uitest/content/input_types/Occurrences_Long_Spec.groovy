@@ -26,7 +26,7 @@ class Occurrences_Long_Spec
     @Shared
     Content MIN_SAFE_CONTENT;
 
-    def "GIVEN creating of 'Long'-content WHEN just created content opened THEN correct 'Long' value present in wizard AND content is valid AND input has a green border "()
+    def "GIVEN creating of 'Long'-content WHEN just created content is opened THEN expected 'Long' value should be present in wizard AND the content is valid"()
     {
         given: "creating of  content with type 'Long'"
         VALID_LONG_CONTENT = buildLong0_1_Content( TEST_LONG );
@@ -37,17 +37,17 @@ class Occurrences_Long_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( VALID_LONG_CONTENT );
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
-        then: "actual value in the form view and expected are equals"
-        longFormViewPanel.getLongValue().equals( TEST_LONG );
+        then: "expected value should be present"
+        longFormViewPanel.getLongValue() == TEST_LONG;
 
-        and: "red icon should not be displayed on the wizard page"
+        and: "red icon should not be displayed in the wizard page"
         !wizard.isContentInvalid();
 
         and: "long input has green border (valid value)"
         longFormViewPanel.isValueInInputValid( 0 );
     }
 
-    def "GIVEN creating of content with type 'long'(not required) WHEN invalid value for long typed THEN input should be displayed with a red border AND red icon should not shown on the wizard tab"()
+    def "GIVEN creating of content with type 'long'(not required) WHEN invalid value has been typed THEN input should be displayed with a red border AND red icon should not shown on the wizard tab"()
     {
         given: "wizard for 'long' content(not required) is opened"
         Content longContent = buildLong0_1_Content( INVALID_LONG1 );
@@ -68,7 +68,7 @@ class Occurrences_Long_Spec
         longFormViewPanel.isValidationMessagePresent();
 
         and: "'Publish' menu item should be enabled, because input is not required"
-        wizard.showPublishMenu().isPublishMenuItemEnabled(  );
+        wizard.showPublishMenu().isPublishMenuItemEnabled();
     }
 
     def "GIVEN new wizard for 'long'(required) is opened WHEN not valid value for long typed THEN input with a red border AND red icon shown on the wizard tab"()
@@ -92,7 +92,7 @@ class Occurrences_Long_Spec
         longFormViewPanel.isValidationMessagePresent();
 
         and: "'Publish' menu item should be disabled, because input is required"
-        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
+        !wizard.showPublishMenu().isPublishMenuItemEnabled();
     }
 
     def "GIVEN wizard for long content(required) WHEN name has been typed AND 'Save' button has been pressed THEN 'confirmation' dialog should not appear"()

@@ -61,41 +61,6 @@ public class TestUtils
         executor.executeScript( script, value );
     }
 
-    public static boolean isCheckBoxChecked( TestSession session, String checkboxId )
-    {
-        JavascriptExecutor executor = (JavascriptExecutor) session.getDriver();
-        String script = String.format( Application.ELEMENT_BY_ID + ".isChecked()", checkboxId );
-        return (Boolean) executor.executeScript( script );
-    }
-
-    public static void createScreenCaptureWithRobot( String screenshotName )
-        throws AWTException
-    {
-        String fileName = screenshotName + ".png";
-        BufferedImage image = new Robot().createScreenCapture( new Rectangle( Toolkit.getDefaultToolkit().getScreenSize() ) );
-        File folder = new File( "build/screenshots" );
-        if ( !folder.exists() )
-        {
-            if ( !folder.mkdir() )
-            {
-                System.out.println( "Folder for snapshots was not created " );
-            }
-            else
-            {
-                System.out.println( "Folder for snapshots was created " + folder.getAbsolutePath() );
-            }
-        }
-        String fullFileName = folder.getAbsolutePath() + File.separator + fileName;
-        try
-        {
-            ImageIO.write( image, "png", new File( fullFileName ) );
-        }
-        catch ( IOException e )
-        {
-            System.out.println( "IOException was occurred" );
-        }
-    }
-
     public static String saveScreenshot( final TestSession testSession, String screenshotName )
     {
         WebDriver driver = testSession.getDriver();
@@ -156,39 +121,6 @@ public class TestUtils
             throw new TestFrameworkException( "wrong label!" );
         }
         return Integer.valueOf( label.substring( start + 1, end ) );
-
-    }
-
-    /**
-     * @param locator
-     * @param driver
-     */
-    public static void clickOnElement( final By locator, final WebDriver driver )
-    {
-        final long startTime = System.currentTimeMillis();
-        Wait<WebDriver> wait =
-            new FluentWait<WebDriver>( driver ).withTimeout( Application.EXPLICIT_NORMAL, TimeUnit.MILLISECONDS ).pollingEvery( 500,
-                                                                                                                                TimeUnit.MILLISECONDS );
-        wait.until( new ExpectedCondition<Boolean>()
-        {
-            @Override
-            public Boolean apply( WebDriver webDriver )
-            {
-                try
-                {
-                    webDriver.findElement( locator ).click();
-                    return true;
-                }
-                catch ( StaleElementReferenceException e )
-                {
-                    logger.info( e.getMessage() + "\n" );
-                    logger.info( "Trying again..." );
-                    return false;
-                }
-            }
-        } );
-        final long endTime = System.currentTimeMillis();
-        logger.info( "clickByElement time is " + ( endTime - startTime ) );
     }
 
     public static String waitNotification( final By locator, final WebDriver driver, long timeout )

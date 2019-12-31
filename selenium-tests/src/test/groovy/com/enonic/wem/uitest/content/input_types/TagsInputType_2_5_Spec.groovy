@@ -38,26 +38,26 @@ class TagsInputType_2_5_Spec
         then: "'Publish' menu item should be disabled, because 2 tags are required!"
         !contentWizardPanel.showPublishMenu().isPublishMenuItemEnabled();
 
-        and: "content should be invalid"
+        and: "content should be invalid, because one tag is added"
         contentWizardPanel.isContentInvalid();
     }
 
     def "GIVEN new wizard for Tag-content 2:5 is opened WHEN five tags has been added THEN tags-input becomes hidden and impossible to add one more tag"()
     {
-        given: "start to add a content with type 'Tag 2:5'"
+        given: "new wizard is opened:"
         Content tagContent = buildTag_2_5_Content( 5 );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
         boolean isDisplayedBefore = formViewPanel.isTagsInputDisplayed()
 
-        when: "five tags has been"
+        when: "five tags has been added:"
         contentWizardPanel.typeData( tagContent )
 
         then: "input text becomes disabled and impossible to add one more tag"
         !formViewPanel.isTagsInputDisplayed() && isDisplayedBefore;
     }
 
-    def "GIVEN five tags added has been added WHEN one of the fives tags has been removed THEN input text becomes enabled again"()
+    def "GIVEN five tags has been added WHEN one of the tags has been removed THEN input text gets enabled again"()
     {
         given: "start to add a content with type 'Tag 2:5'"
         Content tagContent = buildTag_2_5_Content( 5 );
@@ -102,7 +102,7 @@ class TagsInputType_2_5_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
         TagFormViewPanel formViewPanel = new TagFormViewPanel( getSession() );
 
-        then: "five Tags with correct name are present on the wizard page"
+        then: "five Tags with expected name are present on the wizard page"
         formViewPanel.getNumberOfTags() == 5;
 
         and:

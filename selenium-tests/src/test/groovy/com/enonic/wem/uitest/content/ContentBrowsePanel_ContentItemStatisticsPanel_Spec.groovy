@@ -22,7 +22,7 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
         findAndSelectContent( CIRCLES );
         sleep( 400 );
 
-        then: "'svg' displayed in the preview panel"
+        then: "'svg' should be displayed in the preview panel"
         contentItemPreviewPanel.isSVGDisplayed();
     }
 

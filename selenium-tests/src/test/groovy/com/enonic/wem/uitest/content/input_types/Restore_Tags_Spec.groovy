@@ -53,7 +53,6 @@ class Restore_Tags_Spec
         allContentVersionsView.getAllVersions().size() == 4;
         contentBrowsePanel.switchToBrowserTabByTitle( TAG_CONTENT.getDisplayName() );
 
-
         and: "the content becomes valid"
         !wizard.isContentInvalid();
     }
@@ -77,7 +76,5 @@ class Restore_Tags_Spec
 
         and: "red icon should appear in the wizard tab, the content becomes not valid"
         wizard.isContentInvalid();
-
-
     }
 }

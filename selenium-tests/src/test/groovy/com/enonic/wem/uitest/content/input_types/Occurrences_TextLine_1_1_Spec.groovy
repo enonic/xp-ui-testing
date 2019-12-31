@@ -13,65 +13,62 @@ class Occurrences_TextLine_1_1_Spec
 {
     @Shared
     String TEST_TEXT = "test text 1:1";
+    @Shared
+    Content TEST_CONTENT1;
 
-    def "GIVEN 'text line' content without required text has been saved WHEN the content has been opened THEN red icon should be displayed on the wizard page"()
+    def "GIVEN 'text line' content is opened (required text input is empty) WHEN the content has been saved THEN red icon should be displayed in the wizard page"()
     {
-        given: "'text line' content without required text has been saved"
-        Content textLineContent = buildTextLine1_1_Content( null );
-        ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() ).typeData( textLineContent );
+        given: "'text line' content is saved(required text was not typed)"
+        TEST_CONTENT1 = buildTextLine1_1_Content( null );
+        ContentWizardPanel wizard = selectSitePressNew( TEST_CONTENT1.getContentTypeName() ).typeData( TEST_CONTENT1 );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
-        when: "content has been opened"
+        when: "content has been saved"
         wizard.save();
 
-        then: "one text input should be displayed on  the form view"
+        then: "one text input should be displayed in the form view"
         formViewPanel.getNumberOfTextInputs() == 1;
 
-        and: "button 'Add' should not be present on the page"
+        and: "button 'Add' should not be present in the page"
         !formViewPanel.isAddButtonPresent();
 
         and: "validation message should be present, because required input is empty"
         formViewPanel.isValidationMessagePresent();
 
-        and: "red icon should be displayed on the wizard page"
+        and: "red icon should be displayed in the wizard page"
         wizard.isContentInvalid();
     }
 
-    def "GIVEN wizard for creating of 'text line'(required) is opened WHEN content saved without required text and wizard closed THEN the content should be displayed in the grid as invalid"()
+    def "GIVEN existing text-line content(required input is empty) WHEN the content has been selected THEN the content should be not valid in the browse panel"()
     {
-        given: "wizard for creating of 'text line'(required) is opened and data without required text has been typed"
-        Content textLineContent = buildTextLine1_1_Content( null );
-        ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() ).typeData( textLineContent );
+        when: "the content has been selected"
+        findAndSelectContent( TEST_CONTENT1.getContentTypeName() );
+        saveScreenshot( "textline-not-valid1" );
 
-        when: "the content is saved and wizard closed"
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
-        filterPanel.typeSearchText( textLineContent.getName() );
-        saveScreenshot( "textline-not-valid1" )
-
-        then: "the content should be displayed in the grid as invalid, because required input is not filled"
-        contentBrowsePanel.isContentInvalid( textLineContent.getName() );
+        then: "the content should be not valid in the browse panel"
+        contentBrowsePanel.isContentInvalid( TEST_CONTENT1.getName() );
     }
 
-    def "GIVEN wizard for creating of TextLine1:1 is opened WHEN saved and wizard closed THEN new text line Content should be listed  AND  saved text showed when content opened for edit "()
+    def "GIVEN new TextLine1:1 is created (text was typed) WHEN the content has been reopened THEN expected text Content should be present"()
     {
         given: "wizard for creating of TextLine1:1 is opened"
         Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
         ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() );
         TextLine1_1_FormViewPanel formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
-        when: "all required data has been typed"
+        when: "all required data has been typed and saved:"
         wizard.typeData( textLineContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        then: "new content should be listed in the grid and when it is opened"
+        and: "new content should be listed in the grid and when it is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( textLineContent );
         String valueFromUI = formViewPanel.getTextLineValue();
 
-        and: "numbers of inputs should be 1"
+        then: "numbers of inputs should be 1"
         formViewPanel.getNumberOfTextInputs() == 1;
-        and: "saved string should be present on the wizard page"
+        and: "saved string should be present in the wizard page"
         valueFromUI.contains( TEST_TEXT );
 
-        and: "red icon should not be displayed on the wizard page, because the required input is not empty"
+        and: "red icon should not be displayed in the wizard page, because the required input is not empty"
         !wizard.isContentInvalid();
     }
 
@@ -91,9 +88,9 @@ class Occurrences_TextLine_1_1_Spec
         contentBrowsePanel.getContentStatus( textLineContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
-    def "GIVEN wizard for creating of TextLine1:1 is opened WHEN required text input is empty THEN content is invalid and the 'Publish' button is disabled"()
+    def "GIVEN wizard for new TextLine1:1 is opened WHEN required text input is empty THEN content is invalid and the 'Publish' button should be disabled"()
     {
-        given: "wizard for creating of TextLine1:1 is opened"
+        given: "wizard for TextLine1:1 is opened"
         Content textLineContent = buildTextLine1_1_Content( TEST_TEXT );
         ContentWizardPanel wizard = selectSitePressNew( textLineContent.getContentTypeName() );
 

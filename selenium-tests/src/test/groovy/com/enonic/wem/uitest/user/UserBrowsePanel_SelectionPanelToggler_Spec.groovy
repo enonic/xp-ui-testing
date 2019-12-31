@@ -8,8 +8,6 @@ import com.enonic.autotests.pages.usermanager.browsepanel.UserStoreStatisticsPan
 /**
  * Created on 3/10/2017.
  *
- * Tasks:
- * enonic/xp-ui-testing#31 Add Selenium tests for 'Show Selected Items' button(grid toolbar)
  * */
 class UserBrowsePanel_SelectionPanelToggler_Spec
     extends BaseUsersSpec

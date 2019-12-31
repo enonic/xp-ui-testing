@@ -14,8 +14,8 @@ class Occurrences_ImageSelector_0_1_Spec
     @Shared
     Content TEST_IMAGE_SELECTOR_CONTENT;
 
-    def "WHEN wizard for 'Image Selector 0:1' content is opened THEN option filter input should be present, no one images selected and upload button is enabled "() {
-        when: "wizard for 'Image Selector 0:1' content is opened"
+    def "WHEN wizard for 'Image Selector 0:1' content is opened THEN option filter input should be present, there are no selected options and upload button is enabled"() {
+        when: "wizard is opened:"
         Content imageSelectorContent = buildImageSelector0_1_Content(NORD_IMAGE_DISPLAY_NAME);
         ContentWizardPanel wizard = selectSitePressNew(imageSelectorContent.getContentTypeName());
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel(getSession());

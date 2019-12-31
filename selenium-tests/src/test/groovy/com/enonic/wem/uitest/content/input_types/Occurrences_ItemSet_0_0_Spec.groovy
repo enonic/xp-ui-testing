@@ -78,7 +78,7 @@ class Occurrences_ItemSet_0_0_Spec
         wizard.isContentInvalid();
 
         and: "Publish button should be disabled"
-        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
+        !wizard.showPublishMenu().isPublishMenuItemEnabled();
 
         and: "one Item Set should be displayed"
         itemSetViewPanel.getNumberOfSets() == 1;
@@ -150,7 +150,7 @@ class Occurrences_ItemSet_0_0_Spec
         wizard.save();
 
         then: "Publish menu item should be enabled"
-        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
+        wizard.showPublishMenu().isPublishMenuItemEnabled();
 
         and: "content should be valid, because all required inputs are filled"
         !wizard.isContentInvalid();
@@ -172,22 +172,22 @@ class Occurrences_ItemSet_0_0_Spec
         !wizard.isContentInvalid();
 
         and: "Publish menu item should be enabled"
-        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
+        wizard.showPublishMenu().isPublishMenuItemEnabled();
     }
 
-    def "GIVEN existing ItemSet-content is opened WHEN the content has been published THEN 'Published' status should be displayed"()
+    def "GIVEN existing ItemSet-content is opened WHEN the content has been published THEN status gets 'Published'"()
     {
         given: "existing ItemSet-content with saved valid data"
         ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
 
         when: "the content has been published"
-        wizard.clickOnMarkAsReadyAndDoPublish(  );
+        wizard.clickOnMarkAsReadyAndDoPublish();
 
         then: "'Published' status should be displayed"
         wizard.getStatus() == ContentStatus.PUBLISHED.getValue();
     }
 
-    def "GIVEN existing ItemSet-content with saved valid data WHEN text in the htmlArea has been changed THEN 'modified' status is displayed"()
+    def "GIVEN existing ItemSet-content with saved valid data WHEN text in the htmlArea has been changed THEN status gets 'modified'"()
     {
         given: "existing ItemSet-content with saved valid data"
         ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
@@ -198,11 +198,11 @@ class Occurrences_ItemSet_0_0_Spec
         sleep( 700 );
         wizard.save().waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "'modified' status should be displayed"
+        then: "status gets 'modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing ItemSet-content with a several versions WHEN when the previous version is restored THEN expected ItemSet-data should be displayed AND status should be Published"()
+    def "GIVEN existing ItemSet-content with a several versions WHEN when the previous version is restored THEN expected ItemSet-data should be displayed AND status get modified"()
     {
         given: "content added selected and version history opened"
         ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();
@@ -216,15 +216,15 @@ class Occurrences_ItemSet_0_0_Spec
         when: "when the previous version has been restored"
         AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        versionItem.doRestoreVersion();
 
         and: "navigated to the wizard-tab again"
         contentBrowsePanel.switchToBrowserTabByTitle( ITEM_SET_WITH_DATA.getDisplayName() );
-        sleep(1500);
+        sleep( 1500 );
         saveScreenshot( "item_set_text_reverted" );
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
-        then: "correct text in the htmlArea should be reverted"
+        then: "expected text in the htmlArea should be reverted"
         itemSetViewPanel.getInnerTextFromHtmlAreas().get( 0 ) == TEST_TEXT_HTML_AREA;
 
         and: "required text should be reverted in the text-line"

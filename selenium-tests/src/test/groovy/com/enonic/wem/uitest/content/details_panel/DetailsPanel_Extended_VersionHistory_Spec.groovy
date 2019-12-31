@@ -40,7 +40,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
 
     def "GIVEN existing content is selected AND 'Version History' is opened WHEN latest 'version item' has been expanded THEN expected 'version info' should be displayed"()
     {
-        given: "existing content was selected and version history opened"
+        given: "existing content is selected and version history is opened"
         findAndSelectContent( folderContent.getName() );
         contentBrowsePanel.openContentDetailsPanel();
 

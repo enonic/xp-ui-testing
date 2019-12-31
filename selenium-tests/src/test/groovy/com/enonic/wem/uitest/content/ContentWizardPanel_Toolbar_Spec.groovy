@@ -10,7 +10,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 class ContentWizardPanel_Toolbar_Spec
     extends BaseContentSpec
 {
-    def "WHEN folder-wizard is opened AND all inputs are empty THEN all buttons on toolbar have correct state"()
+    def "WHEN folder-wizard is opened AND all inputs are empty THEN all buttons in the toolbar have correct state"()
     {
         when: "content wizard is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
@@ -31,7 +31,7 @@ class ContentWizardPanel_Toolbar_Spec
         wizard.getStatus() == ContentStatus.NEW.getValue();
     }
 
-    def "GIVEN content wizard is opened WHEN name has been typed but not saved yet THEN all buttons on toolbar have correct state"()
+    def "GIVEN content wizard is opened WHEN name has been typed but not saved yet THEN all buttons in toolbar have correct state"()
     {
         given: "content wizard is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ));
@@ -54,7 +54,7 @@ class ContentWizardPanel_Toolbar_Spec
         wizard.getStatus() == ContentStatus.NEW.getValue();
     }
 
-    def "GIVEN folder-wizard opened WHEN a name has been typed and content saved THEN all buttons on toolbar have correct state"()
+    def "GIVEN folder-wizard opened WHEN a name has been typed and content saved THEN all buttons in toolbar have correct state"()
     {
         given: "wizard is opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );

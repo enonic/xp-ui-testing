@@ -132,10 +132,6 @@ public class NewContentDialog
         return uploadButton.isEnabled();
     }
 
-    public boolean isSearchInputEnabled()
-    {
-        return searchInput.isEnabled();
-    }
 
     public void waitUntilSearchInputEnabled()
     {

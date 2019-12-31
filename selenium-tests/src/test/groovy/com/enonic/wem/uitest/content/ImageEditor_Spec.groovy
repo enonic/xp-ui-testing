@@ -11,14 +11,14 @@ import com.enonic.autotests.pages.form.ImageFormViewPanel
 class ImageEditor_Spec
     extends BaseContentSpec
 {
-    def "GIVEN image content opened WHEN 'Crop' button was pressed THEN 'Image Editor' dialog appears with required control elements"()
+    def "GIVEN image content is opened WHEN 'Crop' button has been pressed THEN 'Image Editor' dialog appears with required control elements"()
     {
         given: "content wizard opened"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = new ImageEditor( getSession() );
 
-        when: "'Crop' button was pressed"
+        when: "'Crop' button has been pressed"
         imageFormViewPanel.clickOnCropButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
         saveScreenshot( "image_editor_dialog_opened" );

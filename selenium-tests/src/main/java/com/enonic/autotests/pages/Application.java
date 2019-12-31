@@ -86,8 +86,6 @@ public class Application
 
     public static final String CAN_PUBLISH = "Can Publish";
 
-    public static String ELEMENT_BY_ID = "return window.api.dom.ElementRegistry.getElementById('%s')";
-
     protected final String GRID_CANVAS = "//div[contains(@class,'grid-canvas')]";
 
     protected final String APP_CANCEL_BUTTON_TOP = "//div[contains(@class,'cancel-button-top')]";
@@ -101,7 +99,7 @@ public class Application
 
     protected final String TEXT_INPUT = "//input[contains(@id,'TextInput')]";
 
-    protected final String CKE_TEXT_AREA = "//div[contains(@id,'cke_api.ui.text.TextArea')]";
+    protected final String CKE_TEXT_AREA = "//div[contains(@id,'cke_TextArea')]";
 
     protected final String TEXT_AREA_INPUT = "//textarea[contains(@id,'TextArea')]";
 
@@ -152,9 +150,9 @@ public class Application
 
     protected final String CHECKBOX_ELEMENT = "//div[contains(@id,'Checkbox')]";
 
-    public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']/span";
+    public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']";
 
-    public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']/span";
+    public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']";
 
     public static String ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE = "Item \"%s\" is published.";
 
@@ -174,16 +172,16 @@ public class Application
 
     public static final String SPINNER_XPATH = "//div[@class='spinner']";
 
-    public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage')]//div[@class='notification-content']/span";
+    public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage')]//div[@class='notification-content']";
 
     public String EXPECTED_NOTIFICATION_MESSAGE_XPATH =
-        "//div[contains(@id,'NotificationMessage')]//div[contains(@class,'notification-content')]//span[contains(.,'%s')]";
+        "//div[contains(@id,'NotificationMessage')]//div[contains(@class,'notification-content') and contains(.,'%s')]";
 
     public final String ERROR_NOTIFICATION_MESSAGE_XPATH =
-        "//div[contains(@id,'NotificationMessage') and @class='notification error']//div[contains(@class,'notification-content')]/span";
+        "//div[contains(@id,'NotificationMessage') and @class='notification error']//div[contains(@class,'notification-content')]";
 
     public String PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH =
-        "//div[contains(@id,'NotificationMessage') and contains(@class,'success')]//div[@class='notification-content']/span";
+        "//div[contains(@id,'NotificationMessage') and contains(@class,'success')]//div[@class='notification-content']";
 
     public static String REQUIRED_MESSAGE = "This field is required";
 

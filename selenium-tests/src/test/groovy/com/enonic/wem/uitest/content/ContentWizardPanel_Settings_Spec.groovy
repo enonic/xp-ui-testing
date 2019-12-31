@@ -16,7 +16,7 @@ class ContentWizardPanel_Settings_Spec
     @Shared
     Content content;
 
-    def "WHEN new wizard is opened THEN language should not be selected AND option filter-input should be present"()
+    def "WHEN new wizard is opened THEN language should not be selected AND language 'option filter' should be present"()
     {
         when: "content wizard is opened"
         contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
@@ -32,9 +32,9 @@ class ContentWizardPanel_Settings_Spec
         form.getOwner() == SUPER_USER;
     }
 
-    def "GIVEN saving a content with a language WHEN content has been opened  THEN correct language should be present in settings"()
+    def "GIVEN new content with a language is added WHEN content has been reopened THEN expected language should be present in settings"()
     {
-        given: "saving a content with a language"
+        given: "new content with a language is added"
         ContentSettings settings = ContentSettings.builder().language( NORSK_LANGUAGE ).build();
         content = buildFolderWithSettingsContent( "folder", "content settings", settings );
         addContent( content );

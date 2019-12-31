@@ -22,7 +22,7 @@ class GeoPoint_Spec
             geopointContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "just created content is selected and 'Edit' button clicked"
+        when: "just created content is opened"
         findAndSelectContent( geopointContent.getName() ).clickToolbarEditAndSwitchToWizardTab();
         GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
@@ -30,7 +30,7 @@ class GeoPoint_Spec
         geoPointFormViewPanel.getGeoPointValue() == TEST_GEO_LOCATION;
     }
 
-    def "GIVEN wizard for adding a content with type 'Geo Location' opened WHEN value of 'Geo Location' is not within range and content saved and wizard closed THEN incorrect value is not saved"()
+    def "GIVEN 'Geo Location' - incorrect value has been typed AND Save pressed WHEN the content has been reopened THEN incorrect value should not be saved and displayed"()
     {
         given: "value of 'Geo Location' is not within range"
         Content notValidContent = buildGeoPoint0_0_Content( WRONG_GEO_LOCATION );
@@ -54,7 +54,7 @@ class GeoPoint_Spec
         Content notValidContent = buildGeoPoint1_1_Content( WRONG_GEO_LOCATION );
         ContentWizardPanel wizard = selectSitePressNew( notValidContent.getContentTypeName() );
 
-        when: "data was typed and 'Save' button on the toolbar pressed"
+        when: "data has been typed and 'Save' button pressed"
         wizard.typeData( notValidContent );
         GeoPointFormViewPanel geoPointFormViewPanel = new GeoPointFormViewPanel( getSession() );
 
@@ -65,7 +65,7 @@ class GeoPoint_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN wizard for adding a content with type 'Geo Location' is opened WHEN value of 'Geo Location' is not within range THEN red icon present in the browse panel and content is not valid "()
+    def "GIVEN wizard for 'Geo Location 1:1' is opened WHEN incorrect value has been typed AND Save button pressed THEN red icon should be present in the browse panel and content is not valid "()
     {
         given: "wizard for adding a content with type 'Geo Location' is opened"
         Content notValidContent = buildGeoPoint1_1_Content( WRONG_GEO_LOCATION );
@@ -81,7 +81,7 @@ class GeoPoint_Spec
         contentBrowsePanel.isContentInvalid( notValidContent.getName() );
     }
 
-    def "GIVEN valid data has been typed WHEN switched to the browse panel THEN the content displayed as valid "()
+    def "GIVEN valid data has been typed AND Save button pressed WHEN go to the browse panel THEN the content is valid"()
     {
         given: "wizard opened and the valid data has been typed"
         Content validContent = buildGeoPoint1_1_Content( TEST_GEO_LOCATION );
@@ -98,7 +98,7 @@ class GeoPoint_Spec
         !contentBrowsePanel.isContentInvalid( validContent.getName() );
     }
 
-    def "GIVEN wizard for new geoPoint is opened WHEN and the valid data has been typed THEN red icon should not be present on the wizard "()
+    def "GIVEN wizard for new geoPoint is opened WHEN and the valid data has been typed THEN red icon should not be present in the wizard "()
     {
         when: "wizard opened and the valid data has been typed"
         Content validContent = buildGeoPoint1_1_Content( TEST_GEO_LOCATION );

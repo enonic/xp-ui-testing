@@ -18,7 +18,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class WizardPanel<T>
     extends Application
 {
-    public static String TABS_NAVIGATOR_LINK = "//ul[contains(@id,'wizard.WizardStepNavigator')]";
+    public static String TABS_NAVIGATOR_LINK = "//ul[contains(@id,'WizardStepNavigator')]";
 
     public static String NAVIGATOR_TAB_ITEM_LINK = TABS_NAVIGATOR_LINK + "//li[child::a[contains(.,'%s')]]";
 

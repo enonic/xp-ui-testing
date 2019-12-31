@@ -10,7 +10,7 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 13.10.2016.
- * Verifies the bug: XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
+ * Verifies XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
  * */
 @Stepwise
 class Restore_Version_Crop_Image_Spec
@@ -22,7 +22,7 @@ class Restore_Version_Crop_Image_Spec
     @Shared
     Integer CROPPED_IMAGE_HEIGHT;
 
-    def "GIVEN existing image WHEN handler moved up and image has been cropped AND changes applied THEN new 'version history item' appeared in the version-view"()
+    def "GIVEN existing image is opened WHEN handler moved up and image has been cropped AND changes applied THEN new 'version history item' appeared in the version-view"()
     {
         given: "existing image"
         findAndSelectContent( IMPORTED_MAN_IMAGE );

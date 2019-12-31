@@ -41,23 +41,23 @@ class Occurrences_HtmlArea_0_0_Spec
         selectSitePressNew( htmlAreaContent.getContentTypeName() );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
 
-        then: "one text area should be present"
+        then: "one html-area should be present:"
         formViewPanel.getNumberOfAreas() == 1;
         and: "'Add new area' button should be present"
         formViewPanel.isAddButtonPresent();
 
-        and: "'Source Button button should be displayed"
+        and: "'Source Button' button should be displayed"
         !formViewPanel.isSourceCodeButtonDisplayed();
     }
 
-    def "GIVEN HtmlArea(0:0) content with a text is added WHEN the content has been opened THEN expected text should be present in the editor"()
+    def "GIVEN HtmlArea(0:0) content with a text is added WHEN the content has been reopened THEN expected text should be present in the html-area"()
     {
         given: "new HtmlArea content is added'"
         Content tinyMceContent = buildHtmlArea0_0_Content( 1, TEST_TEXT1 );
         ContentWizardPanel wizard = selectSitePressNew( tinyMceContent.getContentTypeName() );
         wizard.typeData( tinyMceContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "the content has been opened"
+        when: "the content has been reopened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         List<String> actual = formViewPanel.getDataFromCKEAreas();

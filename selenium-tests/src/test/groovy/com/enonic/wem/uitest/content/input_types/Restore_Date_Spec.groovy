@@ -22,15 +22,15 @@ class Restore_Date_Spec
     @Shared
     Content DATE_CONTENT
 
-    def "GIVEN existing date content WHEN date has been changed THEN new 'version item' should appear in the version history panel"()
+    def "GIVEN date content is saved WHEN date has been changed THEN new 'version item' should appear in the version history panel"()
     {
-        given: "existing date content"
+        given: "date content is saved"
         DATE_CONTENT = buildDate1_1_Content( DATE_V1 );
         ContentWizardPanel wizard = selectSitePressNew( DATE_CONTENT.getContentTypeName() );
         wizard.typeData( DATE_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "the content is opened and date was changed"
+        when: "the content is opened and date has been updated"
         findAndSelectContent( DATE_CONTENT.getName() ).clickToolbarEdit();
         DateFormViewPanel formViewPanel = new DateFormViewPanel( getSession() );
         formViewPanel.typeDate( DATE_V2 );

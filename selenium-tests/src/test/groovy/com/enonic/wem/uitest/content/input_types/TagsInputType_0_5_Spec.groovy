@@ -14,7 +14,7 @@ class TagsInputType_0_5_Spec
 
 {
 
-    def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN no one tag added and  'Save' and 'Publish' buttons pressed THEN new content with status 'online' appears "()
+    def "GIVEN wizard for  Tag-content (0:5) is opened WHEN no one tag added and 'Save' and 'Publish' buttons pressed THEN new content with status 'PUBLISHED' appears"()
     {
         given: "start to add a content with type 'Tag 0:5'"
         Content tagContent = buildTag_0_5_Content( 0 );
@@ -29,13 +29,11 @@ class TagsInputType_0_5_Spec
         contentBrowsePanel.getContentStatus( tagContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
-
-    def "GIVEN wizard for adding a Tag-content (0:5) opened WHEN one tag added and 'Save' button pressed and just created content opened THEN only one Tag with correct name present on wizard "()
+    def "GIVEN wizard for Tag-content(0:5) is opened WHEN one tag added and 'Save' button pressed and just created content opened THEN only one Tag with correct name present on wizard "()
     {
         given: "start to add a content with type 'Tag 0:5'"
         Content tagContent = buildTag_0_5_Content( 1 );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
-
 
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().closeBrowserTab().switchToBrowsePanelTab();
@@ -84,7 +82,6 @@ class TagsInputType_0_5_Spec
         Content tagContent = buildTag_0_5_Content( 5 );
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
-
         when: "type a data and 'save' and open for edit new created content"
         contentWizardPanel.typeData( tagContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tagContent );
@@ -96,7 +93,6 @@ class TagsInputType_0_5_Spec
         String[] tags = [TAG_1, TAG_2, TAG_3, TAG_4, TAG_5];
         formViewPanel.getTagsText().containsAll( tags.toList() );
     }
-
 
     private PropertyTree buildData( int numberOfTags )
     {

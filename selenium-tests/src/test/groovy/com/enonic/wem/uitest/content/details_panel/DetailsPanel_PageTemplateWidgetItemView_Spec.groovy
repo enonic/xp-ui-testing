@@ -53,7 +53,7 @@ class DetailsPanel_PageTemplateWidgetItemView_Spec
         view.getTemplateNotUsedMessage() == PageTemplateWidgetItemView.TEMPLATE_NOT_USED_MESSAGE;
     }
 
-    def "GIVEN existing site with a controller WHEN the site has been selected AND Details Panel opened THEN 'Custom' template should be displayed on the widget"()
+    def "GIVEN existing site with a controller WHEN the site has been selected AND Details Panel opened THEN 'Custom' template should be displayed in the widget"()
     {
         given: "existing site with a controller"
         SITE = buildMyFirstAppSite( "site" );

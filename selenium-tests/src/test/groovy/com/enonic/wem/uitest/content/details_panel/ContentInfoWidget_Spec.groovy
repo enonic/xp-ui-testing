@@ -21,7 +21,7 @@ class ContentInfoWidget_Spec
     @Shared
     Content FOLDER;
 
-    def "WHEN existing folder has been selected and Details panel opened THEN expected status and actual content-properties should be present"()
+    def "WHEN existing folder has been selected and Details panel opened THEN expected status and expected content-properties should be present"()
     {
         given: "existing folder"
         FOLDER = buildFolderContent( "folder", "info_widget_test" );

@@ -16,8 +16,6 @@ public class TimeFormViewPanel
 {
     public static String TIME_PROPERTY = "time";
 
-    private final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
-
     private final String TIME_PICKER = "//div[contains(@id,'TimePicker')]";
 
     private final String ICON_CLOCK = TIME_PICKER + "//button[contains(@class,'icon-clock')]";

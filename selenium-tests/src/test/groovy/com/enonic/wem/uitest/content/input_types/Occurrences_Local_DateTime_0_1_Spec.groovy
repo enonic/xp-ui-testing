@@ -15,90 +15,90 @@ class Occurrences_Local_DateTime_0_1_Spec
     @Shared
     String NOT_VALID_DATE_TIME = "016-03-15 19:01";
 
-    def "GIVEN wizard for adding a Local DateTime without timezone opened WHEN date time input was clicked THEN date time picker popup dialog is displayed"()
+    def "GIVEN wizard for adding a Local DateTime without timezone opened WHEN click in the date time input THEN date time picker popup dialog is displayed"()
     {
         given: "wizard for adding a DateTime with timezone opened"
         Content dateTimeContent = buildDateTime0_1_Content( VALID_DATE_TIME1 );
         selectSitePressNew( dateTimeContent.getContentTypeName() );
 
-        when: "DateTime input has been clicked"
+        when: "Click in the dateTime input:"
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
         DateTimePickerPopup picker = formViewPanel.showPicker();
         saveScreenshot( "date-time-picker-with-timezone" );
 
-        then: "'date time picker' popup dialog is displayed"
+        then: "'date time picker' popup dialog should appear"
         picker.isDisplayed();
 
-        and: "time zone not displayed"
+        and: "time zone should not be displayed"
         !picker.getTimePickerPopup().isTimeZoneDisplayed();
     }
 
-    def "GIVEN wizard for DateTime(not required) is opened WHEN only name has been typed THEN dateTime input is empty and content has a valid status"()
+    def "GIVEN wizard for DateTime(not required) is opened WHEN a name has been typed THEN the content should be valid, because dateTime input is not required"()
     {
-        given: "start to add a content with type local 'DateTime(0:1)'"
+        given: "open new wizard 'DateTime(0:1)'"
         Content dateTimeContent = buildDateTime0_1_Content( VALID_DATE_TIME1 );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() );
 
-        when: "only a name typed and dateTime was not typed"
+        when: "a name has been typed"
         wizard.typeDisplayName( dateTimeContent.getDisplayName() );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        then: "date time input is present and enabled"
+        then: "date time input should be enabled"
         formViewPanel.isDateTimeInputDisplayed();
 
-        and: "Add button not displayed on the form"
+        and: "'Add' button should not be displayed in the form"
         !formViewPanel.isAddButtonPresent();
 
         and: "content should be valid, because 'datetime' is not required"
         !wizard.isContentInvalid(  );
 
-        and: "and date time input is empty"
+        and: "date time input should be empty"
         formViewPanel.getDateTimeValue().isEmpty();
     }
 
-    def "GIVEN wizard for a Local DateTime(not required) is opened WHEN not valid dateTime has been typed THEN the content should be valid, because the input is not required"()
+    def "GIVEN wizard for a Local DateTime(not required) is opened WHEN writing dateTime in wrong format THEN the content should be valid, because the input is not required"()
     {
         given: "start to add a content with type local 'DateTime(not required)'"
         Content dateTimeNotValid = buildDateTime0_1_Content( NOT_VALID_DATE_TIME );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeNotValid.getContentTypeName() );
 
-        when: "all data has been typed"
+        when: "writing dateTime in wrong format:"
         wizard.typeData( dateTimeNotValid );
 
         then: "the content should be valid, because the input is not required"
         !wizard.isContentInvalid(  );
     }
 
-    def "GIVEN 'date time' wizard is opened WHEN content saved without a 'date time' THEN wizard has no a red icon"()
+    def "GIVEN 'date time' wizard is opened AND dateTime input is empty WHEN content has been saved THEN wizard has no red icon"()
     {
         given: "new content with type date time added'"
         Content dateTimeContent = buildDateTime0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
 
-        when: "content has been opened"
+        when: "content has been saved"
         wizard.save();
         saveScreenshot( "wizard-datetime01-valid" );
 
-        then: "content is valid and validation message is not displayed"
+        then: "content is valid and validation message should not be displayed"
         !formViewPanel.isValidationMessagePresent();
 
-        and: "'Publish' button is enabled"
+        and: "'Publish' menu item gets enabled"
         wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
-    def "GIVEN 'date time' wizard is opened WHEN 'date time' is empty and content was saved and wizard closed THEN content should be displayed as valid in the grid"()
+    def "GIVEN 'date time' wizard is opened AND dateTime input is empty WHEN the content has been saved and wizard closed THEN content should be valid in the browse panel"()
     {
         given: "new content with type 'DateTime(0:1)' added'"
         Content dateTimeContent = buildDateTime0_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( dateTimeContent.getContentTypeName() ).typeData( dateTimeContent );
 
-        when: "'date time' is empty and content was saved and wizard closed"
+        when: "the content has been saved and wizard closed"
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( dateTimeContent.getName() );
         saveScreenshot( "date-time01-without-date" );
 
-        then: "content should be displayed as valid in the grid, because the 'date time' field not required"
+        then: "content should be valid in the browse panel, because the 'date time' field is not required"
         !contentBrowsePanel.isContentInvalid( dateTimeContent.getName() );
     }
 }

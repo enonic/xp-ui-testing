@@ -24,7 +24,7 @@ class Occurrences_ComboBox_0_0_Spec
 
     def "WHEN wizard for Combo box-content(0:0) is opened THEN option filter input should be present"()
     {
-        when: "start to add a content with type 'ComboBox 0:0'"
+        when: "wizard is opened: 'ComboBox 0:0'"
         Content comboBoxContent = buildComboBox0_0_Content( 1 );
         selectSitePressNew( comboBoxContent.getContentTypeName() );
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
@@ -43,19 +43,19 @@ class Occurrences_ComboBox_0_0_Spec
             comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "combobox content has been opened"
+        when: "combobox content has been reopened"
         findAndSelectContent( comboBoxContent.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
-        then: "no one options should be present in form view"
+        then: "options should not be selected:"
         optValues.size() == 0;
 
         and: "options filter input should be enabled"
         formViewPanel.isOptionFilterInputEnabled();
     }
 
-    def "GIVEN new Combobox-content(0:0) with one option is added WHEN the content is opened THEN one selected option and button 'Remove' should be present in the form view"()
+    def "GIVEN new Combobox-content(0:0) (one option is selected) WHEN the content is reopened THEN one selected option and button 'Remove' should be displayed"()
     {
         given: "new content with type ComboBox 0_0 was added"
         Content comboBoxContent = buildComboBox0_0_Content( 1 );
@@ -63,7 +63,7 @@ class Occurrences_ComboBox_0_0_Spec
             comboBoxContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "content has been opened"
+        when: "content has been reopened"
         findAndSelectContent( comboBoxContent.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();

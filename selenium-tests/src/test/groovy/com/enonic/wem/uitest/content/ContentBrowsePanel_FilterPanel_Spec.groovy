@@ -21,7 +21,7 @@ class ContentBrowsePanel_FilterPanel_Spec
     @Shared
     Content TEST_FOLDER1
 
-    def "WHEN the 'shortcut' checkbox has been checked  in Filter Panel THEN number of rows in the grid should be equals to number in Filter Panel"()
+    def "WHEN the 'shortcut' checkbox has been checked in Filter Panel THEN number of rows in the grid should be equals to number in Filter Panel"()
     {
         given: "'Filter panel' is opened"
         Content content = buildShortcut( "shortcut", null, "filter panel test" )

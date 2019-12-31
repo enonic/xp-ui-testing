@@ -19,9 +19,9 @@ class OptionSet_Spec
     @Shared
     Content OPTION_SET;
 
-    def "GIVEN wizard for OptionSet content is opened WHEN 'radio1' button in the 'single selection' clicked AND 'Save' button pressed THEN red circle should be present on the wizard page"()
+    def "GIVEN wizard for OptionSet content is opened WHEN 'radio1' button in the 'single selection' clicked AND 'Save' button pressed THEN red circle should appear in the wizard page"()
     {
-        given: "wizard for OptionSet content is opened"
+        given: "wizard for OptionSet is opened"
         OPTION_SET = build_OptionSet_Content();
         ContentWizardPanel wizard = selectSitePressNew( OPTION_SET.getContentTypeName() );
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
@@ -34,11 +34,11 @@ class OptionSet_Spec
         wizard.save();
         saveScreenshot( "opt_set_radio1_empty" );
 
-        then: "red circle should be present on the wizard page, because required inputs are not filled"
+        then: "red circle should appear in the wizard page, because required inputs are not filled"
         wizard.isContentInvalid();
     }
 
-    def "GIVEN existing 'Option Set' content is selected in grid WHEN required fields are empty THEN the content should be displayed as invalid"()
+    def "WHEN existing 'Option Set' content is selected(required fields are empty) THEN the content should invalid in browse panel"()
     {
         when:
         findAndSelectContent( OPTION_SET.getName() );
@@ -47,60 +47,59 @@ class OptionSet_Spec
         contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing OptionSet content(not valid) is opened WHEN required option in the 'Single Selection' is clicked THEN the content should be valid in the wizard"()
+    def "GIVEN existing OptionSet content(not valid) is opened WHEN required option in the 'Single Selection' is selected THEN the content gets valid in the wizard"()
     {
-
         given: "existing OptionSet content(not valid) is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
 
-        when: "one required option has been clicked"
+        when: "Second radio button has been clicked:"
         optionSetFormView.getSingleSelectionOptionSet().clickOnSecondRadio();
 
         and: "the content has been saved"
         wizardPanel.save();
         saveScreenshot( "opt_set_is_valid1" );
 
-        then: "red icon should not be displayed on the wizard page"
+        then: "the content gets valid:"
         !wizardPanel.isContentInvalid();
     }
 
-    def "GIVEN existing 'Option Set' content with selected options WHEN it is selected in the grid THEN the content should be displayed as valid"()
+    def "GIVEN existing valid 'Option Set' has been selected in the grid THEN red icon should not be visible in browse panel"()
     {
-        when: "existing 'Option Set' content with selected options"
+        when: "existing 'Option Set' has been selected"
         findAndSelectContent( OPTION_SET.getName() );
 
-        then: "the content should be displayed as valid"
+        then: "the content should be valid"
         !contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing valid 'Option Set' content WHEN it is opened AND first radio button clicked AND required input has been filled THEN the content should be displayed as valid"()
+    def "GIVEN existing valid 'Option Set' content is opened WHEN first radio button has been clicked AND required input has been filled THEN the content gets valid"()
     {
-        given: "existing 'Option Set' content with selected options"
+        given: "existing 'Option Set' content is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
 
-        when:
+        when: "first radio button clicked AND required input has been filled"
         optionSetFormView.getSingleSelectionOptionSet().clickOnFirstRadio().typeSetName( "test" );
         and: "the content has been saved"
         wizardPanel.save();
 
-        then: "red icon should not be displayed on the page"
+        then: "red icon should not be displayed in the wizard"
         !wizardPanel.isContentInvalid();
     }
 
-    def "GIVEN existing 'Option Set' content (option was changed) WHEN it is selected in the grid THEN the content should be displayed as valid"()
+    def "GIVEN existing 'Option Set' content(updated) WHEN it is selected in the grid THEN the content should be valid in browse panel"()
     {
-        when: "existing 'Option Set' content with selected options"
+        when: "existing 'Option Set' content(updated) has been selected"
         findAndSelectContent( OPTION_SET.getName() );
 
         then: "the content should be displayed as valid"
         !contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing 'Option Set' content is opened WHEN option in 'Multi selection' has been clicked AND it is saved without required inputs THEN red icon should be displayed on the wizard page"()
+    def "GIVEN existing 'Option Set' is opened WHEN option in 'Multi selection' has been clicked AND it is saved without required inputs THEN red icon should be displayed on the wizard page"()
     {
-        given: "existing 'Option Set' content is opened"
+        given: "existing 'Option Set' is opened"
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
         optionSetFormView.getSingleSelectionOptionSet().clickOnSecondRadio();
@@ -117,19 +116,19 @@ class OptionSet_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN existing option set content is opened WHEN image was selected in the multi selection"()
+    def "GIVEN existing 'option set' is opened WHEN image has been selected in the multi selection THEN red icon gets not visible"()
     {
-        given: "existing 'Option Set' content is opened"
+        given: "existing 'Option Set'  is opened"
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
 
-        when: "image was selected in the multi selection"
+        when: "image has been selected"
         optionSetFormView.getMultiSelectionOptionSet().selectImage( "nord" );
         and: "'Save' button pressed"
         wizard.save();
         saveScreenshot( "opt_set_image_selected" );
 
-        then: "red icon should not be displayed"
+        then: "red icon gets not visible"
         !wizard.isContentInvalid()
     }
 

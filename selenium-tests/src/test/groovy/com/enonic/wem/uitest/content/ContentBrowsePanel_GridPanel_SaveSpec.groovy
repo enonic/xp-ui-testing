@@ -14,7 +14,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     @Shared
     Content PARENT_FOLDER;
 
-    def "GIVEN wizard for folder is opened and data typed WHEN folder has been saved and wizard closed THEN new folder should be listed in the grid"()
+    def "Preconditions: parent folder should be created"()
     {
         given: "folder-wizard is opened and data typed"
         PARENT_FOLDER = buildFolderContent( "parent-folder", "test folder" );

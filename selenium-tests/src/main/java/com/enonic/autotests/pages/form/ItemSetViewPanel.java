@@ -35,7 +35,7 @@ public class ItemSetViewPanel
 
     private final String TEXT_LINE_INPUTS = FORM_ITEM_SET_VIEW + "//input[contains(@id,'TextInput')]";
 
-    protected final String HTML_AREA_INPUTS = FORM_ITEM_SET_VIEW + "//textarea[contains(@id,'api.ui.text.TextArea')]";
+    protected final String HTML_AREA_INPUTS = FORM_ITEM_SET_VIEW + "//textarea[contains(@id,'TextArea')]";
 
     protected final String ADD_ITEM_SET_BUTTON = FORM_VIEW + "//button/span[text()='Add ItemSet']";
 

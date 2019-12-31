@@ -41,7 +41,7 @@ class DatesInDecember_Spec
         dateFormViewPanel.getDateValue() == NANSEN_BIRTH;
     }
 
-    def "GIVEN date wizard is opened WHEN date in December has been typed AND saved THEN expected value displayed in the wizard"()
+    def "GIVEN date wizard is opened WHEN date in December has been typed AND saved THEN expected value should be displayed in the wizard"()
     {
         given: "date wizard is opened"
         Content dateContent = buildDate1_1_Content( DATE_IN_DECEMBER1 );

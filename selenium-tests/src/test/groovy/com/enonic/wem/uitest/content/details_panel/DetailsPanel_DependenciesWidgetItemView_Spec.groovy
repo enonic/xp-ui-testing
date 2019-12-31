@@ -30,7 +30,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
     @Shared
     String TEST_SITE_NAME = NameHelper.uniqueName( "site" );
 
-    def "WHEN image has been selected and  'Dependencies' menu item has been clicked THEN Dependencies Widget should appear"()
+    def "WHEN image has been selected and 'Dependencies' menu item has been clicked THEN Dependencies Widget should appear"()
     {
         when: "image content is selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );

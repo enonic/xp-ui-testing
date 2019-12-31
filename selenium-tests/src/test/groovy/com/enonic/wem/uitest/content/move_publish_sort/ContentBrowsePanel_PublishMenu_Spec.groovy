@@ -15,13 +15,13 @@ class ContentBrowsePanel_PublishMenu_Spec
     @Shared
     Content FOLDER_CONTENT;
 
-    def "GIVEN 'New' folder is added in the root WHEN folder is selected THEN 'Publish'-menu should be enabled AND Publish button should be enabled"()
+    def "GIVEN 'New' folder is added WHEN folder has been selected THEN 'Publish'-menu should be enabled AND Publish button should be enabled"()
     {
         given: "existing content in root"
         FOLDER_CONTENT = buildFolderContent( "publish", "publish menu test" );
         addReadyContent( FOLDER_CONTENT );
 
-        when: "the content selected"
+        when: "the content has been selected"
         findAndSelectContent( FOLDER_CONTENT.getName() );
         saveScreenshot( "test_publish_menu_offline_content" );
 
@@ -32,7 +32,7 @@ class ContentBrowsePanel_PublishMenu_Spec
         contentBrowsePanel.isPublishButtonEnabled();
     }
 
-    def "GIVEN existing 'New' folder in the root WHEN the folder has been published THEN 'Publish'-menu is available AND 'Unpablish' menu item enabled"()
+    def "GIVEN existing 'New' folder WHEN the folder has been published THEN 'Publish'-menu should be available AND 'Unpablish' menu item enabled"()
     {
         when: "the folder has been published"
         findAndSelectContent( FOLDER_CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();

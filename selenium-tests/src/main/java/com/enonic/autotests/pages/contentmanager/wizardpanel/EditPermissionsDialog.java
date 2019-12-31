@@ -254,8 +254,8 @@ public class EditPermissionsDialog
             saveScreenshot( "err_inherit_checkbox" );
             throw new TestFrameworkException( "inherit permissions checkbox was not found!" );
         }
-        WebElement checkbox = findElement( By.xpath( INHERIT_PERMISSIONS_CHECKBOX ) );
-        return TestUtils.isCheckBoxChecked( getSession(), checkbox.getAttribute( "id" ) );
+        WebElement checkbox = findElement( By.xpath( INHERIT_PERMISSIONS_CHECKBOX+"//input[@type='checkbox']" ) );
+        return checkbox.isSelected();
     }
 
     public boolean isOverwriteChildPermissionsCheckBoxChecked()
@@ -265,8 +265,8 @@ public class EditPermissionsDialog
             saveScreenshot( "err_overwrite_checkbox" );
             throw new TestFrameworkException( "overwrite child permissions checkbox was not found!" );
         }
-        WebElement checkbox = findElement( By.xpath( OVERWRITE_CHILD_PERMISSIONS_CHECKBOX ) );
-        return TestUtils.isCheckBoxChecked( getSession(), checkbox.getAttribute( "id" ) );
+        WebElement checkbox = findElement( By.xpath( OVERWRITE_CHILD_PERMISSIONS_CHECKBOX+ "//input[@type='checkbox']" ) );
+        return checkbox.isSelected();
     }
 
     public EditPermissionsDialog setInheritPermissionsCheckbox( boolean value )

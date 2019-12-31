@@ -19,7 +19,7 @@ class ContentWizard_UndoDelete_Spec
     @Shared
     Content CONTENT;
 
-    def "GIVEN existing folder WHEN the folder has been published THEN 'Online' status should be displayed"()
+    def "GIVEN existing folder WHEN the folder has been published THEN 'PUBLISHED' status should be displayed"()
     {
         given: "existing folder"
         CONTENT = buildFolderContent( "folder", "unpublish of deleted" )
@@ -32,9 +32,9 @@ class ContentWizard_UndoDelete_Spec
         contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
-    def "GIVEN existing 'online' folder is opened  WHEN 'Delete' button has been pressed and confirmed THEN 'Undo delete' button should be present on the toolbar"()
+    def "GIVEN existing 'PUBLISHED' folder is opened  WHEN 'Delete' button has been pressed and confirmed THEN 'Undo delete' button should be present on the toolbar"()
     {
-        given: "existing 'online' folder is opened"
+        given: "existing 'PUBLISHED folder is opened"
         ContentWizardPanel wizard = findAndSelectContent( CONTENT.getName() ).clickToolbarEdit();
 
         boolean isDisplayedBeforeDeleting = wizard.isUndoDeleteButtonDisplayed();
@@ -59,7 +59,7 @@ class ContentWizard_UndoDelete_Spec
         !isDisplayedBeforeDeleting;
     }
 
-    def "GIVEN existing 'Deleted' content WHEN the content selected and 'Undo delete' has been pressed THEN the content should be 'Online'"()
+    def "GIVEN existing 'Deleted' content WHEN the content selected and 'Undo delete' has been pressed THEN the content should be 'PUBLISHED'"()
     {
         when: "the content selected and 'Undo delete' has been pressed"
         findAndSelectContent( CONTENT.getName() ).clickToolbarUndodelete();

@@ -17,7 +17,7 @@ public class SingleSelectorRadioFormView
 {
     public static String RADIO_OPTION = "radio-option";
 
-    private String ALL_RADIO_INPUTS = "//div[contains(@id,'radiobutton.RadioButton')]//input[@type='radio']";
+    private String ALL_RADIO_INPUTS = "//div[contains(@id,'RadioButton')]//input[@type='radio']";
 
     private String RADIO_INPUT = "//span[contains(@class,'radio-button') and child::label[text()='%s']]//input";
 

@@ -15,7 +15,7 @@ public class SingleSelectionOptionSetView
     extends Application
 {
     private final String CONTAINER =
-        "//div[contains(@id,'api.form.FormView')]//div[contains(@id,'FormOptionSetView') and descendant::div[text()='Single selection']]";
+        "//div[contains(@id,'FormView')]//div[contains(@id,'FormOptionSetView') and descendant::div[text()='Single selection']]";
 
     private final String RADIO_1 = CONTAINER + "//span[contains(@id,'RadioButton') and child::label[text()='Option 1']]";
 

@@ -31,7 +31,7 @@ class FieldSet_Spec
     String TEST_DOUBLE = "123.4";
 
 
-    def "GIVEN adding a content with a fieldset WHEN all required fields are typed THEN content should be displayed as valid"()
+    def "GIVEN fieldset is saved WHEN all required fields are filled THEN content should be valid in Browse Panel"()
     {
         given: "'fieldset' content with all required values is saved"
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );

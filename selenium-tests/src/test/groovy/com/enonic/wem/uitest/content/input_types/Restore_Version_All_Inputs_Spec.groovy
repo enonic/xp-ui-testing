@@ -88,7 +88,7 @@ class Restore_Version_All_Inputs_Spec
 
         when: "all data in inputs are changed"
         formView.getComboBoxFormViewPanel().clickOnLastRemoveButton().typeNameOfOptionAndSelectOption( COMBOBOX_OPTION_V2 );
-        formView.getCheckBoxFormViewPanel().setChecked( false );
+        formView.getCheckBoxFormViewPanel().clickOnCheckBox(  );
         formView.getLongFormViewPanel().typeLongValue( LONG_V2 );
         formView.getDoubleFormViewPanel().typeDoubleValue( DOUBLE_V2 );
         formView.getGeoPointFormViewPanel().typeGeoPoint( GEO_POINT_V2 );

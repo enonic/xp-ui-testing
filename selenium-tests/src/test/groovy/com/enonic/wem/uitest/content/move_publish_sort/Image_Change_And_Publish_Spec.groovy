@@ -15,7 +15,7 @@ import spock.lang.Stepwise
 class Image_Change_And_Publish_Spec
     extends BaseContentSpec
 {
-    //verifies status on the wizard page
+
     def "GIVEN existing 'Published' image WHEN the image has been zoomed AND changes were applied THEN status is getting 'Modified'"()
     {
         given: "existing 'online' image"

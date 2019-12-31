@@ -46,7 +46,7 @@ class Publish_InvalidContent_Spec
         contentBrowsePanel.isCreateTaskButtonDisplayed();
     }
 
-    def "GIVEN existing parent folder with not valid child WHEN parent content has been selected and 'Publish' button clicked THEN 'Publish Now' button on the modal dialog should be disabled"()
+    def "GIVEN existing parent folder with not valid child WHEN parent content has been selected and 'Publish' button clicked THEN 'Publish Now' button in the modal dialog should be disabled"()
     {
         setup: "parent folder has been added"
         Content parentFolder = buildFolderContent( "folder", "publish not valid content" );
@@ -64,7 +64,7 @@ class Publish_InvalidContent_Spec
         and: "'include child' icon was clicked"
         contentPublishDialog.includeChildren( true );
 
-        then: "'Publish Now' button on the 'Content publish' dialog should be disabled"
+        then: "'Publish Now' button in 'Content publish' dialog should be disabled"
         !contentPublishDialog.isPublishButtonEnabled();
 
         //and: "warning message should be displayed on the modal dialog"

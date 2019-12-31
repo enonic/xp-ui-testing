@@ -22,15 +22,15 @@ class ContentPublishDialog_Sibling_Folders_Spec
     @Shared
     Content FOLDER2
 
-    def "GIVEN two folders has been added in root directory WHEN both folders was selected and 'Publish' button clicked THEN both contents should be removable on the dialog"()
+    def "GIVEN two folders are added WHEN both folders have been selected selected and 'Publish' wizard is opened THEN both folders should be removable in the dialog"()
     {
-        given: "folder has been added in root directory"
+        given: "folder has been added in root directory:"
         FOLDER1 = buildFolderContent( "folder", "publishing test1" );
         FOLDER2 = buildFolderContent( "folder", "publishing test2" );
         addReadyContent( FOLDER1 );
         addReadyContent( FOLDER2 );
 
-        when: "Both folders were selected and 'Publish' button clicked"
+        when: "'Publish' wizard has been opened"
         findAndSelectContent( FOLDER1.getName() )
         findAndSelectContent( FOLDER2.getName() )
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
@@ -49,7 +49,7 @@ class ContentPublishDialog_Sibling_Folders_Spec
         contentPublishDialog.getContentStatus( FOLDER2.getDisplayName() ) == ContentStatus.NEW.getValue();
     }
 
-    def "GIVEN two existing folders are selected AND Publish Wizard opened WHEN 'remove' icon has been clicked THEN one folder should be removed from the wizard"()
+    def "GIVEN two existing folders are selected AND Publish Wizard opened WHEN 'remove' icon has been clicked THEN one folder should be removed in modal dialog"()
     {
         given: "Both folders were selected and 'Publish' button clicked"
         findAndSelectContent( FOLDER1.getName() )
@@ -84,7 +84,7 @@ class ContentPublishDialog_Sibling_Folders_Spec
         then: "the second folder should be 'New'"
         contentBrowsePanel.getContentStatus( FOLDER2.getName() ) == ContentStatus.NEW.getValue();
 
-        and: "the first folder should be 'Online'"
+        and: "the first folder should be 'Published'"
         findAndSelectContent( FOLDER1.getName() );
         saveScreenshot( "publish_wizard_status_for_first_folder" );
         contentBrowsePanel.getContentStatus( FOLDER1.getName() ) == ContentStatus.PUBLISHED.getValue();

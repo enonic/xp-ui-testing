@@ -25,7 +25,7 @@ public class HtmlArea0_1_FormViewPanel
         if ( text != null )
         {
             WebElement htmlArea =
-                findElement( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
+                findElement( By.xpath( "//div[contains(@id,'FormView')]//textarea[contains(@id,'TextArea')]" ) );
             sleep( 500 );
             setTextInCKE( htmlArea.getAttribute( "id" ), text );
             sleep( 500 );

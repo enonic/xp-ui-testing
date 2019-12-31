@@ -63,7 +63,7 @@ public class SecurityWizardStepForm
     {
         JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
         String id = editPermissionsButton.getAttribute( "id" );
-        String script = String.format( "window.api.dom.ElementRegistry.getElementById('%s').getHTMLElement().click()", id );
+        String script = String.format( "return libAdmin.store.map.get('ElementRegistry').elements.get(arguments[0]).getHTMLElement().click()", id );
         executor.executeScript( script );
     }
 

@@ -18,7 +18,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         filterPanel.isFilterPanelDisplayed();
     }
 
-    def "GIVEN 'Filter Panel' is opened and 'Shortcut' checkbox is checked WHEN 'Clear' link has been clicked THEN initial grid view should be displayed"()
+    def "GIVEN 'Filter Panel' is opened and 'Shortcut' aggregation-checkbox is checked WHEN 'Clear' link has been clicked THEN initial grid view should be displayed"()
     {
         given: "'Filter Panel' is opened and 'Shortcut' checkbox is checked"
         contentBrowsePanel.doShowFilterPanel();
@@ -34,7 +34,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         !beforeClean && contentBrowsePanel.exists( IMPORTED_FOLDER_NAME );
     }
 
-    def "GIVEN 'Shortcut' checkbox is checked WHEN 'Folder' checkbox has been checked THEN all content should be correctly filtered"()
+    def "GIVEN 'Shortcut' aggregation-checkbox is checked WHEN 'Folder' aggregation-checkbox has been checked THEN number of items in grid should be updated"()
     {
         given: "'Shortcut' checkbox is checked"
         contentBrowsePanel.doShowFilterPanel();
@@ -52,7 +52,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
         ( numberOfImages + numberOfShortcuts ) == contentBrowsePanel.getRowsCount();
     }
 
-    def "GIVEN 'Shortcut' checkbox is checked WHEN 'Shortcut' checkbox has been unchecked THEN initial grid should be displayed"()
+    def "GIVEN 'Shortcut' aggregation-checkbox is checked WHEN 'Shortcut' aggregation-checkbox has been unchecked THEN initial grid should be displayed"()
     {
         given: "'Shortcut' checkbox is checked"
         contentBrowsePanel.doShowFilterPanel();
@@ -79,7 +79,7 @@ class ContentBrowsePanel_GridPanel_FilterSpec
 
         then: "one content should be present in the grid"
         contentBrowsePanel.exists( IMPORTED_FOLDER_NAME );
-        and: ""
+        and: "one item should be present in the grid:"
         contentBrowsePanel.getRowsCount() == 1;
     }
 }

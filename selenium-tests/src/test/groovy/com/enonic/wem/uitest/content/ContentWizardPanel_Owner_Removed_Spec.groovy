@@ -114,7 +114,7 @@ class ContentWizardPanel_Owner_Removed_Spec
         form.getOwner() == TEST_USER.getDisplayName();
     }
 
-    public Content buildFolderContent( String name, String displayName )
+     Content buildFolderContent( String name, String displayName )
     {
         String generated = NameHelper.uniqueName( name );
         Content content = Content.builder().

@@ -16,9 +16,9 @@ class Content_Online_Modified_Spec
     @Shared
     Content CONTENT;
 
-    def "GIVEN Ready for publishing  folder is added WHEN the folder has been selected and 'Publish' button on toolbar pressed THEN expected notification message should appear and content is getting 'Published'"()
+    def "GIVEN Ready for publishing folder is added WHEN the folder has been selected and 'Publish' button on toolbar pressed THEN expected notification message should appear and content gets 'Published'"()
     {
-        given: "new folder added in root"
+        given: "new folder id added"
         CONTENT = buildFolderContent( "publish", "folder-content" );
         addReadyContent( CONTENT );
 
@@ -35,10 +35,10 @@ class Content_Online_Modified_Spec
 
     def "GIVEN existing 'Published'-folder WHEN the folder has been updated THEN content becomes 'Modified' in the grid"()
     {
-        given: "existing root content with 'Online' status is opened"
+        given: "existing root content with 'PUBLISHED' status is opened"
         ContentWizardPanel wizard = findAndSelectContent( CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab(); ;
 
-        when: "new display name was typed"
+        when: "display name has been updated"
         wizard.typeDisplayName( NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "content becomes 'Modified' in the BrowsePanel"
@@ -64,5 +64,4 @@ class Content_Online_Modified_Spec
         and: "Publish-menu on the BrowsePanel-toolbar should be enabled"
         contentBrowsePanel.isPublishMenuAvailable();
     }
-
 }

@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages.form;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -16,9 +17,10 @@ public class CheckBoxFormViewPanel
 {
     public static String CHECKBOX_PROPERTY = "checkbox";
 
+    private final String CHECBOX_CONTAINER = FORM_VIEW + "//div[contains(@id,'InputView')]//div[contains(@id,'Checkbox') and contains(@class,'checkbox')]";
 
-    @FindBy(xpath = FORM_VIEW + "//div[contains(@id,'InputView')]//div[contains(@id,'api.ui.Checkbox')]")
-    private WebElement checkBox;
+    private final String CHECKBOX = CHECBOX_CONTAINER + "//input[@type='checkbox']";
+    private final String CHECKBOX_LABEL = CHECBOX_CONTAINER + "//label";
 
 
     public CheckBoxFormViewPanel( final TestSession session )
@@ -30,40 +32,38 @@ public class CheckBoxFormViewPanel
     public FormViewPanel type( final PropertyTree data )
     {
         boolean checkboxValue = data.getBoolean( CHECKBOX_PROPERTY );
-        setChecked( checkboxValue );
+        if ( checkboxValue )
+        {
+            clickOnCheckBox();
+        }
+        //setChecked( checkboxValue );
         sleep( 300 );
         return this;
     }
 
-    public CheckBoxFormViewPanel pressKeyOnRow( WebElement element, Keys key )
+    public FormViewPanel clickOnCheckBox()
     {
-
-        Actions actions = new Actions( getDriver() );
-        actions.moveToElement( element ).build().perform();
-        sleep( 1000 );
-        // actions.click( element );
-        actions.sendKeys( key );
-        actions.build().perform();
-        sleep( 500 );
-
+        findElement( By.xpath( CHECKBOX_LABEL ) ).click();
         return this;
     }
 
     public CheckBoxFormViewPanel setChecked( boolean checked )
     {
-        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-        String id = checkBox.getAttribute( "id" );
-        String script = String.format( "window.api.dom.ElementRegistry.getElementById('%s')" + ".setChecked(%b)", id, checked );
-        executor.executeScript( script );
+        WebElement checkbox = findElement( By.xpath( CHECKBOX ) );
+        String id = checkbox.getAttribute( "id" );
+        String script = String.format( "document.getElementById('%s').checked=%b", id, checked );
+        //return libAdmin.store.map.get('ElementRegistry').elements.get(arguments[0]).checked=arguments[0]
+        //String script = String.format( "window.api.dom.ElementRegistry.getElementById('%s')" + ".setChecked(%b)", id, checked );
+        getJavaScriptExecutor().executeScript( script );
         sleep( 1000 );
         return this;
     }
 
     public boolean isChecked()
     {
-        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-        String id = checkBox.getAttribute( "id" );
-        String script = String.format( "return window.api.dom.ElementRegistry.getElementById('%s')" + ".isChecked()", id );
-        return (Boolean) executor.executeScript( script );
+        WebElement checkbox = findElement( By.xpath( CHECKBOX ) );
+        String id = checkbox.getAttribute( "id" );
+        String script = String.format( "return document.getElementById('%s').checked", id );
+        return (Boolean) getJavaScriptExecutor().executeScript( script );
     }
 }

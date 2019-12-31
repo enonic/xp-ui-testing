@@ -227,7 +227,8 @@ public class ImageFormViewPanel
     public String getCaptionText()
     {
         String id = captionTextArea.getAttribute( "id" );
-        return (String) getJavaScriptExecutor().executeScript( String.format( ELEMENT_BY_ID, id ) + ".getValue()" );
+        return (String) getJavaScriptExecutor().executeScript(
+            "return libAdmin.store.map.get('ElementRegistry').elements.get(arguments[0]).getValue()", id );
     }
 
     public String getTextFromCopyright()

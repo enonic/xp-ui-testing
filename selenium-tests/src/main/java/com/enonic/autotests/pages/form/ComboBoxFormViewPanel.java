@@ -17,12 +17,12 @@ public class ComboBoxFormViewPanel
     extends FormViewPanel
 
 {
-    protected final String COMBO_BOX = "//div[contains(@id,'inputtype.combobox.ComboBox')]";
+    protected final String COMBO_BOX = "//div[contains(@id,'ComboBox')]";
 
     protected final String COMBO_BOX_OPTIONS_INPUT_XPATH = FORM_VIEW + COMBO_BOX + COMBOBOX_OPTION_FILTER_INPUT;
 
     private final String REMOVE_SELECTED_OPTION_BUTTON =
-        FORM_VIEW + "//div[contains(@id,'combobox.BaseSelectedOptionView')]//a[@class='remove']";
+        FORM_VIEW + "//div[contains(@id,'BaseSelectedOptionView')]//a[@class='remove']";
 
     private String COMBOBOX_OPTION =
         "//div[contains(@class,'slick-viewport')]//div[contains(@id,'ComboBoxDisplayValueViewer') and text()='%s']";

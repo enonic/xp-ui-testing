@@ -174,13 +174,6 @@ public class ContentWizardPanel
         //return homeButton.getAttribute( "class" ).contains( "clickable" );
     }
 
-    public ContentWizardPanel clickOnMinimizeEditIcon()
-    {
-        String minimizeEditIcon = "//div[@class='minimize-edit']";
-        findElement( By.xpath( minimizeEditIcon ) ).click();
-        return this;
-    }
-
     public boolean isDeleteButtonDisplayed()
     {
         return isElementDisplayed( By.xpath( TOOLBAR_DELETE_BUTTON_XPATH ) );
@@ -230,12 +223,10 @@ public class ContentWizardPanel
         if ( os.indexOf( "mac" ) >= 0 )
         {
             buildActions().keyDown( Keys.COMMAND ).sendKeys( Keys.ENTER ).build().perform();
-            //buildActions().sendKeys( Keys.chord( Keys.COMMAND, Keys.ENTER ) ).build().perform();
         }
         else
         {
             buildActions().keyDown( Keys.CONTROL ).sendKeys( Keys.ENTER ).build().perform();
-            //buildActions().sendKeys( Keys.chord( Keys.CONTROL, Keys.ENTER ) ).build().perform();
         }
         return this;
     }
@@ -246,9 +237,7 @@ public class ContentWizardPanel
     public ContentWizardPanel pressCloseKeyboardShortcut()
     {
         buildActions().keyDown( Keys.ALT ).sendKeys( "w" ).build().perform();
-        //buildActions().keyDown( Keys.LEFT_ALT ).sendKeys( "w" ).build().perform();
         sleep( 1000 );
-        //buildActions().sendKeys( Keys.chord( Keys.ALT, "w" ) ).build().perform();
         return this;
     }
 
@@ -337,7 +326,6 @@ public class ContentWizardPanel
             "disabled" );
     }
 
-
     /*
      * clicks on the toggler for 'Inspection Panel' and waits until the panel is shown
      */
@@ -403,7 +391,6 @@ public class ContentWizardPanel
 
     public boolean waitForContentInProgress()
     {
-
         if ( !isElementDisplayed( By.xpath( CONTENT_STATE_ICON ) ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_wizard_status)" ) );

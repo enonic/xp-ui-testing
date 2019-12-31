@@ -10,13 +10,12 @@ import spock.lang.Stepwise
 
 /**
  * Created on 04.10.2016.
- * XP-4328 Add selenium tests for changing of focus in the Image Wizard
  * */
 @Stepwise
 class ImageEditor_Focus_Spec
     extends BaseContentSpec
 {
-    def "GIVEN 'Image Editor' dialog opened WHEN focus has been moved THEN red circle appears"()
+    def "GIVEN 'Image Editor' dialog is opened WHEN focus has been moved THEN red circle should appear"()
     {
         given: "'Image Editor' dialog opened"
         findAndSelectContent( WHALE_IMAGE_NAME ).clickToolbarEdit().waitUntilWizardOpened();

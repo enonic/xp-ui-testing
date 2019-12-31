@@ -11,7 +11,7 @@ class ContentWizardPanel_NameCollisions_Spec
     Content TEST_FOLDER;
 
 
-    def "GIVEN added folder in the ROOT WHEN wizard opened and folder with the same name typed AND 'Save' button pressed  THEN correct warning-message appears "()
+    def "GIVEN new folder is added (in the ROOT) WHEN wizard has been opened and the same name typed AND 'Save' button pressed  THEN message - '. A content with that name already exists' appears"()
     {
         given:
         TEST_FOLDER = buildFolderContent( "folder", "name already in use" );

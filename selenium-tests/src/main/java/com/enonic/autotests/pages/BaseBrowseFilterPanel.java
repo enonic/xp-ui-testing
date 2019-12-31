@@ -21,7 +21,7 @@ public abstract class BaseBrowseFilterPanel
     public static final String CLEAR_FILTER_BUTTON = FILTER_PANEL_CONTAINER + "//a[contains(@id,'ClearFilterButton']";
 
     public static final String SEARCH_INPUT_XPATH =
-        "//input[contains(@id,'api.app.browse.filter.TextSearchField') and contains(@class,'text-search-field')]";
+        "//input[contains(@id,'TextSearchField') and contains(@class,'text-search-field')]";
 
     @FindBy(xpath = SEARCH_INPUT_XPATH)
     protected WebElement searchInput;

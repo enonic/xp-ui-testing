@@ -8,8 +8,6 @@ import spock.lang.Ignore
 import spock.lang.Stepwise
 
 /**
- * XP-4174 Add selenium tests for image cropping
- * XP-4168 Add selenium test for verifying XP-4167
  *
  * Created on 30.09.2016.
  * */
@@ -17,7 +15,7 @@ import spock.lang.Stepwise
 class ImageEditor_Crop_Reset_Spec
     extends BaseContentSpec
 {
-    def "GIVEN 'Image Editor' dialog opened WHEN dragHandler moved up AND image was cropped THEN image's height was reduced"()
+    def "GIVEN 'Image Editor' dialog is opened WHEN dragHandler moved up AND image is cropped THEN image's height should be reduced"()
     {
         given: "'Image Editor' dialog opened"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();

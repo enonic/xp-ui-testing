@@ -29,7 +29,7 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
         then: "'user access' widget should be displayed"
         view.isDisplayed();
 
-        and: "'Edit Permissions' link should be present on the widget"
+        and: "'Edit Permissions' link should be present in the widget"
         view.isEditPermissionsLinkDisplayed();
     }
 

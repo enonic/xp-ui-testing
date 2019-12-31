@@ -69,7 +69,7 @@ class Set_In_Set_Validation_Spec
         !contentBrowsePanel.isContentInvalid( SET_IN_SET.getName() );
     }
 
-    def "GIVEN existing valid 'Set in Set' content is opened WHEN required first name and last name has been cleared THEN red icon should appear on the wizard"()
+    def "GIVEN existing valid 'Set in Set' content is opened WHEN required first name and last name has been cleared THEN red icon should appear in the wizard"()
     {
         given: "existing valid 'Set in Set' content is opened"
         ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET.getName() ).clickToolbarEdit();

@@ -4,9 +4,6 @@ import com.enonic.autotests.pages.Application
 
 /**
  * Created on 2/21/2017.
- *
- * Tasks:
- * enonic/xp-ui-testing#31 Add Selenium tests for 'Show Selected Items' button(grid toolbar)
  * */
 class ContentBrowsePanel_SelectionToggler_Spec
     extends BaseContentSpec
@@ -61,7 +58,7 @@ class ContentBrowsePanel_SelectionToggler_Spec
         names.get( 0 ).contains( IMPORTED_FOLDER_NAME );
     }
 
-    def "GIVEN content grid id opened WHEN two checkboxes have been clicked THEN correct number should be displayed in the 'circle'"()
+    def "GIVEN content grid id opened WHEN two checkboxes have been clicked THEN expected number should be displayed in the 'circle'"()
     {
         given: "content grid is opened"
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
@@ -77,17 +74,17 @@ class ContentBrowsePanel_SelectionToggler_Spec
         contentBrowsePanel.getNumberInSelectionToggler() == "2";
     }
 
-    def "GIVEN two contents were selected WHEN 'Select All Rows' checkbox has been clicked THEN 'Show Selected Items' button should not be displayed"()
+    def "GIVEN two items are checked WHEN 'Select All Rows' checkbox has been clicked THEN 'Show Selected Items' button gets not visible"()
     {
-        given: "two contents were selected"
+        given: "two items are checked"
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         contentBrowsePanel.clickCheckboxAndSelectRow( 0 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 1 );
 
-        when: "'Select All Rows' checkbox has been unchecked"
+        when: "'Select All Rows' checkbox has been clicked"
         contentBrowsePanel.clickOnSelectionController();
 
-        then: "the 'Show Selected Items' button should not be displayed"
+        then: "'Show Selected Items' circle-button gets not visible"
         !contentBrowsePanel.isSelectionTogglerDisplayed();
     }
 }

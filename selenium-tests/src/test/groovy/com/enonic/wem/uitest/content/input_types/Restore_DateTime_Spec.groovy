@@ -6,10 +6,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
-/**
- * Tasks: XP-4948 Add Selenium tests for checking of 'red icon' (invalid content) in wizards
- *
- */
+
 class Restore_DateTime_Spec
     extends Base_InputFields_Occurrences
 {
@@ -23,15 +20,15 @@ class Restore_DateTime_Spec
     @Shared
     Content DATE_TIME_CONTENT
 
-    def "GIVEN existing date content WHEN date is changed THEN new version item should appear in the version history panel"()
+    def "GIVEN new date content is saved WHEN date has been updated THEN new version item should appear in History Panel"()
     {
-        given: "existing date content"
+        given: "date content is saved"
         DATE_TIME_CONTENT = buildDateTime1_1_Content( DATE_TIME_V1 );
         ContentWizardPanel wizard = selectSitePressNew( DATE_TIME_CONTENT.getContentTypeName() );
         wizard.typeData( DATE_TIME_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.doClearSelection();
 
-        when: "the content is opened and date changed"
+        when: "date has been updated:"
         findAndSelectContent( DATE_TIME_CONTENT.getName() ).clickToolbarEdit();
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
         formViewPanel.typeDateTime( DATE_TIME_V2 );
@@ -44,9 +41,9 @@ class Restore_DateTime_Spec
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
-    def "GIVEN existing content with already changed date WHEN previous version restored THEN correct date displayed in the wizard"()
+    def "GIVEN existing content with several versions WHEN previous version has been restored THEN expected date should appear in the wizard"()
     {
-        given: "content with a changed date"
+        given: "existing content with several versions"
         findAndSelectContent( DATE_TIME_CONTENT.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
@@ -56,10 +53,10 @@ class Restore_DateTime_Spec
         versionItem.doRestoreVersion(  );
         saveScreenshot( "date_time_restored" );
 
-        and: "content opened"
+        and: "content is opened"
         contentBrowsePanel.clickToolbarEdit();
 
-        then: "correct date is present on the wizard"
+        then: "expected date should appear in the wizard"
         DateTimeFormViewPanel formViewPanel = new DateTimeFormViewPanel( getSession() );
         formViewPanel.getDateTimeValue() == DATE_TIME_V1;
     }

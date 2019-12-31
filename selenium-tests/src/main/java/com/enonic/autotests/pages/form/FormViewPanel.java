@@ -17,7 +17,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class FormViewPanel
     extends Application
 {
-    protected static final String FORM_VIEW = "//div[contains(@id,'api.form.FormView')]";
+    protected static final String FORM_VIEW = "//div[contains(@id,'FormView')]";
 
     protected final String VALIDATION_VIEWER = "//div[contains(@id,'ValidationRecordingViewer')]";
 
@@ -64,14 +64,13 @@ public abstract class FormViewPanel
 
     public List<String> getDataFromCKEAreas()
     {
-        List<WebElement> editors =
-            findElements( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'TextArea')]" ) );
+        List<WebElement> editors = findElements( By.xpath( "//div[contains(@id,'FormView')]//textarea[contains(@id,'TextArea')]" ) );
         return editors.stream().map( e -> getCKEData( e.getAttribute( "id" ) ) ).collect( Collectors.toList() );
     }
 
     protected String getCKEData( String id )
     {
-        return ((String) getJavaScriptExecutor().executeScript( SCRIPT_DATA_CKE, id )).trim();
+        return ( (String) getJavaScriptExecutor().executeScript( SCRIPT_DATA_CKE, id ) ).trim();
     }
 
     public boolean isValidationMessagePresent()
@@ -86,7 +85,7 @@ public abstract class FormViewPanel
 
     public void doScrollPanel( int scrollTop )
     {
-        String xpathPanel = "//div[contains(@id,'ui.panel.Panel') and contains(@class,'panel-strip-scrollable')]";
+        String xpathPanel = "//div[contains(@id,'Panel') and contains(@class,'panel-strip-scrollable')]";
         WebElement panel = getDisplayedElement( By.xpath( xpathPanel ) );
         String id = panel.getAttribute( "id" );
         String script = "document.getElementById(arguments[0]).scrollTop=arguments[1]";

@@ -103,7 +103,7 @@ class ContentWizard_EditPermissionsDialog_Spec
         List<String> principals = modalDialog.getPrincipalNames();
         saveScreenshot( "test_default_acl_entries" );
 
-        then: "two default acl-entry are displayed"
+        then: "two default acl-entry should be displayed"
         principals.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES;
 
         and: "expected acl-entries and actual are equal"

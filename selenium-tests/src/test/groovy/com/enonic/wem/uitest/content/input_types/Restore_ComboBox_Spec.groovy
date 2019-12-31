@@ -14,7 +14,7 @@ class Restore_ComboBox_Spec
     @Shared
     Content COMBOBOX_CONTENT;
 
-    def "GIVEN existing combobox-content 2:4 with two selected options WHEN content opened and one option was removed THEN number of versions increased by one"()
+    def "GIVEN combobox-content 2:4 (two selected options) is saved WHEN one selected option has been removed THEN number of versions increased by one"()
     {
         given: "new COMBOBOX-content (2:4) has been added"
         COMBOBOX_CONTENT = buildComboBox2_4_Content( 2 );

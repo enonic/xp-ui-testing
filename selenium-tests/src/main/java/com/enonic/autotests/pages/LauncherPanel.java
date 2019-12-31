@@ -21,7 +21,7 @@ public class LauncherPanel
 
     private final String ACTIVE_ROW_TEXT = PANEL_DIV + "//div[@class='app-row active']//p[@class='app-name']";
 
-    public static final String OPEN_LAUNCHER_BUTTON = "//button[contains(@class,'launcher-button')]/span[@class='lines']";
+    public static final String OPEN_LAUNCHER_BUTTON = "//button[contains(@class,'launcher-button') and child::span[text()='X']]";
 
     private final String APPLICATIONS_LINK = PANEL_DIV + "//a[contains(@href,'applications')]//p[@class='app-name']";
 

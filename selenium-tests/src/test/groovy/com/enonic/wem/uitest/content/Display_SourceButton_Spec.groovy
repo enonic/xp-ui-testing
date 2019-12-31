@@ -27,9 +27,6 @@ import spock.lang.Stepwise
 
 /**
  * Created  on 08.12.2016.
- * Tasks:
- * xp-ui-testing#21 Up-to-date tests for SourceCode dialog
- * XP-4658 Add selenium tests to verify displaying of the Source Button
  * */
 @Stepwise
 class Display_SourceButton_Spec
@@ -53,7 +50,7 @@ class Display_SourceButton_Spec
     @Shared
     Content SITE;
 
-    def "setup: adding of a user with roles: 'Content Manager App' AND 'Administration Console Login' "()
+    def "Preconditions: new user should be added with roles: 'Content Manager App' AND 'Administration Console Login' "()
     {
         setup: "navigate to USERS app"
         go "admin"
@@ -68,7 +65,7 @@ class Display_SourceButton_Spec
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
             UserItemName.USERS_FOLDER );
 
-        when: "data was typed and user saved"
+        when: "data has been typed and user saved"
         userWizardPanel.typeData( USER ).save().close( USER.getDisplayName() );
         userBrowsePanel.getFilterPanel().typeSearchText( USER.getDisplayName() );
 
@@ -76,7 +73,7 @@ class Display_SourceButton_Spec
         userBrowsePanel.exists( USER.getDisplayName(), true );
     }
 
-    def "GIVEN Content Studio is opened with SU WHEN new site with 'Full Access' for just created user added THEN Content is listed in BrowsePanel"()
+    def "GIVEN SU is logged in WHEN new site with 'Full Access' for just created user has been added THEN Content is listed in BrowsePanel"()
     {
         given: "navigate to 'Content Studio'"
         ContentAclEntry entry = ContentAclEntry.builder().principalName( USER_NAME ).suite( PermissionSuite.FULL_ACCESS ).build();
@@ -96,7 +93,7 @@ class Display_SourceButton_Spec
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN Content Studio is opened with SU WHEN the site is opened and text component added THEN component is displayed"()
+    def "GIVEN SU is logged in WHEN existing site is opened and text component has been added THEN component should be added"()
     {
         given: "navigate to 'Content Studio'"
         go "admin"
@@ -122,7 +119,7 @@ class Display_SourceButton_Spec
         liveFormPanel.isTextComponentPresent();
     }
 
-    def "GIVEN login with the User AND open te site WHEN user without required roles tries to edit the text component THEN Source Button should not be displayed"()
+    def "GIVEN login with the User AND open the site WHEN user without required roles tries to edit the text component THEN Source Button should not be present"()
     {
         given: "'users' is opened"
         go "admin"

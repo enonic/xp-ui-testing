@@ -22,7 +22,7 @@ class Occurrences_ImageSelector_0_0_Spec
     Content TEST_IMAGE_SELECTOR_CONTENT;
 
     //verifies the "Path-search in selectors doesn't work #4786'
-    def "GIVEN wizard for Image Selector-content (0:0) is opened WHEN path to an image has been typed THEN the image should be filtered "()
+    def "GIVEN wizard for Image Selector-content (0:0) is opened WHEN path to an image has been typed THEN the image should be filtered"()
     {
         given: "wizard for Image Selector-content (0:0) is opened"
         Content imageSelectorContent = buildImageSelector0_0_Content( NORD_IMAGE_DISPLAY_NAME );
@@ -41,7 +41,7 @@ class Occurrences_ImageSelector_0_0_Spec
         images.get( 0 ) == NORD_IMAGE_DISPLAY_NAME;
     }
 
-    def "GIVEN wizard for Image Selector-content (0:0) is opened WHEN display name has been typed THEN red icon should not be displayed on the wizard page"()
+    def "GIVEN wizard for Image Selector-content (0:0) is opened WHEN display name has been typed THEN red icon should not be displayed in the wizard page"()
     {
         given: "wizard for Image Selector-content (0:0) is opened"
         Content imageSelectorContent = buildImageSelector0_0_Content( NORD_IMAGE_DISPLAY_NAME );
@@ -54,14 +54,14 @@ class Occurrences_ImageSelector_0_0_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN Image Selector-content (0:0) with two images has been added WHEN content is opened THEN correct images should be present on the page "()
+    def "GIVEN Image Selector-content (0:0) with two images has been added WHEN the content has been reopened THEN expected images should be displayed"()
     {
         given: "Image Selector-content (0:0) with two images has been added"
         Content imageSelectorContent = buildImageSelector0_0_Content( NORD_IMAGE_DISPLAY_NAME, BOOK_IMAGE_DISPLAY_NAME );
         selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData(
             imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content is opened"
+        when: "the content has been reopened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( imageSelectorContent );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> images = formViewPanel.getSelectedImages();
@@ -77,7 +77,7 @@ class Occurrences_ImageSelector_0_0_Spec
         images.get( 1 ) == BOOK_IMAGE_DISPLAY_NAME;
     }
 
-    def "GIVEN Image Selector-content (0:0) with four images has been added WHEN content opened for edit THEN correct images should be present on the page"()
+    def "GIVEN Image Selector-content (0:0) with four images has been added WHEN the content has been reopened THEN expected images should be present in the page"()
     {
         given: "Image Selector-content (0:0) with four images has been added"
         TEST_IMAGE_SELECTOR_CONTENT =
@@ -86,18 +86,18 @@ class Occurrences_ImageSelector_0_0_Spec
         selectSitePressNew( TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName() ).typeData(
             TEST_IMAGE_SELECTOR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content is opened"
+        when: "content has been reopened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> images = formViewPanel.getSelectedImages();
         saveScreenshot( "img_sel_content0_0_4" )
 
-        then: "four images should be present on the wizard page"
+        then: "four images should be present in the wizard page"
         images.size() == 4;
         and:
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "expected images are present"
+        and: "expected images should be present"
         images.get( 0 ) == NORD_IMAGE_DISPLAY_NAME;
         and:
         images.get( 1 ) == BOOK_IMAGE_DISPLAY_NAME;

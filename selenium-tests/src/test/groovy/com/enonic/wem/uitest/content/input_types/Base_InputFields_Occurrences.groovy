@@ -100,12 +100,12 @@ class Base_InputFields_Occurrences
         filterPanel = contentBrowsePanel.getFilterPanel();
     }
 
-    def "create a site based on the application with all content types"()
+    def "create a site with 'all content types' application"()
     {
-        when: "add a site, based on the test application"
+        when: "do add the site:"
         addSiteWithAllInputTypes();
 
-        then: " test site should be listed"
+        then: "test site should be listed"
         contentBrowsePanel.exists( SITE_NAME );
     }
 

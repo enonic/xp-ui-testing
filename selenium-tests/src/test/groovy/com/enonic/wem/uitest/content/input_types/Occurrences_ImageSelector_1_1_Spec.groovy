@@ -13,9 +13,9 @@ class Occurrences_ImageSelector_1_1_Spec
     @Shared
     Content TEST_IMAGE_SELECTOR_CONTENT;
 
-    def "WHEN wizard for 'Image Selector'-content(1:1) is opened THEN option filter input should be present, there no selected image and upload button should be enabled "()
+    def "WHEN wizard for 'Image Selector'-content(1:1) is opened THEN option filter input should be present, there no selected options and upload button should be enabled"()
     {
-        when: "wizard for adding a 'Image Selector'-content(1:1) is opened"
+        when: "wizard is opened:"
         Content imageSelectorContent = buildImageSelector1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
@@ -32,15 +32,15 @@ class Occurrences_ImageSelector_1_1_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN 'Image Selector-content' (1:1) has been added (without image) WHEN content opened for edit THEN selected image not present on page and content is invalid"()
+    def "GIVEN 'Image Selector-content' (1:1) has been added (without image) WHEN content has been reopened THEN selected image should not present in the page and the content is invalid"()
     {
-        given: "'Image Selector-content' (1:1) has been added (without image)"
+        given: "'Image Selector-content' (1:1) has been added (image was not selected)"
         Content imageSelectorContent = buildImageSelector1_1_Content( null );
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() )
         and: "required image was not selected and the content was saved"
         wizard.typeData( imageSelectorContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "the content is opened"
+        when: "the content is reopened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( imageSelectorContent );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> imagesNames = formViewPanel.getSelectedImages();

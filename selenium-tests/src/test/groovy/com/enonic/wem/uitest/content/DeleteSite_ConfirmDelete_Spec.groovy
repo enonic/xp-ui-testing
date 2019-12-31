@@ -20,7 +20,7 @@ class DeleteSite_ConfirmDelete_Spec
     @Shared
     String INCORRECT_NUMBER_OF_CONTENT = "100";
 
-    def "GIVEN existing is selected WHEN 'Delete' button has been pressed AND 'Delete' on the dialog clicked THEN 'Confirm delete' dialog appears"()
+    def "GIVEN existing site is selected WHEN 'Delete' button has been pressed AND 'Delete' in the dialog clicked THEN 'Confirm delete' dialog appears"()
     {
         given: "existing site is selected AND delete button pressed"
         SITE = buildSiteWithNameAndDispalyNameAndDescription("site", "confirm delete", "description");

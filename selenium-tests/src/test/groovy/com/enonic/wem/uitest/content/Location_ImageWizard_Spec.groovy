@@ -5,8 +5,6 @@ import com.enonic.autotests.pages.form.LocationFormViewPanel
 import spock.lang.Shared
 
 /**
- * Selenium tests for Location step in ImageWizard
- *
  * Created on 27.09.2016.
  * */
 class Location_ImageWizard_Spec

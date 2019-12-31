@@ -17,16 +17,16 @@ public class FreeFormViewPanel
     private final String ITEM_SET = "//div[contains(@id,'FormItemSetView')]";
 
     private final String INPUT_RADIO_BUTTON = ITEM_SET +
-        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'ui.RadioButton') and descendant::label[text()='Input']]";
+        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'RadioButton') and descendant::label[text()='Input']]";
 
     private final String BUTTON_RADIO_BUTTON = ITEM_SET +
-        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'ui.RadioButton') and descendant::label[text()='Button']]";
+        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'RadioButton') and descendant::label[text()='Button']]";
 
     private final String SELECT_RADIO_BUTTON = ITEM_SET +
-        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'ui.RadioButton') and descendant::label[text()='Select']]";
+        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'RadioButton') and descendant::label[text()='Select']]";
 
     private final String IMAGE_RADIO_BUTTON = ITEM_SET +
-        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'ui.RadioButton') and descendant::label[text()='image']]";
+        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'RadioButton') and descendant::label[text()='image']]";
 
 
     /**

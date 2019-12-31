@@ -36,7 +36,7 @@ class FreeFormNestedSet_Spec
         wizard.isContentInvalid()
     }
 
-    def "GIVEN existing not valid 'FreeForm' content WHEN the content has been selected THEN the content should be displayed as invalid(in the grid)"()
+    def "GIVEN existing not valid 'FreeForm' content WHEN the content has been selected THEN the content should be invalid(in the grid)"()
     {
         when: "'FreeForm' content is selected"
         findAndSelectContent( SET_IN_SET_CONTENT.getName() );

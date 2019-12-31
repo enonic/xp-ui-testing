@@ -13,7 +13,7 @@ import spock.lang.Ignore
 class HtmlArea_InsertAnchorDialog_Spec
     extends Base_InputFields_Occurrences
 {
-    def "GIVEN wizard for html-area content is opened WHEN 'Insert Image' button has been clicked THEN modal dialog should be displayed"()
+    def "GIVEN wizard for html-area content is opened WHEN 'Insert Image' button has been clicked THEN modal dialog should appear"()
     {
         given: "wizard for html-area content is opened"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );
@@ -24,7 +24,7 @@ class HtmlArea_InsertAnchorDialog_Spec
         InsertAnchorModalDialog insertAnchorDialog = formViewPanel.showToolbarAndClickOnInsertAnchorButton();
         saveScreenshot( "anchor_dialog_opened" );
 
-        then: " modal dialog should be displayed"
+        then: "modal dialog should appear"
         insertAnchorDialog.getHeader() == InsertAnchorModalDialog.HEADER_TEXT;
 
         and: "'Cancel' button should be displayed"

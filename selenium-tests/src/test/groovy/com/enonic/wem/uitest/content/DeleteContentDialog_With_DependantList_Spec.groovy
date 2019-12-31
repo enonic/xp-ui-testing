@@ -16,18 +16,18 @@ class DeleteContentDialog_With_DependantList_Spec
     @Shared
     Content CHILD_CONTENT
 
-    def "GIVEN parent content with a child WHEN the parent selected and 'Delete' on the toolbar pressed THEN 'Delete Content' dialog with dependant list appeared"()
+    def "GIVEN parent content with a child WHEN the parent selected and 'Delete' on the toolbar pressed THEN 'Delete Content' dialog with dependant list should appear"()
     {
-        given: "parent content added"
+        given: "parent content is added"
         PARENT_CONTENT = buildFolderContent( "folder", "delete with child" );
         addContent( PARENT_CONTENT );
 
-        and: "one child content added"
+        and: "child content is added"
         CHILD_CONTENT = buildFolderContentWithParent( "child", "dependant child folder", PARENT_CONTENT.getName() );
         findAndSelectContent( PARENT_CONTENT.getName() );
         addContent( CHILD_CONTENT );
 
-        when: "parent content selected and 'Delete' on the toolbar pressed"
+        when: "parent content is selected and 'Delete' in the browse toolbar has been pressed"
         DeleteContentDialog modalDialog = contentBrowsePanel.clickToolbarDelete();
 
         and: "'Hide dependent items' link should be present"

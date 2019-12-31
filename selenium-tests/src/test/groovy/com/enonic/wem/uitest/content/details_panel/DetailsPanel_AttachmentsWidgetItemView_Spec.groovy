@@ -29,7 +29,7 @@ class DetailsPanel_AttachmentsWidgetItemView_Spec
 
     def "GIVEN existing image-content WHEN content selected and details panel opened THEN expected attachment name displayed in the widget "()
     {
-        when: "image content selected"
+        when: "image content has been selected"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME );
         contentBrowsePanel.openContentDetailsPanel();
         AttachmentsWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getAttachmentsWidgetItemView();

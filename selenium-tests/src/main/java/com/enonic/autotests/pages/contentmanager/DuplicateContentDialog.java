@@ -19,7 +19,7 @@ public class DuplicateContentDialog
 
 
     private final String BUTTON_DUPLICATE =
-        CONTAINER + "//button[contains(@id,'dialog.DialogButton') and descendant::span[contains(.,'Duplicate')]]";
+        CONTAINER + "//button[contains(@id,'DialogButton') and descendant::span[contains(.,'Duplicate')]]";
 
     private final String BUTTON_CANCEL = CONTAINER + "//button[contains(@id,'dialog.DialogButton') and descendant::span[text()='Cancel']]";
 

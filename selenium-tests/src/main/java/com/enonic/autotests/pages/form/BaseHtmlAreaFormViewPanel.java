@@ -38,7 +38,7 @@ public abstract class BaseHtmlAreaFormViewPanel
 
     protected final String STEP_XPATH = "//li[contains(@id,'TabBarItem') and child::a[text()='Html Area']]";
 
-    protected final String CKE = FORM_VIEW + "//div[contains(@id,'cke_api.ui.text.TextArea')]//div[contains(@class,'cke_contents')]";
+    protected final String CKE = FORM_VIEW + "//div[contains(@id,'cke_TextArea')]//div[contains(@class,'cke_contents')]";
 
 
     public BaseHtmlAreaFormViewPanel( final TestSession session )

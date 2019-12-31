@@ -15,19 +15,19 @@ class Occurrences_RadioButtons_Spec
     @Shared
     Content content_wit_opt;
 
-    def "WHEN wizard for  'Radio Buttons'-content is opened THEN radio buttons should be present on the page AND options should not be selected"()
+    def "WHEN wizard for 'Radio Buttons'-content is opened THEN radio buttons should be present in the page AND options should not be selected"()
     {
-        when: "start to add a content with type 'Radio Buttons'"
+        when: "new wizard has been:"
         String option = null;
         Content radioButtonsContent = buildRadioButtonsContent( option );
         selectSitePressNew( radioButtonsContent.getContentTypeName() );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
-        then: " radio buttons are present on page and options are not selected"
+        then: "radio buttons should be present in the page and options are not selected"
         formViewPanel.getSelectedOption().isEmpty();
     }
 
-    def "GIVEN saving of content without selected option WHEN content opened for edit THEN no one selected options is present in form view"()
+    def "GIVEN new content is saved (option was not selected) WHEN content has been reopened THEN options should not be selected in the form view"()
     {
         given: "new content with type 'Radio Buttons'"
         String option = null;
@@ -35,7 +35,7 @@ class Occurrences_RadioButtons_Spec
         selectSitePressNew( radioButtonsContent.getContentTypeName() ).typeData(
             radioButtonsContent ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "content has been reopened"
         saveScreenshot( NameHelper.uniqueName( "radio-button" ) )
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( radioButtonsContent );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
@@ -44,13 +44,13 @@ class Occurrences_RadioButtons_Spec
         formViewPanel.getSelectedOption().isEmpty();
     }
 
-    def "GIVEN content with not required 'Radio Buttons' is created WHEN 'Publish' button pressed THEN status should be 'Published'"()
+    def "GIVEN content with not required 'Radio Buttons' is created WHEN 'Publish' button pressed THEN the content gets 'Published'"()
     {
         given: "new 'Radio Buttons' content is added"
         String option = null;
         Content radioButtonsContent = buildRadioButtonsContent( option );
         ContentWizardPanel wizard = selectSitePressNew( radioButtonsContent.getContentTypeName() ).typeData( radioButtonsContent )
-        wizard.clickOnMarkAsReadyAndDoPublish(  );
+        wizard.clickOnMarkAsReadyAndDoPublish();
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.close( radioButtonsContent.getDisplayName() );
 
@@ -58,14 +58,14 @@ class Occurrences_RadioButtons_Spec
         filterPanel.typeSearchText( radioButtonsContent.getName() );
 
         then:
-        contentBrowsePanel.getContentStatus( radioButtonsContent.getName() ).equals( ContentStatus.PUBLISHED.getValue() );
+        contentBrowsePanel.getContentStatus( radioButtonsContent.getName() ) == ContentStatus.PUBLISHED.getValue();
         and:
         !contentBrowsePanel.isContentInvalid( radioButtonsContent.getName() );
         and: "expected notification message should appear"
         publishedMessage == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, radioButtonsContent.getName() );
     }
 
-    def "GIVEN saving of not required 'Single Selector Radio-content' with  selected option WHEN content is opened THEN correct selected option  present in form view"()
+    def "GIVEN new 'Single Selector Radio-content' is created (option was selected) WHEN the content is reopened THEN expected option should be selected"()
     {
         given: "new content with type 'Single Selector Radio' is saved"
         String option = "option A";
@@ -73,11 +73,11 @@ class Occurrences_RadioButtons_Spec
         selectSitePressNew( content_wit_opt.getContentTypeName() ).typeData(
             content_wit_opt ).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "the content is opened"
+        when: "the content has been reopened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
-        then:
+        then:"expected option should be selected"
         formViewPanel.getSelectedOption() == option;
     }
 

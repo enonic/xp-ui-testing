@@ -45,7 +45,7 @@ class DetailsPanel_OwnerName_Spec
         go "admin"
     }
 
-    def "setup: add a test user to the system user store"()
+    def "Preconditions: add a test user to the system user store"()
     {
         setup: "'User' app is opened"
         UserBrowsePanel userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
@@ -89,11 +89,11 @@ class DetailsPanel_OwnerName_Spec
         getTestSession().setUser( TEST_USER );
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        when: "the folder was duplicated"
+        when: "the folder has been duplicated"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() );
         contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() ).clickToolbarDuplicate();
 
-        and: "Duplicate button on the dialog has been pressed"
+        and: "Duplicate button in the dialog has been pressed"
         DuplicateContentDialog dialog = new DuplicateContentDialog( getSession() );
         dialog.waitForOpened().clickOnDuplicateButton().waitForClosed();
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );

@@ -171,10 +171,6 @@ public class ContentDetailsPanel
      */
     public boolean isDisplayed()
     {
-//        WebElement splitPanel = getDisplayedElement( By.xpath( SPLIT_PANEL_WITH_DETAILS_PANEL ) );
-//        JavascriptExecutor executor = (JavascriptExecutor) getSession().getDriver();
-//        return !(Boolean) executor.executeScript(
-//            "return window.api.dom.ElementRegistry.getElementById(arguments[0]).isSecondPanelHidden()", splitPanel.getAttribute( "id" ) );
         return isElementDisplayed( DETAILS_PANEL );
     }
 

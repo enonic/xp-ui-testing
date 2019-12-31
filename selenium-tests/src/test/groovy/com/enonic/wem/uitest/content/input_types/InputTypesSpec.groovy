@@ -21,7 +21,7 @@ class InputTypesSpec
     @Shared
     String TEST_DATE_TIME = "2015-02-28 19:01";
 
-    def "GIVEN 'Date' content was added WHEN the content is opened THEN actual date and expected should be equals"()
+    def "GIVEN 'Date' content is added WHEN the content is reopened THEN expected date should be displayed"()
     {
         given: "add a content with type 'Date'"
         Content dateContent = buildDate0_1_Content( TEST_DATE );
@@ -50,7 +50,7 @@ class InputTypesSpec
         DateTimeFormViewPanel dateTimeFormViewPanel = new DateTimeFormViewPanel( getSession() );
 
         then: "actual 'Date Time' and expected should be equals"
-        dateTimeFormViewPanel.getDateTimeValue().equals( TEST_DATE_TIME );
+        dateTimeFormViewPanel.getDateTimeValue()== TEST_DATE_TIME ;
     }
 
     def "GIVEN 'Time' content was added WHEN the content is opened THEN actual and expected time should be equals"()
@@ -65,10 +65,10 @@ class InputTypesSpec
         TimeFormViewPanel timeFormViewPanel = new TimeFormViewPanel( getSession() );
 
         then: "actual and expected time should be equals"
-        timeFormViewPanel.getTimeValue().equals( TEST_TIME );
+        timeFormViewPanel.getTimeValue()== TEST_TIME ;
     }
 
-    def "GIVEN 'checkbox' content with 'true' value was added WHEN the content is opened THEN checkbox should be checked"()
+    def "GIVEN 'checkbox' content with 'true' value is added WHEN the content is reopened THEN checkbox should be checked"()
     {
         given: "'checkbox' content with 'true' value was added"
         Content checkBoxContent = buildCheckBoxContent( true );

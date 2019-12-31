@@ -20,7 +20,7 @@ public class DateFormViewPanel
     public static String DATE_PROPERTY = "date";
 
     private final String DATE_INPUT_XPATH =
-        FORM_VIEW + "//div[contains(@id,'api.form.InputView')]//div[contains(@id,'inputtype.time.Date')]//input[contains(@id,'TextInput')]";
+        FORM_VIEW + "//div[contains(@id,'InputView')]//div[contains(@id,'Date')]//input[contains(@id,'TextInput')]";
 
     @FindBy(xpath = DATE_INPUT_XPATH)
     private WebElement dateInput;

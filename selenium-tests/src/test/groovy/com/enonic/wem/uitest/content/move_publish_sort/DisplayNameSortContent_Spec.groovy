@@ -12,7 +12,7 @@ class DisplayNameSortContent_Spec
         extends BaseContentSpec {
 
     def "GIVEN sort content dialog is opened (default sorting) WHEN 'DisplayName - Ascending order' has been selected THEN content in the folder should be sorted correctly"() {
-        given: "folder with contents is selected and 'Sort' button clicked"
+        given: "sort dialog is opened:"
         findAndSelectContent(IMPORTED_FOLDER_NAME);
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().doSort(
                 SortMenuItem.DISPLAY_NAME.getValue(), SortOrder.ASCENDING);

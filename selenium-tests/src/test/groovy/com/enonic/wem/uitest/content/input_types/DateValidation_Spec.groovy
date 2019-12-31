@@ -48,7 +48,7 @@ class DateValidation_Spec
         ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
 
-        when: "time with wrong format has been typed"
+        when: "time in wrong format has been typed"
         wizard.typeData( timeContent );
         saveScreenshot( "test_wrong_time" );
         wizard.showPublishMenu();
@@ -60,14 +60,14 @@ class DateValidation_Spec
         formViewPanel.isTimeInvalid();
     }
 
-    def "GIVEN wizard for not required 'Time 0:0' is opened WHEN value of time is correct THEN 'Publish' button should be enabled"()
+    def "GIVEN wizard with not required 'Time 0:0' is opened WHEN correct time has been typed THEN 'Publish' button gets enabled"()
     {
-        given: "wizard for not required 'Time 0:0' is opened"
+        given: "wizard with not required 'Time 0:0' is opened"
         Content timeContent = buildTime0_0_Content( CORRECT_TIME );
         ContentWizardPanel wizard = selectSitePressNew( timeContent.getContentTypeName() );
         TimeFormViewPanel formViewPanel = new TimeFormViewPanel( getSession() );
 
-        when: "correct time typed"
+        when: "correct time has been typed"
         wizard.typeData( timeContent );
 
         then: "'Publish' menu item should be enabled"

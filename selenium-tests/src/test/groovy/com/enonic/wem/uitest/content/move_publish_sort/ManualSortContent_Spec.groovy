@@ -9,7 +9,7 @@ class ManualSortContent_Spec
     extends BaseContentSpec
 {
 
-    def "GIVEN sort dialog is opened WHEN two contents has been swapped (by drag and drop) THEN contents should be correctly sorted in the dialog-grid and 'Manually Sorted' displayed in the sort menu"()
+    def "GIVEN sort dialog is opened WHEN two images has been swapped (by drag and drop) THEN contents should be correctly sorted in the dialog-grid and 'Manually Sorted' displayed in the sort menu"()
     {
         given: "folder with contents selected and 'sort' dialog opened"
         findAndSelectContent( IMPORTED_FOLDER_NAME );

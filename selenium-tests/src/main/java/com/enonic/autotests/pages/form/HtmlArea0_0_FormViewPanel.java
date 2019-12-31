@@ -45,10 +45,10 @@ public class HtmlArea0_0_FormViewPanel
     }
 
     private void typeInCKE(long numberOfEditors, final PropertyTree data){
-        List<WebElement> editors = findElements( By.xpath( "//div[contains(@id,'api.form.FormView')]//textarea[contains(@id,'api.ui.text.TextArea')]" ) );
+        List<WebElement> editors = findElements( By.xpath( "//div[contains(@id,'FormView')]//textarea[contains(@id,'TextArea')]" ) );
         if ( editors.size() == 0 )
         {
-            throw new TestFrameworkException( "no one text input was not found" );
+            throw new TestFrameworkException( "text area input was not found" );
         }
         int i = 0;
         for ( final String sourceString : data.getStrings( STRINGS_PROPERTY ) )

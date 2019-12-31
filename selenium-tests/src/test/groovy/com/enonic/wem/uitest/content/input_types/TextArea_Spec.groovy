@@ -10,7 +10,7 @@ class TextArea_Spec
     extends Base_InputFields_Occurrences
 {
 
-    def "WHEN new wizard for TextArea-content(not required) is opened AND display name is typed THEN TextArea should be empty AND Publish button should be enabled"()
+    def "WHEN new wizard for TextArea-content(not required) is opened THEN TextArea should be empty AND Publish button should be enabled"()
     {
         when: "wizard is opened(text area is not required )"
 

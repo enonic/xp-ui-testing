@@ -8,8 +8,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 5/22/2017.
- * Task:
- * xp-ui-testing#51  Add Selenium tests for 'Home button' on the wizard-toolbar
  *
  * Verifies: https://github.com/enonic/xp/issues/4970
  *   404 Error appears when the 'home-button' has been clicked

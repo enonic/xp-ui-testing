@@ -10,8 +10,6 @@ import spock.lang.Stepwise
 /**
  * Created on 17.10.2016.
  *
- * Task: XP-4272 Add selenium tests for zooming an image
- *
  * */
 @Stepwise
 class ImageEditor_Zoom_Reset_Spec
@@ -30,7 +28,7 @@ class ImageEditor_Zoom_Reset_Spec
         imageEditor.doZoomImage( 70 );
         saveScreenshot( "image_zoomed_70" );
 
-        and: "'Apply' button pressed"
+        and: "'Apply' button has been pressed"
         toolbar.clickOnApplyButton();
         saveScreenshot( "zoom_applied" )
 

@@ -21,7 +21,7 @@ class DateTime_April_Spec
     @Shared
     String DATE_TIME_3 = "2016-03-31 01:01"
 
-    def "GIVEN wizard for adding a DateTime with tz opened WHEN datetime in March typed AND saved THEN correct value displayed in the wizard"()
+    def "GIVEN wizard for new DateTime with tz is opened WHEN datetime in March has been typed AND saved THEN expected value displayed in the wizard"()
     {
         given: "wizard for adding a DateTime with timezone opened"
         Content dateTimeContent = buildDateTime1_1_Content( DATE_TIME_1 );
