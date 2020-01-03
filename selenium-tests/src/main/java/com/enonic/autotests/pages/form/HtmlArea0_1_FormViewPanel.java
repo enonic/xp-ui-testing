@@ -24,8 +24,7 @@ public class HtmlArea0_1_FormViewPanel
         String text = data.getString( STRING_PROPERTY );
         if ( text != null )
         {
-            WebElement htmlArea =
-                findElement( By.xpath( "//div[contains(@id,'FormView')]//textarea[contains(@id,'TextArea')]" ) );
+            WebElement htmlArea = findElement( By.xpath( FORM_VIEW + "//textarea[contains(@id,'TextArea')]" ) );
             sleep( 500 );
             setTextInCKE( htmlArea.getAttribute( "id" ), text );
             sleep( 500 );
@@ -46,8 +45,7 @@ public class HtmlArea0_1_FormViewPanel
 
     public String getTextInCKE()
     {
-        WebElement editor =
-            findElement( By.xpath( "//div[contains(@id,'api.form.FormView')]"+TEXT_AREA_INPUT ) );
+        WebElement editor = findElement( By.xpath( FORM_VIEW + TEXT_AREA_INPUT ) );
         return getCKEData( editor.getAttribute( "id" ) );
     }
 }

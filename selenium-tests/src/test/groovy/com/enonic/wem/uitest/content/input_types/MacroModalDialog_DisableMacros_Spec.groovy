@@ -31,7 +31,7 @@ class MacroModalDialog_DisableMacros_Spec
         ContentWizardPanel wizard = selectSitePressNew( HTML_AREA_CONTENT.getContentTypeName() ).typeData( HTML_AREA_CONTENT ).save();
         HtmlArea0_1_FormViewPanel htmlAreaFormViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
-        when: "'Disable macros' has been selected from the options"
+        when: "'Disable macros' has been selected in the options"
         MacroModalDialog dialog = htmlAreaFormViewPanel.showToolbarAndClickOnInsertMacroButton();
         PropertyTree data = new PropertyTree();
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, TEST_TEXT );
@@ -40,7 +40,7 @@ class MacroModalDialog_DisableMacros_Spec
         wizard.save();
         saveScreenshot( "test_disable_macros_inserted" );
 
-        then: "correct text should be displayed in the htmlarea"
+        then: "expected text should be displayed in the htmlarea"
         htmlAreaFormViewPanel.getTextInCKE().contains( DISABLE_MACROS_RESULT );
     }
 
@@ -54,7 +54,7 @@ class MacroModalDialog_DisableMacros_Spec
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
 
-        when: "'Disable macros' selected from the options"
+        when: "'Disable macros' has been selected in the options"
         PropertyTree data = new PropertyTree();
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, " " );
         dialog.selectOption( MacroType.DISABLE_MACROS ).getMacroConfigPanel().typeData( data );
@@ -70,7 +70,7 @@ class MacroModalDialog_DisableMacros_Spec
         and:
         ( (TextAreaConfigPanel) dialog.getMacroConfigPanel() ).isValidationMessagePresent();
 
-        and: "correct validation message appears"
+        and: "expected validation message appears"
         ( (TextAreaConfigPanel) dialog.getMacroConfigPanel() ).getValidationMessage() == "This field is required"
     }
 
@@ -97,7 +97,7 @@ class MacroModalDialog_DisableMacros_Spec
         previewPanel.getPreviewMessage() == MacroConfigPanel.NOT_COMPLETE_PREVIEW_MESSAGE;
     }
 
-    def "GIVEN MacroModalDialog opened WHEN 'Disable macros' has been selected AND text has been typed in the textArea AND 'preview' link on the dialog clicked THEN correct info in the preview-content panel appears"()
+    def "GIVEN MacroModalDialog opened WHEN 'Disable macros' has been selected AND text has been typed in the textArea AND 'preview' link on the dialog clicked THEN expected text appears in the preview-content panel"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();
@@ -105,7 +105,7 @@ class MacroModalDialog_DisableMacros_Spec
         HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
         MacroModalDialog dialog = formViewPanel.showToolbarAndClickOnInsertMacroButton();
 
-        when: "'Disable macros' selected from the options"
+        when: "'Disable macros' selected in the options"
         PropertyTree data = new PropertyTree();
         and: "text in the text area not inserted"
         data.addString( TextAreaConfigPanel.TEXT_AREA_VALUE, TEST_TEXT );
@@ -115,7 +115,7 @@ class MacroModalDialog_DisableMacros_Spec
         MacroPreviewPanel previewPanel = dialog.clickOnPreviewTabLink();
         saveScreenshot( "test_disable_macros_textarea_filled_preview" );
 
-        then: "expected info in the preview-content panel appears"
+        then: "expected text should appear in the preview-content panel"
         previewPanel.getPreviewContentMessage() == TEST_TEXT;
     }
 }
