@@ -36,15 +36,17 @@ public class PageComponentsViewDialog
     private String TOGGLE_ICON = DIALOG_CONTAINER + COMPONENTS_GRID +
         "//div[contains(@class,'slick-cell') and descendant::h6[contains(@class,'main-name')  and text()='%s']]/span[@class='toggle icon']";
 
-    private String LAYOUT_BY_DISPLAY_NAME = DIALOG_CONTAINER +
-        "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-layout')]]" + NAMES_VIEW_BY_DISPLAY_NAME;
+    private String LAYOUT_BY_DISPLAY_NAME =
+        DIALOG_CONTAINER + "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-layout')]]" +
+            NAMES_VIEW_BY_DISPLAY_NAME;
 
-    private String FRAGMENT_BY_DISPLAY_NAME = DIALOG_CONTAINER +
-        "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-fragment')]]" +
-        NAMES_VIEW_BY_DISPLAY_NAME;
+    private String FRAGMENT_BY_DISPLAY_NAME =
+        DIALOG_CONTAINER + "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-fragment')]]" +
+            NAMES_VIEW_BY_DISPLAY_NAME;
 
-    private String FRAGMENT_DISPLAY_NAMES = DIALOG_CONTAINER +
-        "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-fragment')]]" + H6_DISPLAY_NAME;
+    private String FRAGMENT_DISPLAY_NAMES =
+        DIALOG_CONTAINER + "//div[contains(@id,'PageComponentsItemViewer') and descendant::div[contains(@class,'icon-fragment')]]" +
+            H6_DISPLAY_NAME;
 
     public final String CLOSE_BUTTON = DIALOG_CONTAINER + "//button[contains(@id,'CloseButton')]";
 
@@ -88,6 +90,21 @@ public class PageComponentsViewDialog
         }
         getDisplayedElement( By.xpath( menuButton ) ).click();
         sleep( 500 );
+        return this;
+    }
+
+    public PageComponentsViewDialog expandItem( String name )
+    {
+        String selector = "//div[contains(@class,'slick-row') and descendant::h6[contains(@class,'main-name') and text()='%s']]" +
+            "//span[@class='toggle icon expand']";
+        String xpath = String.format( selector, name );
+        if ( !waitUntilVisibleNoException( By.xpath( xpath ), EXPLICIT_NORMAL ) )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err-page-components-layout" ) );
+            throw new TestFrameworkException( "Page Components Dialog was not opened!" );
+        }
+        findElement( By.xpath( xpath ) ).click();
+        sleep( 300 );
         return this;
     }
 

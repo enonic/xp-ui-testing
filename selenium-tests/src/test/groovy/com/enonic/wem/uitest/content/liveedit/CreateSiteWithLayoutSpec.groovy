@@ -173,6 +173,7 @@ class CreateSiteWithLayoutSpec
         PageComponentsViewDialog pageComponentsView = templateWizard.showComponentView();
 
         when: "an image has been inserted in the left region"
+        pageComponentsView.expandItem( LAYOUT_NAME );
         pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         templateWizard.switchToLiveEditFrame();
@@ -204,6 +205,7 @@ class CreateSiteWithLayoutSpec
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "an image has been inserted in the center region"
+        pageComponentsView.expandItem( LAYOUT_NAME );
         pageComponentsView.openMenu( "center" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
@@ -228,6 +230,7 @@ class CreateSiteWithLayoutSpec
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "an image has been inserted in the right region"
+        pageComponentsView.expandItem( LAYOUT_NAME );
         pageComponentsView.openMenu( "right" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
@@ -251,6 +254,8 @@ class CreateSiteWithLayoutSpec
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
         when: "'reset' menu-item has been clicked"
+        pageComponentsView.expandItem( LAYOUT_NAME );
+        pageComponentsView.expandItem( "left" );
         pageComponentsView.openMenu( TEST_IMAGE_DISPLAY_NAME ).selectMenuItem( "Reset" );
         wizardPanel.switchToLiveEditFrame();
 
@@ -275,6 +280,8 @@ class CreateSiteWithLayoutSpec
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
         when: "'duplicate' menu-item has been clicked"
+        pageComponentsView.expandItem( LAYOUT_NAME );
+        pageComponentsView.expandItem( "left" );
         pageComponentsView.openMenu( TEST_IMAGE_DISPLAY_NAME ).selectMenuItem( "Duplicate" );
         wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
@@ -297,6 +304,8 @@ class CreateSiteWithLayoutSpec
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
         when: "menu for image is opened and 'remove' menu-item selected"
+        pageComponentsView.expandItem( LAYOUT_NAME );
+        pageComponentsView.expandItem( "left" );
         pageComponentsView.openMenu( TEST_IMAGE_DISPLAY_NAME ).selectMenuItem( "Remove" );
         wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );

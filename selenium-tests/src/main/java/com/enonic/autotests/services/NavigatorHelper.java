@@ -48,11 +48,11 @@ public class NavigatorHelper
     {
         HomePage home = loginAndOpenHomePage( testSession );
         //closeXpTourDialogIfPresent( testSession );
-        if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3, testSession ) )
-        {
-            TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
-            throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
-        }
+//        if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3, testSession ) )
+//        {
+//            TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
+//            throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
+//        }
         ContentBrowsePanel cmPage = home.openContentStudioApplication();
         return cmPage;
     }
