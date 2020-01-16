@@ -19,7 +19,7 @@ public class ContentUnpublishDialog
 
     public static final String HEADER_TEXT = "Unpublish item";
 
-    public static final String SUBHEADER_PART_TEXT = "Take offline? - Unpublishing selected item(s) will set status back to offline";
+    public static final String SUBHEADER_PART_TEXT = "Unpublishing selected item(s) will set status back to offline";
 
     private final String DIALOG_HEADER_H2 = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
 
