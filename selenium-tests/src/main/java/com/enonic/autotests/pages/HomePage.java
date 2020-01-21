@@ -114,11 +114,11 @@ public class HomePage
 
     public boolean checkLauncher()
     {
-        boolean isLauncherPresent = waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), 2 );
+        boolean isLauncherPresent = waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), 3 );
         if ( !isLauncherPresent )
         {
             //saveScreenshot( NameHelper.uniqueName( "err_launcher_display" ) );
-            throw new TestFrameworkException( "launcher panel should be displayed by default" );
+            throw new TestFrameworkException( "launcher panel was not loaded in 3 seconds! It should be loaded by default" );
         }
         return true;
     }

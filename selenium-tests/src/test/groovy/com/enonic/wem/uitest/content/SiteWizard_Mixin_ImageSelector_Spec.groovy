@@ -18,7 +18,7 @@ class SiteWizard_Mixin_ImageSelector_Spec
     @Shared
     Content SITE;
 
-    def "GIVEN site wizard is opened WHEN application with 'selected-image'-mixin has been selected THEN image-selector should appear appears in the wizard"()
+    def "GIVEN new site wizard is opened WHEN application with 'selected-image'-mixin has been selected THEN image-selector should appear appears in the wizard"()
     {
         given: "site wizard is opened "
         SITE = buildSiteWithApps( FIRST_TEST_APP_NAME );
@@ -32,7 +32,7 @@ class SiteWizard_Mixin_ImageSelector_Spec
         then: "option filter input for a selecting an image should appear in the wizard's page"
         imageSelectorFormViewPanel.isOptionFilterIsDisplayed();
 
-        and: "'Selected Image' wizard step should be added on the toolbar"
+        and: "'Selected Image' wizard step should be added in the toolbar"
         wizard.isWizardStepPresent( "Selected image" );
     }
 
@@ -49,7 +49,7 @@ class SiteWizard_Mixin_ImageSelector_Spec
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
     }
 
-    def "GIVEN existing site with mixin(image-selector) WHEN site has been opened AND image selected AND site saved THEN image shoukld be displayed in hte wizard"()
+    def "GIVEN existing site with mixin(image-selector) WHEN site has been opened AND image selected AND site saved THEN image should be displayed in hte wizard"()
     {
         given: "existing site with mixin(image-selector)"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
