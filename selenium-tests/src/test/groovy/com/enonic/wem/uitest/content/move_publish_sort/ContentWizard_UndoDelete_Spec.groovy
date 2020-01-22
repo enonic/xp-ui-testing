@@ -28,7 +28,7 @@ class ContentWizard_UndoDelete_Spec
         when: "the folder has been published"
         findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();
 
-        then: "'Online' status should be displayed"
+        then: "'Published' status should be displayed"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
@@ -65,10 +65,10 @@ class ContentWizard_UndoDelete_Spec
         findAndSelectContent( CONTENT.getName() ).clickToolbarUndodelete();
         saveScreenshot( "undo-delete-pressed-online" );
 
-        then: "the content is getting 'Online'"
+        then: "the content gets 'Published'"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
 
-        and: "correct notification message should be displayed"
+        and: "expected notification message should be displayed"
         contentBrowsePanel.waitForNotificationMessage() == Application.ITEM_IS_UNDELETED;
     }
 }

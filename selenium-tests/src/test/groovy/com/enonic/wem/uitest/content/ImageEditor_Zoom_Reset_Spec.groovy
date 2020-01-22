@@ -61,7 +61,6 @@ class ImageEditor_Zoom_Reset_Spec
         wizard.isAlertPresent();
     }
 
-
     def "GIVEN 'Image Editor' opened WHEN image has been zoomed AND Apply button pressed AND Save AND 'Close' button pressed THEN Alert modal dialog should not appear"()
     {
         given: "'Image Editor' dialog opened"
@@ -84,7 +83,9 @@ class ImageEditor_Zoom_Reset_Spec
         !wizard.isAlertPresent();
     }
 
-    def "GIVEN existing zoomed image WHEN it opened THEN 'Reset' button should be displayed on the wizard"()
+    //https://github.com/enonic/app-contentstudio/issues/1365
+    //Image Wizard - Save button gets enabled after reverting changes (rotated or flipped) #1365
+    def "WHEN existing zoomed image is opened THEN 'Reset' button should be displayed in the wizard"()
     {
         when: "existing zoomed image"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit();
@@ -97,7 +98,7 @@ class ImageEditor_Zoom_Reset_Spec
         !wizard.isSaveButtonEnabled();
     }
 
-    def "GIVEN existing zoomed image WHEN it opened AND 'Reset' button was pressed AND 'close' button pressed THEN 'Alert' dialog with warning messages should appear"()
+    def "GIVEN existing zoomed image is opened WHEN 'Reset' button has been pressed AND 'close' icon pressed THEN 'Alert' dialog with warning messages should appear"()
     {
         given: "existing zoomed image"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit();
@@ -113,7 +114,7 @@ class ImageEditor_Zoom_Reset_Spec
         wizard.waitIsAlertDisplayed();
     }
 
-    def "GIVEN existing zoomed image WHEN the image has been opened AND 'Reset' button pressed AND 'Saved' and 'close' button pressed  THEN 'Alert' dialog should not appear"()
+    def "GIVEN existing zoomed image is opened WHEN 'Reset' button has been pressed AND 'Saved' and 'close' buttons pressed THEN 'Alert' dialog should not appear"()
     {
         given: "existing zoomed image"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();

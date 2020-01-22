@@ -11,7 +11,8 @@ import spock.lang.Stepwise
 class DisplayNameSortContent_Spec
         extends BaseContentSpec {
 
-    def "GIVEN sort content dialog is opened (default sorting) WHEN 'DisplayName - Ascending order' has been selected THEN content in the folder should be sorted correctly"() {
+    def "GIVEN sort content dialog is opened (default sorting) WHEN 'DisplayName - Ascending order' has been selected THEN expected sorting should be applied"()
+    {
         given: "sort dialog is opened:"
         findAndSelectContent(IMPORTED_FOLDER_NAME);
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().doSort(
@@ -25,7 +26,7 @@ class DisplayNameSortContent_Spec
                 SortMenuItem.DISPLAY_NAME.getValue(), SortOrder.ASCENDING).getContentNames();
         saveScreenshot("dname_ascending");
 
-        then: "content in the dialog should be correctly sorted"
+        then: "expected sorting should be applied"
         Collections.sort(defaultSortingList);
         defaultSortingList.equals(nameAscendingList);
     }

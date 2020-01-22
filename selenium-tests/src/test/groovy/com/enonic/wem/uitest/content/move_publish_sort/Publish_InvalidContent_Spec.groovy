@@ -17,7 +17,7 @@ class Publish_InvalidContent_Spec
     @Shared
     Content invalidFolder;
 
-    def "GIVEN wizard for new folder is opened WHEN display name is empty  AND 'Save' button has been pressed THEN 'Publish' button should be disabled AND red icon should be present on the wizard"()
+    def "GIVEN wizard for new folder is opened WHEN display name is empty  AND 'Save' button has been pressed THEN 'Publish' button should be disabled AND red icon gets visible in the wizard"()
     {
         given: "wizard for new folder is opened"
         invalidFolder = buildFolderWithEmptyDisplayNameContent( "not_valid" );
@@ -61,7 +61,7 @@ class Publish_InvalidContent_Spec
         when: "parent content has been selected and 'Publish' button pressed"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
-        and: "'include child' icon was clicked"
+        and: "'include child' icon is clicked"
         contentPublishDialog.includeChildren( true );
 
         then: "'Publish Now' button in 'Content publish' dialog should be disabled"

@@ -18,7 +18,7 @@ class Delete_Published_Parent_Folder_Spec
     @Shared
     Content PARENT_FOLDER;
 
-    def "GIVEN existing Ready to publish folder with a child WHEN parent content has been selected and 'Publish' button pressed THEN notification message appears and content is getting 'Published'"()
+    def "GIVEN existing Ready to publish folder with a child WHEN parent content has been selected and 'Publish' button pressed THEN '2 items are published.' and content get 'Published'"()
     {
         given:
         PARENT_FOLDER = buildFolderContent( "publish", "parent folder" );

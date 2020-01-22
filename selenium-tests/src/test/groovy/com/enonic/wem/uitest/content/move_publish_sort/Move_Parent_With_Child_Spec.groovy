@@ -9,7 +9,6 @@ import spock.lang.Stepwise
 /**
  * Created  on 02.11.2016.
  * verifies: XP-4111 Incorrect filtering of options when parent and its child were selected for moving
- *
  * */
 @Stepwise
 class Move_Parent_With_Child_Spec
