@@ -26,9 +26,9 @@ class Occurrences_Long_Spec
     @Shared
     Content MIN_SAFE_CONTENT;
 
-    def "GIVEN creating of 'Long'-content WHEN just created content is opened THEN expected 'Long' value should be present in wizard AND the content is valid"()
+    def "GIVEN long-content(0:1) is saved WHEN just created content is reopened THEN expected 'Long' value should be present in wizard"()
     {
-        given: "creating of  content with type 'Long'"
+        given: "long-content(0:1) is saved"
         VALID_LONG_CONTENT = buildLong0_1_Content( TEST_LONG );
         ContentWizardPanel wizard = selectSitePressNew( VALID_LONG_CONTENT.getContentTypeName() ).waitUntilWizardOpened()
         wizard.typeData( VALID_LONG_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
@@ -47,7 +47,7 @@ class Occurrences_Long_Spec
         longFormViewPanel.isValueInInputValid( 0 );
     }
 
-    def "GIVEN creating of content with type 'long'(not required) WHEN invalid value has been typed THEN input should be displayed with a red border AND red icon should not shown on the wizard tab"()
+    def "GIVEN wizard for long-content(0:1) is opened WHEN invalid value has been typed THEN input should be displayed with a red border AND red icon should not shown in the wizard tab"()
     {
         given: "wizard for 'long' content(not required) is opened"
         Content longContent = buildLong0_1_Content( INVALID_LONG1 );
@@ -71,7 +71,7 @@ class Occurrences_Long_Spec
         wizard.showPublishMenu().isPublishMenuItemEnabled();
     }
 
-    def "GIVEN new wizard for 'long'(required) is opened WHEN not valid value for long typed THEN input with a red border AND red icon shown on the wizard tab"()
+    def "GIVEN new wizard for 'long'(1:1) is opened WHEN not valid value has been typed THEN input with a red border AND red icon shown in the wizard tab"()
     {
         given: "creating of  content with type 'Long'"
         Content longContent = buildLong1_1_Content( INVALID_LONG1 );
@@ -156,25 +156,25 @@ class Occurrences_Long_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN wizard for 'long' content is opened WHEN MIN_SAFE value was typed THEN red icon should not be displayed on the wizard page"()
+    def "GIVEN wizard for 'long' content is opened WHEN 'MIN_SAFE' value has been typed THEN red icon should not be displayed in the wizard page"()
     {
         given: "wizard for long content is opened"
         MIN_SAFE_CONTENT = buildLong1_1_Content( MIN_SAFE_INTEGER );
         ContentWizardPanel wizard = selectSitePressNew( MIN_SAFE_CONTENT.getContentTypeName() ).waitUntilWizardOpened();
         LongFormViewPanel longFormViewPanel = new LongFormViewPanel( getSession() );
 
-        when: "MIN value was typed"
+        when: "MIN value has been typed"
         wizard.typeData( MIN_SAFE_CONTENT ).save();
         saveScreenshot( "test_min_long" );
 
         then: "input should be without a red border"
         longFormViewPanel.isValueInInputValid( 0 );
 
-        and: "red icon should not be present on the wizard page, because the value is allowed"
+        and: "red icon should not be present in the wizard page, because the value is allowed"
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN existing content with MIN_SAFE_VALUE  WHEN content opened THEN correct value should be displayed on the wizard page"()
+    def "GIVEN existing content with 'MIN_SAFE_VALUE' WHEN content is opened THEN expected long-value should be present"()
     {
         given: "existing content with MIN_SAFE_VALUE is selected "
         findAndSelectContent( MIN_SAFE_CONTENT.getName() )
@@ -188,7 +188,7 @@ class Occurrences_Long_Spec
         longFormViewPanel.getLongValue() == MIN_SAFE_INTEGER
     }
 
-    def "GIVEN existing content with required input(long) is selected WHEN content was opened AND input has been cleared THEN red icon should be present on the wizard page"()
+    def "GIVEN existing content with required input(long) is selected WHEN content has been opened AND input has been cleared THEN red icon gets visible in the wizard page"()
     {
         given: "existing content with required input(long)"
         findAndSelectContent( MIN_SAFE_CONTENT.getName() )
@@ -204,5 +204,8 @@ class Occurrences_Long_Spec
 
         then: "validation message should be present, because the input is required"
         longFormViewPanel.isValidationMessagePresent();
+
+        and: "the content gets invalid:"
+        wizard.isContentInvalid();
     }
 }
