@@ -14,11 +14,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 12.01.2017.
- *
- * Tasks:
- * XP-4817 Add selenium test for creating fragments from a layout
- * XP-4818 Add selenium test for switching between layouts
- * xp-ui-testing#71 Add new tests for Fragments
  * */
 @Stepwise
 class Fragment_Create_From_Layout_Spec
@@ -164,6 +159,7 @@ class Fragment_Create_From_Layout_Spec
         ContentWizardPanel fragmentWizard = findAndSelectContent( LAYOUT_3_COL_DISPLAY_NAME ).clickToolbarEdit();
         and: "PageComponentsView has been opened"
         PageComponentsViewDialog pageComponentsView = fragmentWizard.showComponentView();
+        pageComponentsView.expandItem( LAYOUT_3_COL_DISPLAY_NAME );
 
         when: "Insert Image menu item has been clicked"
         pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
