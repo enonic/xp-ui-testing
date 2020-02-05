@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<page xmlns="urn:enonic:xp:model:1.0">
+  <display-name>Page with error</display-name>
+  <form>
+  </form>
+  <regions>
+  </regions>
+</page>

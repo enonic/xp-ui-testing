@@ -118,7 +118,7 @@ class Occurrences_ImageSelector_2_4_Spec
         wizard.isContentInvalid();
     }
 
-    def "WHEN content with 4 images has been added and published THEN the content should be 'Online'"()
+    def "WHEN content with 4 images has been added and published THEN the content should be 'Published'"()
     {
         when: "content with 4 selected images saved and published"
         IMAGE_SELECTOR_CONTENT_4_IMAGES =
