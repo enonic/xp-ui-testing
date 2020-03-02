@@ -43,7 +43,7 @@ public class EditPermissionsDialog
 
     private final String PRINCIPALS_OPTIONS_FILTER_INPUT = CONTAINER_XPATH + COMBOBOX_OPTION_FILTER_INPUT;
 
-    private String PRINCIPAL_PATH = "//div[contains(@id,'AccessControlEntryViewer')]//p[contains(.,'%s')]";
+    private String PRINCIPAL_PATH = CONTAINER_XPATH + "//div[contains(@id,'PrincipalContainerViewer')]//p[contains(.,'%s')]";
 
     private String PRINCIPAL_CHECKBOX_PATH = SLICK_ROW_BY_NAME + "//div[contains(@class,'checkboxsel')]/label";
 
@@ -254,7 +254,7 @@ public class EditPermissionsDialog
             saveScreenshot( "err_inherit_checkbox" );
             throw new TestFrameworkException( "inherit permissions checkbox was not found!" );
         }
-        WebElement checkbox = findElement( By.xpath( INHERIT_PERMISSIONS_CHECKBOX+"//input[@type='checkbox']" ) );
+        WebElement checkbox = findElement( By.xpath( INHERIT_PERMISSIONS_CHECKBOX + "//input[@type='checkbox']" ) );
         return checkbox.isSelected();
     }
 
@@ -265,7 +265,7 @@ public class EditPermissionsDialog
             saveScreenshot( "err_overwrite_checkbox" );
             throw new TestFrameworkException( "overwrite child permissions checkbox was not found!" );
         }
-        WebElement checkbox = findElement( By.xpath( OVERWRITE_CHILD_PERMISSIONS_CHECKBOX+ "//input[@type='checkbox']" ) );
+        WebElement checkbox = findElement( By.xpath( OVERWRITE_CHILD_PERMISSIONS_CHECKBOX + "//input[@type='checkbox']" ) );
         return checkbox.isSelected();
     }
 

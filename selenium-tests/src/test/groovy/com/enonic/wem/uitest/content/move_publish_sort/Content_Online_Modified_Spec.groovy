@@ -45,7 +45,7 @@ class Content_Online_Modified_Spec
         contentBrowsePanel.getContentStatus( CONTENT.getName() ).equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
     }
 
-    def "GIVEN existing 'Modified'-folder WHEN the content has been selected and published THEN folder becomes 'Published'"()
+    def "GIVEN existing 'Modified'-folder WHEN the content has been selected and published THEN folder gets 'Published'"()
     {
         when: "modified content has been published"
         findAndSelectContent( CONTENT.getName() ).showPublishMenu().clickOnMarkAsReadyMenuItem();

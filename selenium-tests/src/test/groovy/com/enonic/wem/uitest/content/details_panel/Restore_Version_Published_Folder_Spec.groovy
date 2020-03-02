@@ -21,7 +21,7 @@ class Restore_Version_Published_Folder_Spec
     @Shared
     String NEW_DISPLAY_NAME = "restore-modified";
 
-    def "WHEN existing folder has been published AND previous version restored THEN 'Modified' status should be displayed in the version view AND in the Browse panel"()
+    def "WHEN existing folder has been published AND previous version restored THEN 'Modified' status should be displayed in the top version item AND in the Browse panel"()
     {
         given: "existing folder with several versions"
         FOLDER_CONTENT = buildFolderContent( "folder", INITIAL_DISPLAY_NAME );
@@ -39,10 +39,7 @@ class Restore_Version_Published_Folder_Spec
         and: "one of the previous versions was restored"
         versionItem.doRestoreVersion( );
 
-        and: "the version view has been expanded"
-        allContentVersionsView.clickOnVersionAndExpand( 1 );
-
-        then: "'Modified' status is displayed for the current version"
+        then: "'Modified' status should be displayed in the top version-item"
         versionItem.getContentStatus( 0 ) == ContentStatus.MODIFIED.getValue();
 
         and: "'Modified' status should be displayed in the Browse panel"

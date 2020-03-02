@@ -202,7 +202,7 @@ class Occurrences_ItemSet_0_0_Spec
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing ItemSet-content with a several versions WHEN when the previous version is restored THEN expected ItemSet-data should be displayed AND status get modified"()
+    def "GIVEN existing ItemSet-content with a several versions WHEN when the previous version is restored THEN expected ItemSet-data should be displayed AND status gets modified"()
     {
         given: "content added selected and version history opened"
         ContentWizardPanel wizard = findAndSelectContent( ITEM_SET_WITH_DATA.getName() ).clickToolbarEdit();

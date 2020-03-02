@@ -18,7 +18,7 @@ import com.enonic.autotests.utils.NameHelper;
 public class ContentInfoWidget
     extends Application
 {
-    private final String CONTAINER = "//div[contains(@id,WidgetView)]";
+    private final String CONTAINER = "//div[contains(@id,WidgetView) and contains(@class,'properties-widget')]";
 
     private final String STATUS_TEXT = CONTAINER + "//div[contains(@id,'StatusWidgetItemView')]/span";
 
