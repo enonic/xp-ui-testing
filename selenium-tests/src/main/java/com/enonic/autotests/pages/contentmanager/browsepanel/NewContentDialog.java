@@ -145,8 +145,6 @@ public class NewContentDialog
      */
     public ContentWizardPanel selectContentType( String type )
     {
-        //String searchString = contentTypeDisplayName.substring( contentTypeDisplayName.indexOf( ":" ) + 1 );
-        //waitUntilElementEnabled( By.xpath( SEARCH_INPUT ), Application.EXPLICIT_NORMAL );
         buildActions().sendKeys( type ).build().perform();
         sleep( 500 );
         String ctypeXpath = String.format( CONTENT_TYPE_DISPLAY_NAME, type );
@@ -157,7 +155,7 @@ public class NewContentDialog
             throw new TestFrameworkException( "content type with name " + type + " was not found!" );
         }
         getDisplayedElement( By.xpath( ctypeXpath ) ).click();
-        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        sleep( 300 );
         //switch to the new browser tab
         switchToNewWizardTab();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );

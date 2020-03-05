@@ -56,7 +56,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         saveScreenshot( "version_panel_pending" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
-        then: "the latest version has a 'deleted' badge"
+        then: "the latest version has 'deleted' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.DELETED.getValue() );
 
     }
