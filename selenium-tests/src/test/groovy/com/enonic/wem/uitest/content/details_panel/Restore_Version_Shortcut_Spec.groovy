@@ -10,7 +10,6 @@ import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-@Ignore
 @Stepwise
 class Restore_Version_Shortcut_Spec
     extends BaseVersionHistorySpec
@@ -31,7 +30,7 @@ class Restore_Version_Shortcut_Spec
     String TARGET_2 = "whale";
 
 
-    def "GIVEN existing shortcut WHEN display name of the shortcut changed THEN new 'version history item' appeared in the version-view"()
+    def "GIVEN existing shortcut is opened WHEN display name has been updated THEN new 'version history item' should appear"()
     {
         given:
         ContentSettings settings = ContentSettings.builder().language( NORSK_LANGUAGE ).build();
@@ -42,25 +41,24 @@ class Restore_Version_Shortcut_Spec
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_before_changing_shortcut" );
 
-
-        when: "display name of the folder changed"
+        when: "display name has been updated"
         contentBrowsePanel.clickToolbarEdit().typeDisplayName( NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
         int numberOfVersionsAfter = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_after_changing_shortcut" );
 
-        then: "new 'version history item' appeared in the version-view"
+        then: "new 'version history item' should appear"
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing shortcut and 'display name' has been updated WHEN the shortcut selected AND previous version restored THEN correct display name appears in the grid"()
+    def "GIVEN existing shortcut is selected WHEN previous version has been reverted THEN expected display name appears in the grid"()
     {
-        given: "existing shortcut and 'display name' has been updated"
+        given: "existing shortcut is selected"
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
 
-        and: "version panel opened"
+        and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "the shortcut selected AND previous version has been restored"
+        when: "previous version has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion(  );
         saveScreenshot( "shortcut_display_name_restored" );
@@ -70,9 +68,9 @@ class Restore_Version_Shortcut_Spec
         contentBrowsePanel.exists( SHORTCUT_CONTENT.getName() );
     }
 
-    def "GIVEN existing shortcut WHEN target has been changed in the wizard THEN new target displayed on wizard AND number of versions is increased"()
+    def "GIVEN existing shortcut is opened WHEN target has been changed THEN number of versions should be increased by 1"()
     {
-        given: "existing shortcut"
+        given: "existing shortcut is opened"
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
         AllContentVersionsView allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
@@ -89,9 +87,9 @@ class Restore_Version_Shortcut_Spec
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing shortcut with two versions for target AND wizard opened WHEN version of shortcut changed THEN correct target present on the wizard"()
+    def "GIVEN existing shortcut is opened WHEN version has been reverted THEN expected target should appear in the wizard"()
     {
-        given: "existing folder with updated 'display name'"
+        given: "existing shortcut with several versions is opened"
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
@@ -99,7 +97,7 @@ class Restore_Version_Shortcut_Spec
         and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "the shortcut selected AND previous version restored"
+        when: "previous version has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion( );
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();

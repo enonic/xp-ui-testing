@@ -13,7 +13,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 26.08.2016.*/
-@Ignore
 @Stepwise
 class Shortcut_Spec
     extends BaseContentSpec
@@ -24,10 +23,10 @@ class Shortcut_Spec
     @Shared
     String TARGET_1 = "server";
 
-    def "GIVEN creating of new shortcut WHEN name was typed but target is not selected AND AppHome button has been pressed THEN the content should be displayed as invalid"()
+    def "GIVEN new shortcut wizard is opened WHEN name was typed and saved THEN the content should be not nvalid(in grid)"()
     {
         given:
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( ContentTypeName.shortcut() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( "Shortcut" );
         String name = NameHelper.uniqueName( "shortcut" );
 
         when: "name and display name has been typed"
@@ -44,7 +43,7 @@ class Shortcut_Spec
         contentBrowsePanel.isContentInvalid( name );
     }
 
-    def "GIVEN creating of new shortcut WHEN name typed but target is not selected THEN red icon is present on the wizard-tab AND validation message appears"()
+    def "GIVEN new shortcut wizard is opened WHEN name has been typed and saved THEN red icon appears in the wizard-tab"()
     {
         given:
         SHORTCUT_CONTENT = buildShortcutWithTarget( "shortcut", null, "shortcut display name", TARGET_1, );
@@ -65,7 +64,7 @@ class Shortcut_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN existing shortcut without selected target is opened WHEN target was selected THEN red icon should not be displayed on the wizard tab"()
+    def "GIVEN existing shortcut is opened WHEN target has been selected THEN red icon should not be displayed in the wizard tab"()
     {
         given: "existing shortcut without selected target is opened"
         ContentWizardPanel wizard = findAndSelectContent( SHORTCUT_CONTENT.getName() ).clickToolbarEdit();
@@ -83,13 +82,13 @@ class Shortcut_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN existing shortcut with selected target is opened WHEN target was removed THEN red icon should be present on the wizard tab"()
+    def "GIVEN existing shortcut is opened WHEN target has been removed THEN red icon should appear in the wizard tab"()
     {
         given: "existing shortcut with selected target is opened"
         ContentWizardPanel wizard = findAndSelectContent( SHORTCUT_CONTENT.getName() ).clickToolbarEdit();
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 
-        when: "target was removed"
+        when: "target has been removed"
         formViewPanel.removeTarget();
         saveScreenshot( "shortcut_target_removed" );
 
