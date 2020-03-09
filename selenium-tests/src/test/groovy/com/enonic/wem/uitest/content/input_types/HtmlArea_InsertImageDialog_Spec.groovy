@@ -38,38 +38,6 @@ class HtmlArea_InsertImageDialog_Spec
 
         and: "Image toolbar should not be displayed"
         !insertImageModalDialog.isToolbarDisplayed();
-
-    }
-    // verifies XP-4949 HTML Area - Modal dialogs must handle close on Esc test is reimplemented in JS
-    @Ignore
-    def "GIVEN InsertImageModalDialog is opened WHEN 'Escape' key has been pressed THEN modal dialog should be closed"()
-    {
-        given: "wizard for html-area content is opened"
-        Content htmlAreaContent = buildHtmlArea0_1_Content( null );
-        selectSitePressNew( htmlAreaContent.getContentTypeName() );
-        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-        InsertImageModalDialog insertImageModalDialog = formViewPanel.showToolbarAndClickOnInsertImageButton();
-
-        when: "'Escape' key has been clicked"
-        insertImageModalDialog.pressEscapeKey();
-
-        then: "modal dialog should be closed"
-        insertImageModalDialog.waitForClosed();
-    }
-
-    def "GIVEN  InsertImageModalDialog is opened WHEN 'Cancel' button has been clicked THEN modal dialog should be closed"()
-    {
-        given: "InsertImageModalDialog is opened"
-        Content htmlAreaContent = buildHtmlArea0_1_Content( null );
-        selectSitePressNew( htmlAreaContent.getContentTypeName() );
-        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-        InsertImageModalDialog insertImageModalDialog = formViewPanel.showToolbarAndClickOnInsertImageButton();
-
-        when: "'Cancel' button has been clicked"
-        insertImageModalDialog.clickOnCancelButton();
-
-        then: "modal dialog should be closed"
-        insertImageModalDialog.waitForClosed();
     }
 
     def "GIVEN InsertImageModalDialog is opened WHEN an image was inserted THEN Image toolbar should be displayed"()

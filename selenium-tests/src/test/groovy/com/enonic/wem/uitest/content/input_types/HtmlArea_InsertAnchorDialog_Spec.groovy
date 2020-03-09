@@ -52,23 +52,6 @@ class HtmlArea_InsertAnchorDialog_Spec
         then: "modal dialog should not be displayed"
         insertAnchorButton.waitForClosed();
     }
-    // verifies XP-4949 HTML Area - Modal dialogs must handle close on Esc (Test is reimplemented in JS)
-    @Ignore
-    def "GIVEN  InsertAnchorModalDialog is opened WHEN 'Escape' key has been pressed THEN modal dialog should not be displayed"()
-    {
-        given: "wizard for html-area content is opened"
-        Content htmlAreaContent = buildHtmlArea0_1_Content( null );
-        selectSitePressNew( htmlAreaContent.getContentTypeName() );
-        HtmlArea0_1_FormViewPanel formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
-        and: "InsertAnchorModalDialog is opened"
-        InsertAnchorModalDialog insertAnchorModalDialog = formViewPanel.showToolbarAndClickOnInsertAnchorButton();
-
-        when: "'Escape' key has been clicked"
-        insertAnchorModalDialog.pressEscapeKey();
-
-        then: "modal dialog should not be displayed"
-        insertAnchorModalDialog.waitForClosed();
-    }
 
     def "GIVEN  InsertAnchorModalDialog is opened WHEN text has been typed AND 'Insert' button pressed THEN modal dialog should not be displayed"()
     {
