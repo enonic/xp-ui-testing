@@ -15,7 +15,7 @@ class DetailsPanels_VersionHistory_Spec
     @Shared
     Content folderContent;
 
-    def "GIVEN content is selected WHEN 'Version History' menu item has been clicked THEN panel with versions should be loaded"()
+    def "GIVEN content is selected WHEN 'Version History' has been opened THEN panel with versions should be loaded"()
     {
         given: "content is added"
         folderContent = buildFolderContent( "version_h_", "version_history_test" );
@@ -31,7 +31,7 @@ class DetailsPanels_VersionHistory_Spec
         allContentVersionsView.isLoaded();
     }
 
-    def "GIVEN existing content is selected WHEN 'Version History' option is selected THEN two versions should be present on the versions panel"()
+    def "GIVEN existing content is selected WHEN 'Version History' has been opened THEN two versions should be present in the panel"()
     {
         given: "content selected and details panel opened"
         findAndSelectContent( folderContent.getName() );
@@ -54,7 +54,7 @@ class DetailsPanels_VersionHistory_Spec
         allVersions.getFirst().getModified().contains( "minute ago" );
     }
 
-    def "GIVEN existing content is selected WHEN the content has been marked as ready AND published THEN the latest versions should has 'Published' badge"()
+    def "GIVEN existing content is selected WHEN the content has been published THEN the latest versions should be with 'Published' badge"()
     {
         given: "existing content is selected"
         findAndSelectContent( folderContent.getName() );
@@ -73,9 +73,9 @@ class DetailsPanels_VersionHistory_Spec
         contentVersions.getFirst().getStatus().equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
-    def "GIVEN existing 'Published' content was changed and content is getting 'Modified' WHEN versions panel is opened THEN three versions should be present. The older one with green 'online' badge and the newer one with a gray 'Modified' badge."()
+    def "GIVEN existing 'Published' content has been changed and content gets 'Modified' WHEN versions panel has been opened THEN three versions should be present. The older one with green 'published' badge and the newer one with a gray 'Modified' badge."()
     {
-        given: "existing 'online' content was changed and content is getting 'Modified'"
+        given: "existing 'Published' content has been changed and content is 'Modified'"
         findAndSelectContent( folderContent.getName() ).clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
             "newDisplayName" ).save().closeBrowserTab().switchToBrowsePanelTab();
 

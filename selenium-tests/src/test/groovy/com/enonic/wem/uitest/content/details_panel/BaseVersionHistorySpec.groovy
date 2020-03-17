@@ -15,6 +15,7 @@ class BaseVersionHistorySpec
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
         AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         contentItemVersionsPanel.waitUntilLoaded();
+        sleep( 500 );
         return contentItemVersionsPanel;
     }
 }
