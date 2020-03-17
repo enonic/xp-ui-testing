@@ -60,15 +60,18 @@ public class AllContentVersionsView
     private ContentVersion buildContentVersion( WebElement li )
     {
         String statusInElement = ".//div[contains(@class,'status')]";
+        String result = null;
         String modifierName = null;
         try
         {
-            modifierName = li.findElements( By.xpath( "." + H6_DISPLAY_NAME ) ).get( 0 ).getText();
+            result = li.findElements( By.xpath( "." + P_SUB_NAME ) ).get( 0 ).getText();
+            modifierName = result.substring( result.indexOf( "by" ) + 2 ).trim();
         }
         catch ( StaleElementReferenceException e )
         {
             sleep( 1000 );
-            modifierName = li.findElements( By.xpath( "." + H6_DISPLAY_NAME ) ).get( 0 ).getText();
+            result = li.findElements( By.xpath( "." + P_SUB_NAME ) ).get( 0 ).getText();
+            modifierName = result.substring( result.indexOf( "by" + 2 ) ).trim();
         }
 
         String status = null;
@@ -77,7 +80,7 @@ public class AllContentVersionsView
             status = li.findElements( By.xpath( statusInElement ) ).get( 0 ).getText();
         }
 
-        String whenModified = li.findElements( By.xpath( "." + P_NAME ) ).get( 0 ).getText();
+        String whenModified = li.findElements( By.xpath( "." + H6_MAIN_NAME ) ).get( 0 ).getText();
         return ContentVersion.builder().modifier( modifierName ).status( status ).modified( whenModified ).build();
     }
 

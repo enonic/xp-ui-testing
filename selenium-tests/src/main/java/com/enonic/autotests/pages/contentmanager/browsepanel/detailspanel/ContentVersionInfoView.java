@@ -24,7 +24,7 @@ public class ContentVersionInfoView
 
     private String REVERT_BUTTON = EXPANDED_VERSION_ITEM + "//button[child::span[text()='Revert']]";
 
-    private String OWNER_NAME_VALUE = VERSION_ITEM + "//div[contains(@id,'ContentVersionViewer')]" + H6_MAIN_NAME;
+    private String OWNER_NAME_VALUE = VERSION_ITEM + "//div[contains(@id,'ContentVersionViewer')]" + P_NAME;
 
     public ContentVersionInfoView( final TestSession session )
     {

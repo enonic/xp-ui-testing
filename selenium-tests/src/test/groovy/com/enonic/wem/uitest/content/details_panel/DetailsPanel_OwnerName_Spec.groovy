@@ -139,7 +139,7 @@ class DetailsPanel_OwnerName_Spec
 
         then: "expected 'owner name' should be displayed"
         saveScreenshot( "test_owner_version-history_user_name" );
-        versionItem.getOwnerName( 0 ) == TEST_USER.getDisplayName();
+        versionItem.getOwnerName( 0 ).contains( TEST_USER.getDisplayName() );
     }
 
     def "WHEN the copy of the existing folder is opened THEN correct owner should be displayed in settings"()

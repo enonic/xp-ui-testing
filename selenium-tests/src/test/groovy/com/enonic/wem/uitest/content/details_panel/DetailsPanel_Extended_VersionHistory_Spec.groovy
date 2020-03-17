@@ -50,7 +50,7 @@ class DetailsPanel_Extended_VersionHistory_Spec
         saveScreenshot( "version-history-expanded" );
 
         then: "Super User should be owner in the vew"
-        versionItem.getOwnerName(0) == "Super User";
+        versionItem.getOwnerName( 0 ) == "by Super User";
 
         and: "'this version should be active"
         allContentVersionsView.isVersionActive( 0 );

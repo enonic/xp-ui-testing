@@ -7,6 +7,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
 import spock.lang.Shared
 import spock.lang.Stepwise
+import com.enonic.autotests.utils.TimeUtils
 
 @Stepwise
 class DetailsPanels_VersionHistory_Spec
@@ -51,7 +52,7 @@ class DetailsPanels_VersionHistory_Spec
         allVersions.getFirst().getModifier() == "Super User";
 
         and: "expected 'modified time' should be displayed"
-        allVersions.getFirst().getModified().contains( "minute ago" );
+        allVersions.getFirst().getModified().contains( TimeUtils.getNowDate() );
     }
 
     def "GIVEN existing content is selected WHEN the content has been published THEN the latest versions should be with 'Published' badge"()
@@ -106,5 +107,8 @@ class DetailsPanels_VersionHistory_Spec
 
         then: "the latest version has 'deleted' badge"
         contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.DELETED.getValue() );
+
+        and: "previous version has a 'published' badge"
+        contentVersions.peek().getStatus().equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 }
