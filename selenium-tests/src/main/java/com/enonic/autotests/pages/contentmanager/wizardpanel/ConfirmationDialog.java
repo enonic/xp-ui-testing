@@ -15,9 +15,11 @@ public class ConfirmationDialog
 {
     private final String DIALOG_CONTAINER = "//div[contains(@id,'ConfirmationDialog')]";
 
-    public final String YES_BUTTON_XPATH = DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[text()='Yes']]";
+    public final String YES_BUTTON_XPATH =
+        DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and descendant::u[text()='Y'] and child::span[text()='es']]";
 
-    public final String NO_BUTTON_XPATH = DIALOG_CONTAINER + "//div[@class='dialog-buttons']//button/span[text()='No']";
+    public final String NO_BUTTON_XPATH =
+        DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and descendant::u[text()='N'] and child::span[text()='o']]";
 
     private final String TITLE_TEXT = DIALOG_CONTAINER + "//div[@class='dialog-header']//h2";
 
