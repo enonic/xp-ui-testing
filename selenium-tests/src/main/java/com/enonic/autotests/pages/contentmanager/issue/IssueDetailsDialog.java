@@ -53,7 +53,7 @@ public class IssueDetailsDialog
 
     private final String STOP_ISSUE_BUTTON = "//li[contains(@id,'TabMenuItem') and child::a[text()='Closed']]";
 
-    private final String START_ISSUE_BUTTON = "//li[contains(@id,'TabMenuItem') and child::a[text()='Open']]";
+    private final String OPEN_ISSUE_BUTTON = "//li[contains(@id,'TabMenuItem') and child::a[text()='Open']]";
 
     private final String STATUS_INFO = DIALOG_CONTAINER + "//span[@class='status-info']";
 
@@ -156,15 +156,15 @@ public class IssueDetailsDialog
         return this;
     }
 
-    public boolean isStopButtonActive()
+    public boolean isCloseButtonActive()
     {
         WebElement stopButton = findElement( By.xpath( STOP_ISSUE_BUTTON ) );
         return waitAndCheckAttrValue( stopButton, "class", "active", 1 );
     }
 
-    public IssueDetailsDialog doStopTask()
+    public IssueDetailsDialog doCloseTask()
     {
-        if ( isStopButtonActive() )
+        if ( isCloseButtonActive() )
         {
             saveScreenshot( "err_stop_issue" );
             throw new TestFrameworkException( "stop button should be not 'active'" );

@@ -46,7 +46,7 @@ class Issue_Dependant_List_Spec
         go "admin"
     }
 
-    def "setup: add a test user to the system user store"()
+    def "setup: add a test user in system user store"()
     {
         setup: "'Users' app is opened"
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
@@ -60,15 +60,15 @@ class Issue_Dependant_List_Spec
         UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
             UserItemName.USERS_FOLDER );
 
-        when: "data was typed and user saved"
+        when: "data has been typed and user saved"
         userWizardPanel.typeData( TEST_USER ).save().close( TEST_USER.getDisplayName() );
         userBrowsePanel.getFilterPanel().typeSearchText( TEST_USER.getDisplayName() );
 
-        then: "new user should be present beneath the system store"
+        then: "new user should be present in the system store"
         userBrowsePanel.exists( TEST_USER.getDisplayName(), true );
     }
 
-    def "GIVEN existing user WHEN when an issue created and assigned to him THEN issue should be listed"()
+    def "GIVEN existing user WHEN when new task has been assigned to him THEN new task with expected dependent items should be displayed"()
     {
         setup: "Content Studio is opened"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -87,7 +87,7 @@ class Issue_Dependant_List_Spec
         List<String> assigneesList = new ArrayList<>();
         assigneesList.add( TEST_USER.getName() );
 
-        and: "create issue dialog is opened and data has been typed"
+        and: "create task dialog is opened and data has been typed"
         TEST_ISSUE = buildIssue( "description: issue to close", assigneesList, null );
         CreateIssueDialog createIssueDialog = contentBrowsePanel.showPublishMenu().clickOnCreateTaskMenuItem();
         createIssueDialog.typeData( TEST_ISSUE );
@@ -97,7 +97,7 @@ class Issue_Dependant_List_Spec
         when: "'Create' button has been pressed"
         createIssueDialog.clickOnCreateTaskButton();
 
-        and: "Items- link hqs been clicked"
+        and: "Items- tab has been clicked"
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
         issueDetailsDialog.clickOnItemsTabBarItem();
         sleep( 400 );

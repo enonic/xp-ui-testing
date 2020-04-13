@@ -61,7 +61,7 @@ class Issue_Close_Spec
         userBrowsePanel.exists( TEST_USER.getDisplayName(), true );
     }
 
-    def "GIVEN existing user WHEN when an issue created and assigned to him THEN issue should be listed"()
+    def "GIVEN existing user WHEN new task has been assigned to him THEN new task should be added in tasks list"()
     {
         setup: "Content Studio is opened"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
@@ -84,12 +84,12 @@ class Issue_Close_Spec
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
         issueDetailsDialog.clickOnCancelButtonTop();
 
-        then: "Issue details dialog should be closed"
+        then: "Task details dialog should be closed"
         issueDetailsDialog.waitForClosed();
     }
 
     //verifies the xp#5300 Notification about unclosed issues doesn't disappear after publishing of the last open issue
-    def "GIVEN the user is logged in WHEN the user has opened 'Issue Details' and stopped the issue THEN the issue should be 'Stopped' on the dialog"()
+    def "GIVEN the user is logged in WHEN the user has opened 'Issue Details' and stopped the issue THEN the issue should be 'Closed' on the dialog"()
     {
         given: "existing assigned user is logged in"
         getTestSession().setUser( TEST_USER );
@@ -99,21 +99,18 @@ class Issue_Close_Spec
         when: "task has been clicked"
         IssueDetailsDialog taskDetailsDialog = dialog.clickOnIssue( TEST_TASK.getTitle() );
 
-        and: "task has been stopped"
-        taskDetailsDialog.clickOnStatusSelectorMenu().doStopTask();
+        and: "Open status menu and click on `Close` button(task has been closed)"
+        taskDetailsDialog.clickOnStatusSelectorMenu().doCloseTask();
 
-        then: "status of the issue should be 'Stopped'"
+        then: "the task gets 'Closed'"
         taskDetailsDialog.waitForClosedStatus();
         saveScreenshot( "task_stopped_by_user" );
 
-        and: "correct notification message should be displayed"
+        and: "expected notification message should appear"
         contentBrowsePanel.waitForNotificationMessage() == Application.TASK_IS_CLOSED;
         taskDetailsDialog.clickOnCancelButtonTop();
         sleep( 2000 );
         saveScreenshot( "last_task_closed" );
-
-        // and: "'Has Assigned issues' icon should not be displayed"
-        // contentBrowsePanel.getTextInIssuesButton() == "No open issues";
     }
 
     def "GIVEN existing task is closed by the user AND SU is 'logged in' WHEN 'task details' dialog has been opened THEN correct user-name should be present in the 'Closed by'"()
