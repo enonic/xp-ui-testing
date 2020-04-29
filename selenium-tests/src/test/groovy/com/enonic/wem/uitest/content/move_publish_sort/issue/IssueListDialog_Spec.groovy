@@ -76,7 +76,7 @@ class IssueListDialog_Spec
         assigneesList.add( TEST_USER.getName() );
 
         and: "create task dialog is opened and data has been typed"
-        TEST_ISSUE = buildIssue( "issue 1", assigneesList, null );
+        TEST_TASK = buildIssue( "issue 1", assigneesList, null );
         CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().clickOnCreateTaskMenuItem();
         createIssueDialog.typeData( TEST_TASK );
         createIssueDialog.clickOnCreateTaskButton();
