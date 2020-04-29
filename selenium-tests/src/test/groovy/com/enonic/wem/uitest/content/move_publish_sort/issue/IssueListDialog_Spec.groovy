@@ -33,7 +33,7 @@ class IssueListDialog_Spec
     Content CONTENT;
 
     @Shared
-    Issue TEST_ISSUE;
+    Issue TEST_TASK;
 
     def setup()
     {
@@ -78,7 +78,7 @@ class IssueListDialog_Spec
         and: "create task dialog is opened and data has been typed"
         TEST_ISSUE = buildIssue( "issue 1", assigneesList, null );
         CreateIssueDialog createIssueDialog = findAndSelectContent( CONTENT.getName() ).showPublishMenu().clickOnCreateTaskMenuItem();
-        createIssueDialog.typeData( TEST_ISSUE );
+        createIssueDialog.typeData( TEST_TASK );
         createIssueDialog.clickOnCreateTaskButton();
         String message = contentBrowsePanel.waitForNotificationMessage();
         saveScreenshot( "issue_created_issue_list" )
@@ -114,7 +114,7 @@ class IssueListDialog_Spec
         issueListDialog.isNewTaskButtonDisplayed();
 
         and: "just added issue should be present in the list"
-        issueListDialog.isIssuePresent( TEST_ISSUE.getTitle() );
+        issueListDialog.isIssuePresent( TEST_TASK.getTitle() );
     }
 
     def "GIVEN Issue List dialog is opened WHEN Cancel-button-top has been pressed THEN the dialog should be closed"()
@@ -144,7 +144,7 @@ class IssueListDialog_Spec
         titles.size() == 1;
 
         and: ""
-        titles.get( 0 ).contains( TEST_ISSUE.getTitle() );
+        titles.get( 0 ).contains( TEST_TASK.getTitle() );
 
         and: "'Assigned to Me' option should be selected"
         issueListDialog.getTypeFilterSelectedOption().contains( "Assigned to Me" );
@@ -159,12 +159,12 @@ class IssueListDialog_Spec
 
 
         when: "the issue has been clicked"
-        issueListDialog.clickOnIssue( TEST_ISSUE.getTitle() );
+        issueListDialog.clickOnIssue( TEST_TASK.getTitle() );
         IssueDetailsDialog details = new IssueDetailsDialog( getSession() );
         and: "'Items' button has been pressed"
         details.clickOnItemsTabBarItem();
 
-        and: "Publish & Close issue button has been pressed"
+        and: "Publish button has been pressed"
         details.clickOnPublishButton();
         ContentPublishDialog contentPublishDialog = new ContentPublishDialog(getSession(  ));
         contentPublishDialog.clickOnPublishButton(  )
@@ -175,7 +175,7 @@ class IssueListDialog_Spec
 
         and: "'Reopen Task' button should be present"
         details.isReopenTaskButtonPresent();
-        println "expected is:" + String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, TEST_ISSUE.getTitle() );
+        println "expected is:" + String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, TEST_TASK.getTitle() );
         //"Item is published" message should appear
         contentBrowsePanel.waitExpectedNotificationMessage(
             String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, CONTENT.getName() ), 1 );

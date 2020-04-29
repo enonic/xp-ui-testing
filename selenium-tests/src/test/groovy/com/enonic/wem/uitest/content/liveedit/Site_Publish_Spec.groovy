@@ -43,9 +43,9 @@ class Site_Publish_Spec
         contentBrowsePanel.getContentStatus( SITE.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
-    def "GIVEN existing 'online' site WHEN text component was added THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'Published' site WHEN a text component has been added THEN status on the wizard-page is getting 'Modified'"()
     {
-        given: "existing 'online' site"
+        given: "existing 'Published' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 

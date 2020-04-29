@@ -151,7 +151,7 @@ class Occurrences_DefaultRelation_2_4_Spec
             name( NameHelper.uniqueName( "def_rel_" ) ).
             displayName( "def_rel_2_4" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + ":default_relation2_4" ).data( data ).
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "default_relation2_4" ).data( data ).
             build();
         return imageSelectorContent;
     }

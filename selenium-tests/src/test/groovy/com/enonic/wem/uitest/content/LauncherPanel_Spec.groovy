@@ -45,7 +45,7 @@ class LauncherPanel_Spec
         and: "expected user's display name should be shown"
         launcherPanel.getUserDisplayName() == "Super User";
 
-        and: "button with 'close' icon should be present on the panel"
+        and: "button with 'XP' icon should be present on the panel"
         launcherPanel.iButtonCloseLauncherDisplayed();
 
         and:
@@ -93,7 +93,7 @@ class LauncherPanel_Spec
         then: "'Launcher Panel' should not be displayed"
         launcherPanel.waitUntilLauncherClosed();
 
-        and: "button with 'lines' appears"
+        and: "button with 'XP' appears"
         launcherPanel.isOpenLauncherButtonPresent();
         saveScreenshot( "launcher-closed-home-page" );
 
