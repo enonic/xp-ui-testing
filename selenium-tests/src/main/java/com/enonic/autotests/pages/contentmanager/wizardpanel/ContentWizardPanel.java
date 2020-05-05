@@ -95,6 +95,9 @@ public class ContentWizardPanel
     private final String CONTEXTN_PANEL_TOGGLER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ContextPanel')]" +
         "//button[contains(@id, 'NonMobileContextPanelToggleButton') and contains(@class,'icon-cog')]";
 
+    private final String EDIT_PERMISSIONS_BUTTON =
+        "//div[contains(@id,'WizardStepNavigatorAndToolbar')]" + "//div[contains(@class,'edit-permissions-button')]";
+
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON_XPATH)
     protected WebElement toolbarSaveButton;
 
@@ -277,7 +280,7 @@ public class ContentWizardPanel
 
     public String clickOnMarkAsReadyButton()
     {
-        waitUntilVisible( By.xpath( TOOLBAR_MARK_AS_READY_BUTTON_XPATH ));
+        waitUntilVisible( By.xpath( TOOLBAR_MARK_AS_READY_BUTTON_XPATH ) );
         getDisplayedElement( By.xpath( TOOLBAR_MARK_AS_READY_BUTTON_XPATH ) ).click();
         sleep( 1000 );
         return waitForNotificationMessage();
@@ -472,9 +475,7 @@ public class ContentWizardPanel
 
         if ( content.getAclEntries() != null )
         {
-            SecurityWizardStepForm securityWizardStepForm = clickOnAccessTabLink();
-            securityWizardStepForm.waitUntilButtonEditPermissionsClickable().clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions(
-                content.getAclEntries() ).clickOnApply();
+            this.clickOnEditPermissionsButton().uncheckInheritCheckbox().updatePermissions( content.getAclEntries() ).clickOnApply();
             sleep( 700 );
             saveScreenshot( NameHelper.uniqueName( "acl_" + content.getName() ) );
         }
@@ -582,7 +583,7 @@ public class ContentWizardPanel
 
     public void isPublishButtonEnabled()
     {
-         waitUntilElementEnabled( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        waitUntilElementEnabled( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
     }
 
     public boolean isMarAsReadyEnabled()
@@ -953,7 +954,6 @@ public class ContentWizardPanel
 
     /**
      * Gets Permissions from the Security tab
-     *
      */
     public List<ContentAclEntry> getAclEntries()
     {
@@ -972,6 +972,7 @@ public class ContentWizardPanel
         }
         return entries;
     }
+
     public ContentPublishDialog clickOnPublishMenuItem()
     {
         if ( !isPublishMenuItemEnabled() )
@@ -984,5 +985,14 @@ public class ContentWizardPanel
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
         dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
         return dialog;
+    }
+
+    public EditPermissionsDialog clickOnEditPermissionsButton()
+    {
+        waitUntilVisibleNoException( By.xpath( EDIT_PERMISSIONS_BUTTON ), Application.EXPLICIT_NORMAL );
+        getDisplayedElement( By.xpath( EDIT_PERMISSIONS_BUTTON ) ).click();
+        EditPermissionsDialog editPermissionsDialog = new EditPermissionsDialog( getSession() );
+        editPermissionsDialog.waitForOpened();
+        return editPermissionsDialog;
     }
 }

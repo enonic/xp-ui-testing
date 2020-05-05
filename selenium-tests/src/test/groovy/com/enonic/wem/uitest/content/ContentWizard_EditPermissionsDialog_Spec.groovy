@@ -3,7 +3,6 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
-import com.enonic.autotests.pages.contentmanager.wizardpanel.SecurityWizardStepForm
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
@@ -12,7 +11,6 @@ import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.xp.security.PrincipalKey
 import spock.lang.Shared
 import spock.lang.Stepwise
-
 
 @Stepwise
 class ContentWizard_EditPermissionsDialog_Spec
@@ -29,13 +27,13 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "GIVEN wizard for new folder is opened WHEN data has been typed and the content saved AND 'Edit Permissions' dialog is opened THEN correct name of folder should be present on the dialog"()
     {
         given: "wizard for new folder is opened"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
         def testName = NameHelper.uniqueName( "folder" );
 
         when: "data has been typed and the content saved"
         wizard.typeDisplayName( testName ).save();
         and: " 'Edit Permissions' dialog is opened"
-        EditPermissionsDialog dialog = wizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
+        EditPermissionsDialog dialog = wizard.clickOnEditPermissionsButton();
 
         then: "correct header should be displayed"
         dialog.getHeader() == EditPermissionsDialog.HEADER;
@@ -51,7 +49,7 @@ class ContentWizard_EditPermissionsDialog_Spec
 
         when: "'Edit Permissions' button on the wizard panel pressed"
         EditPermissionsDialog modalDialog = findAndSelectContent(
-            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink().clickOnEditPermissionsButton();
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnEditPermissionsButton();
         saveScreenshot( "test_edit_perm_dialog_default" );
 
         then: "modal dialog should be opened"
@@ -83,7 +81,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given: "content was selected and 'Edit Permissions' dialog is opened"
         EditPermissionsDialog modalDialog = findAndSelectContent(
-            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink().clickOnEditPermissionsButton();
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnEditPermissionsButton();
 
         when: "'inherit permissions' has been unchecked"
         modalDialog.setInheritPermissionsCheckbox( false );
@@ -99,7 +97,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         when: "content selected and 'Edit Permissions' dialog has been opened"
         EditPermissionsDialog modalDialog = findAndSelectContent(
-            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink().clickOnEditPermissionsButton();
+            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnEditPermissionsButton();
         List<String> principals = modalDialog.getPrincipalNames();
         saveScreenshot( "test_default_acl_entries" );
 
@@ -115,8 +113,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given: "'Edit Permissions' dialog is opened"
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
-        SecurityWizardStepForm securityForm = wizard.clickOnAccessTabLink();
-        EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
+        EditPermissionsDialog modalDialog = wizard.clickOnEditPermissionsButton();
         ContentAclEntry entry = ContentAclEntry.builder().principalName( RoleName.SYSTEM_USER_MANAGER.getValue() ).build();
 
         when: "new Role has been added"
@@ -124,7 +121,7 @@ class ContentWizard_EditPermissionsDialog_Spec
         sleep( 500 );
 
         and: "dialog has been opened again"
-        modalDialog = securityForm.clickOnEditPermissionsButton();
+        modalDialog = wizard.clickOnEditPermissionsButton();
 
         then: "number of ACL-entries on the modal dialog should be increased"
         List<ContentAclEntry> aclEntriesActual = modalDialog.getAclEntries();
@@ -138,8 +135,7 @@ class ContentWizard_EditPermissionsDialog_Spec
     {
         given: "'Edit Permissions' dialog is opened"
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
-        SecurityWizardStepForm securityForm = wizard.clickOnAccessTabLink();
-        EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
+        EditPermissionsDialog modalDialog = wizard.clickOnEditPermissionsButton();
 
         and: "one Role was removed"
         modalDialog.removeAclEntry( RoleName.SYSTEM_USER_MANAGER.getValue() );
@@ -158,9 +154,8 @@ class ContentWizard_EditPermissionsDialog_Spec
     def "GIVEN 'Edit Permissions' dialog is opened WHEN one acl entry has been removed THEN number of entries on the modal dialog should be reduced"()
     {
         given: "'Edit Permissions' dialog is opened"
-        SecurityWizardStepForm securityForm = findAndSelectContent(
-            content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink();
-        EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
+        ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
+        EditPermissionsDialog modalDialog = wizard.clickOnEditPermissionsButton();
 
         when: "one Role has been removed"
         modalDialog.removeAclEntry( RoleName.SYSTEM_ADMIN.getValue() );
@@ -169,7 +164,7 @@ class ContentWizard_EditPermissionsDialog_Spec
         modalDialog.clickOnApply();
 
         and: "dialog has been reopened again"
-        securityForm.clickOnEditPermissionsButton();
+        wizard.clickOnEditPermissionsButton();
 
         then: "number of entries on the modal dialog should be reduced"
         List<ContentAclEntry> aclEntries = modalDialog.getAclEntries();
