@@ -15,9 +15,6 @@ import spock.lang.Stepwise
 /**
  * Created on 1/31/2017.
  *
- * Verifies:
- * XP-4932 Impossible to save changes when 'Overwrite child permissions' was set in true
- * XP-4930 Security wizard-step-form not refreshed in a child content, when permissions were changed in the parent content
  * */
 @Stepwise
 class ContentWizard_Overwrite_Child_Permissions_Spec
@@ -39,7 +36,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         given: "Content wizard is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
         and: "'Edit Permissions Dialog' is opened"
-        EditPermissionsDialog dialog = wizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
+        EditPermissionsDialog dialog = wizard.clickOnEditPermissionsButton();
 
         when: "'Overwrite child permissions' has been clicked"
         dialog.setOverwriteChildPermissionsCheckbox( true );
@@ -63,7 +60,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
 
         when: "Edit permissions dialog is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
-        EditPermissionsDialog dialog = wizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
+        EditPermissionsDialog dialog = wizard.clickOnEditPermissionsButton();
 
         and: "'Overwrite child permissions' is checked"
         dialog.setOverwriteChildPermissionsCheckbox( true ).clickOnApply();
@@ -85,7 +82,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         contentBrowsePanel.switchToBrowserTabByTitle( PARENT_FOLDER.getDisplayName() );
 
         when: " Anonymous acl-entry was added in the parent wizard"
-        EditPermissionsDialog dialog = parentWizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
+        EditPermissionsDialog dialog = parentWizard.clickOnEditPermissionsButton();
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         and: "'Overwrite child permissions' set in true for the parent folder AND new permission was added"
         dialog.setInheritPermissionsCheckbox( false ).setOverwriteChildPermissionsCheckbox( true ).addPermissionByClickingCheckbox(
@@ -99,14 +96,14 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         then: "the same entry should appear in the child content"
         ContentAclEntry expected = ContentAclEntry.builder().principalName( "/system/users/anonymous" ).suite(
             PermissionSuite.CAN_READ ).build();
-        childFolder.getAclEntries().contains( expected );
+        childFolder.clickOnEditPermissionsButton(  ).getAclEntries().contains( expected );
     }
 
     def "GIVEN existing child folder is opened AND 'Edit Permission' dialog is opened WHEN 'Inherit permissions' set in false AND new Permission was added in the child THEN the permissions should be displayed on the wizard"()
     {
         given: "existing parent folder with a child is opened"
         ContentWizardPanel childWizard = findAndSelectContent( CHILD_FOLDER.getName() ).clickToolbarEdit();
-        EditPermissionsDialog dialog = childWizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
+        EditPermissionsDialog dialog = childWizard.clickOnEditPermissionsButton();
         ContentAclEntry userAdminRoleEntry = ContentAclEntry.builder().principalName( RoleName.USER_ADMINISTRATOR.getValue() ).build();
 
         when: "'Inherit permissions' set in false"
@@ -121,7 +118,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         saveScreenshot( "inherit_perm_false_perm_changed" );
 
         then: "expected role should be present on the Security form in the wizard"
-        childWizard.getAclEntries().contains( expectedEntryFromUI );
+        childWizard.clickOnEditPermissionsButton(  ).getAclEntries().contains( expectedEntryFromUI );
     }
 
     def "GIVEN existing child folder is opened AND 'Edit Permission' dialog is opened WHEN 'Inherit permissions' set in true THEN permissions list should be updated to permissions from the parent folder"()
@@ -130,7 +127,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         ContentWizardPanel childWizard = findAndSelectContent( CHILD_FOLDER.getName() ).clickToolbarEdit();
 
         and: "Edit Permissions dialog is opened"
-        EditPermissionsDialog dialog = childWizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
+        EditPermissionsDialog dialog = childWizard.clickOnEditPermissionsButton();
 
         when: "'Inherit permissions' set in true"
         dialog.setInheritPermissionsCheckbox( true );
@@ -144,7 +141,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         saveScreenshot( "inherit_perm_true_initial_perm_restored" );
 
         then: "permissions should be the same as in the parent folder"
-        !childWizard.getAclEntries().contains( entryToRemove );
+        !childWizard.clickOnEditPermissionsButton(  ).getAclEntries().contains( entryToRemove );
     }
     //verifies xp5400 (Confirmation Dialog should appear)
     def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel'-top button pressed THEN Confirmation Dialog should not appear"()
@@ -152,7 +149,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         given: "Content wizard is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
         and: "'Edit Permissions Dialog' is opened"
-        EditPermissionsDialog editPermissionsButton = wizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
+        EditPermissionsDialog editPermissionsButton = wizard.clickOnEditPermissionsButton();
         and: "changes is made"
         editPermissionsButton.setOverwriteChildPermissionsCheckbox( true );
 
@@ -170,7 +167,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         given: "Content wizard is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName() );
         and: "'Edit Permissions Dialog' is opened"
-        EditPermissionsDialog editPermissionsButton = wizard.clickOnAccessTabLink().clickOnEditPermissionsButton();
+        EditPermissionsDialog editPermissionsButton = wizard.clickOnEditPermissionsButton();
         and: "changes is made"
         editPermissionsButton.setOverwriteChildPermissionsCheckbox( true );
 
