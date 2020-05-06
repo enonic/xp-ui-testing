@@ -482,19 +482,6 @@ public class ContentWizardPanel
         return this;
     }
 
-    public SecurityWizardStepForm clickOnAccessTabLink()
-    {
-        String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, ACCESS_LINK_TEXT );
-        if ( !isElementDisplayed( securityTabXpath ) )
-        {
-            saveScreenshot( "err_" + ACCESS_LINK_TEXT );
-            throw new TestFrameworkException( "step was not found! " + ACCESS_LINK_TEXT );
-        }
-        findElement( By.xpath( securityTabXpath ) ).click();
-        sleep( 500 );
-        return new SecurityWizardStepForm( getSession() );
-    }
-
     public SettingsWizardStepForm clickOnSettingsTabLink()
     {
         String securityTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, SETTINGS_LINK_TEXT );
@@ -993,6 +980,7 @@ public class ContentWizardPanel
         getDisplayedElement( By.xpath( EDIT_PERMISSIONS_BUTTON ) ).click();
         EditPermissionsDialog editPermissionsDialog = new EditPermissionsDialog( getSession() );
         editPermissionsDialog.waitForOpened();
+        sleep( 300 );
         return editPermissionsDialog;
     }
 }

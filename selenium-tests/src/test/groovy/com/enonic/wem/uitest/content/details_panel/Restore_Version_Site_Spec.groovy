@@ -5,7 +5,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllCon
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
-import com.enonic.autotests.pages.contentmanager.wizardpanel.SecurityWizardStepForm
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
@@ -40,7 +39,6 @@ class Restore_Version_Site_Spec
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "site_versions_1" );
 
-
         when: "display name of the site has been changed"
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().typeDisplayName(
             NEW_DISPLAY_NAME ).save().closeBrowserTab().switchToBrowsePanelTab();
@@ -72,17 +70,17 @@ class Restore_Version_Site_Spec
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN new acl-entry has been added WHEN previous version has been reverted THEN new added acl entry should be present in the content wizard"()
+    def "GIVEN new acl-entry has been added WHEN previous version has been reverted THEN list of acl entries should not be changed"()
     {
         given: "new acl entry has been added and Save pressed"
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         findAndSelectContent( SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
-        SecurityWizardStepForm securityForm = wizard.clickOnAccessTabLink();
-        EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
-        modalDialog.setInheritPermissionsCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
-        sleep( 1000 );
-        List<String> beforeRestoring = securityForm.getDisplayNamesOfAclEntries();
+        EditPermissionsDialog modalDialog = wizard.clickOnEditPermissionsButton();
+        modalDialog.setInheritPermissionsCheckbox( false ).addPermission( anonymousEntry );
+        List<String> beforeRestoring = modalDialog.getPrincipalsDisplayName();
+        modalDialog.clickOnApply();
+
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the previous version has been restored"
@@ -90,16 +88,16 @@ class Restore_Version_Site_Spec
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion();
         and:
-        SecurityWizardStepForm stepForm = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink();
+        modalDialog = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnEditPermissionsButton();
 
         then: "acl-entry should be displayed after the reverting of previous version"
-        stepForm.getDisplayNamesOfAclEntries().contains( "Anonymous User" );
+        modalDialog.getPrincipalsDisplayName().contains( "Anonymous User" );
 
         and: "the entry was present before the restoring"
         beforeRestoring.contains( "Anonymous User" );
     }
 
-    def "GIVEN the site is selected AND version panel is opened WHEN previous version has been reverted THEN the acl-entry stil should be present"()
+    def "GIVEN the site is selected AND version panel is opened WHEN previous version has been reverted THEN list of acl entries should not be changed"()
     {
         given: "the site is selected AND version panel is opened"
         findAndSelectContent( SITE.getName() );
@@ -110,11 +108,11 @@ class Restore_Version_Site_Spec
         versionItem.doRestoreVersion();
 
         and: "navigate to the security tab"
-        SecurityWizardStepForm form = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnAccessTabLink();
+        EditPermissionsDialog editPermissionsDialog = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnEditPermissionsButton();
         saveScreenshot( "version_acl_site_application_restored" );
 
         then: "the role should appear after the restoring of the latest version"
-        form.getDisplayNamesOfAclEntries().contains( "Anonymous User" );
+        editPermissionsDialog.getPrincipalsDisplayName().contains( "Anonymous User" );
     }
 
     def "GIVEN existing site is opened WHEN application has been removed THEN number of versions should be increased"()

@@ -4,7 +4,6 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllCon
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
-import com.enonic.autotests.pages.contentmanager.wizardpanel.SecurityWizardStepForm
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -70,7 +69,7 @@ class Restore_Version_Folder_Spec
     {
         given: "existing folder is opened"
         findAndSelectContent( FOLDER_CONTENT.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         SettingsWizardStepForm form = new SettingsWizardStepForm( getSession() );
         and: "language is changed"
         form.removeLanguage( NORSK_LANGUAGE ).selectLanguage( ENGLISH_LANGUAGE );
@@ -85,7 +84,7 @@ class Restore_Version_Folder_Spec
         versionItem.doRestoreVersion(  );
 
         and: "folder is opened"
-        contentBrowsePanel.clickToolbarEdit();
+        contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         saveScreenshot( "folder_language_restored" );
 
         then: "original language should be restored in the wizard page"
@@ -97,12 +96,13 @@ class Restore_Version_Folder_Spec
         given: "new acl entry is added and folder saved"
         ContentAclEntry anonymousEntry = ContentAclEntry.builder().principalName( SystemUserName.SYSTEM_ANONYMOUS.getValue() ).build();
         findAndSelectContent( FOLDER_CONTENT.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
-        SecurityWizardStepForm securityForm = wizard.clickOnAccessTabLink();
-        EditPermissionsDialog modalDialog = securityForm.clickOnEditPermissionsButton();
-        modalDialog.setInheritPermissionsCheckbox( false ).addPermission( anonymousEntry ).clickOnApply();
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
+        EditPermissionsDialog editPermissionsDialog = wizard.clickOnEditPermissionsButton();
+        editPermissionsDialog.setInheritPermissionsCheckbox( false ).addPermission( anonymousEntry );
         sleep( 500 );
-        List<String> aclNames = wizard.clickOnAccessTabLink().getDisplayNamesOfAclEntries();
+        List<String> aclNames = editPermissionsDialog.getPrincipalsDisplayName();
+        editPermissionsDialog.clickOnApply();
+
         and: "wizard closes"
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
@@ -114,7 +114,7 @@ class Restore_Version_Folder_Spec
         then: "number of versions should not be changed, because only permissions were changed"
         numberOfVersions == 6;
 
-        and: "new ACL entry should be present"
+        and: "new ACL entry should be added"
         aclNames.contains( "Anonymous User" );
 
     }

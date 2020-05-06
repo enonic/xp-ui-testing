@@ -33,6 +33,8 @@ public class EditPermissionsDialog
 
     private final String CONTENT_PATH = DIALOG_HEADER + "//p[@class='path']";
 
+    private final String SELECTED_OPTION = "//div[contains(@id,'PrincipalContainerSelectedOptionView')]";
+
     private final String INHERIT_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + "//div[contains(@class,'inherit-perm')]";
 
     private final String OVERWRITE_CHILD_PERMISSIONS_CHECKBOX = CONTAINER_XPATH + "//div[contains(@class,'overwrite-child')]";
@@ -282,6 +284,12 @@ public class EditPermissionsDialog
     public List<String> getPrincipalNames()
     {
         List<WebElement> elements = findElements( By.xpath( CONTAINER_XPATH + P_NAME ) );
+        return elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
+    }
+
+    public List<String> getPrincipalsDisplayName()
+    {
+        List<WebElement> elements = findElements( By.xpath( CONTAINER_XPATH + SELECTED_OPTION + H6_DISPLAY_NAME ) );
         return elements.stream().map( WebElement::getText ).collect( Collectors.toList() );
     }
 
