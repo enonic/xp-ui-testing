@@ -2,10 +2,13 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TimeUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import com.enonic.autotests.vo.contentmanager.ContentVersion
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -104,10 +107,10 @@ class ContentWizard_Publish_Inputs_Spec
         !wizard.isOnlineToInputDisplayed();
     }
 
-    def "GIVEN existing Unpublished folder WHEN 'Online from' set in the future AND Publish button pressed THEN folder is getting 'Online Pending'"()
+    def "GIVEN existing Unpublished folder WHEN 'Online from' set in the future AND Publish button pressed THEN folder is getting 'Published Pending'"()
     {
         given: "existing published folder"
-        ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEditAndSwitchToWizardTab(  );
 
         when: "the folder has been unpublished"
         ContentPublishDialog publishDialog = wizard.showPublishMenu().clickOnPublishMenuItem();
@@ -115,8 +118,24 @@ class ContentWizard_Publish_Inputs_Spec
         publishDialog.typeOnlineFrom( TimeUtils.getTomorrowDateTime() ).clickOnScheduleButton();
 
         then: "status gets 'Published(Pending)'"
-        saveScreenshot( "schedule_wizard_online_pending" );
+        saveScreenshot( "schedule_wizard_published_pending" );
         wizard.waitStatus( ContentStatus.PUBLISHED_PENDING, Application.EXPLICIT_NORMAL );
-
     }
+    //Verifies https://github.com/enonic/app-contentstudio/issues/941
+    //Incorrect status in version history for content with scheduled publishing #941
+    def "GIVEN existing 'Published(Pending)' folder WHEN the folder has been selected THEN 'Published(Pending)'status should be in Versions widget"()
+    {
+        given: "existing Published(Pending) folder is selected"
+        findAndSelectContent( TEST_FOLDER.getName() );
+
+        when: "Versions panel has been opened"
+        ContentBrowsePanel contentBrowsePanel = new ContentBrowsePanel(getSession(  ));
+        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        LinkedList<ContentVersion> allVersions = allContentVersionsView.getAllVersions();
+
+        then: "status gets 'Published(Pending)'"
+        saveScreenshot( "schedule_wizard_published_pending" );
+        allVersions.getFirst().getStatus() == ContentStatus.PUBLISHED_PENDING.getValue();
+    }
+
 }

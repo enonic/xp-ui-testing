@@ -119,7 +119,7 @@ class ContentPublish_Child_Spec
 
         and: "parent folder has been expanded"
         contentBrowsePanel.expandItem( parentContent.getPath().toString() );
-        saveScreenshot( "parent_child_are_pending" );
+        saveScreenshot( "parent_child_are_deleted" );
 
         then: "published parent content becomes 'deleted'"
         contentBrowsePanel.getContentStatus( parentContent.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );

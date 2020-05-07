@@ -53,7 +53,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
 
         when:
         AllContentVersionsView allContentVersionsView = openVersionPanel();
-        saveScreenshot( "version_panel_pending" )
+        saveScreenshot( "version_panel_deleted" )
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "the latest version has 'deleted' badge"

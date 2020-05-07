@@ -53,7 +53,7 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
         view.getEveryoneText() == UserAccessWidgetItemView.EVERYONE_CAN_READ;
     }
 
-    def "GIVEN new 'Acl-entry' is added for existing content WHEN the content has been selected and 'UserAccessWidget' opened THEN new 'acl-entry' should be displayed in the widget"()
+    def "GIVEN new 'Acl-entry' is added in existing content WHEN the content has been selected and 'UserAccessWidget' opened THEN new 'acl-entry' should be displayed in the widget"()
     {
         given: "new Acl-entry was added for existing content"
         findAndSelectContent( FOLDER_CONTENT.getName() );
