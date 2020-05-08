@@ -9,4 +9,10 @@ include ':test-applications:myfirstapp'
 include ':test-applications:install-app'
 include ':selenium-tests'
 
-enableFeaturePreview('STABLE_PUBLISHING')
+def addBuild( name )
+{
+    def dir = new File( (File) settingsDir, name )
+    if (dir.directory) {
+        includeBuild name
+    }
+}
