@@ -976,8 +976,11 @@ public class ContentWizardPanel
 
     public EditPermissionsDialog clickOnEditPermissionsButton()
     {
-        waitUntilVisibleNoException( By.xpath( EDIT_PERMISSIONS_BUTTON ), Application.EXPLICIT_NORMAL );
-        getDisplayedElement( By.xpath( EDIT_PERMISSIONS_BUTTON ) ).click();
+        boolean isDisplayed = waitUntilVisibleNoException( By.xpath( EDIT_PERMISSIONS_BUTTON ), Application.EXPLICIT_NORMAL );
+        if(!isDisplayed){
+            this.saveScreenshot( NameHelper.uniqueName( "err_edit_permission_button" ) );
+        }
+        findElement( By.xpath( EDIT_PERMISSIONS_BUTTON ) ).click();
         EditPermissionsDialog editPermissionsDialog = new EditPermissionsDialog( getSession() );
         editPermissionsDialog.waitForOpened();
         sleep( 300 );
