@@ -14,7 +14,9 @@ class ContentBrowsePanel_SelectionToggler_Spec
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         when: "the row has been clicked and content is selected"
+        sleep(1000);
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
+        sleep(1000);
 
         then: "the 'selection toggler' should not be displayed"
         !contentBrowsePanel.isSelectionTogglerDisplayed();
@@ -64,8 +66,10 @@ class ContentBrowsePanel_SelectionToggler_Spec
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         when: "two checkboxes have been clicked"
+        sleep(1000);
         contentBrowsePanel.clickCheckboxAndSelectRow( 0 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 1 );
+        sleep(1000);
 
         then: "the 'Show Selected Items' button should be not active"
         !contentBrowsePanel.isSelectionTogglerActive();
@@ -78,6 +82,7 @@ class ContentBrowsePanel_SelectionToggler_Spec
     {
         given: "two items are checked"
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
+        sleep(1000);
         contentBrowsePanel.clickCheckboxAndSelectRow( 0 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 1 );
 
