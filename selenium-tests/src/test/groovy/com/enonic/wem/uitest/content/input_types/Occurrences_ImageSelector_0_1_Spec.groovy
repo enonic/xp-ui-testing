@@ -14,7 +14,7 @@ class Occurrences_ImageSelector_0_1_Spec
     @Shared
     Content TEST_IMAGE_SELECTOR_CONTENT;
 
-    def "WHEN wizard for 'Image Selector 0:1' content is opened THEN option filter input should be present, there are no selected options and upload button is enabled"() {
+    def "WHEN new wizard for 'Image Selector 0:1' is opened THEN there are no selected options and upload button should be enabled"() {
         when: "wizard is opened:"
         Content imageSelectorContent = buildImageSelector0_1_Content(NORD_IMAGE_DISPLAY_NAME);
         ContentWizardPanel wizard = selectSitePressNew(imageSelectorContent.getContentTypeName());
@@ -34,18 +34,18 @@ class Occurrences_ImageSelector_0_1_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN existing 'Image Selector-content' (0:1) AND options were not selected WHEN content opened for edit THEN image not present on the page and content should be valid "() {
+    def "GIVEN existing 'Image Selector-content' (0:1) image was not selected WHEN content has been opened THEN image not present in the page and content should be valid"() {
         given: "existing 'Image Selector-content' (0:1) AND options were not selected"
         Content imageSelectorContent = buildImageSelector0_1_Content(null);
         ContentWizardPanel wizard = selectSitePressNew(imageSelectorContent.getContentTypeName())
         wizard.typeData(imageSelectorContent).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content opened for edit"
+        when: "content has been opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu(imageSelectorContent);
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel(getSession());
         List<String> imagesNames = formViewPanel.getSelectedImages();
 
-        then: "image not displayed on the wizard page"
+        then: "image should not be selected in the page"
         imagesNames.size() == 0;
 
         and: "options filter input should be displayed"
@@ -61,14 +61,15 @@ class Occurrences_ImageSelector_0_1_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN saving of content with not required 'Image Selector' AND option is not selected WHEN 'Publish' button pressed THEN status of the content is getting 'Online'"() {
-        given: "creating of content with type 'Image Selector'"
+    def "GIVEN new content with image selector is saved WHEN 'Publish'(in wizard) button pressed THEN the content gets 'Published'"() {
+        given: "new content with image selector is saved"
         Content imageSelectorContent = buildImageSelector0_1_Content(null);
         ContentWizardPanel wizard = selectSitePressNew(imageSelectorContent.getContentTypeName());
         and: "data has been typed and the content published"
         wizard.typeData( imageSelectorContent ).clickOnMarkAsReadyAndDoPublish(  );
+        sleep(400);
         String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage(Application.EXPLICIT_NORMAL);
-        and: "wizard was closed"
+        and: "wizard has been closed"
         wizard.close(imageSelectorContent.getDisplayName());
 
         when: "name of the content is typed in the search input"
@@ -84,13 +85,13 @@ class Occurrences_ImageSelector_0_1_Spec
         publishedMessage == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, imageSelectorContent.getName() );
     }
 
-    def "GIVEN saving of Image Selector-content (0:1) and one image was selected WHEN content is opened THEN correct image should be present on the page and option filter not displayed"() {
-        given: "new content with type 'Image Selector0_1' was added"
+    def "GIVEN Image Selector-content (0:1) with selected image is saved WHEN content has been reopened THEN expected image should be present in the page and option filter should not be displayed"() {
+        given: "new content with type 'Image Selector0_1' is added"
         TEST_IMAGE_SELECTOR_CONTENT = buildImageSelector0_1_Content(NORD_IMAGE_DISPLAY_NAME);
         selectSitePressNew(TEST_IMAGE_SELECTOR_CONTENT.getContentTypeName()).typeData(
                 TEST_IMAGE_SELECTOR_CONTENT).save().closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "content was opened"
+        when: "content has been reopened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu(TEST_IMAGE_SELECTOR_CONTENT);
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel(getSession());
         List<String> images = formViewPanel.getSelectedImages();
@@ -101,16 +102,16 @@ class Occurrences_ImageSelector_0_1_Spec
         and: "option filter should not be displayed"
         !formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "image with correct name should be present on the page"
+        and: "image with expected name should be present in the page"
         images.get(0) == NORD_IMAGE_DISPLAY_NAME;
     }
 
-    def "GIVEN content with selected option is opened WHEN images was clicked THEN buttons 'Edit' and 'Remove' should appear"() {
+    def "GIVEN content with selected option is opened WHEN images has been clicked THEN buttons 'Edit' and 'Remove' should appear"() {
         given: "'Image Selector'-content with selected image is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu(TEST_IMAGE_SELECTOR_CONTENT);
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel(getSession());
 
-        when: "image was clicked"
+        when: "image has been clicked"
         formViewPanel.clickOnImage(NORD_IMAGE_DISPLAY_NAME)
 
         then: "buttons 'Edit' and 'Remove' should appear"
@@ -120,7 +121,7 @@ class Occurrences_ImageSelector_0_1_Spec
         formViewPanel.isEditButtonDisplayed();
     }
 
-    def "GIVEN content with selected option is opened WHEN image was clicked  AND 'Remove' button pressed THEN image should be removed and 'options filter' input should be displayed"() {
+    def "GIVEN content with selected option is opened WHEN image has been clicked  AND 'Remove' button pressed THEN image should be removed and 'options filter' input should appear"() {
         given: "'Image Selector' content with selected image is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu(TEST_IMAGE_SELECTOR_CONTENT);
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel(getSession());
@@ -133,7 +134,7 @@ class Occurrences_ImageSelector_0_1_Spec
         !formViewPanel.isRemoveButtonDisplayed();
         and:
         !formViewPanel.isEditButtonDisplayed();
-        and: "option filter should be displayed"
+        and: "option filter should appear"
         formViewPanel.isOptionFilterIsDisplayed();
     }
 }
