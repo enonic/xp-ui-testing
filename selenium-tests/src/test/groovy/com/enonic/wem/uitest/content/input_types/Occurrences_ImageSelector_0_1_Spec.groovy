@@ -15,7 +15,7 @@ class Occurrences_ImageSelector_0_1_Spec
     Content TEST_IMAGE_SELECTOR_CONTENT;
 
     def "WHEN new wizard for 'Image Selector 0:1' is opened THEN there are no selected options and upload button should be enabled"() {
-        when: "wizard is opened:"
+        when: "wizard has been opened:"
         Content imageSelectorContent = buildImageSelector0_1_Content(NORD_IMAGE_DISPLAY_NAME);
         ContentWizardPanel wizard = selectSitePressNew(imageSelectorContent.getContentTypeName());
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel(getSession());
@@ -24,7 +24,7 @@ class Occurrences_ImageSelector_0_1_Spec
         then: "'options filter' input should be displayed"
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "no one option is selected"
+        and: "no one option should be selected"
         formViewPanel.getSelectedImages().size() == 0;
 
         and: "upload button should be enabled"
@@ -34,8 +34,8 @@ class Occurrences_ImageSelector_0_1_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN existing 'Image Selector-content' (0:1) image was not selected WHEN content has been opened THEN image not present in the page and content should be valid"() {
-        given: "existing 'Image Selector-content' (0:1) AND options were not selected"
+    def "GIVEN new 'Image Selector-content' (0:1) is saved (no images were selected) WHEN content has been reopened THEN options are not selected in the page and content should be valid"() {
+        given: "new content is saved 'Image Selector-content' (0:1) AND options were not selected"
         Content imageSelectorContent = buildImageSelector0_1_Content(null);
         ContentWizardPanel wizard = selectSitePressNew(imageSelectorContent.getContentTypeName())
         wizard.typeData(imageSelectorContent).save().closeBrowserTab().switchToBrowsePanelTab();

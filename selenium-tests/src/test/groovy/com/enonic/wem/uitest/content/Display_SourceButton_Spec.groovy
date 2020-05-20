@@ -127,15 +127,16 @@ class Display_SourceButton_Spec
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         saveScreenshot( "logged_" + USER_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
+        sleep(1000);
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         CkeToolbar ckeToolbar = new CkeToolbar(getSession(  ));
 
-        when: "double click on the text component was performed"
+        when: "the text component has been double clicked"
         liveFormPanel.doubleClickOnTextComponent( "test text" );
         saveScreenshot( "text_component_edit_inline_mode" );
 
-        then: "'Source Button button should not be displayed"
+        then: "'Source Button button should not be displayed in the editor-toolbar"
         !ckeToolbar.isSourceCodeButtonDisplayed();
     }
 
