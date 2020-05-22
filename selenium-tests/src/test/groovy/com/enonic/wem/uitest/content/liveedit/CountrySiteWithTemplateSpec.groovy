@@ -65,6 +65,7 @@ class CountrySiteWithTemplateSpec
         when: "'Templates' folder selected and new page-template is added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).typeData( PAGE_TEMPLATE );
+        wizard.clickOnMarkAsReadyButton();
         sleep( 500 );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
@@ -107,6 +108,7 @@ class CountrySiteWithTemplateSpec
         when: "'city list' part has been inserted"
         PageComponentsViewDialog pageComponentsView = contentWizard.showComponentView();
         insertPart( pageComponentsView, "country", contentWizard, "City list" );
+        contentWizard.clickOnMarkAsReadyButton();
         contentWizard.clickToolbarPreview();
         saveScreenshot( "city_list_part_added" );
 
@@ -135,13 +137,13 @@ class CountrySiteWithTemplateSpec
         name == PAGE_CONTROLLER_NAME;
     }
 
-    @Ignore
+    // @Ignore
     def "GIVEN new USA-content has been added AND child city-content for USA was added  WHEN USA-content selected AND 'Preview' button is pressed THEN correct text should be present on the page-source "()
     {
         given: "new USA-content has been added"
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, SITE.getName() );
         ContentWizardPanel wizard = selectSitePressNew( USA_CONTENT.getContentTypeName(), SITE.getName() );
-        wizard.typeData( USA_CONTENT ).save();
+        wizard.typeData( USA_CONTENT ).clickOnMarkAsReadyButton();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         and: "child city-content for USA was added "
@@ -150,7 +152,8 @@ class CountrySiteWithTemplateSpec
 
         and: "new City-content added beneath the USA-content"
         findAndSelectContent( USA_CONTENT.getName() ).clickToolbarNew().selectContentType( SAN_FR_CONTENT.getContentTypeName() ).typeData(
-            SAN_FR_CONTENT ).save().closeBrowserTab().switchToBrowsePanelTab();
+            SAN_FR_CONTENT ).clickOnMarkAsReadyButton();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
         findAndSelectContent( USA_CONTENT.getName() );
         sleep( 3000 );
         saveScreenshot( "san_francisco_added" )
@@ -171,7 +174,7 @@ class CountrySiteWithTemplateSpec
 
     }
 
-    @Ignore
+    // @Ignore
     def "WHEN site is not published yet WHEN site opened in 'master', through the portal THEN '404' should be present in the sources"()
     {
         given: "site not published and opened in the 'master'"
@@ -184,7 +187,7 @@ class CountrySiteWithTemplateSpec
         source.contains( "404" );
     }
 
-    @Ignore
+    ///@Ignore
     def "WHEN site is not published yet AND site opened in 'draft', through the portal THEN correct data should be present in page sources"()
     {
         when: "site not published and opened in the 'master'"
@@ -200,12 +203,14 @@ class CountrySiteWithTemplateSpec
         source.contains( USA_DESCRIPTION );
     }
 
-    @Ignore
+    //@Ignore
     def "WHEN site has been published AND site opened through the portal THEN correct description and population should be present in page sources"()
     {
         given: "site has been 'published'"
         filterPanel.typeSearchText( SITE.getName(), );
-        ContentPublishDialog dialog = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName(), ).clickToolbarPublish();
+        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName(), );
+        contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
+        ContentPublishDialog dialog = contentBrowsePanel.clickToolbarPublish();
         dialog.includeChildren( true ).clickOnPublishButton();
         sleep( 2000 );
         saveScreenshot( "country_site_published" );
@@ -221,7 +226,7 @@ class CountrySiteWithTemplateSpec
         source.contains( USA_DESCRIPTION );
     }
 
-    @Ignore
+    //@Ignore
     def "GIVEN city content changed and content is not 'Published' now WHEN site opened in 'master', through the portal THEN old data for city-content should be displayed"()
     {
         given: "city content was changed and content was not 'Published'"
@@ -239,12 +244,12 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + SF_POPULATION );
     }
 
-    @Ignore
+    //@Ignore
     def "GIVEN city content was changed and 'Published' WHEN site opened in 'master', through the portal THEN new population should be displayed"()
     {
         given: "city content changed and 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnMarkAsReadyAndDoPublish(  );
+        wizard.clickOnMarkAsReadyAndDoPublish();
         contentBrowsePanel.waitForNotificationMessage();
         sleep( 1000 );
 
@@ -256,7 +261,7 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + NEW_SF_POPULATION );
     }
 
-    @Ignore
+    //@Ignore
     def "GIVEN existing country content WHEN 'Page Component View' is opened THEN all added components should be displayed"()
     {
         given: "existing country content is opened"
@@ -272,12 +277,12 @@ class CountrySiteWithTemplateSpec
         components.size() == 4;
 
         and:
-        components.get( 0 ).getType().equals( "page" ) && components.get( 0 ).getName().equals( COUNTRY_TEMPLATE_DISPLAY_NAME );
+        components.get( 0 ).getName().equals( COUNTRY_TEMPLATE_DISPLAY_NAME );
         and:
-        components.get( 1 ).getType().equals( "region" ) && components.get( 1 ).getName().equals( "country" );
+        components.get( 1 ).getName() == "country";
         and:
-        components.get( 3 ).getType().equals( "part" ) && components.get( 3 ).getName().equals( COUNTRY_PART_DEFAULT_NAME );
+        components.get( 3 ).getName() == COUNTRY_PART_DEFAULT_NAME;
         and:
-        components.get( 2 ).getType().equals( "part" ) && components.get( 2 ).getName().equals( "City list" );
+        components.get( 2 ).getName() == "City list";
     }
 }
