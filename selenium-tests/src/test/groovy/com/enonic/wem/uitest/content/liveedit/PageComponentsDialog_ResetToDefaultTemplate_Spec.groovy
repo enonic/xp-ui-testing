@@ -65,7 +65,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    def "GIVEN the site is opened AND one image has been changed WHEN root element in page component dialog has been selected and 'Reset' menu item clicked THEN site should be reset to default template"()
+    def "GIVEN existing site is opened AND one image has been changed WHEN root element in page component dialog has been selected and 'Reset' menu item clicked THEN site should be reset to default template"()
     {
         given: "site opened for edit  and site saved"
         filterPanel.typeSearchText( SITE.getName() )

@@ -52,9 +52,9 @@ class CountrySiteWithTemplateSpec
     @Shared
     Content SITE;
 
-    def "GIVEN existing Site based on 'My First App' WHEN new template with the 'country' region as a controller was added THEN new template should be listed"()
+    def "GIVEN new site is saved WHEN new template with 'country' controller has been added THEN new template should be listed"()
     {
-        given: "existing Site based on 'My First App'"
+        given: "new site is added:"
         SITE = buildMyFirstAppSite( "mysite" );
         addSite( SITE );
         filterPanel.typeSearchText( SITE.getName() );
@@ -70,23 +70,23 @@ class CountrySiteWithTemplateSpec
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
-        then: "new page-template should be listed"
+        then: "new page-template should be present"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    def "GIVEN existing page-template is opened WHEN the template is opened and the and 'country' part is added THEN correct page-sources should be present in the HTML"()
+    def "GIVEN existing page-template is opened WHEN 'country' part has been added THEN expected page-sources should be present in the HTML"()
     {
         given: "existing page-template is opened"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
         ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
-        when: "the template is opened and the 'country region' controller selected and 'country' part inserted"
+        when: "'country' part has been inserted"
         PageComponentsViewDialog pageComponentsView = contentWizard.showComponentView();
         and: "Part has been inserted(the site should be saved automatically)"
         insertPart( pageComponentsView, "country", contentWizard, "country" );
 
-        and: "Preview button has been pressed"
+        and: "'Preview' button has been pressed"
         contentWizard.clickToolbarPreview();
         saveScreenshot( "country_part_added" );
 
@@ -94,7 +94,7 @@ class CountrySiteWithTemplateSpec
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
         source != null;
 
-        and: "correct title of the region should be present in the HTML"
+        and: "correct title of the region should be present in HTML"
         source.contains( COUNTRY_REGION_TITLE );
         and: "correct header should be present"
         source.contains( COUNTRY_TEMPLATE_DISPLAY_NAME );
@@ -116,11 +116,11 @@ class CountrySiteWithTemplateSpec
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
         source != null;
 
-        and: "'Cities' header should be present in the HTML"
+        and: "'Cities' header should be present in HTML"
         source.contains( "Cities" );
     }
 
-    def "GIVEN existing page template is opened WHEN Context Window has been opened AND 'Inspect' link is clicked THEN correct page controller should be displayed on the panel"()
+    def "GIVEN existing page template is opened WHEN 'Inspect' link is clicked THEN expected page controller should be displayed in Inspect Panel"()
     {
         given: "existing page-template is opened"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
@@ -137,8 +137,7 @@ class CountrySiteWithTemplateSpec
         name == PAGE_CONTROLLER_NAME;
     }
 
-    // @Ignore
-    def "GIVEN new USA-content has been added AND child city-content for USA was added  WHEN USA-content selected AND 'Preview' button is pressed THEN correct text should be present on the page-source "()
+    def "GIVEN new USA-content with a child has been added WHEN USA-content selected AND 'Preview' button has been pressed THEN correct text should be present in page-source"()
     {
         given: "new USA-content has been added"
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, SITE.getName() );
@@ -159,38 +158,35 @@ class CountrySiteWithTemplateSpec
         saveScreenshot( "san_francisco_added" )
         contentBrowsePanel.doClearSelection();
 
-        when: "country-content is selected in the grid and the 'Preview' button pressed"
+        when: "country-content has been selected and 'Preview' button pressed"
         findAndSelectContent( USA_CONTENT.getName() );
         sleep( 1000 );
         saveScreenshot( "USA_City" )
         contentBrowsePanel.clickToolbarPreview();
         sleep( 1000 );
 
-        then: "correct headers "
+        then: "expected header should be in page source "
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
         source.contains( CITY_HEADER );
-        and: "correct Population of the city should be present in the 'page source'"
+        and: "expected population should be present in the 'page source'"
         source.contains( "Population: " + SF_POPULATION );
-
     }
 
-    // @Ignore
-    def "WHEN site is not published yet WHEN site opened in 'master', through the portal THEN '404' should be present in the sources"()
+    def "WHEN site is not published yet WHEN site opened in 'master', through the portal THEN '404' page should be loaded"()
     {
         given: "site not published and opened in the 'master'"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
         sleep( 2000 );
 
-        expect: "'404' should be present in the sources"
+        expect: "'404' should be loaded"
         saveScreenshot( "portal-country-preview-master-offline" );
         String source = getDriver().getPageSource();
         source.contains( "404" );
     }
 
-    ///@Ignore
-    def "WHEN site is not published yet AND site opened in 'draft', through the portal THEN correct data should be present in page sources"()
+    def "WHEN site is not published yet AND site opened in 'draft' THEN expected page should be loaded"()
     {
-        when: "site not published and opened in the 'master'"
+        when: "not published site has been opened in 'draft'"
         openResourceInDraft( SITE.getName() + "/" + USA_CONTENT.getName() );
         sleep( 2000 );
         saveScreenshot( "portal-country-preview-draft-offline" );
@@ -203,8 +199,7 @@ class CountrySiteWithTemplateSpec
         source.contains( USA_DESCRIPTION );
     }
 
-    //@Ignore
-    def "WHEN site has been published AND site opened through the portal THEN correct description and population should be present in page sources"()
+    def "WHEN site has been published AND site opened in 'master' THEN correct description and population should be present in page sources"()
     {
         given: "site has been 'published'"
         filterPanel.typeSearchText( SITE.getName(), );
@@ -215,7 +210,7 @@ class CountrySiteWithTemplateSpec
         sleep( 2000 );
         saveScreenshot( "country_site_published" );
 
-        when: "site was opened in master"
+        when: "site has been opened in master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
 
         then: "correct population should be present in page sources"
@@ -226,26 +221,26 @@ class CountrySiteWithTemplateSpec
         source.contains( USA_DESCRIPTION );
     }
 
-    //@Ignore
-    def "GIVEN city content changed and content is not 'Published' now WHEN site opened in 'master', through the portal THEN old data for city-content should be displayed"()
+    @Ignore
+    def "GIVEN site is modified WHEN site opened in 'master' THEN old data for city-content should be displayed"()
     {
-        given: "city content was changed and content was not 'Published'"
+        given: "city content was changed and content is 'Modified' now"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         CityFormView cityFormView = new CityFormView( getSession() );
         cityFormView.typePopulation( NEW_SF_POPULATION );
         wizard.save();
         sleep( 1000 );
 
-        when: "site was opened in the master"
+        when: "site has been opened in the master"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
 
-        then: "population should not be changed"
+        then: "population should not be updated"
         String source = getDriver().getPageSource();
         source.contains( "Population: " + SF_POPULATION );
     }
 
-    //@Ignore
-    def "GIVEN city content was changed and 'Published' WHEN site opened in 'master', through the portal THEN new population should be displayed"()
+    @Ignore
+    def "GIVEN modified site has been 'Published' WHEN site has been opened in 'master' THEN new population should be displayed"()
     {
         given: "city content changed and 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
@@ -261,7 +256,7 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + NEW_SF_POPULATION );
     }
 
-    //@Ignore
+    @Ignore
     def "GIVEN existing country content WHEN 'Page Component View' is opened THEN all added components should be displayed"()
     {
         given: "existing country content is opened"

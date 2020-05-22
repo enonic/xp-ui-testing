@@ -20,9 +20,9 @@ class PageComponentsDialog_Swap_Text_Component
     String TEXT2 = "text 2";
 
 
-    def "Preconditions: new site wizard is opened WHEN name and 2 text components have been inserted THEN 2 required strings should be present on the Live Form Panel"()
+    def "Preconditions: new site with 2 components should be added"()
     {
-        given: "data typed and saved and wizard closed"
+        given: "nwe wizard is opened"
         SITE = buildMyFirstAppSite( "site" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() );
         wizard.typeData( SITE ).selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER );
@@ -44,7 +44,6 @@ class PageComponentsDialog_Swap_Text_Component
 
         then: "2 required strings should be present on the Live Form Panel"
         wizard.switchToLiveEditFrame();
-       // liveFormPanel.getTextFromTextComponents().size() == 2;
     }
 
     def "GIVEN site with 2 text-components is opened WHEN swapping components by DnD THEN components should be displayed in the new order"()

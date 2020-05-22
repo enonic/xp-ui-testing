@@ -59,7 +59,7 @@ class CreateSiteWithLayoutSpec
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "WHEN existing site has been expanded and templates folder selected AND new page-template added THEN this template should be present in 'Templates' folder"()
+    def "WHEN existing site has been expanded AND new page-template added THEN this template should be present in 'Templates' folder"()
     {
         given: "existing site"
         pageTemplate = buildPageTemplate( MAIN_REGION_PAGE_DESCRIPTOR_NAME, SUPPORTS, SITE_DISPLAY_NAME, SITE.getName() );
@@ -110,7 +110,7 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getTextFromTextComponents().get( 0 ) == ( TEXT_COMPONENT_TEXT );
     }
 
-    def "GIVEN 'Page Components' is opened WHEN menu for 'main region' is opened and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout should be present on the live edit frame"()
+    def "GIVEN 'Page Components' is opened WHEN menu for 'main region' is opened and 'insert' menu-item selected AND 'layout'-item clicked THEN new layout should be present in Live Edit frame"()
     {
         given: "site is opened and 'Page Components' is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( pageTemplate.getName() ).clickToolbarEdit();

@@ -15,7 +15,7 @@ class ContextWindow_InsertPanel_Spec
     @Shared
     Content TEST_SITE;
 
-    def "GIVEN creating of new site WHEN page controller is not selected THEN toggler buttons 'Components View' and 'Inspection Panel' should not be displayed"()
+    def "GIVEN new site is added WHEN page controller is not selected THEN toggler buttons 'Components View' and 'Inspection Panel' should not be displayed"()
     {
         given: "creating of new site"
         TEST_SITE = buildMyFirstAppSite( "test-insert-panel" );
@@ -32,7 +32,7 @@ class ContextWindow_InsertPanel_Spec
         wizardPanel.isContextPanelTogglerDisplayed()
     }
 
-    def "GIVEN existing site without a controller is opened WHEN page controller has been selected THEN toggler buttons for 'Components View' and 'Inspection Panel' should be displayed"()
+    def "GIVEN existing site is opened WHEN page controller has been selected THEN toggler buttons for 'Components View' and 'Inspection Panel' should be displayed"()
     {
         given: "existing site without a controller is opened"
         ContentWizardPanel siteWizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
@@ -46,7 +46,7 @@ class ContextWindow_InsertPanel_Spec
 
     }
 
-    def "GIVEN existing site is opened WHEN 'Insert' link has been clicked THEN 'Insertables' panel should be displayed AND all available components should be present on the panel"()
+    def "GIVEN existing site is opened WHEN 'Insert' link has been clicked THEN 'Insertables' panel should be displayed AND all available components should be present in the panel"()
     {
         given: "existing site is opened"
         ContentWizardPanel siteWizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
@@ -82,7 +82,7 @@ class ContextWindow_InsertPanel_Spec
         insertablesPanel.getTitle() == PageInsertablesPanel.TITLE
     }
     // verifies the xp#5580 Site Wizard - endless spinner appears when Show-Hide button was pressed in the second time
-    def "GIVEN existing site is opened  AND 'Hide Page Editor' button has been clicked WHEN 'Show Page Editor' has been clicked THEN "()
+    def "GIVEN existing site is opened AND 'Hide Page Editor' button has been clicked WHEN 'Show Page Editor' has been clicked THEN "()
     {
         given: "'Page Editor' for the existing site opened"
         ContentWizardPanel siteWizard = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();

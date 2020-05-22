@@ -18,7 +18,7 @@ class MyFirstApp_Spec
     @Shared
     Content USA_CONTENT;
 
-    def "Precondidtions: new site based with 'My First App' is opened WHEN data was saved and wizard closed THEN new site should be listed"()
+    def "Preconditions: new site should be added"()
     {
         given:
         MY_FIRST_SITE = buildMyFirstAppSite( "country-site" );
@@ -33,7 +33,7 @@ class MyFirstApp_Spec
         contentBrowsePanel.exists( MY_FIRST_SITE.getName() );
     }
 
-    def "GIVEN adding new country-content WHEN data was typed AND 'save' pressed THEN new added content should be listed"()
+    def "GIVEN new country-wizard is opened WHEN data have been typed AND 'save' pressed THEN new added content should be listed"()
     {
         given: "site is selected and wizard for adding of new country-content is opened"
         USA_CONTENT = buildCountry_Content( "USA", USA_DESCRIPTION, USA_POPULATION, MY_FIRST_SITE.getName() );
@@ -49,7 +49,7 @@ class MyFirstApp_Spec
         contentBrowsePanel.exists( USA_CONTENT.getName() );
     }
 
-    def "WHEN child country-content is opened THEN 'Show Page Editor' button should be present on the toolbar"()
+    def "WHEN child country-content is opened THEN 'Show Page Editor' button should be present in the toolbar"()
     {
         when: "child country-content is opened"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
@@ -60,7 +60,7 @@ class MyFirstApp_Spec
         wizard.isShowPageEditorButtonDisplayed();
     }
 
-    def "GIVEN country-content is opened WHEN  'Show Page Editor' button clicked  THEN LiveEdit frame should be displayed AND option filter should be displayed"()
+    def "GIVEN country-content is opened WHEN 'Show Page Editor' button clicked  THEN LiveEdit frame should be loaded AND controller selector should be present"()
     {
         given: "child country-content is opened"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
@@ -76,7 +76,7 @@ class MyFirstApp_Spec
         countryContentWizard.isPageDescriptorOptionsFilterDisplayed();
     }
 
-    def "GIVEN child country-content is opened AND 'Page Editor' has been shown WHEN 'Hide Page Editor' button pressed THEN 'Live Edit' frame should not be displayed"()
+    def "GIVEN child country-content is opened AND 'Page Editor' is loaded WHEN 'Hide Page Editor' button has been pressed THEN 'Live Edit' frame gets not visible"()
     {
         given: "child country-content is opened"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
@@ -85,15 +85,15 @@ class MyFirstApp_Spec
         and: "'Page Editor' have been opened"
         wizard.showPageEditor();
 
-        when: "the 'Hide Page Editor' button pressed"
+        when: "'Hide Page Editor' button has been pressed"
         wizard.hidePageEditor();
         saveScreenshot( "editor_hidden" );
 
-        then: "the 'LiveEdit' frame should not be displayed"
+        then: "'LiveEdit' frame gets not visible"
         !wizard.isLiveEditFrameDisplayed();
     }
 
-    def "GIVEN 'country' content opened WHEN region selected and 'Preview' button pressed THEN region component should be correctly shown in the new browser window"()
+    def "GIVEN 'country' content opened WHEN controller has been selected and 'Preview' button pressed THEN region component should be shown in the new browser window"()
     {
         given: "'country' content is opened"
         filterPanel.typeSearchText( USA_CONTENT.getName() );
@@ -106,24 +106,24 @@ class MyFirstApp_Spec
         wizard.clickToolbarPreview();
         saveScreenshot( "country_preview_clicked" );
 
-        then: "the region page is opened in a browser with correct title and correct header"
+        then: "Expected title should be loaded in the page"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
         source.contains( COUNTRY_REGION_TITLE );
 
-        and: "correct header should be displayed"
+        and: "expected header should be displayed"
         source.contains( COUNTRY_REGION_HEADER );
     }
 
-    def "GIVEN country-content with a controller WHEN content is opened and new part inserted into the region THEN correct page source should be present"()
+    def "GIVEN existing country-content is opened WHEN new part has been inserted THEN page source should be updated"()
     {
-        given: "country-content with a controller is opened"
+        given: "existing country-content is opened"
         ContentWizardPanel wizard = findAndSelectContent( USA_CONTENT.getName() ).clickToolbarEdit();
 
-        and: "Component View is shown"
+        and: "open Component View:"
         wizard.showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
 
-        when: "new part was inserted into the region"
+        when: "new part has been inserted"
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Part" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
@@ -131,13 +131,13 @@ class MyFirstApp_Spec
         partComponentView.selectItem( COUNTRY_PART_DEFAULT_NAME );
         saveScreenshot( "part_country_added" );
         wizard.switchToDefaultWindow();
-        and: "'Preview' button on the wizard-toolbar has been pressed"
+        and: "'Preview' button has been pressed"
         wizard.clickToolbarPreview();
 
-        then: "the content opened in a browser and page's sources are correct"
+        then: "page source should be updated"
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
         source.contains( "Population: " + USA_POPULATION );
-        and: "correct description should be present"
+        and: "expected description should be present"
         source.contains( USA_DESCRIPTION );
     }
 }

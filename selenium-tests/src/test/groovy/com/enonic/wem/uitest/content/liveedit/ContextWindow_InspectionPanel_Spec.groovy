@@ -19,7 +19,7 @@ class ContextWindow_InspectionPanel_Spec
     Content TEST_SITE
 
 
-    def "GIVEN creating of new site with selected controller WHEN Context window opened and 'Inspect' link clicked THEN Inspection tab should be opened"()
+    def "GIVEN new site with controller is added WHEN 'Inspect' link has been clicked THEN Inspection tab should be opened"()
     {
         given: "creating of new site"
         TEST_SITE = buildMyFirstAppSite( "test-inspection-panel" );
@@ -45,7 +45,7 @@ class ContextWindow_InspectionPanel_Spec
         inspectionPanel.isSaveAsTemplateButtonDisplayed();
     }
 
-    def "GIVEN the site with 'page controller' is opened WHEN 'Preview' button pressed THEN page-sources are correct and correct header present as well"()
+    def "GIVEN existing site is opened WHEN 'Preview' button has been pressed THEN expected HTML code should be loaded"()
     {
         given: "the site with a 'page controller' is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
@@ -61,7 +61,7 @@ class ContextWindow_InspectionPanel_Spec
         source.contains( COUNTRY_SITE_HTML_HEADER );
     }
 
-    def "GIVEN 'existing site is opened WHEN Page controller has been changed to 'Country list' THEN expected page controller should be displayed in the selector"()
+    def "GIVEN 'existing site is opened WHEN Page controller has been changed THEN new page controller should appear in Inspect Panel"()
     {
         given: "existing site is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( TEST_SITE.getName() ).clickToolbarEdit();
@@ -79,7 +79,7 @@ class ContextWindow_InspectionPanel_Spec
         dialog.pressYesButton();
         saveScreenshot( "test-inspection-new-controller-selected" );
 
-        then: "expected page controller should be displayed in the Inspect panel"
+        then: "expected page controller should appear in the Inspect panel"
         inspectPanel.getSelectedPageController() == COUNTRY_LIST_PAGE_CONTROLLER;
     }
 

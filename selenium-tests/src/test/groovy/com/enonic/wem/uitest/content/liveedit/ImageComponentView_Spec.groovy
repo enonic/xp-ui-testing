@@ -17,13 +17,13 @@ class ImageComponentView_Spec
     @Shared
     String SITE_NAME;
 
-    def "GIVEN new site has been added and it is opened WHEN Image-component has been inserted THEN Image Component View should be added in the page editor"()
+    def "GIVEN new site has been added and it is reopened WHEN Image-component has been inserted THEN Image Component View should be added in the page editor"()
     {
         given: "new site has been added"
         SITE_NAME = NameHelper.uniqueName( "site" );
         addSiteWithAllInputTypes( SITE_NAME );
 
-        and: "the site is opened"
+        and: "the site is reopened"
         ContentWizardPanel wizard = findAndSelectContent( SITE_NAME ).clickToolbarEdit();
 
         when: "image component has been inserted"

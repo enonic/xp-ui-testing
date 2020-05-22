@@ -26,7 +26,7 @@ class Image_Change_In_InspectionPanel_Spec
 
     def "GIVEN site wizard is opened WHEN new image component has been inserted THEN the image should be present in the 'selected option' on the Inspection Panel"()
     {
-        given: "site wizard  is opened and the controller has been selected"
+        given: "new site wizard is opened and a controller has been selected"
         SITE1 = buildSiteWithAllTypes( "inspect" );
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE1.getContentTypeName() ).typeData(
             SITE1 ).selectPageDescriptor( "main region" );
@@ -42,7 +42,7 @@ class Image_Change_In_InspectionPanel_Spec
         imageInspectionPanel.getSelectedImageDisplayName() == IMAGE_DISPLAY_NAME;
     }
 
-    def "GIVEN image- component has been clicked and InspectionPanel opened WHEN remove-selected option has been clicked THEN OptionFilter input should appear on the panel"()
+    def "GIVEN image-component has been clicked and InspectionPanel opened WHEN remove icon has been clicked THEN OptionFilter input should appear on the panel"()
     {
         given: "site wizard  is opened and the controller has been selected"
         ContentWizardPanel siteWizard = findAndSelectContent( SITE1.getName() ).clickToolbarEdit();
