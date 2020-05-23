@@ -46,7 +46,7 @@ class PageComponentsDialog_Swap_Text_Component
         wizard.switchToLiveEditFrame();
     }
 
-    def "GIVEN site with 2 text-components is opened WHEN swapping components by DnD THEN components should be displayed in the new order"()
+    def "GIVEN site with 2 text-components is opened WHEN swapping components by DnD THEN components should be displayed in new order"()
     {
         given: "site with 2 text-components is opened"
         filterPanel.typeSearchText( SITE.getName() );
@@ -68,9 +68,9 @@ class PageComponentsDialog_Swap_Text_Component
         LinkedList<String> after = liveFormPanel.getTextFromTextComponents();
         saveScreenshot( "page_comp_view_text_swapped" );
 
-        then: "components should be displayed in the new order"
+        then: "components should be displayed in new order"
         before.get( 0 ) == TEXT2;
-        and: "components should be displayed in the new order"
+        and: "components should be displayed in new order"
         after.get( 0 ) == TEXT1;
     }
 }

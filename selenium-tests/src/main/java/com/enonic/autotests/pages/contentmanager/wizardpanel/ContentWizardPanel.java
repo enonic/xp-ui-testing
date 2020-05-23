@@ -93,7 +93,7 @@ public class ContentWizardPanel
     private final String TOOLBAR_PREVIEW_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
     private final String CONTEXTN_PANEL_TOGGLER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ContextPanel')]" +
-        "//button[contains(@id, 'NonMobileContextPanelToggleButton') and contains(@class,'icon-cog')]";
+        "//button[contains(@id, 'NonMobileContextPanelToggleButton')]";
 
     private final String EDIT_PERMISSIONS_BUTTON =
         "//div[contains(@id,'WizardStepNavigatorAndToolbar')]" + "//div[contains(@class,'edit-permissions-button')]";
