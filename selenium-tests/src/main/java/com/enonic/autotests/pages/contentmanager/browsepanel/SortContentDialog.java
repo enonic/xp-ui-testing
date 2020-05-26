@@ -235,11 +235,11 @@ public class SortContentDialog
         String selector = null;
         if ( order.equals( SortOrder.ASCENDING ) )
         {
-            selector = menuItem + "//button[@title='Sort in ascending order']";
+            selector = menuItem + "//button[contains(@class,'asc')]";
         }
         else
         {
-            selector = menuItem + "//button[@title='Sort in descending order']";
+            selector = menuItem + "//button[contains(@class,'desc')]";
         }
 
         if ( !isElementDisplayed( selector ) )
