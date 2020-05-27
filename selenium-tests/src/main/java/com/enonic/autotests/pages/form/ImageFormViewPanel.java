@@ -86,7 +86,7 @@ public class ImageFormViewPanel
 
     public ImageEditor clickOnCropButton()
     {
-        boolean isClickable = waitUntilClickableNoException( By.xpath( BUTTON_CROP ), EXPLICIT_NORMAL );
+        boolean isClickable = waitUntilClickableNoException( By.xpath( BUTTON_CROP ), EXPLICIT_LONG );
         if ( !isClickable )
         {
             saveScreenshot( "err_crop_button" );

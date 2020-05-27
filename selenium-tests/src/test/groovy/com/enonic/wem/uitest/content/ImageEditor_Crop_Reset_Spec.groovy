@@ -20,6 +20,7 @@ class ImageEditor_Crop_Reset_Spec
         given: "'Image Editor' dialog opened"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        sleep(1000);
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
         ImageEditorToolbar toolbar = imageEditor.getToolbar();
         int before = imageEditor.getCropAreaHeight();
@@ -48,6 +49,7 @@ class ImageEditor_Crop_Reset_Spec
         given: "'Image Editor' dialog opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
+        sleep(1000);
 
         when: " dragHandler moved up AND image cropped "
         ImageEditor imageEditor = formViewPanel.clickOnCropButton();
@@ -72,6 +74,7 @@ class ImageEditor_Crop_Reset_Spec
 
         when: "the image was opened"
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
+        sleep(1000);
 
         then: "'Reset' button should be displayed on the Image Editor"
         formViewPanel.isButtonResetPresent();
@@ -82,6 +85,7 @@ class ImageEditor_Crop_Reset_Spec
         given: "existing cropped image"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
+        sleep(1000);
         saveScreenshot( "reset_button_displayed" );
 
         when: "'Reset' button has been pressed"
@@ -99,6 +103,7 @@ class ImageEditor_Crop_Reset_Spec
         given: "existing cropped image"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEditAndSwitchToWizardTab();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
+        sleep(1000);
 
         and: "the image has been cropped"
         ImageEditor imageEditor = imageFormViewPanel.clickOnCropButton();
