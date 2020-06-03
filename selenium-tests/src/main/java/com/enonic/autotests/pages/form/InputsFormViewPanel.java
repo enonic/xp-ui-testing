@@ -34,13 +34,13 @@ public class InputsFormViewPanel
     @Override
     public FormViewPanel type( final PropertyTree data )
     {
+        getCheckBoxFormViewPanel().type( data );
         getComboBoxFormViewPanel().type( data );
         getDoubleFormViewPanel().type( data );
         getSingleSelectorRadioFormView().type( data );
         getGeoPointFormViewPanel().type( data );
         getTextLineFormViewPanel().type( data );
         getLongFormViewPanel().type( data );
-        getCheckBoxFormViewPanel().type( data );
         getImageSelectorFormViewPanel().type( data );
         getRelationshipFormView().type( data );
         return this;

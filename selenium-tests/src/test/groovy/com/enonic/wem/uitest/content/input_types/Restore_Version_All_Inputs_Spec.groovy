@@ -23,9 +23,6 @@ class Restore_Version_All_Inputs_Spec
     String INITIAL_DISPLAY_NAME = "restore-version-types";
 
     @Shared
-    String NEW_DISPLAY_NAME = NameHelper.uniqueName( "restore-all" );
-
-    @Shared
     String TEXT_LINE_V1 = "version1";
 
     @Shared
@@ -61,7 +58,7 @@ class Restore_Version_All_Inputs_Spec
     @Shared
     String COMBOBOX_OPTION_V2 = "myOption 2";
 
-    def "GIVEN content with input types has been added WHEN content has been selected and version history opened THEN two versions should be present in versions-panel"()
+    def "GIVEN content with input types has been added WHEN version paqnel has been opened THEN two versions should be present in versions-panel"()
     {
         given: "content with input types has been added"
         ALL_INPUTS_CONTENT = buildContent( "types", INITIAL_DISPLAY_NAME );
@@ -69,7 +66,6 @@ class Restore_Version_All_Inputs_Spec
         wizard.typeData( ALL_INPUTS_CONTENT );
         saveScreenshot( "all_inputs_typed" );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
-
 
         when: "content has been selected and version history opened"
         contentBrowsePanel.doClearSelection();
@@ -80,7 +76,7 @@ class Restore_Version_All_Inputs_Spec
         allContentVersionsView.getAllVersions().size() == 2;
     }
 
-    def "GIVEN existing content is opened WHEN  values in inputs have been changed AND the content has been saved THEN number of versions should be increased by 1"()
+    def "GIVEN existing content is opened WHEN values in inputs have been changed AND the content has been saved THEN number of versions should be increased by 1"()
     {
         given:
         ContentWizardPanel wizard = findAndSelectContent( ALL_INPUTS_CONTENT.getName() ).clickToolbarEdit();
@@ -102,7 +98,7 @@ class Restore_Version_All_Inputs_Spec
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
-    def "GIVEN existing content with 3 versions WHEN previous version has been restored THEN expected values should be present in all inputs"()
+    def "GIVEN existing content WHEN previous version has been restored THEN expected values should be present in all inputs"()
     {
         given: "existing content with 3 versions"
         findAndSelectContent( ALL_INPUTS_CONTENT.getName() );
@@ -114,7 +110,7 @@ class Restore_Version_All_Inputs_Spec
         versionItem.doRestoreVersion(  );
         saveScreenshot( "all_inputs_restored" );
 
-        and: "content is opened"
+        and: "content is reopened"
         contentBrowsePanel.clickToolbarEdit();
 
         then: "expected values should be present in all inputs"
