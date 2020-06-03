@@ -57,7 +57,7 @@ class DetailsPanel_OwnerName_Spec
             roles.toList() ).build();
 
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew(
             UserItemName.USERS_FOLDER );
 
         when: "data typed and new user has been saved"

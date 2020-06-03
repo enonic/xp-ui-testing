@@ -27,7 +27,7 @@ class Occurrences_HtmlArea_0_2_Spec
     @Shared
     String DEFAULT_EXPECTED_TEXT2 = "<p>" + TEST_TEXT2 + "</p>";
 
-    def "WHEN wizard for new htmlArea(0:2) content is opened THEN one text area should be present "()
+    def "WHEN wizard for new htmlArea(0:2) is opened THEN one html area should be present"()
     {
         when: "wizard for new htmlArea(0:2) content is opened"
         Content htmlAreaContent = buildHtmlArea0_2_Content( 1, TEST_TEXT1 );
@@ -35,7 +35,7 @@ class Occurrences_HtmlArea_0_2_Spec
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         wizard.typeDisplayName( htmlAreaContent.getDisplayName() );
 
-        then: "one text area should be present"
+        then: "one html area should be present"
         formViewPanel.getNumberOfAreas() == 1;
 
         and: "'Add' button should be present"
@@ -45,7 +45,7 @@ class Occurrences_HtmlArea_0_2_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN wizard for htmlArea(0:2) is opened WHEN button 'Add' clicked THEN two text areas should be present and button 'Add' is getting hidden"()
+    def "GIVEN wizard for htmlArea(0:2) is opened WHEN button 'Add' clicked THEN two text areas should be present and button 'Add' gets hidden"()
     {
         given: "wizard for htmlArea(0:2) is opened"
         Content htmlAreaContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1 );
@@ -64,7 +64,7 @@ class Occurrences_HtmlArea_0_2_Spec
         formViewPanel.getNumberOfAreas() == 2;
     }
 
-    def "GIVEN wizard for htmlArea(0:2) is opened AND one more area has been added WHEN one text area was removed THEN one area should be present AND button 'Add' should appear"()
+    def "GIVEN wizard for htmlArea(0:2) is opened AND one more area has been added WHEN one text area has been removed THEN one area remains in the page AND button 'Add' should appear"()
     {
         given: "start to add a content with type 'htmlArea 0:2'"
         Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1 );
@@ -74,21 +74,21 @@ class Occurrences_HtmlArea_0_2_Spec
         formViewPanel.clickOnAddButton();
         int beforeRemoving = formViewPanel.getNumberOfAreas();
 
-        when: "one html-area was removed"
+        when: "one html-area has been removed"
         formViewPanel.removeLastTextArea();
         saveScreenshot( "one_htmlarea_removed" );
 
-        then: "button 'Add' should be present on the page"
+        then: "button 'Add' should be present in the page"
         formViewPanel.isAddButtonPresent();
 
-        and: "one text area should be present"
+        and: "one text area remains in the wizard"
         formViewPanel.getNumberOfAreas() == 1;
 
         and:
         beforeRemoving == 2;
     }
 
-    def "GIVEN 'HtmlArea 0:2' content has been added AND two strings were typed WHEN the content is opened THEN both strings saved correctly"()
+    def "GIVEN 'HtmlArea 0:2' content has been added AND two strings were typed WHEN the content has been reopened THEN expected text should be displayed"()
     {
         given: "content with type 'HtmlArea 0:2' has been added"
         Content tinyMceContent = buildHtmlArea0_2_Content( 2, TEST_TEXT1, TEST_TEXT2 );
@@ -96,7 +96,7 @@ class Occurrences_HtmlArea_0_2_Spec
         wizard.typeData( tinyMceContent ).save().closeBrowserTab().switchToBrowsePanelTab();
         saveScreenshot( "area0_2_saved" )
 
-        when: "the content is opened"
+        when: "the content is reopened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( tinyMceContent );
         HtmlArea0_0_FormViewPanel formViewPanel = new HtmlArea0_0_FormViewPanel( getSession() );
         List<String> strings = formViewPanel.getDataFromCKEAreas();
