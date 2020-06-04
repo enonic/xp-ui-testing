@@ -100,16 +100,6 @@ public class UserBrowsePanel
         return this;
     }
 
-    public UserBrowsePanel expandStoreAndSelectUsers( String storeName )
-    {
-        clickOnExpander( storeName );
-        sleep( 700 );
-        clickOnRowByName( "users" );
-        sleep( 500 );
-        getSession().put( USER_ITEM_TYPE, UserItemName.USERS_FOLDER );
-        return this;
-    }
-
     public UserBrowsePanel expandStoreAndSelectGroups( String storeName )
     {
         clickOnExpander( storeName );
@@ -148,28 +138,10 @@ public class UserBrowsePanel
         return getDisplayedStrings( By.xpath( USER_ITEMS_GRID + P_NAME ) );
     }
 
-    public UserBrowsePanel clickCheckboxAndSelectFolder( UserItemName itemType )
-    {
-        getSession().put( USER_ITEM_TYPE, itemType );
-        return clickCheckboxAndSelectRow( itemType.getValue() );
-    }
-
     public UserBrowsePanel clickCheckboxAndSelectUser( String userAppItemName )
     {
         getSession().put( USER_ITEM_TYPE, UserItemName.USER );
         return clickCheckboxAndSelectRow( userAppItemName );
-    }
-
-    public UserBrowsePanel clickCheckboxAndSelectUserStore( String userAppItemName )
-    {
-        getSession().put( USER_ITEM_TYPE, UserItemName.USER_STORE );
-        return clickCheckboxAndSelectRow( userAppItemName );
-    }
-
-    public UserBrowsePanel clickCheckboxAndSelectGroup( String groupName )
-    {
-        getSession().put( USER_ITEM_TYPE, UserItemName.GROUP );
-        return clickCheckboxAndSelectRow( groupName );
     }
 
     public UserBrowsePanel clickCheckboxAndSelectRole( String roleName )
@@ -232,7 +204,6 @@ public class UserBrowsePanel
         newButton.click();
         sleep( 500 );
         NewPrincipalDialog newPrincipalDialog = new NewPrincipalDialog( getSession() );
-        //UserItemName selectedItem = (UserItemName) getSession().get( USER_ITEM_TYPE );
         if ( selectedItem == null )
         {
             return newPrincipalDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
@@ -262,19 +233,6 @@ public class UserBrowsePanel
         }
     }
 
-    public UserStoreWizardPanel openUserStoreWizard()
-    {
-        sleep( 500 );
-        newButton.click();
-        NewPrincipalDialog newPrincipalDialog = new NewPrincipalDialog( getSession() );
-        newPrincipalDialog.waitForLoaded( Application.EXPLICIT_NORMAL );
-        newPrincipalDialog.selectItemOpenWizard( NewPrincipalDialog.ItemsToCreate.USER_STORE, null );
-        sleep( 500 );
-        UserStoreWizardPanel wizard = new UserStoreWizardPanel( getSession() );
-        wizard.waitUntilWizardOpened();
-        return wizard;
-    }
-
     /**
      * @return true if 'Delete' button enabled, otherwise false.
      */
@@ -301,10 +259,6 @@ public class UserBrowsePanel
         return duplicateButton.isEnabled();
     }
 
-    public boolean isSyncEnabled()
-    {
-        return syncButton.isEnabled();
-    }
 
     @Override
     public WizardPanel clickToolbarEdit()
