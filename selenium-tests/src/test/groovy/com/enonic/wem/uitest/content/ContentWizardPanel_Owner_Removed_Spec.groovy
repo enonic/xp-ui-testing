@@ -53,8 +53,7 @@ class ContentWizardPanel_Owner_Removed_Spec
             roles.toList() ).build();
 
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew(
-            UserItemName.USERS_FOLDER );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew( UserItemName.USERS_FOLDER );
 
         when: "data was typed and user saved"
         userWizardPanel.typeData( TEST_USER ).save().close( TEST_USER.getDisplayName() );
@@ -114,7 +113,7 @@ class ContentWizardPanel_Owner_Removed_Spec
         form.getOwner() == TEST_USER.getDisplayName();
     }
 
-     Content buildFolderContent( String name, String displayName )
+    Content buildFolderContent( String name, String displayName )
     {
         String generated = NameHelper.uniqueName( name );
         Content content = Content.builder().

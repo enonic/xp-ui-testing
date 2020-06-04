@@ -830,7 +830,7 @@ public class ContentBrowsePanel
     public IssueListDialog clickOnToolbarShowIssues()
     {
         openTasksButton.click();
-        sleep( 500 );
+        sleep( 700 );
         IssueListDialog issueListDialog = new IssueListDialog( getSession() );
         issueListDialog.waitForOpened();
         return issueListDialog;

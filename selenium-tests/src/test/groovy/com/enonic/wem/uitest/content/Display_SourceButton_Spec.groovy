@@ -62,8 +62,7 @@ class Display_SourceButton_Spec
             roles.toList() ).build();
 
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickCheckboxAndSelectFolder( UserItemName.USERS_FOLDER ).clickOnToolbarNew(
-            UserItemName.USERS_FOLDER );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew( UserItemName.USERS_FOLDER );
 
         when: "data has been typed and user saved"
         userWizardPanel.typeData( USER ).save().close( USER.getDisplayName() );
@@ -127,10 +126,10 @@ class Display_SourceButton_Spec
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         saveScreenshot( "logged_" + USER_NAME );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
-        sleep(1000);
+        sleep( 1000 );
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        CkeToolbar ckeToolbar = new CkeToolbar(getSession(  ));
+        CkeToolbar ckeToolbar = new CkeToolbar( getSession() );
 
         when: "the text component has been double clicked"
         liveFormPanel.doubleClickOnTextComponent( "test text" );
@@ -189,7 +188,7 @@ class Display_SourceButton_Spec
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        CkeToolbar ckeToolbar = new CkeToolbar(getSession(  ));
+        CkeToolbar ckeToolbar = new CkeToolbar( getSession() );
 
         when: "double click on the text component is performed"
         liveFormPanel.doubleClickOnTextComponent( "test text" );
@@ -211,7 +210,7 @@ class Display_SourceButton_Spec
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType( "htmlarea0_1" );
         saveScreenshot( "htmlarea_source_button_should_be_displayed" );
         HtmlArea0_1_FormViewPanel htmlArea = new HtmlArea0_1_FormViewPanel( getSession() );
-        htmlArea.showToolbar(  );
+        htmlArea.showToolbar();
 
         then: "'Source Button button should be displayed"
         htmlArea.isSourceCodeButtonDisplayed();

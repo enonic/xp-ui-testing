@@ -51,8 +51,7 @@ class IssueListDialog_Spec
             User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( "1q2w3e" ).roles( roles.toList() ).build();
         and: "select the Users-folder"
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew(
-            UserItemName.USERS_FOLDER );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew( UserItemName.USERS_FOLDER );
 
         when: "data was typed and user saved"
         userWizardPanel.typeData( TEST_USER ).save().close( TEST_USER.getDisplayName() );
@@ -108,8 +107,6 @@ class IssueListDialog_Spec
         and: "'All' option should be selected by default"
         issueListDialog.getTypeFilterSelectedOption().contains( "All" );
 
-
-
         and: "'New task' button should be present"
         issueListDialog.isNewTaskButtonDisplayed();
 
@@ -157,7 +154,6 @@ class IssueListDialog_Spec
         NavigatorHelper.openContentStudioApp( getTestSession() );
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
 
-
         when: "the issue has been clicked"
         issueListDialog.clickOnIssue( TEST_TASK.getTitle() );
         IssueDetailsDialog details = new IssueDetailsDialog( getSession() );
@@ -166,8 +162,8 @@ class IssueListDialog_Spec
 
         and: "Publish button has been pressed"
         details.clickOnPublishButton();
-        ContentPublishDialog contentPublishDialog = new ContentPublishDialog(getSession(  ));
-        contentPublishDialog.clickOnPublishButton(  )
+        ContentPublishDialog contentPublishDialog = new ContentPublishDialog( getSession() );
+        contentPublishDialog.clickOnPublishButton()
         saveScreenshot( "issue_published" );
 
         then: "Issue Details Dialog should be loaded"
