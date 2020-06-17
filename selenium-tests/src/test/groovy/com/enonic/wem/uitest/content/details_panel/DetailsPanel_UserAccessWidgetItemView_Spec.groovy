@@ -64,6 +64,7 @@ class DetailsPanel_UserAccessWidgetItemView_Spec
 
         when: "content has been selected and widget opened"
         modalDialog.setInheritPermissionsCheckbox( false ).addPermissionByClickingCheckbox( anonymousEntry ).clickOnApply();
+        modalDialog.waitForDialogClosed();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         saveScreenshot( "anonymous_ua_widget" );
 

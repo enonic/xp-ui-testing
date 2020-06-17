@@ -337,4 +337,9 @@ public class EditPermissionsDialog
     {
         return cancelButtonTop.isDisplayed();
     }
+
+    public boolean waitForDialogClosed()
+    {
+        return waitsElementNotVisible( By.xpath( CONTAINER_XPATH ), Application.EXPLICIT_LONG );
+    }
 }

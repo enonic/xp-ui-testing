@@ -64,6 +64,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
 
         and: "'Overwrite child permissions' is checked"
         dialog.setOverwriteChildPermissionsCheckbox( true ).clickOnApply();
+        dialog.waitForDialogClosed();
 
         and: "wizard is closing"
         wizard.executeCloseWizardScript();
@@ -133,11 +134,11 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         dialog.setInheritPermissionsCheckbox( true );
         and: "Apply button has been pressed"
         dialog.clickOnApply();
+        dialog.waitForDialogClosed();
 
         and: "the content has been saved"
         ContentAclEntry entryToRemove = ContentAclEntry.builder().principalName( USER_ADMIN_ROLE ).suite(
             PermissionSuite.CAN_READ ).build();
-        //childWizard.save();
         saveScreenshot( "inherit_perm_true_initial_perm_restored" );
 
         then: "permissions should be the same as in the parent folder"

@@ -142,6 +142,7 @@ class ContentWizard_EditPermissionsDialog_Spec
 
         and: "Apply button has been pressed"
         modalDialog.clickOnApply();
+        modalDialog.waitForDialogClosed();
         sleep( 700 );
 
         when: "shortcut to 'Close' has been pressed"
@@ -162,6 +163,7 @@ class ContentWizard_EditPermissionsDialog_Spec
         saveScreenshot( "content-wizard-role-was-removed" );
         and: "Apply button has been pressed"
         modalDialog.clickOnApply();
+        modalDialog.waitForDialogClosed();
 
         and: "dialog has been reopened again"
         wizard.clickOnEditPermissionsButton();
