@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type xmlns="urn:enonic:xp:model:1.0">
+  <display-name>content-selector2_8</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+
+    <input name="allowAll" type="ContentSelector">
+      <label>Allow all content items</label>
+      <occurrences minimum="2" maximum="8"/>
+      <config>
+        <relationship>system:reference</relationship>
+        <allowPath>*</allowPath>
+        <treeMode>true</treeMode>
+      </config>
+    </input>
+
+  </form>
+</content-type>
