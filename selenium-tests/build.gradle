@@ -436,7 +436,5 @@ testContentStudioFirefoxHeadless.finalizedBy = ['stopServer']
 repositories {
     mavenLocal()
     mavenCentral()
-    maven {
-        url 'https://repo.enonic.com/dev'
-    }
+    xp.enonicRepo('dev')
 }
