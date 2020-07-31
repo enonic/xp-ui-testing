@@ -431,3 +431,12 @@ task testContentStudioFirefoxHeadless( type: Test, dependsOn: [buildApplications
 }
 //Stop server is not necessary when run in a Docker container.
 testContentStudioFirefoxHeadless.finalizedBy = ['stopServer']
+
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url 'https://repo.enonic.com/dev'
+    }
+}
