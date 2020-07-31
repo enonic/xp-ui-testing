@@ -3,63 +3,23 @@ exports.create = function () {
     //Documentation BEGIN
     var contentLib = require('/lib/xp/content');
 
+    // var result = contentLib.create({
+    //     name: '_attachments',
+    //     parentPath: "/",
+    //     displayName: '_attachments',
+    //     draft: true,
+    //     contentType: 'base:folder',
+    //     data: {},
+    //     branch: 'draft'
+    // });
+
     var result = contentLib.create({
-        name: 'mycontent',
-        parentPath: '/features/js-libraries',
+        name: 'myContent',
+        parentPath: '/',
         displayName: 'My Content',
-        requireValid: true,
-        contentType: app.name + ':all-input-types',
-        language: 'no',
+        contentType: app.name + ':date0_0',
         data: {
-            myCheckbox: true,
-            myComboBox: 'option1',
-            myDate: '1970-01-01',
-            myDateTime: '1970-01-01T10:00',
-            myDouble: 3.14,
-            myGeoPoint: '59.91,10.75',
-            myHtmlArea: '<p>htmlAreaContent</p>',
-            myImageSelector: '5a5fc786-a4e6-4a4d-a21a-19ac6fd4784b',
-            myImageSelector2: '3d37979c-3269-48b3-ab02-9e7efe69e744',
-            myLong: 123,
-            myMediaSelector: 'a3e276b6-62a9-44e8-ace2-3bd2e9f08d2f',
-            myRelationship: 'features',
-            myRadioButtons: 'option1',
-            myTag: 'aTag',
-            myTextArea: 'textAreaContent',
-            myTextLine: 'textLineContent',
-            myTime: '10:00',
-            myTextAreas: [
-                'textAreaContent1',
-                'textAreaContent2'
-            ],
-            myItemSet: {
-                'textLine': 'textLineContent',
-                'long': 123
-            },
-            checkOptionSet: {
-                _selected: ["option_2", "option_3"],
-                option_2: {
-                    contentSelector: '5a5fc786-a4e6-4a4d-a21a-19ac6fd4784b'
-                },
-                option_3: {
-                    textarea: 'My Another Text Area',
-                    long: 555
-                }
-            },
-            radioOptionSet: {
-                _selected: "option_3",
-                option_3: {
-                    textarea: 'My Text Area',
-                    long: 123
-                }
-            }
-        },
-        x: {
-            "com-enonic-app-features": {
-                "menu-item": {
-                    "menuItem": true
-                }
-            }
+            "date": ["2020-06-02", "2020-06-03", "2022-10-03"]
         }
     });
 
@@ -70,6 +30,7 @@ exports.create = function () {
 
     return result;
 };
+
 
 exports.get = function () {
 
@@ -88,6 +49,25 @@ exports.get = function () {
     //Documentation END
 
     log.info('Get result: ' + JSON.stringify(result, null, 4));
+
+    return result;
+};
+
+exports.exists = function (key) {
+
+    //Documentation BEGIN
+    var contentLib = require('/lib/xp/content');
+
+    var result = contentLib.exists({
+        key: key
+    });
+
+    if (result) {
+        log.info('Content found');
+    } else {
+        log.info('Content was not found');
+    }
+    //Documentation END
 
     return result;
 };
@@ -183,6 +163,15 @@ exports.query = function () {
                     field: "data.price"
                 }
             }
+        },
+        highlight: {
+            properties: {
+                "data.city": {},
+                "data.description": {
+                    preTag: "<b>",
+                    postTag: "</b>"
+                }
+            }
         }
     });
 
@@ -199,26 +188,7 @@ exports.query = function () {
     return result;
 };
 
-exports.delete = function () {
 
-    //Documentation BEGIN
-    var contentLib = require('/lib/xp/content');
-
-    var result = contentLib.delete({
-        key: '/features/js-libraries/mycontent'
-    });
-
-    if (result) {
-        log.info('Content deleted');
-    } else {
-        log.info('Content was not found');
-    }
-    //Documentation END
-
-    log.info('Delete result: ' + JSON.stringify(result, null, 4));
-
-    return result;
-};
 
 exports.modify = function () {
 
@@ -230,7 +200,7 @@ exports.modify = function () {
         c.data["myTime"] = "11:00";
         c.data.checkOptionSet = {
             _selected: ["option_2"],
-                option_2: {
+            option_2: {
                 contentSelector: '5a5fc786-a4e6-4a4d-a21a-19ac6fd4784b'
             }
         };

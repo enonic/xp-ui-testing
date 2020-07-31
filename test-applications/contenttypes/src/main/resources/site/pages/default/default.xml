@@ -3,9 +3,10 @@
   <display-name>Page</display-name>
   <description>home page</description>
   <form>
-    <input type="TextLine" name="title">
-      <label>Title</label>
-      <occurrences minimum="0" maximum="1"/>
+    <input name="htmlarea_0_0" type="HtmlArea">
+      <label>HTML content 0:0</label>
+      <occurrences minimum="0" maximum="0"/>
+      <help-text>HTML Area</help-text>
     </input>
   </form>
   <regions>
