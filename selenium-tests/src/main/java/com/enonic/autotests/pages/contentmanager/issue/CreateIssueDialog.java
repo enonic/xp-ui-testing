@@ -168,15 +168,6 @@ public class CreateIssueDialog
         return "";
     }
 
-    public String getValidationMessageForAssigneesInput()
-    {
-        if ( isElementDisplayed( ASSIGNEES_INPUT_ERROR_MESSAGE ) )
-        {
-            return getDisplayedString( ASSIGNEES_INPUT_ERROR_MESSAGE );
-        }
-        return "";
-    }
-
     public void waitForOpened()
     {
         if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL ) )
@@ -203,7 +194,7 @@ public class CreateIssueDialog
 
     public boolean isItemsOptionFilterDisplayed()
     {
-        return assigneesOptionFilterInput.isDisplayed();
+        return itemsOptionFilterInput.isDisplayed();
     }
 
     public boolean isCreateTaskButtonDisplayed()

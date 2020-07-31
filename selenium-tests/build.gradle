@@ -38,7 +38,7 @@ ext {
     xpHome = "$distroDir${File.separator}home"
     configDir = "$xpHome${File.separator}config"
     contentStudioFile = "$deployDir${File.separator}contentstudio-${csVersion}.jar"
-    contentStudioAppUrl = "https://repo.enonic.com/public/com/enonic/app/contentstudio/${csVersion}/contentstudio-${csVersion}.jar"
+    contentStudioAppUrl = "https://repo.enonic.com/dev/com/enonic/app/contentstudio/${csVersion}/contentstudio-${csVersion}.jar"
 }
 
 task updateTestDir {
@@ -241,35 +241,6 @@ task testPublishMoveSortDeatailsPanel( type: Test, dependsOn: [buildApplications
     copyContentTypes.mustRunAfter startServer
 }
 
-task testUser( type: Test, dependsOn: [deleteFolders, startServer] ) {
-    scanForTestClasses = false
-    include '**/user/*Spec.class'
-    forkEvery = null
-    startServer.shouldRunAfter deleteFolders
-}
-
-task testApplication( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
-    scanForTestClasses = false
-    include '**/application/*Spec.class'
-    forkEvery = null
-    deleteFolders.mustRunAfter buildApplications
-    startServer.mustRunAfter deleteFolders
-    copyTestApplications.mustRunAfter startServer
-}
-
-task testApplicationFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
-    //set system property
-    System.setProperty 'geb.env', 'firefox'
-    //set required JvmOption:
-    systemProperty 'geb.env', System.getProperty( 'geb.env' )
-    scanForTestClasses = false
-    include '**/application/*Spec.class'
-    forkEvery = null
-    deleteFolders.mustRunAfter buildApplications
-    startServer.mustRunAfter deleteFolders
-    copyTestApplications.mustRunAfter startServer
-}
-
 task testPublishMoveSortDeatailsPanelFirefox( type: Test,
                                               dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
@@ -285,18 +256,6 @@ task testPublishMoveSortDeatailsPanelFirefox( type: Test,
     startServer.mustRunAfter deleteFolders
     copyContentTypes.mustRunAfter startServer
 }
-
-task testUserFirefox( type: Test, dependsOn: [deleteFolders, startServer] ) {
-    //set system property
-    System.setProperty 'geb.env', 'firefox'
-    //set required JvmOption:
-    systemProperty 'geb.env', System.getProperty( 'geb.env' )
-    scanForTestClasses = false
-    include '**/user/*Spec.class'
-    forkEvery = null
-    startServer.shouldRunAfter deleteFolders
-}
-
 task testInputTypesFirefox( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property
     System.setProperty 'geb.env', 'firefox'
@@ -343,49 +302,12 @@ task testPageEditor( type: Test, dependsOn: [buildApplications, deleteFolders, s
     copySimplePageApp.mustRunAfter startServer
 }
 
-task testUploadContent( type: Test, dependsOn: [deleteFolders, buildApplications, startServer, copyContentTypes] ) {
-    scanForTestClasses = false
-    include '**/content/upload/**Spec.class'
-    forkEvery = null
-    copyContentTypes.shouldRunAfter startServer
-}
-
-task testUserLocal( type: Test ) {
-    scanForTestClasses = false
-    include '**/user/*Spec.class'
-    forkEvery = null
-}
-
 task testPageEditorLocal( type: Test ) {
     scanForTestClasses = false
     include '**/content/liveedit/**Spec.class'
     forkEvery = null
 }
 
-task testApplicationLocal( type: Test ) {
-    scanForTestClasses = false
-    include '**/application/*Spec.class'
-    forkEvery = null
-}
-
-task testApplicationBrowserStackFirefox( type: Test ) {
-    //set system property
-    System.setProperty 'geb.env', 'browserstack_ff'
-    //set required JvmOption:
-    systemProperty 'geb.env', System.getProperty( 'geb.env' )
-    scanForTestClasses = false
-    include '**/application/*Spec.class'
-    forkEvery = null
-}
-task testApplicationBrowserStackChrome( type: Test ) {
-    //set system property
-    System.setProperty 'geb.env', 'browserstack_chrome'
-    //set required JvmOption:
-    systemProperty 'geb.env', System.getProperty( 'geb.env' )
-    scanForTestClasses = false
-    include '**/application/*Spec.class'
-    forkEvery = null
-}
 task testPublishMoveSortDeatailsPanelLocal( type: Test ) {
     scanForTestClasses = false
     include '**/content/move_publish_sort/**/*Spec.class'
@@ -412,33 +334,15 @@ task testContentStudioLocal( type: Test ) {
     forkEvery = null
 }
 
-testApplication.finalizedBy = ['stopServer']
 testPageEditor.finalizedBy = ['stopServer']
-testUser.finalizedBy = ['stopServer']
 testContentStudio.finalizedBy = ['stopServer']
 testInputTypes.finalizedBy = ['stopServer']
 testContentStudioFirefox.finalizedBy = ['stopServer']
 testPublishMoveSortDeatailsPanelFirefox.finalizedBy = ['stopServer']
-testApplicationFirefox.finalizedBy = ['stopServer']
 
 //
 // Chrome Headless tests:
 //
-
-task testApplicationsAppChrHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
-    //set system property
-    System.setProperty 'chrome.headless', 'true'
-    //set required JvmOption:
-    systemProperty 'chrome.headless', System.getProperty( 'chrome.headless' )
-    scanForTestClasses = false
-    include '**/application/*Spec.class'
-    forkEvery = null
-    deleteFolders.mustRunAfter buildApplications
-    startServer.mustRunAfter deleteFolders
-    copyContentTypes.mustRunAfter startServer
-}
-//Stop server is not necessary when run in a Docker container.
-testApplicationsAppChrHeadless.finalizedBy = ['stopServer']
 
 task testPublishMoveSortDetailsPanelChrHeadless( type: Test,
                                                  dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
@@ -508,23 +412,6 @@ testBaseWizardGridChrHeadless.finalizedBy = ['stopServer']
 //
 // Firefox tests
 //
-
-task testApplicationsAppFirefoxHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyTestApplications] ) {
-    //set system property
-    System.setProperty 'geb.env', 'firefox'
-    System.setProperty 'firefox.headless', 'true'
-    //set required JvmOption:
-    systemProperty 'geb.env', System.getProperty( 'geb.env' )
-    systemProperty 'firefox.headless', System.getProperty( 'firefox.headless' )
-    scanForTestClasses = false
-    include '**/application/*Spec.class'
-    forkEvery = null
-    deleteFolders.mustRunAfter buildApplications
-    startServer.mustRunAfter deleteFolders
-    copyContentTypes.mustRunAfter startServer
-}
-//Stop server is not necessary when run in a Docker container.
-testApplicationsAppFirefoxHeadless.finalizedBy = ['stopServer']
 
 task testContentStudioFirefoxHeadless( type: Test, dependsOn: [buildApplications, deleteFolders, startServer, copyContentTypes] ) {
     //set system property

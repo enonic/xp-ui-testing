@@ -99,7 +99,7 @@ class Occurrences_ComboBox_2_4_Spec
         formViewPanel.isValidationMessagePresent();
     }
 
-    def "GIVEN new ComboBox-content(2:4) with four options is created WHEN content has been opened THEN four selected options present on page and 'filter input' is disabled"()
+    def "GIVEN new ComboBox-content(2:4) with four options is created WHEN content has been opened THEN four selected options should be displayed and 'filter input' is disabled"()
     {
         given: "new content ComboBox2_4 is added'"
         Content comboBoxContent = buildComboBox2_4_Content( 4 );
@@ -111,14 +111,14 @@ class Occurrences_ComboBox_2_4_Spec
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
-        then: "four options present in form view"
+        then: "four options should be present in the form view"
         optValues.size() == 4;
 
-        and: "and options have a correct text"
+        and: "expected options should be displayed"
         String[] options = ["option A", "option B", "option C", "option D"];
         optValues.containsAll( options.toList() );
 
-        and: "options filter input is disabled, because this content have a maximum options"
+        and: "options filter input should be disabled, because this content have a maximum options"
         !formViewPanel.isOptionFilterInputEnabled();
     }
 

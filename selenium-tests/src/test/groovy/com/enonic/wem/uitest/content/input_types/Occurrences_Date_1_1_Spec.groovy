@@ -33,7 +33,7 @@ class Occurrences_Date_1_1_Spec
         picker.isDisplayed();
     }
 
-    def "GIVEN wizard for new 'Date(1:1)' is opened WHEN name has been typed AND date input is empty THEN red icon should be present on the wizard-page(date input is required)"()
+    def "GIVEN wizard for new 'Date(1:1)' is opened WHEN name has been typed AND date input is empty THEN red icon should be present in the wizard-page(date input is required)"()
     {
         given: "wizard for new 'Date(1:1)' is opened"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
