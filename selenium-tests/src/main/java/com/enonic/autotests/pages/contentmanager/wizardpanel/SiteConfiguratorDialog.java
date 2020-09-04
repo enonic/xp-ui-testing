@@ -174,7 +174,7 @@ public class SiteConfiguratorDialog
             throw new TestFrameworkException( "ImageContentComboBox option filter was not found!" );
         }
         getDisplayedElement( By.xpath( optionFilter ) ).sendKeys( imageName );
-        String imageXpath = DIALOG_CONTAINER + String.format( OPTION_IMAGE_SELECTOR_VIEW_BY_NAME, imageName );
+        String imageXpath = DIALOG_CONTAINER + String.format( SLICK_ROW_BY_DISPLAY_NAME, imageName );
         if ( !isElementDisplayed( imageXpath ) )
         {
             saveScreenshot( "img_file_not_found" );
@@ -186,17 +186,18 @@ public class SiteConfiguratorDialog
 
     public InsertLinkModalDialog clickOnHtmlAreaInsertLinkButton()
     {
-        boolean isPresent = waitUntilVisibleNoException( By.xpath( CKE_TEXT_AREA ), Application.EXPLICIT_NORMAL );
+        boolean isPresent = isElementDisplayed( By.xpath( CKE_TEXT_AREA ) );
         if ( !isPresent )
         {
             throw new TestFrameworkException( "CKE_AREA is not visible!" );
         }
         WebElement textArea = getDisplayedElement( By.xpath( CKE_TEXT_AREA ) );
         buildActions().moveToElement( textArea ).click( textArea ).build().perform();
-        if ( !waitUntilVisibleNoException( By.xpath( INSERT_LINK_BUTTON ), Application.EXPLICIT_NORMAL ) )
+        sleep( 300 );
+        if ( !isElementDisplayed( By.xpath( INSERT_LINK_BUTTON ) ) )
         {
             saveScreenshot( "err_insert_link" );
-            throw new TestFrameworkException( "insert-link menu item not present!" );
+            throw new TestFrameworkException( "insert-link menu item is not present!" );
         }
         getDisplayedElement( By.xpath( INSERT_LINK_BUTTON ) ).click();
         return new InsertLinkModalDialog( getSession() );
@@ -212,6 +213,8 @@ public class SiteConfiguratorDialog
     private void showToolbar()
     {
         WebElement textArea = getDisplayedElement( By.xpath( CKE_TEXT_AREA ) );
+        ( (JavascriptExecutor) getDriver() ).executeScript( "arguments[0].scrollIntoView(true);", textArea );
+        sleep( 500 );
         buildActions().moveToElement( textArea ).click( textArea ).build().perform();
     }
 
