@@ -489,10 +489,10 @@ class BaseContentSpec
     {
         PropertyTree data = new PropertyTree();
         data.addString( SiteFormViewPanel.APP_KEY, APP_CONTENT_TYPES_DISPLAY_NAME );
-        data.addStrings( "description", "all content types  site " )
+        data.addStrings( "description", "all content types  site" )
         Content site = Content.builder().
             name( siteName ).
-            displayName( "site with all content types" ).
+            displayName( "site with content types" ).
             parent( ContentPath.ROOT ).
             contentType( "Site" ).data( data ).
             build();

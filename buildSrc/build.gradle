@@ -5,7 +5,7 @@ apply plugin: 'groovy'
 repositories {
     mavenCentral()
     maven {
-        url 'http://repo.enonic.com/public'
+        url 'http://repo.enonic.com/dev'
     }
 }
 
