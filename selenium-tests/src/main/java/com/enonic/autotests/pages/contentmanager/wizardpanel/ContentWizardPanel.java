@@ -41,7 +41,7 @@ public class ContentWizardPanel
 {
     public static final String SHOW_PAGE_EDITOR_BUTTON_TITLE = "Show Page Editor";
 
-    public static final String SCHEDULE_VALIDATION_MESSAGE = "End date/time cannot be in the past";
+    public static final String SCHEDULE_VALIDATION_MESSAGE = "Online to cannot be in the past";
 
     public static final String ONLINE_FROM_MISSED_NOTIFICATION_MESSAGE = "[Online to] date/time cannot be set without [Online from]";
 
