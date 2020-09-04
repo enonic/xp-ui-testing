@@ -860,7 +860,7 @@ public class ContentWizardPanel
     {
         if ( !waitIsAlertDisplayed() )
         {
-            throw new TestFrameworkException( "Expected Alert dialog was not displayed!" );
+            throw new TestFrameworkException( "Expected Alert dialog was not loaded!" );
         }
         Alert alert = getDriver().switchTo().alert();
         alert.accept();

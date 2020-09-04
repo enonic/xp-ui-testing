@@ -91,7 +91,7 @@ public class ImageComponentView
 
     public ImageComponentView clickOnOption( String imageName )
     {
-        String optionXpath = String.format( IMAGE_CONTENT_SELECTOR + OPTION_IMAGE_SELECTOR_VIEW_BY_NAME, imageName );
+        String optionXpath = String.format( IMAGE_CONTENT_SELECTOR + SLICK_ROW_BY_DISPLAY_NAME, imageName );
         boolean isVisible = waitUntilVisibleNoException( By.xpath( optionXpath ), Application.EXPLICIT_NORMAL );
         if ( !isVisible )
         {

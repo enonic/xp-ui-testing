@@ -13,9 +13,6 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-/**
- * verifies the XP-3893 Dependencies Widget: outbound dependencies not displayed , when site with inserted images was selected
- * */
 @Stepwise
 class DetailsPanel_DependenciesWidgetItemView_Spec
     extends BaseContentSpec
@@ -91,7 +88,6 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
 
         and: "correct label for dependencies is displayed"
         filterPanel.getDependenciesSectionTitle() == ContentBrowseFilterPanel.DEPENDENCIES_SECTION_OUTBOUND_TITLE;
-
 
         and: "'close dependency section' button should be displayed"
         filterPanel.isCloseDependenciesSectionButtonDisplayed();

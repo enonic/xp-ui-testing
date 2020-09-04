@@ -952,7 +952,7 @@ public abstract class BrowsePanel
         {
             throw new TestFrameworkException( "menu item was not found!  " + action );
         }
-        return waitIsElementEnabled( findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ), 2 );
+        return waitIsElementEnabled( findElement( By.xpath( String.format( CONTEXT_MENU_ITEM, action ) ) ), Application.EXPLICIT_NORMAL );
     }
 
     public boolean isContextMenuItemDisplayed( String menuItem )

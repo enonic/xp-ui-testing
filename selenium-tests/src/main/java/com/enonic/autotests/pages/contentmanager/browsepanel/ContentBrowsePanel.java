@@ -765,10 +765,11 @@ public class ContentBrowsePanel
         {
             clickOnFoldButton();
         }
+        waitForMoveButtonEnabled( Application.EXPLICIT_NORMAL );
         moveButton.click();
         sleep( 500 );
         MoveContentDialog moveContentDialog = new MoveContentDialog( getSession() );
-        moveContentDialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        moveContentDialog.waitUntilDialogLoaded();
         return moveContentDialog;
     }
 
@@ -1205,6 +1206,11 @@ public class ContentBrowsePanel
     public boolean waitForPublishButtonVisible( long timeout )
     {
         return waitUntilVisibleNoException( By.xpath( PUBLISH_BUTTON_XPATH ), timeout );
+    }
+
+    public void waitForMoveButtonEnabled( long timeout )
+    {
+        waitUntilElementEnabled( By.xpath( PUBLISH_BUTTON_XPATH ), timeout );
     }
 
     public boolean isPreviewButtonEnabled()

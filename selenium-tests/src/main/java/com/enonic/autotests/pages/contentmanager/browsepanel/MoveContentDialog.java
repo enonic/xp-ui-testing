@@ -136,11 +136,9 @@ public class MoveContentDialog
 
     /**
      * Waits until 'MoveContentDialog' is opened.
-     *
-     * @return true if dialog opened, otherwise false.
      */
-    public boolean waitUntilDialogShown( long timeout )
+    public void waitUntilDialogLoaded()
     {
-        return waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout );
+        waitUntilVisible( By.xpath( DIALOG_CONTAINER ) );
     }
 }

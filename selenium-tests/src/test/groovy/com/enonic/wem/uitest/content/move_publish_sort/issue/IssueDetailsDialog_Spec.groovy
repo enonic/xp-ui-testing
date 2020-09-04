@@ -90,8 +90,6 @@ class IssueDetailsDialog_Spec
         then: "Task details dialog should be displayed"
         taskDetailsDialog.waitForLoaded();
 
-        and: "'Close Task' button should be present"
-        taskDetailsDialog.isCloseTaskButtonPresent();
         and: "'Back' button should be present"
         taskDetailsDialog.isBackButtonDisplayed();
         and: "status of the issue should be 'Open'"
