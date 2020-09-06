@@ -135,7 +135,8 @@ public class AllContentVersionsView
     }
 
     public void clickOnVersionAndCloseView( int index )
-    {List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
+    {
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
         if ( liElements.size() == 0 || index >= liElements.size() )
         {
             saveScreenshot( NameHelper.uniqueName( "err_expand_version" ) );
@@ -147,19 +148,14 @@ public class AllContentVersionsView
         clickOnVersionItem( index );
     }
 
-    public AllContentVersionsView isLoaded()
-    {
-        if ( !isElementDisplayed( CONTAINER_WIDGET ) )
-        {
-            saveScreenshot( "err_version_panel" );
-            throw new TestFrameworkException( "ContentItemVersionsPanel was not loaded!" );
-        }
-        return this;
-    }
-
     public AllContentVersionsView waitUntilLoaded()
     {
-        waitUntilVisible( By.xpath( CONTAINER_WIDGET ) );
+        boolean result = waitUntilVisibleNoException( By.xpath( CONTAINER_WIDGET ), EXPLICIT_LONG );
+        if ( !result )
+        {
+            saveScreenshot( "err_load_version_panel" );
+            throw new TestFrameworkException( "Error when Versions panel is loading" );
+        }
         return this;
     }
 

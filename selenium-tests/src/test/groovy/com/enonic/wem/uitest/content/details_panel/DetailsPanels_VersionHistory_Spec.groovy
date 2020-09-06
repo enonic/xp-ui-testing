@@ -29,7 +29,7 @@ class DetailsPanels_VersionHistory_Spec
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
         then: "panel with all versions should be loaded"
-        allContentVersionsView.isLoaded();
+        allContentVersionsView.waitUntilLoaded();
     }
 
     def "GIVEN existing content is selected WHEN 'Version History' has been opened THEN two versions should be present in the panel"()
