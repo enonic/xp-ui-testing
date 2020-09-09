@@ -8,7 +8,6 @@ import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-@Stepwise
 class ContentBrowsePanel_GridPanel_Spec
     extends BaseContentSpec
 {
@@ -282,8 +281,7 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.getSelectedRowsNumber() == 4
     }
 
-    //verifies  enonic/xp#4463 After a node is unhighlighted in the grid the toolbar action buttons are still active
-    def "GIVEN row with the content is highlighted WHEN highlighting has been removed THEN 'Edit', 'Delete', 'Duplicate 'buttons  should be disabled on the toolbar"()
+    def "GIVEN a row with the content is highlighted WHEN highlighting has been removed THEN 'Edit', 'Delete', 'Duplicate 'buttons get disabled"()
     {
         given: "row with the content is highlighted"
         contentBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );

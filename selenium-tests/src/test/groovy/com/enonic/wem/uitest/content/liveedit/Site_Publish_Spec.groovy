@@ -31,8 +31,8 @@ class Site_Publish_Spec
         given: "data typed and saved and the wizard is closed"
         SITE = buildMyFirstAppSite( "site" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE );
-        wizard.selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).switchToDefaultWindow(  );
-        wizard.clickOnMarkAsReadyButton(  );
+        wizard.selectPageDescriptor( COUNTRY_REGION_PAGE_CONTROLLER ).switchToDefaultWindow();
+        wizard.clickOnMarkAsReadyButton();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site has been published"
@@ -69,7 +69,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnMarkAsReadyAndDoPublish(  );
+        wizard.clickOnMarkAsReadyAndDoPublish();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "text component has been removed"
@@ -89,7 +89,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.showPublishMenu().clickOnPublishMenuItem(  ).clickOnPublishButton(  );
+        wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishButton();
 
         when: "display name was changed"
         wizard.typeDisplayName( "new name" )
@@ -106,7 +106,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.clickOnMarkAsReadyAndDoPublish(  );
+        wizard.clickOnMarkAsReadyAndDoPublish();
         saveScreenshot( "site_published_in_wizard" );
 
         when: "language was changed"
@@ -122,14 +122,14 @@ class Site_Publish_Spec
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'modified' site is opened AND it has been published WHEN new part was inserted THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'modified' site is opened AND it has been published WHEN new part has been inserted THEN status gets 'Modified'"()
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.showPublishMenu().clickOnPublishMenuItem(  ).clickOnPublishButton();
+        wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "new part was inserted"
+        when: "new part has been inserted"
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Part" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
@@ -137,13 +137,11 @@ class Site_Publish_Spec
         partComponentView.selectItem( CITY_CREATION_PART );
         saveScreenshot( "site_modified_in_wizard" );
 
-        and: "site saved in the wizard"
+        and: "switch from Live Edit to the wizard page"
         wizard.switchToDefaultWindow();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "status on the wizard-page is getting 'Modified'"
+        then: "status in the wizard-page gets 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
-
-    //TODO implement the Use Case: swap 2 components and verify, that status is getting 'Modified'
 }

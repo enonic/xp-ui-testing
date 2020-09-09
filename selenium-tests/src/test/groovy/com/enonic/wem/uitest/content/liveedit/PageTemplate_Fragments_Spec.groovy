@@ -23,7 +23,7 @@ class PageTemplate_Fragments_Spec
     Content PAGE_TEMPLATE;
 
 
-    def "GIVEN site with a controller has been added WHEN new page template has been added THEN the template should be present beneath the site"()
+    def "Preconditions: new site with a controller and new page template should be added"()
     {
         given: "site with a controller has been added"
         SITE = buildMyFirstAppSite( "site" );
@@ -47,7 +47,7 @@ class PageTemplate_Fragments_Spec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    def "GIVEN existing site is opened WHEN new fragment created in the site THEN new fragment should be listed"()
+    def "GIVEN existing site is opened WHEN new fragment has been cretaed from an image THEN new fragment wizard should be loaded in new browser tab"()
     {
         given: "existing site is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
@@ -58,7 +58,7 @@ class PageTemplate_Fragments_Spec
         wizard.switchToDefaultWindow();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
-        when: "image component is inserted"
+        when: "image component has been inserted"
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
@@ -71,11 +71,11 @@ class PageTemplate_Fragments_Spec
         sleep( 2000 )
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( ELEPHANT_IMAGE_DISPLAY_NAME );
 
-        then: "new fragment should be present on the page"
+        then: "new fragment should be loaded in new browser tab:"
         wizard.getNameInputValue() == buildFragmentName( ELEPHANT_IMAGE_DISPLAY_NAME );
     }
 
-    def "GIVEN existing page template is opened WHEN existing fragment has been inserted THEN it should be present "()
+    def "GIVEN existing page template is opened WHEN existing fragment has been inserted THEN the fragment should be present in the template"()
     {
         given: "existing page template is opened"
         ContentWizardPanel wizard = findAndSelectContent( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
@@ -94,7 +94,7 @@ class PageTemplate_Fragments_Spec
         !wizard.isSaveButtonEnabled(  );
     }
 
-    def "GIVEN existing page template is opened WHEN image has been clicked on the PageComponentView and context menu opened THEN 'Create Fragment' menu item should not be present "()
+    def "GIVEN existing page template is opened WHEN image has been clicked in the PageComponentView and context menu opened THEN 'Create Fragment' menu item should not be present "()
     {
         given: "existing page template is opened"
         ContentWizardPanel wizard = findAndSelectContent( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
@@ -108,7 +108,7 @@ class PageTemplate_Fragments_Spec
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
         imageComponentView.selectImageFromOptions( ELEPHANT_IMAGE_DISPLAY_NAME );
 
-        when: "the image has been clicked on the PageComponentView and context menu opened"
+        when: "the image has been clicked in the PageComponentView and context menu opened"
         wizard.switchToDefaultWindow().showComponentView();
         pageComponentsView.openMenu( ELEPHANT_IMAGE_DISPLAY_NAME );
 

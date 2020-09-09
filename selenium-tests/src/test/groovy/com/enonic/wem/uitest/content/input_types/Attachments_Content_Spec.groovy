@@ -9,7 +9,6 @@ import com.enonic.autotests.vo.contentmanager.Content
 /**
  * Created on 26.12.2016.
  *
- * Verifies: XP-4779 Broken uploader in attachment content type
  * */
 class Attachments_Content_Spec
     extends Base_InputFields_Occurrences

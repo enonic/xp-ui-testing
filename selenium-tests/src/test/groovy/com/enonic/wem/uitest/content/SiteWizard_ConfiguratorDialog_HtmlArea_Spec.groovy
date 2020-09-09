@@ -30,9 +30,6 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     String CONTENT_TEXT = "content-text";
 
     @Shared
-    String DOWNLOAD_TEXT = "download-text";
-
-    @Shared
     String EMAIL_TEXT = "email-text";
 
     @Shared
@@ -69,7 +66,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
         contentBrowsePanel.exists( SITE.getName() );
     }
-    //xp-ui-testing#6 Add selenium tests for allowPath, allowType properties from the ContentSelector
+
     def "GIVEN site configurator dialog is opened WHEN an image-name was typed but allow type is 'Folder' THEN 'no matching items' message should be displayed"()
     {
         given: "site-configurator dialog is opened"
@@ -224,7 +221,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         contentWizard.clickToolbarPreview();
         String source = TestUtils.getPageSource( getSession(), PAGE_TITLE );
 
-        then: "correct background should be present in a page-source"
+        then: "correct background should be present in the page-source"
         source.contains( backgroundPart );
     }
 

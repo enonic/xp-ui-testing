@@ -37,7 +37,7 @@ class DateContentValidation_Spec
         dateFormViewPanel.isInvalidDate();
     }
 
-    def "WHEN date with wrong day of month has been typed THEN input's border becomes red "()
+    def "WHEN date with wrong day of month has been typed THEN input's border becomes red"()
     {
         given: "date wizard is opened"
         Content dateContent = buildDate0_1_Content( WRONG_DAY_DATE );
@@ -52,7 +52,7 @@ class DateContentValidation_Spec
         dateFormViewPanel.isInvalidDate();
     }
 
-    def "WHEN date with wrong month has been typed THEN input's border becomes red "()
+    def "WHEN date with wrong month has been typed THEN input's border becomes red"()
     {
         given: "date wizard is opened"
         Content dateContent = buildDate0_1_Content( WRONG_MONTH_DATE );
@@ -67,7 +67,7 @@ class DateContentValidation_Spec
         dateFormViewPanel.isInvalidDate();
     }
 
-    def "WHEN data with correct format typed THEN input has a green border"()
+    def "WHEN date with correct format has been typed THEN input has a green border"()
     {
         given: "date wizard is opened"
         Content dateContent = buildDate0_1_Content( CORRECT_DATE );

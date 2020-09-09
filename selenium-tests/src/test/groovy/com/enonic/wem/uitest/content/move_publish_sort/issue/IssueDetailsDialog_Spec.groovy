@@ -34,9 +34,6 @@ class IssueDetailsDialog_Spec
     @Shared
     Issue TEST_TASK;
 
-    @Shared
-    String NEW_TITLE = "new issue-title";
-
     def setup()
     {
         go "admin"

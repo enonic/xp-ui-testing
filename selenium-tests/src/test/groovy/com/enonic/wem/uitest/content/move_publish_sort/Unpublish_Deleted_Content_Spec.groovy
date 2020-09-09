@@ -19,21 +19,21 @@ class Unpublish_Deleted_Content_Spec
     @Shared
     Content CONTENT;
 
-    def "Preconditions: WHEN existing folder has been published THEN 'Published' status should be displayed"()
+    def "Preconditions: new folder should be added and published"()
     {
-        given: "existing folder"
-        CONTENT = buildFolderContent( "folder", "unpublish of deleted" )
+        given: "new folder has been added"
+        CONTENT = buildFolderContent( "folder", "unpublishing deleted" )
         addReadyContent( CONTENT );
 
         when: "the folder has been published"
         findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();
 
-        then: "'Online' status should be displayed"
+        then: "'Published' status should be displayed"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
     //verifies issue https://github.com/enonic/app-contentstudio/issues/385
-    def "GIVEN existing 'Published' folder is opened AND has been deleted in the wizard WHEN the folder has been 'unpublished' in the wizard THEN wizard closes AND the content should not be listed in the grid"()
+    def "GIVEN existing 'Published' folder has been marked as deleted in the wizard WHEN the folder has been 'unpublished' in the wizard THEN wizard closes AND the content should not be listed in the grid"()
     {
         given: "existing 'deleted' content is opened"
         findAndSelectContent( CONTENT.getName() );

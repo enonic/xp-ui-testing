@@ -75,7 +75,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         view.getType() == EXECUTABLE_APP_NAME;
     }
 
-    def "GIVEN new folder is added an it selected WHEN details panel has been opened THEN expected properties should be displayed in the PropertiesWidgetItemView "()
+    def "GIVEN new folder is selected WHEN details panel has been opened THEN expected properties should be displayed in the PropertiesWidgetItemView"()
     {
         given: "new folder is added"
         ContentSettings settings = ContentSettings.builder().language( NORSK_LANGUAGE ).build();
@@ -84,8 +84,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         and:"the folder is selected"
         findAndSelectContent( FOLDER_CONTENT.getName() );
 
-
-        when: "PropertiesWidgetItemView is shown"
+        when: "PropertiesWidgetItemView has bee opened"
         contentBrowsePanel.openContentDetailsPanel();
         PropertiesWidgetItemView view = contentBrowsePanel.getContentBrowseItemPanel().getContentDetailsPanel().getPropertiesWidgetItemView();
         saveScreenshot( "folder_info_properties" );
@@ -127,7 +126,7 @@ class DetailsPanel_PropertiesWidgetItemView_Spec
         view.getApplicationName() == MEDIA_APP_NAME;
     }
 
-    def "GIVEN existing content with owner is opened WHEN owner has been changed in the wizard  THEN new owner shown in the widget"()
+    def "GIVEN existing content with owner is opened WHEN owner has been changed in the wizard THEN new owner should appears in the widget"()
     {
         given: "existing content with owner is opened "
         ContentWizardPanel wizard = findAndSelectContent( FOLDER_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab();

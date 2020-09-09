@@ -1210,7 +1210,7 @@ public class ContentBrowsePanel
 
     public void waitForMoveButtonEnabled( long timeout )
     {
-        waitUntilElementEnabled( By.xpath( PUBLISH_BUTTON_XPATH ), timeout );
+        waitUntilElementEnabled( By.xpath( MOVE_BUTTON_XPATH ), timeout );
     }
 
     public boolean isPreviewButtonEnabled()

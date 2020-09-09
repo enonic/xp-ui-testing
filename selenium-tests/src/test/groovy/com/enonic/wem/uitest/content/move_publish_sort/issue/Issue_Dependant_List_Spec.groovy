@@ -46,7 +46,7 @@ class Issue_Dependant_List_Spec
         go "admin"
     }
 
-    def "setup: add a test user in system user store"()
+    def "setup: add an user in system provider"()
     {
         setup: "'Users' app is opened"
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );

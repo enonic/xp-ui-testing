@@ -26,7 +26,7 @@ class Restore_Version_Folder_Spec
     @Shared
     String NEW_DISPLAY_NAME = NameHelper.uniqueName( "restore-version" )
 
-    def "GIVEN existing folder WHEN folder's display name has been changed THEN new 'version history item' should appear in the version-widget"()
+    def "WHEN folder's display name has been changed THEN new 'version history item' should appear in the version-widget"()
     {
         given: "new folder is added"
         ContentSettings settings = ContentSettings.builder().language( NORSK_LANGUAGE ).build();
@@ -47,7 +47,7 @@ class Restore_Version_Folder_Spec
         numberOfVersionsAfter - numberOfVersionsBefore == 1;
     }
 
-    def "GIVEN existing folder with updated 'display name' WHEN the folder has been selected AND previous version restored THEN content with original display name should be present"()
+    def "GIVEN existing folder with updated 'display name' is selected WHEN previous version restored THEN content with original display name should be present"()
     {
         given: "existing folder with updated 'display name'"
         findAndSelectContent( FOLDER_CONTENT.getName() );
@@ -55,7 +55,7 @@ class Restore_Version_Folder_Spec
         and: "version panel is opened"
         AllContentVersionsView allContentVersionsView = openVersionPanel();
 
-        when: "the folder selected AND previous version has been restored"
+        when: "previous version has been restored"
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
         versionItem.doRestoreVersion(  );
         saveScreenshot( "folder_display_name_restored" );

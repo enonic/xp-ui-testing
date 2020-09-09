@@ -22,7 +22,7 @@ class Site_With_TemplatePageComponentDialog_Spec
     @Shared
     Content SITE;
 
-    def "add a site with a page template"()
+    def "Preconditions :add a site with a page template"()
     {
         given: "site based on test application added"
         SITE = buildMyFirstAppSite( "site" );
@@ -40,7 +40,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    def "GIVEN existing site with a template WHEN site is opened and 'Show Component View' on wizard-toolbar was clicked THEN 'Page Component dialog appears'"()
+    def "GIVEN existing site with a template is opened WHEN 'Show Component View' in wizard-toolbar has been clicked THEN 'Page Component dialog appears'"()
     {
         given: "existing Site based on 'My First App'"
         filterPanel.typeSearchText( SITE.getName() );
@@ -48,7 +48,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         when: "the site is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
 
-        and: "'Show Component View' button was pressed"
+        and: "'Show Component View' button has been pressed"
         wizard.showComponentView();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
         saveScreenshot( "page-comp-dialog-templ" );
