@@ -1,7 +1,7 @@
 var portal = require('/lib/xp/portal');
 var thymeleaf = require('/lib/thymeleaf');
 var contentJsLib = require('/lib/jslibraries/content');
-var view = resolve('js-libraries-content.html');
+var view = resolve('part-with-error.html');
 
 function handlePost(req) {
 
