@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type>
+  <super-type>base:structured</super-type>
+  <display-name>attachment0_0</display-name>
+  <description>attachment0_0</description>
+  <form>
+    <input name="attachment0_0" type="AttachmentUploader">
+      <label>Multiple attachments ( not required)</label>
+      <custom-text/>
+      <help-text/>
+      <occurrences minimum="0" maximum="0"/>
+    </input>
+  </form>
+</content-type>
