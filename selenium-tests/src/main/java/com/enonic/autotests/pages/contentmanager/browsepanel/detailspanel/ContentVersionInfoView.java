@@ -16,11 +16,10 @@ public class ContentVersionInfoView
     extends Application
 {
 
-    private String EXPANDED_VERSION_ITEM = "//li[contains(@class,'content-version-item') and contains(@class,'expanded')]";
+    private String EXPANDED_VERSION_ITEM = "//li[contains(@class,'version-list-item') and contains(@class,'expanded')]";
 
-    private String VERSION_ITEM = "//ul[contains(@id,'VersionsView')]//li[contains(@class,'content-version-item')]";
+    private String VERSION_ITEM = "//ul[contains(@id,'VersionHistoryList')]//li[contains(@class,'version-list-item')]";
 
-    private final String VERSION_EXPANDED_DIV = "//div[contains(@class,'version-info')]";
 
     private String REVERT_BUTTON = EXPANDED_VERSION_ITEM + "//button[child::span[text()='Revert']]";
 

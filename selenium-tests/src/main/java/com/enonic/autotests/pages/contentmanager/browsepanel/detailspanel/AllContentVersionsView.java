@@ -23,13 +23,13 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class AllContentVersionsView
     extends Application
 {
-    private final String CONTAINER_WIDGET = "//div[contains(@id,'VersionsWidgetItemView')]";
+    private final String CONTAINER_WIDGET = "//div[contains(@id,'VersionHistoryView')]";
 
-    private final String VERSIONS_VIEW_UL = "//ul[contains(@id,'VersionsView')]";
+    private final String VERSIONS_VIEW_UL = "//ul[contains(@id,'VersionHistoryList')]";
 
     protected final String TAB_MENU_BUTTON = "//div[contains(@id,'TabMenuButton') and child::span[text()='Version History']]";
 
-    private final String CONTENT_VERSION_VIEWER = "//div[contains(@id,'api.content.ContentVersionViewer')]";
+    private final String VERSION_ITEM = "//li[contains(@class,'version-list-item') and child::div[not(contains(@class,'publish-action'))]]";
 
     @FindBy(xpath = TAB_MENU_BUTTON)
     WebElement tabMenuButton;
@@ -46,12 +46,12 @@ public class AllContentVersionsView
         List<WebElement> liElements = null;
         try
         {
-            liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
+            liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
         }
         catch ( StaleElementReferenceException e )
         {
             sleep( 1000 );
-            liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
+            liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
         }
 
         return liElements.stream().map( e -> buildContentVersion( e ) ).collect( Collectors.toCollection( LinkedList::new ) );
@@ -91,13 +91,13 @@ public class AllContentVersionsView
             saveScreenshot( "err_active_version" );
             throw new TestFrameworkException( "active version was not found in the version history panel! " );
         }
-        WebElement element = getDisplayedElement( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item active')]" ) );
+        WebElement element = getDisplayedElement( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
         return buildContentVersion( element );
     }
 
     public boolean isVersionInfoExpanded( int index )
     {
-        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
         WebElement version = liElements.get( index );
         String attrClass = version.getAttribute( "class" );
         return attrClass.contains( ( "expanded" ) ) || attrClass.contains( "active" );
@@ -105,7 +105,7 @@ public class AllContentVersionsView
 
     public boolean isVersionActive( int index )
     {
-        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
         WebElement version = liElements.get( index );
         String attrClass = version.getAttribute( "class" );
         return attrClass.contains( "active" );
@@ -120,7 +120,7 @@ public class AllContentVersionsView
 
     private WebElement clickOnVersionItem( int index )
     {
-        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
         if ( liElements.size() == 0 || index >= liElements.size() )
         {
             saveScreenshot( NameHelper.uniqueName( "err_expand_version" ) );
@@ -136,7 +136,7 @@ public class AllContentVersionsView
 
     public void clickOnVersionAndCloseView( int index )
     {
-        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + "/li[contains(@class,'content-version-item')]" ) );
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
         if ( liElements.size() == 0 || index >= liElements.size() )
         {
             saveScreenshot( NameHelper.uniqueName( "err_expand_version" ) );
