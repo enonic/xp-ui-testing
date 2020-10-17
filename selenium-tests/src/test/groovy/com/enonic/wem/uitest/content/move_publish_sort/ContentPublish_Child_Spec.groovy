@@ -122,10 +122,10 @@ class ContentPublish_Child_Spec
         saveScreenshot( "parent_child_are_deleted" );
 
         then: "published parent content becomes 'deleted'"
-        contentBrowsePanel.getContentStatus( parentContent.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
+        contentBrowsePanel.getContentStatus( parentContent.getName() ).equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
 
         and: "published child content becomes 'deleted' as well"
-        contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
+        contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
 
         and: "'New' child content should be removed"
         !contentBrowsePanel.exists( childContent2.getName() );

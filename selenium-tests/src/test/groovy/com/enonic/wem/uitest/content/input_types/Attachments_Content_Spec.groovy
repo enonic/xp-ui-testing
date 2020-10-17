@@ -40,8 +40,9 @@ class Attachments_Content_Spec
         ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() );
         AttachmentsFormView attachmentsFormView = new AttachmentsFormView( getSession() );
 
-        when: "'Save' button has been pressed but the required attachment is not selected"
-        wizard.typeName( NameHelper.uniqueName( "attachment" ) ).save();
+        when: "Display name has been typed and 'Save' button has been pressed"
+        wizard.typeDisplayName( NameHelper.uniqueName( "attachment" ) );
+        wizard.save();
 
         then: "validation message should be displayed"
         attachmentsFormView.isValidationMessagePresent();
@@ -61,7 +62,7 @@ class Attachments_Content_Spec
         AttachmentsFormView attachmentsFormView = new AttachmentsFormView( getSession() );
 
         when: "'Save draft' button has been pressed but the required attachment not selected"
-        wizard.typeName( NameHelper.uniqueName( "attachments" ) ).save();
+        wizard.typeDisplayName( NameHelper.uniqueName( "attachments" ) ).save();
 
         then: "validation message should be displayed"
         attachmentsFormView.isValidationMessagePresent();

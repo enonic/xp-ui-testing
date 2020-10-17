@@ -40,10 +40,11 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         saveScreenshot( "parent_child_deleted" );
 
         then: "parent folder should be 'Deleted'"
-        contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.DELETED.getValue();
+        contentBrowsePanel.getContentStatus( PARENT_FOLDER.getName() ) == ContentStatus.MARKED_FOR_DELETION.getValue();
 
         and: "child folder should be 'Deleted'"
-        findAndSelectContent( CHILD_FOLDER.getName() ).getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.DELETED.getValue();
+        findAndSelectContent( CHILD_FOLDER.getName() ).getContentStatus( CHILD_FOLDER.getName() ) ==
+            ContentStatus.MARKED_FOR_DELETION.getValue();
     }
     // verifies bug - https://github.com/enonic/app-contentstudio/issues/1080
     def "GIVEN existing published then 'deleted' folder is selected WHEN versions widget has been opened THEN the latest version should be Deleted"()
@@ -57,7 +58,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "the latest version has 'deleted' badge"
-        contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.DELETED.getValue() );
+        contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
 
     }
 

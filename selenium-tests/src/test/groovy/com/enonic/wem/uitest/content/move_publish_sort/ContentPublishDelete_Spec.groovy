@@ -47,7 +47,7 @@ class ContentPublishDelete_Spec
         saveScreenshot("content_should_be_pending");
 
         then: "content is getting 'Deleted'"
-        contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
+        contentBrowsePanel.getContentStatus( content.getName() ).equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
         and: "expected notification message should be displayed"
         message == String.format( Application.ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE, content.getName() );
     }

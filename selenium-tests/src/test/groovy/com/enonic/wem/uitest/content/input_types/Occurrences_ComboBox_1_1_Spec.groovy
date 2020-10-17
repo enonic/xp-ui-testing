@@ -136,8 +136,8 @@ class Occurrences_ComboBox_1_1_Spec
 
         then: "content should be with 'Published' status"
         contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
-        and:
-        publishMessage == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, comboBox1_1.getName() );
+        //and:
+        //publishMessage == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, comboBox1_1.getName() );
     }
 
     def "GIVEN not valid content with 'modified' status WHEN content selected and 'Delete' pressed THEN content with 'Deleted' status should be displayed"()
@@ -152,7 +152,7 @@ class Occurrences_ComboBox_1_1_Spec
         filterPanel.typeSearchText( comboBox1_1.getName() );
         contentBrowsePanel.clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
         then:
-        contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.DELETED.getValue() );
+        contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
         and: "red icon should be present, because required option was removed"
         contentBrowsePanel.isContentInvalid( comboBox1_1.getName() )
     }

@@ -44,7 +44,7 @@ class ContentWizard_UndoDelete_Spec
         saveScreenshot( "deleted_status_wizard" );
 
         then: "'Deleted' status should be displayed on the wizard-page"
-        wizard.getStatus() == ContentStatus.DELETED.getValue();
+        wizard.getStatus() == ContentStatus.MARKED_FOR_DELETION.getValue();
 
         and: "'Delete' button should not be displayed for the 'deleted' content"
         !wizard.isDeleteButtonDisplayed();

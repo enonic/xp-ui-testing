@@ -112,6 +112,6 @@ class ContentInfoWidget_Spec
         saveScreenshot( "det_panel_content_deleted" )
 
         then: "'Deleted' status should appear on the 'Detail Panel'"
-        contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.DELETED.getValue() );
+        contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
     }
 }

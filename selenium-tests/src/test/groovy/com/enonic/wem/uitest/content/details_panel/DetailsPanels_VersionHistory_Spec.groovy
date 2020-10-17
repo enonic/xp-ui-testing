@@ -106,7 +106,7 @@ class DetailsPanels_VersionHistory_Spec
         LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
 
         then: "the latest version has 'deleted' badge"
-        contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.DELETED.getValue() );
+        contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
 
         and: "previous version has a 'published' badge"
         contentVersions.peek().getStatus().equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
