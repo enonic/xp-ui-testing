@@ -23,7 +23,7 @@ class ContentWizard_Publish_Inputs_Spec
     @Shared
     Content TEST_FOLDER;
 
-    def "GIVEN existing folder is opened WHEN 'Publish' button has been pressed and the content published THEN 'Online from' and 'Online to' appears on the Schedule step form"()
+    def "GIVEN existing folder is opened WHEN the folder has been published THEN 'Online from' and 'Online to' appear in the Schedule step form"()
     {
         given: "existing folder is opened"
         TEST_FOLDER = buildFolderContent( "schedule", "schedule inputs test" );
@@ -56,7 +56,7 @@ class ContentWizard_Publish_Inputs_Spec
         !isDisplayedBeforePublish;
     }
 
-    def "GIVEN existing published folder WHEN the folder is  opened and 'Online to' is earlier  than 'Online from' THEN correct validation message appears"()
+    def "GIVEN existing published folder is opened WHEN 'Online to' is earlier than 'Online from' THEN expected validation message appears"()
     {
         given: "existing published folder"
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
@@ -67,10 +67,9 @@ class ContentWizard_Publish_Inputs_Spec
 
         then: "expected validation messages appears"
         wizard.getScheduleValidationMessage() == wizard.SCHEDULE_VALIDATION_MESSAGE;
-
     }
 
-    def "GIVEN existing published folder WHEN the folder is opened 'Online from' is cleared and 'Online to' has been set THEN correct notification message appears"()
+    def "GIVEN existing published folder is opened WHEN 'Online from' is cleared and 'Online to' has been set THEN expected notification message appears"()
     {
         given: "existing published folder"
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
@@ -87,7 +86,7 @@ class ContentWizard_Publish_Inputs_Spec
         notification == wizard.ONLINE_FROM_MISSED_NOTIFICATION_MESSAGE
     }
 
-    def "GIVEN existing published folder WHEN the folder has been unpublished THEN 'Online from'  and 'Online to'  inputs are getting hidden"()
+    def "WHEN existing folder has been unpublished THEN 'Online from' and 'Online to' inputs get hidden"()
     {
         given: "existing published folder"
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEdit();
@@ -107,7 +106,7 @@ class ContentWizard_Publish_Inputs_Spec
         !wizard.isOnlineToInputDisplayed();
     }
 
-    def "GIVEN existing Unpublished folder WHEN 'Online from' set in the future AND Publish button pressed THEN folder is getting 'Published Pending'"()
+    def "WHEN 'Online from' has been set in the future AND Publish button pressed THEN folder gets 'Publishing Scheduling'"()
     {
         given: "existing published folder"
         ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEditAndSwitchToWizardTab(  );
@@ -119,23 +118,20 @@ class ContentWizard_Publish_Inputs_Spec
 
         then: "status gets 'Published(Pending)'"
         saveScreenshot( "schedule_wizard_published_pending" );
-        wizard.waitStatus( ContentStatus.PUBLISHED_PENDING, Application.EXPLICIT_NORMAL );
+        wizard.waitStatus( ContentStatus.PUBLISHED_SCHEDULED, Application.EXPLICIT_NORMAL );
     }
     //Verifies https://github.com/enonic/app-contentstudio/issues/941
     //Incorrect status in version history for content with scheduled publishing #941
-    def "GIVEN existing 'Published(Pending)' folder WHEN the folder has been selected THEN 'Published(Pending)'status should be in Versions widget"()
+    def "WHEN existing 'Publishing Scheduling' folder is selected THEN 'Will be published' status should be in Versions widget"()
     {
         given: "existing Published(Pending) folder is selected"
         findAndSelectContent( TEST_FOLDER.getName() );
 
         when: "Versions panel has been opened"
-        ContentBrowsePanel contentBrowsePanel = new ContentBrowsePanel(getSession(  ));
-        VersionHistoryWidget allContentVersionsView = openVersionPanel();
-        LinkedList<ContentVersion> allVersions = allContentVersionsView.getAllVersions();
+        VersionHistoryWidget versionHistoryWidget = openVersionPanel();
 
         then: "status gets 'Published(Pending)'"
         saveScreenshot( "schedule_wizard_published_pending" );
-        allVersions.getFirst().getStatus() == ContentStatus.PUBLISHED_PENDING.getValue();
+        versionHistoryWidget.getContentStatus().contains( "Will be published" );
     }
-
 }
