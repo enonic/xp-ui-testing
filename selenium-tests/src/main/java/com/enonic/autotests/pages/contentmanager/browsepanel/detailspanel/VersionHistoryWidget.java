@@ -20,7 +20,7 @@ import com.enonic.autotests.vo.contentmanager.ContentVersion;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
-public class AllContentVersionsView
+public class VersionHistoryWidget
     extends Application
 {
     private final String CONTAINER_WIDGET = "//div[contains(@id,'VersionHistoryView')]";
@@ -29,12 +29,15 @@ public class AllContentVersionsView
 
     protected final String TAB_MENU_BUTTON = "//div[contains(@id,'TabMenuButton') and child::span[text()='Version History']]";
 
-    private final String VERSION_ITEM = "//li[contains(@class,'version-list-item') and child::div[not(contains(@class,'publish-action'))]]";
+    private final String LI_VERSION_ITEM =
+        "//li[contains(@class,'version-list-item') and child::div[contains(@id,'VersionHistoryListItemViewer') and not(contains(@class,'publish-action'))]]";
 
-    @FindBy(xpath = TAB_MENU_BUTTON)
-    WebElement tabMenuButton;
+    private final String CONTENT_STATUS = CONTAINER_WIDGET + "/div[contains(@class,'status')]";
 
-    public AllContentVersionsView( final TestSession session )
+    @FindBy(xpath = CONTENT_STATUS)
+    WebElement contentStatus;
+
+    public VersionHistoryWidget( final TestSession session )
     {
         super( session );
     }
@@ -46,12 +49,12 @@ public class AllContentVersionsView
         List<WebElement> liElements = null;
         try
         {
-            liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
+            liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + LI_VERSION_ITEM ) );
         }
         catch ( StaleElementReferenceException e )
         {
             sleep( 1000 );
-            liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
+            liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + LI_VERSION_ITEM ) );
         }
 
         return liElements.stream().map( e -> buildContentVersion( e ) ).collect( Collectors.toCollection( LinkedList::new ) );
@@ -59,7 +62,6 @@ public class AllContentVersionsView
 
     private ContentVersion buildContentVersion( WebElement li )
     {
-        String statusInElement = ".//div[contains(@class,'status')]";
         String result = null;
         String modifierName = null;
         try
@@ -74,14 +76,16 @@ public class AllContentVersionsView
             modifierName = result.substring( result.indexOf( "by" + 2 ) ).trim();
         }
 
-        String status = null;
-        if ( li.findElements( By.xpath( statusInElement ) ).size() > 0 )
+        String action = null;
+        if ( li.findElements( By.xpath( "." + H6_MAIN_NAME ) ).size() > 0 )
         {
-            status = li.findElements( By.xpath( statusInElement ) ).get( 0 ).getText();
+            result = li.findElements( By.xpath( "." + H6_MAIN_NAME ) ).get( 0 ).getText();
+            action = result.substring( result.lastIndexOf( ":" ) + 3 ).trim();
         }
 
-        String whenModified = li.findElements( By.xpath( "." + H6_MAIN_NAME ) ).get( 0 ).getText();
-        return ContentVersion.builder().modifier( modifierName ).status( status ).modified( whenModified ).build();
+        result = li.findElements( By.xpath( "." + H6_MAIN_NAME ) ).get( 0 ).getText();
+        String whenModified = result.substring( 0, result.lastIndexOf( ":" ) + 3 ).trim();
+        return ContentVersion.builder().modifier( modifierName ).action( action ).modified( whenModified ).build();
     }
 
     public ContentVersion getActiveVersion()
@@ -91,36 +95,30 @@ public class AllContentVersionsView
             saveScreenshot( "err_active_version" );
             throw new TestFrameworkException( "active version was not found in the version history panel! " );
         }
-        WebElement element = getDisplayedElement( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
+        WebElement element = getDisplayedElement( By.xpath( VERSIONS_VIEW_UL + LI_VERSION_ITEM ) );
         return buildContentVersion( element );
     }
 
     public boolean isVersionInfoExpanded( int index )
     {
-        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + LI_VERSION_ITEM ) );
         WebElement version = liElements.get( index );
         String attrClass = version.getAttribute( "class" );
-        return attrClass.contains( ( "expanded" ) ) || attrClass.contains( "active" );
+        return attrClass.contains( "expanded" );
     }
 
     public boolean isVersionActive( int index )
     {
-        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
+        List<WebElement> liElements =
+            getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + LI_VERSION_ITEM + "//div[contains(@id,'VersionHistoryListItemViewer')]" ) );
         WebElement version = liElements.get( index );
         String attrClass = version.getAttribute( "class" );
         return attrClass.contains( "active" );
     }
 
-    public ContentVersionInfoView clickOnVersionAndExpand( int index )
+    public ContentVersionInfoView clickOnVersionItem( int index )
     {
-        WebElement versionItem = clickOnVersionItem( index );
-        waitAndCheckAttrValue( versionItem, "class", "expanded", EXPLICIT_1 );
-        return new ContentVersionInfoView( getSession() );
-    }
-
-    private WebElement clickOnVersionItem( int index )
-    {
-        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
+        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + LI_VERSION_ITEM ) );
         if ( liElements.size() == 0 || index >= liElements.size() )
         {
             saveScreenshot( NameHelper.uniqueName( "err_expand_version" ) );
@@ -131,24 +129,10 @@ public class AllContentVersionsView
         Actions builder = new Actions( getDriver() );
         //builder.moveToElement( version ).click().build().perform();
         builder.click( versionItem ).build().perform();
-        return versionItem;
+        return new ContentVersionInfoView( getSession() );
     }
 
-    public void clickOnVersionAndCloseView( int index )
-    {
-        List<WebElement> liElements = getDisplayedElements( By.xpath( VERSIONS_VIEW_UL + VERSION_ITEM ) );
-        if ( liElements.size() == 0 || index >= liElements.size() )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err_expand_version" ) );
-            throw new TestFrameworkException( "required version does not exist!" );
-        }
-
-        WebElement versionItem = liElements.get( index );
-        waitAndCheckAttrValue( versionItem, "class", "expanded", EXPLICIT_1 );
-        clickOnVersionItem( index );
-    }
-
-    public AllContentVersionsView waitUntilLoaded()
+    public VersionHistoryWidget waitUntilLoaded()
     {
         boolean result = waitUntilVisibleNoException( By.xpath( CONTAINER_WIDGET ), EXPLICIT_LONG );
         if ( !result )
@@ -162,5 +146,10 @@ public class AllContentVersionsView
     public boolean waitUntilPanelNotVisible()
     {
         return WaitHelper.waitsElementNotVisible( getDriver(), By.xpath( CONTAINER_WIDGET ), Application.EXPLICIT_NORMAL );
+    }
+
+    public String getContentStatus()
+    {
+        return contentStatus.getText();
     }
 }

@@ -2,7 +2,7 @@ package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -214,9 +214,9 @@ class Occurrences_ItemSet_0_0_Spec
         contentBrowsePanel.openContentDetailsPanel();
 
         when: "when the previous version has been restored"
-        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion();
+        VersionHistoryWidget allContentVersionsView = contentDetailsPanel.openVersionHistory();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
 
         and: "navigated to the wizard-tab again"
         contentBrowsePanel.switchToBrowserTabByTitle( ITEM_SET_WITH_DATA.getDisplayName() );

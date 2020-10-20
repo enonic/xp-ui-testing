@@ -3,7 +3,7 @@ package com.enonic.wem.uitest.content.details_panel
 import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.DuplicateContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.PropertiesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -133,8 +133,8 @@ class DetailsPanel_OwnerName_Spec
         contentBrowsePanel.openContentDetailsPanel();
 
         when: "the first 'version history' item has been expanded"
-        AllContentVersionsView allContentVersionsView = contentBrowsePanel.getContentDetailsPanel().openVersionHistory();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
+        VersionHistoryWidget allContentVersionsView = contentBrowsePanel.getContentDetailsPanel().openVersionHistory();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 0 );
 
 
         then: "expected 'owner name' should be displayed"

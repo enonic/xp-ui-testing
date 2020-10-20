@@ -3,7 +3,6 @@ package com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -107,7 +106,7 @@ public class ContentDetailsPanel
         }
     }
 
-    public AllContentVersionsView openVersionHistory()
+    public VersionHistoryWidget openVersionHistory()
     {
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( VERSION_HISTORY_OPTION_ITEM ) )
@@ -124,7 +123,7 @@ public class ContentDetailsPanel
         }
         getDisplayedElement( By.xpath( VERSION_HISTORY_OPTION_ITEM ) ).click();
         sleep( 700 );
-        AllContentVersionsView versions = new AllContentVersionsView( getSession() );
+        VersionHistoryWidget versions = new VersionHistoryWidget( getSession() );
         versions.waitUntilLoaded();
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return versions;

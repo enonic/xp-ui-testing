@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
@@ -35,7 +35,7 @@ class Restore_DateTime_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and:"version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         then: "number of versions should be increased by one"
         allContentVersionsView.getAllVersions().size() == 3;
@@ -45,12 +45,12 @@ class Restore_DateTime_Spec
     {
         given: "existing content with several versions"
         findAndSelectContent( DATE_TIME_CONTENT.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         when: "the previous version is restored"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         saveScreenshot( "date_time_restored" );
 
         and: "content is opened"

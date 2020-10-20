@@ -5,7 +5,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentUtils
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.*
@@ -18,7 +18,6 @@ import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.data.ValueFactory
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -640,10 +639,10 @@ class Base_InputFields_Occurrences
         return contentBrowsePanel;
     }
 
-    protected AllContentVersionsView openVersionPanel()
+    protected VersionHistoryWidget openVersionPanel()
     {
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.openContentDetailsPanel();
-        AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
+        VersionHistoryWidget contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         return contentItemVersionsPanel;
     }
 

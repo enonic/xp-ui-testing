@@ -4,7 +4,7 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TimeUtils
 import com.enonic.autotests.vo.contentmanager.Content
@@ -130,7 +130,7 @@ class ContentWizard_Publish_Inputs_Spec
 
         when: "Versions panel has been opened"
         ContentBrowsePanel contentBrowsePanel = new ContentBrowsePanel(getSession(  ));
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         LinkedList<ContentVersion> allVersions = allContentVersionsView.getAllVersions();
 
         then: "status gets 'Published(Pending)'"

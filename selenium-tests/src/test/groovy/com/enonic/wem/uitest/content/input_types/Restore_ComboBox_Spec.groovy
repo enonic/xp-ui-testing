@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
@@ -29,7 +29,7 @@ class Restore_ComboBox_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         then: "number of versions should increase by one"
         allContentVersionsView.getAllVersions().size() == INITIAL_NUMBER_OF_VERSIONS + 1;
@@ -43,12 +43,12 @@ class Restore_ComboBox_Spec
         wizard.switchToBrowsePanelTab();
 
         and: "version history panel is expanded"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         when: "valid version with two selected options has been reverted"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         sleep(1000);
 
         then: "content should be displayed as valid in the grid"
@@ -84,12 +84,12 @@ class Restore_ComboBox_Spec
         given: "existing content with 3 versions opened"
         ContentWizardPanel wizard = findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
-        when: "not valid version of content is restored, one required image missed"
+        when: "not valid version is reverted, one required image is missed"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         saveScreenshot( "combobox_not_valid_version" );
 
         then: "the content should be displayed as invalid in the grid"

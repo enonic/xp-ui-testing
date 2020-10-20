@@ -6,7 +6,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilter
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseItemPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentItemPreviewPanel
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentDetailsPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.DependenciesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -527,12 +527,12 @@ class BaseContentSpec
         return content;
     }
 
-    protected AllContentVersionsView openVersionPanel()
+    protected VersionHistoryWidget openVersionPanel()
     {
         contentBrowsePanel.openContentDetailsPanel();
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         ContentDetailsPanel contentDetailsPanel = contentBrowsePanel.getContentDetailsPanel();
-        AllContentVersionsView contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
+        VersionHistoryWidget contentItemVersionsPanel = contentDetailsPanel.openVersionHistory();
         contentItemVersionsPanel.waitUntilLoaded();
         return contentItemVersionsPanel;
     }

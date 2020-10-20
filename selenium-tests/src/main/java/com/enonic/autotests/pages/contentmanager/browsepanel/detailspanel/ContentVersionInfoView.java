@@ -23,14 +23,14 @@ public class ContentVersionInfoView
 
     private String REVERT_BUTTON = EXPANDED_VERSION_ITEM + "//button[child::span[text()='Revert']]";
 
-    private String OWNER_NAME_VALUE = VERSION_ITEM + "//div[contains(@id,'ContentVersionViewer')]" + P_NAME;
+    private String OWNER_NAME_VALUE = VERSION_ITEM + "//div[contains(@id,'VersionHistoryListItemViewer')]" + P_NAME;
 
     public ContentVersionInfoView( final TestSession session )
     {
         super( session );
     }
 
-    public void doRestoreVersion()
+    public void doRevertVersion()
     {
         waitUntilVisibleNoException( By.xpath( REVERT_BUTTON ), EXPLICIT_NORMAL );
         getDisplayedElement( By.xpath( REVERT_BUTTON ) ).click();
@@ -48,23 +48,9 @@ public class ContentVersionInfoView
         List<WebElement> allOwners = findElements( By.xpath( OWNER_NAME_VALUE ) );
         if ( allOwners.size() == 0 )
         {
-            throw new TestFrameworkException( "owner name was not found! " + index );
+            throw new TestFrameworkException( "Versions widget: owner name was not found! " + index );
         }
         return allOwners.get( index ).getText();
     }
 
-    //New, Published....
-    public String getContentStatus( int index )
-    {
-        List<WebElement> items = findElements( By.xpath( VERSION_ITEM ) );
-        List<WebElement> status = items.get( index ).findElements( By.xpath( "./div[contains(@class,'status')]" ) );
-        if ( status.size() == 0 )
-        {
-            return "";
-        }
-        else
-        {
-            return status.get( 0 ).getText();
-        }
-    }
 }

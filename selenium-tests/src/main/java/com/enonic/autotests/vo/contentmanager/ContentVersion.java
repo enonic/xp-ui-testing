@@ -7,12 +7,12 @@ public class ContentVersion
 
     private String modified;
 
-    private String status;
+    private String action;
 
     public ContentVersion( Builder builder )
     {
         this.modifier = builder.modifier;
-        this.status = builder.status;
+        this.action = builder.action;
         this.modified = builder.modified;
     }
 
@@ -26,9 +26,9 @@ public class ContentVersion
         return modified;
     }
 
-    public String getStatus()
+    public String getAction()
     {
-        return status;
+        return action;
     }
 
     public static class Builder
@@ -37,7 +37,7 @@ public class ContentVersion
 
         private String modified;
 
-        private String status;
+        private String action;
 
         Builder()
         {
@@ -46,7 +46,7 @@ public class ContentVersion
         public Builder( final ContentVersion contentVersion )
         {
             this.modifier = contentVersion.getModifier();
-            this.status = contentVersion.getStatus();
+            this.action = contentVersion.getAction();
             this.modified = contentVersion.getModified();
         }
 
@@ -63,9 +63,9 @@ public class ContentVersion
         }
 
 
-        public Builder status( final String status )
+        public Builder action( final String action )
         {
-            this.status = status;
+            this.action = action;
             return this;
         }
 

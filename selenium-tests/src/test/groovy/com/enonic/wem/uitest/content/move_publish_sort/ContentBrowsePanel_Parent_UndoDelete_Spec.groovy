@@ -3,7 +3,7 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
 import com.enonic.wem.uitest.content.BaseContentSpec
@@ -21,7 +21,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
     @Shared
     Content CHILD_FOLDER
 
-    def "GIVEN existing parent folder with a child WHEN the parent has been selected AND 'Delete' button has been pressed THEN confirmation dialog with input for number of contents to delete should be displayed"()
+    def "WHEN existing parent folder with a child has been 'Marked for deletion' THEN parent and child folder should be 'Marked for deletion'"()
     {
         given: "parent folder has been added"
         PARENT_FOLDER = buildFolderContent( "folder", "undo delete parent" );
@@ -47,22 +47,21 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
             ContentStatus.MARKED_FOR_DELETION.getValue();
     }
     // verifies bug - https://github.com/enonic/app-contentstudio/issues/1080
-    def "GIVEN existing published then 'deleted' folder is selected WHEN versions widget has been opened THEN the latest version should be Deleted"()
+    def "GIVEN existing 'Marked for deletion' folder is selected WHEN versions widget has been opened THEN Marked for deletion should be in Versions Widget"()
     {
         given: "published then 'deleted' folder is selected "
         findAndSelectContent( PARENT_FOLDER.getName() );
 
         when:
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget versionHistoryWidget = openVersionPanel();
         saveScreenshot( "version_panel_deleted" )
-        LinkedList<ContentVersion> contentVersions = allContentVersionsView.getAllVersions();
+        LinkedList<ContentVersion> contentVersions = versionHistoryWidget.getAllVersions();
 
-        then: "the latest version has 'deleted' badge"
-        contentVersions.poll().getStatus().equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
-
+        then: "'Marked for deletion' status should be in the widget"
+        versionHistoryWidget.getContentStatus().equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
     }
 
-    def "GIVEN existing 'deleted' folder WHEN the content has been selected THEN Duplicate, Move, Edit buttons should not be displayed"()
+    def "WHEN existing 'Marked for deletion' folder has been selected THEN Duplicate, Move, Edit buttons should not be displayed"()
     {
         when: "existing 'deleted' folder is selected"
         findAndSelectContent( PARENT_FOLDER.getName() );
@@ -83,7 +82,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
 
     def "GIVEN parent 'Deleted' folder is selected WHEN 'Undo delete' button has been pressed THEN both folders get 'Published'"()
     {
-        given: "parent folder with a child are 'Deleted' AND parent is selected"
+        given: "parent folder with a child are 'Marked for deletion' AND parent folder is selected"
         findAndSelectContent( PARENT_FOLDER.getName() );
 
         when: "'Undo delete' button has been pressed"
@@ -103,7 +102,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
         findAndSelectContent( CHILD_FOLDER.getName() ).getContentStatus( CHILD_FOLDER.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
-    def "GIVEN parent folder and child are 'Deleted' WHEN child folder has been selected and 'Undo delete' pressed THEN both folders are getting 'Published'"()
+    def "GIVEN parent folder and child are 'Deleted' WHEN child folder has been 'Undo deleted' THEN both folders get 'Published'"()
     {
         given: "both contents are published"
         findAndSelectContent( PARENT_FOLDER.getName() );

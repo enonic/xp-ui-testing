@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.details_panel
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
@@ -34,7 +34,7 @@ class Restore_Version_Folder_Spec
         addContent( FOLDER_CONTENT );
         findAndSelectContent( FOLDER_CONTENT.getName() );
         and: "version panel for the content is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_before_changing_dname" );
 
@@ -53,12 +53,12 @@ class Restore_Version_Folder_Spec
         findAndSelectContent( FOLDER_CONTENT.getName() );
 
         and: "version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
-        when: "previous version has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
-        saveScreenshot( "folder_display_name_restored" );
+        when: "previous version has been reverted"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
+        saveScreenshot( "folder_display_name_reverted" );
 
         then: "content with original display name should be present"
         filterPanel.typeSearchText( INITIAL_DISPLAY_NAME );
@@ -77,11 +77,11 @@ class Restore_Version_Folder_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
-        when: "the folder has been selected AND the previous version has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        when: "the folder has been selected AND the previous version has been reverted"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
 
         and: "folder is opened"
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
@@ -107,7 +107,7 @@ class Restore_Version_Folder_Spec
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "version panel for the content is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         int numberOfVersions = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_number_permissions_updated" );
 

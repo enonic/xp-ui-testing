@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.details_panel
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
@@ -22,7 +22,7 @@ class Restore_Version_Zoom_Image_Spec
         findAndSelectContent( HAND_IMAGE_NAME );
 
         and: "versions panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
 
         and: "the image is opened in the wizard"
@@ -54,11 +54,11 @@ class Restore_Version_Zoom_Image_Spec
         findAndSelectContent( HAND_IMAGE_NAME );
 
         and: "version panel opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
-        when: "version with original image has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        when: "version with original image has been reverted"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
 
         and: "image is opened in the wizard"
         contentBrowsePanel.clickToolbarEdit();
@@ -75,11 +75,11 @@ class Restore_Version_Zoom_Image_Spec
         findAndSelectContent( HAND_IMAGE_NAME );
 
         and: "version panel opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         when: "version with zoomed image is restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         saveScreenshot( "zoomed_image_reverted_to_original" );
 
         and: "image is opened in the wizard"
@@ -100,11 +100,11 @@ class Restore_Version_Zoom_Image_Spec
         wizard.switchToBrowsePanelTab();
 
         when: "version panel opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         and: "original version is restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         saveScreenshot( "image_reverted_to_zoomed" );
 
         and: "wizard-tab activated again"
@@ -124,11 +124,11 @@ class Restore_Version_Zoom_Image_Spec
         wizard.switchToBrowsePanelTab();
 
         when: "version panel opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         and: "version with zoomed image is restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         saveScreenshot( "image_reverted_to_zoomed" );
 
         and: "wizard-tab activated again"

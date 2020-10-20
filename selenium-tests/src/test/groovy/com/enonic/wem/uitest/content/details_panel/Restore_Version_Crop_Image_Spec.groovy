@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.details_panel
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
@@ -28,7 +28,7 @@ class Restore_Version_Crop_Image_Spec
         findAndSelectContent( IMPORTED_MAN_IMAGE );
 
         and: "version history panel has been opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
 
         and: "image is opened"
@@ -58,11 +58,11 @@ class Restore_Version_Crop_Image_Spec
         findAndSelectContent( IMPORTED_MAN_IMAGE );
 
         and: "version panel opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         when: "version with original image has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
 
         and: "the image is opened"
         contentBrowsePanel.clickToolbarEdit();
@@ -84,11 +84,11 @@ class Restore_Version_Crop_Image_Spec
         findAndSelectContent( IMPORTED_MAN_IMAGE );
 
         and: "version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         when: "version of image with cropped size has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
 
         and: "the image is opened"
         contentBrowsePanel.clickToolbarEdit();
@@ -113,11 +113,11 @@ class Restore_Version_Crop_Image_Spec
         wizard.switchToBrowsePanelTab();
 
         when: "version panel has been opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
-        and: "original version is restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 3 );
-        versionItem.doRestoreVersion();
+        and: "original version is reverted"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 3 );
+        versionItem.doRevertVersion();
         saveScreenshot( "image_reverted_to_original" );
 
         and: "switch to the wizard-tab again"
@@ -135,11 +135,11 @@ class Restore_Version_Crop_Image_Spec
         wizard.switchToBrowsePanelTab();
 
         when: "version panel has been opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
-        and: "cropped version has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 3 );
-        versionItem.doRestoreVersion(  );
+        and: "cropped version has been reverted"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 3 );
+        versionItem.doRevertVersion();
         saveScreenshot( "cropped_version_reverted2" );
 
         and: "switch to the wizard-tab again"

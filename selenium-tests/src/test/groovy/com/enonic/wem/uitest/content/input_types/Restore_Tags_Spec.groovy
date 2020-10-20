@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TagFormViewPanel
@@ -29,7 +29,7 @@ class Restore_Tags_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and:
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         saveScreenshot( "tag_valid_version_browse_panel" );
 
         then: "number of versions increased by one"
@@ -41,12 +41,12 @@ class Restore_Tags_Spec
         given: "tag-content (one required tag is missed)"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         when: "version with 2 selected tags have been restored"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
 
         then: "number of version is increased"
         saveScreenshot( "tag_valid_version" );
@@ -62,12 +62,12 @@ class Restore_Tags_Spec
         given: "current version of content is valid"
         ContentWizardPanel wizard = findAndSelectContent( TAG_CONTENT.getName() ).clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
-        when: "version with one selected tag has been restored"
+        when: "version with one selected tag has been reverted"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
 
         then: "number of version is increased to 5"
         allContentVersionsView.getAllVersions().size() == 5;

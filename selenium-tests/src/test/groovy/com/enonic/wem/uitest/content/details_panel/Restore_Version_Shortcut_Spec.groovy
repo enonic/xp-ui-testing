@@ -1,12 +1,11 @@
 package com.enonic.wem.uitest.content.details_panel
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ShortcutFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -37,7 +36,7 @@ class Restore_Version_Shortcut_Spec
         SHORTCUT_CONTENT = buildShortcutWithSettingsAndTarget( "shortcut", null, INITIAL_DISPLAY_NAME, TARGET_1, settings );
         addContent( SHORTCUT_CONTENT );
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_before_changing_shortcut" );
 
@@ -56,11 +55,11 @@ class Restore_Version_Shortcut_Spec
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
 
         and: "version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
-        when: "previous version has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        when: "previous version has been reverted"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         saveScreenshot( "shortcut_display_name_restored" );
 
         then: "correct display name appears in the grid"
@@ -72,7 +71,7 @@ class Restore_Version_Shortcut_Spec
     {
         given: "existing shortcut is opened"
         findAndSelectContent( SHORTCUT_CONTENT.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "versions_before_changing_target" );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
@@ -95,11 +94,11 @@ class Restore_Version_Shortcut_Spec
         wizard.switchToBrowsePanelTab();
 
         and: "version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
-        when: "previous version has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion( );
+        when: "previous version has been reverted"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         saveScreenshot( "shortcut_target_restored" );
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );

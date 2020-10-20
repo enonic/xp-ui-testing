@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content.details_panel
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.EditPermissionsDialog
@@ -35,7 +35,7 @@ class Restore_Version_Site_Spec
         SITE = buildSiteWithAppsAndSettings( INITIAL_DISPLAY_NAME, settings, MY_FIRST_APP );
         addContent( SITE );
         findAndSelectContent( SITE.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         int numberOfVersionsBefore = allContentVersionsView.getAllVersions().size();
         saveScreenshot( "site_versions_1" );
 
@@ -58,11 +58,11 @@ class Restore_Version_Site_Spec
         findAndSelectContent( SITE.getName() );
 
         and: "version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         when: "the previous version has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         saveScreenshot( "site_versions_reverted1" );
 
         then: "previous display name should appear in the grid"
@@ -84,9 +84,9 @@ class Restore_Version_Site_Spec
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "the previous version has been restored"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         and:
         modalDialog = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnEditPermissionsButton();
 
@@ -101,11 +101,11 @@ class Restore_Version_Site_Spec
     {
         given: "the site is selected AND version panel is opened"
         findAndSelectContent( SITE.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
 
         when: "the previous version has been restored"
-        versionItem.doRestoreVersion();
+        versionItem.doRevertVersion();
 
         and: "navigate to the security tab"
         EditPermissionsDialog editPermissionsDialog = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab().clickOnEditPermissionsButton();
@@ -119,7 +119,7 @@ class Restore_Version_Site_Spec
     {
         given: "existing site with selected application opened"
         findAndSelectContent( SITE.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         int before = allContentVersionsView.getAllVersions().size();
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel siteFormViewPanel = new SiteFormViewPanel( getSession() );
@@ -147,11 +147,11 @@ class Restore_Version_Site_Spec
         wizard.switchToBrowsePanelTab();
 
         and: "version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
-        when: "version with one application has been restored restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion();
+        when: "version with single application has been reverted"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         saveScreenshot( "version_site_application_restored" );
 
@@ -166,7 +166,7 @@ class Restore_Version_Site_Spec
     {
         given: "existing site with selected application is opened"
         findAndSelectContent( SITE.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         int before = allContentVersionsView.getAllVersions().size();
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         PageTemplateFormViewPanel pageTemplateFormViewPanel = new PageTemplateFormViewPanel( getSession() );
@@ -189,13 +189,13 @@ class Restore_Version_Site_Spec
     {
         given: "existing site with selected application opened"
         findAndSelectContent( SITE.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
 
-        when: "version of the site in which the controller was not selected has been restored"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 3 );
-        versionItem.doRestoreVersion();
+        when: "version of the site in which the controller was not selected has been reverted"
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 3 );
+        versionItem.doRevertVersion();
         sleep( 300 );
         contentBrowsePanel.switchToContentWizardTabBySelectedContent();
         sleep( 700 );

@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
@@ -32,7 +32,7 @@ class Restore_ImageSelector_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         saveScreenshot( "imgselector_number_versions_should_be_3" );
 
         then: "number of versions should be increased by one"
@@ -45,12 +45,12 @@ class Restore_ImageSelector_Spec
         ContentWizardPanel wizard = findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         and: "AppHome button has been pressed"
         wizard.switchToBrowsePanelTab();
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         when: "valid version with two images is reverted"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         saveScreenshot( "image_selector_valid_version" );
 
         then: "the content is valid in the grid as well"
@@ -79,12 +79,12 @@ class Restore_ImageSelector_Spec
         given: "content with two images is selected"
         ContentWizardPanel wizard = findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();
         wizard.switchToBrowsePanelTab();
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         when: "version with one images has been reverted"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         saveScreenshot( "image_selector_not_valid_version" );
 
         then: "the content should be valid in the grid"
@@ -95,7 +95,7 @@ class Restore_ImageSelector_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN version with one image is reverted WHEN content has been opened THEN one image should be present in the wizard"()
+    def "GIVEN version with single image is reverted WHEN content has been opened THEN one image should be present in the wizard"()
     {
         when: "content has been opened"
         findAndSelectContent( IMAGE_SELECTOR_CONTENT.getName() ).clickToolbarEdit();

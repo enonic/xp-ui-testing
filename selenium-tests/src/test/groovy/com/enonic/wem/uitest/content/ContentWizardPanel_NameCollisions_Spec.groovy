@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -18,8 +19,9 @@ class ContentWizardPanel_NameCollisions_Spec
         addContent( TEST_FOLDER );
 
         when:
-        String warning = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_FOLDER.getContentTypeName() ).typeData(
-            TEST_FOLDER ).save().waitNotificationWarning( Application.EXPLICIT_NORMAL );
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_FOLDER.getContentTypeName() ).typeData(
+            TEST_FOLDER );
+        String warning = wizard.save().waitNotificationWarning( Application.EXPLICIT_NORMAL );
         saveScreenshot( "test_save_content_name_in_use" )
         then:
         warning == String.format( Application.CONTENT_ALREADY_IN_USE_WARNING, TEST_FOLDER.getName() );

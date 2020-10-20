@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateFormViewPanel
@@ -37,23 +37,23 @@ class Restore_Date_Spec
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
 
         and: "version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         then: "number of versions should be increased by one"
         allContentVersionsView.getAllVersions().size() == 3;
     }
 
-    def "GIVEN existing date-content with 3 versions WHEN previous version is restored THEN correct date should be displayed in the wizard"()
+    def "GIVEN existing date-content with 3 versions WHEN previous version is reverted THEN correct date should be displayed in the wizard"()
     {
         given: "content with a changed date"
         findAndSelectContent( DATE_CONTENT.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
-        when: "the previous version is restored"
+        when: "the previous version is reverted"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
-        saveScreenshot( "date_restored" );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
+        saveScreenshot( "date_reverted" );
 
         and: "content is opened"
         contentBrowsePanel.clickToolbarEdit();

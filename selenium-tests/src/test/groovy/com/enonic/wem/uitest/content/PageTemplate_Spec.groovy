@@ -1,13 +1,12 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
-import com.enonic.xp.schema.content.ContentTypeName
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -147,11 +146,11 @@ class PageTemplate_Spec
         wizard.switchToBrowsePanelTab();
 
         when: "version panel is opened"
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
         and: "the version with selected 'support' option has been expanded"
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        and: "the version is restored"
-        versionItem.doRestoreVersion(  );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        and: "the version is reverted"
+        versionItem.doRevertVersion();
         contentBrowsePanel.switchToBrowserTabByTitle( TEST_TEMPLATE.getDisplayName() );
 
         then: "'support' option filter should be displayed"

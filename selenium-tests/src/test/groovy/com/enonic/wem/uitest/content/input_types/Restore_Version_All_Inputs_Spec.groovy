@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.*
@@ -8,7 +8,6 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
-import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -70,7 +69,7 @@ class Restore_Version_All_Inputs_Spec
         when: "content has been selected and version history opened"
         contentBrowsePanel.doClearSelection();
         findAndSelectContent( ALL_INPUTS_CONTENT.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         then: "2 versions should be present on the widget by default(the content is just created)"
         allContentVersionsView.getAllVersions().size() == 2;
@@ -92,7 +91,7 @@ class Restore_Version_All_Inputs_Spec
         formView.getSingleSelectorRadioFormView().selectOption( RADIO_OPTION_V2 );
         formView.getTextLineFormViewPanel().typeText( TEXT_LINE_V2 );
         wizard.save().closeBrowserTab().switchToBrowsePanelTab();
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         then: "total amount of versions is increased"
         allContentVersionsView.getAllVersions().size() == 3;
@@ -102,12 +101,12 @@ class Restore_Version_All_Inputs_Spec
     {
         given: "existing content with 3 versions"
         findAndSelectContent( ALL_INPUTS_CONTENT.getName() );
-        AllContentVersionsView allContentVersionsView = openVersionPanel();
+        VersionHistoryWidget allContentVersionsView = openVersionPanel();
 
         when: "the previous version has been restored"
         allContentVersionsView.getAllVersions();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
-        versionItem.doRestoreVersion(  );
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
+        versionItem.doRevertVersion();
         saveScreenshot( "all_inputs_restored" );
 
         and: "content is reopened"

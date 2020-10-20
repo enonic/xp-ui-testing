@@ -1,14 +1,11 @@
 package com.enonic.wem.uitest.content.details_panel
 
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
 import spock.lang.Stepwise
-
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Stepwise
 class DetailsPanel_Extended_VersionHistory_Spec
@@ -16,55 +13,41 @@ class DetailsPanel_Extended_VersionHistory_Spec
 {
 
     @Shared
-    Content folderContent;
+    Content FOLDER;
 
     @Shared
     String NEW_DISPLAY_NAME = "version-info-changed"
 
-    def "GIVEN existing content is selected AND 'Version History' is opened WHEN latest 'version item' has been clicked THEN 'version info' should appear"()
+    def "GIVEN existing content is selected AND 'Version History' is opened WHEN current 'version item' has been clicked THEN the item should not be expanded"()
     {
         given: "new folder has been added"
-        folderContent = buildFolderContent( "version_info", "version_info_test" );
-        addContent( folderContent );
+        FOLDER = buildFolderContent( "version_info", "version_info_test" );
+        addContent( FOLDER );
         and: "the content is selected and details panel opened"
-        findAndSelectContent( folderContent.getName() );
+        findAndSelectContent( FOLDER.getName() );
         contentBrowsePanel.openContentDetailsPanel();
 
         when: "latest 'version item' has been clicked"
-        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
-        allContentVersionsView.clickOnVersionAndExpand( 0 );
+        VersionHistoryWidget allContentVersionsView = contentDetailsPanel.openVersionHistory();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 0 );
 
         then: "'version item' should be expanded or active"
-        allContentVersionsView.isVersionInfoExpanded( 0 );
-    }
-
-    def "GIVEN existing content is selected AND 'Version History' is opened WHEN latest 'version item' has been expanded THEN expected 'version info' should be displayed"()
-    {
-        given: "existing content is selected and version history is opened"
-        findAndSelectContent( folderContent.getName() );
-        contentBrowsePanel.openContentDetailsPanel();
-
-        when: "'Version History' option opened and first item expanded"
-        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 0 );
-        saveScreenshot( "version-history-expanded" );
-
-        then: "Super User should be owner in the vew"
-        versionItem.getOwnerName( 0 ) == "by Super User";
-
-        and: "'this version should be active"
+        !allContentVersionsView.isVersionInfoExpanded( 0 );
+        and: "this version should be active"
         allContentVersionsView.isVersionActive( 0 );
+        and:
+        versionItem.getOwnerName( 0 ) == "by Super User";
     }
 
-    def "GIVEN existing content is selected and version history is opened WHEN first version item has been expanded THEN version-info should be expanded AND Restore button gets visible"()
+    def "GIVEN existing content is selected and version history is opened WHEN penultimate version item has been expanded THEN version-info should be expanded AND Restore button gets visible"()
     {
         given: "existing content is selected and version history opened"
-        findAndSelectContent( folderContent.getName() );
+        findAndSelectContent( FOLDER.getName() );
         contentBrowsePanel.openContentDetailsPanel();
 
         when: "'Version History' option opened and first item expanded"
-        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+        VersionHistoryWidget allContentVersionsView = contentDetailsPanel.openVersionHistory();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
         saveScreenshot( "version-history-expanded-no-display-name" );
 
         then: "two versions should be displayed on the panel"
@@ -77,21 +60,21 @@ class DetailsPanel_Extended_VersionHistory_Spec
         versionItem.isRevertButtonDisplayed();
     }
 
-    def "GIVEN folder is selected AND a version info is expanded  WHEN this version item has been clicked THEN 'version item' gets collapsed"()
+    def "GIVEN folder is selected AND a version info is expanded WHEN this version item has been clicked THEN 'version item' gets collapsed"()
     {
         given: "content is selected and version history is opened"
-        findAndSelectContent( folderContent.getName() );
+        findAndSelectContent( FOLDER.getName() );
         contentBrowsePanel.openContentDetailsPanel();
 
-        and: "version history panel has been opened "
-        AllContentVersionsView allContentVersionsView = contentDetailsPanel.openVersionHistory();
-        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionAndExpand( 1 );
+        and: "version history panel has been expanded"
+        VersionHistoryWidget allContentVersionsView = contentDetailsPanel.openVersionHistory();
+        ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
 
-        when: "'close version info' button was clicked"
-        allContentVersionsView.clickOnVersionAndCloseView( 1 );
+        when: "the version item has been clicked"
+        allContentVersionsView.clickOnVersionItem( 1 );
         saveScreenshot( "version-history-item-collapsed" );
 
-        then: "'Revert' button gets  hidden"
+        then: "'Revert' button gets hidden"
         !versionItem.isRevertButtonDisplayed();
 
         and: "version item gets collapsed"

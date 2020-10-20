@@ -1,7 +1,5 @@
 package com.enonic.autotests.pages.form.liveedit;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AllContentVersionsView;
+import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget;
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentInfoWidget;
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.DependenciesWidgetItemView;
 import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageEmulatorPanel;
@@ -92,7 +90,7 @@ public class WizardContextPanel
         return pageEmulatorPanel;
     }
 
-    public AllContentVersionsView openVersionHistory()
+    public VersionHistoryWidget openVersionHistory()
     {
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         widgetSelectorDropDownHandler.click();
@@ -104,7 +102,7 @@ public class WizardContextPanel
         }
         getDisplayedElement( By.xpath( VERSION_HISTORY_OPTION_ITEM ) ).click();
         sleep( 500 );
-        AllContentVersionsView versions = new AllContentVersionsView( getSession() );
+        VersionHistoryWidget versions = new VersionHistoryWidget( getSession() );
         versions.waitUntilLoaded();
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return versions;
