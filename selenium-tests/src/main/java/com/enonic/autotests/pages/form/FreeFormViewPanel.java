@@ -28,6 +28,13 @@ public class FreeFormViewPanel
     private final String IMAGE_RADIO_BUTTON = ITEM_SET +
         "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'RadioButton') and descendant::label[text()='image']]";
 
+    private final String ITEM_SET_2 = ITEM_SET + "//div[contains(@id,'FormOccurrenceDraggableLabel') and contains(.,'height')]";
+
+    private final String ITEM_SET_3 = ITEM_SET + "//div[contains(@id,'FormOccurrenceDraggableLabel') and contains(.,'element type')]";
+
+    private final String ITEM_SET_4 = ITEM_SET + "//div[contains(@id,'FormOccurrenceDraggableLabel') and contains(.,'input type')]";
+
+
 
     /**
      * The constructor.
@@ -54,6 +61,7 @@ public class FreeFormViewPanel
 
     public FreeFormViewPanel clickOnButtonRadioButton()
     {
+        buildActions().moveToElement( this.findElement( By.xpath( ITEM_SET_2 ) ) ).build().perform();
         getDisplayedElement( By.xpath( BUTTON_RADIO_BUTTON ) ).click();
         sleep( 1000 );
         return this;
@@ -80,6 +88,26 @@ public class FreeFormViewPanel
         loaderComboBox.selectOption( imageName );
         sleep( 400 );
         return this;
+    }
+
+    //Expand/collapse the form:
+    public void clickOnForm()
+    {
+        this.findElement( By.xpath( ITEM_SET ) ).click();
+        sleep( 400 );
+    }
+
+    public void expandItemSetRadio()
+    {
+        this.findElement( By.xpath( ITEM_SET_2 ) ).click();
+        sleep( 400 );
+        this.findElement( By.xpath( ITEM_SET_3 ) ).click();
+    }
+
+    public void expandItemSetRadio2()
+    {
+        this.findElement( By.xpath( ITEM_SET_4 ) ).click();
+        sleep( 400 );
     }
 }
 

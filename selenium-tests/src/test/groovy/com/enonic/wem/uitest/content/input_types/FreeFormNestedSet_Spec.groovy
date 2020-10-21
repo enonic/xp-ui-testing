@@ -52,24 +52,28 @@ class FreeFormNestedSet_Spec
         FreeFormViewPanel freeForm = new FreeFormViewPanel( getSession() );
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
+        freeForm.clickOnForm();
+        freeForm.expandItemSetRadio();
         freeForm.clickOnButtonRadioButton();
 
         and: "the content has been saved"
         wizard.save();
         saveScreenshot( "freeform_should_be_valid1" );
 
-        then: "red icon should not be displayed on  the wizard page"
+        then: "red icon should not be displayed in the wizard page"
         !wizard.isContentInvalid();
     }
 
 
-    def "GIVEN existing not valid 'FreeForm' content is opened WHEN required inputs are not filled THEN red icon should be present on the wizard page"()
+    def "GIVEN existing not valid 'FreeForm' content is opened WHEN required inputs has been cleared THEN red icon gets visible in the wizard page"()
     {
         given: "wizard for FreeForm is opened"
         ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET_CONTENT.getName() ) clickToolbarEdit();
         FreeFormViewPanel freeForm = new FreeFormViewPanel( getSession() );
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
+        freeForm.clickOnForm();
+        freeForm.expandItemSetRadio();
         freeForm.clickOnInputRadioButton();
         and: "the content has been saved"
         wizard.save();
@@ -87,13 +91,15 @@ class FreeFormNestedSet_Spec
         then: "the content should be displayed as invalid, because required inputs are not filled"
         contentBrowsePanel.isContentInvalid( SET_IN_SET_CONTENT.getName() )
     }
-    //OptionSet -Error appears when 'upload' button in the ImageSelector was pressed #4813
-    //insert an image in the nested set.
+
     def "GIVEN existing not valid 'FreeForm' content is opened AND option with ImageSelector is selected WHEN image has been selected THEN red icon should should not be present on the wizard page"()
     {
         given: "wizard for FreeForm is opened"
         ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET_CONTENT.getName() ) clickToolbarEdit();
         FreeFormViewPanel freeForm = new FreeFormViewPanel( getSession() );
+        freeForm.clickOnForm();
+        freeForm.expandItemSetRadio();
+        freeForm.expandItemSetRadio2();
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
         freeForm.clickOnInputRadioButton().clickOnImageRadioButton().selectImage( "nord" );

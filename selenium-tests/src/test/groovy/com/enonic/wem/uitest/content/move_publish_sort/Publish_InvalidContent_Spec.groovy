@@ -9,25 +9,24 @@ import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
-
 @Stepwise
 class Publish_InvalidContent_Spec
     extends BaseContentSpec
 {
     @Shared
-    Content invalidFolder;
+    Content FOLDER;
 
     def "GIVEN wizard for new folder is opened WHEN display name is empty  AND 'Save' button has been pressed THEN 'Publish' button should be disabled AND red icon gets visible in the wizard"()
     {
         given: "wizard for new folder is opened"
-        invalidFolder = buildFolderWithEmptyDisplayNameContent( "not_valid" );
+        FOLDER = buildFolderWithEmptyDisplayNameContent( "not_valid" );
 
         when: "display name is empty AND 'Save' button has been pressed"
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( invalidFolder.getContentTypeName() ).typeData(
-            invalidFolder ).save();
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( "Folder" ).typeData( FOLDER );
+        wizard.save();
 
         then: "'Publish...' menu item should be disabled"
-        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
+        !wizard.showPublishMenu().isPublishMenuItemEnabled();
 
         and: "red icon should be displayed on the wizard page"
         wizard.isContentInvalid();
@@ -36,11 +35,11 @@ class Publish_InvalidContent_Spec
     def "GIVEN existing folder (displayName is empty) WHEN the content has been selected THEN 'CREATE ISSUE' button on the grid-toolbar should be displayed"()
     {
         given: "existing content without a displayName"
-        filterPanel.typeSearchText( invalidFolder.getName() );
+        filterPanel.typeSearchText( FOLDER.getName() );
         saveScreenshot( "publish_invalid_folder" )
 
         when: "the content has been selected"
-        contentBrowsePanel.clickCheckboxAndSelectRow( invalidFolder.getName() );
+        contentBrowsePanel.clickCheckboxAndSelectRow( FOLDER.getName() );
 
         then: "'Create Issue' button on the grid-toolbar should be displayed"
         contentBrowsePanel.isCreateTaskButtonDisplayed();
@@ -50,18 +49,19 @@ class Publish_InvalidContent_Spec
     {
         setup: "parent folder has been added"
         Content parentFolder = buildFolderContent( "folder", "publish not valid content" );
+        Content childContent = buildFolderContentWithParent( "not_valid", null, parentFolder.getName() );
         addReadyContent( parentFolder );
 
         and: "not valid child folder has been added"
         findAndSelectContent( parentFolder.getName() );
-        Content childContent = buildFolderContentWithParent( "not_valid", null, parentFolder.getName() );
-        ContentWizardPanel wizardPanel= contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).typeData( childContent );
+        ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType(
+            childContent.getContentTypeName() ).typeData( childContent );
         wizardPanel.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "parent content has been selected and 'Publish' button pressed"
         ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
             Application.EXPLICIT_NORMAL );
-        and: "'include child' icon is clicked"
+        and: "'include child' icon has been clicked"
         contentPublishDialog.includeChildren( true );
 
         then: "'Publish Now' button in 'Content publish' dialog should be disabled"
