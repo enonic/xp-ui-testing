@@ -92,7 +92,7 @@ class FreeFormNestedSet_Spec
         contentBrowsePanel.isContentInvalid( SET_IN_SET_CONTENT.getName() )
     }
 
-    def "GIVEN existing not valid 'FreeForm' content is opened AND option with ImageSelector is selected WHEN image has been selected THEN red icon should should not be present on the wizard page"()
+    def "GIVEN existing not valid 'FreeForm' content is opened AND option with ImageSelector is selected WHEN image has been selected THEN red icon should should not be present in the wizard page"()
     {
         given: "wizard for FreeForm is opened"
         ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET_CONTENT.getName() ) clickToolbarEdit();
@@ -117,8 +117,7 @@ class FreeFormNestedSet_Spec
             name( NameHelper.uniqueName( "freeform" ) ).
             displayName( "freeform content" ).
             parent( ContentPath.from( SITE_NAME ) ).
-            contentType( ALL_CONTENT_TYPES_APP_NAME + "freeform" ).
-            build();
+            contentType( ALL_CONTENT_TYPES_APP_NAME + "freeform" ).build();
         return tinyMceContent;
     }
 }
