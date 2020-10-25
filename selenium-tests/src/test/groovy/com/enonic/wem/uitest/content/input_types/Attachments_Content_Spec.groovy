@@ -14,13 +14,10 @@ class Attachments_Content_Spec
     extends Base_InputFields_Occurrences
 {
 
-    def "GIVEN creating of content with the required 'attachment' WHEN wizard is opened THEN Attachment-uploader is present AND 'Upload' button is displayed"()
+    def "WHEN new wizard required 'attachment' is opened THEN Attachment-uploader with 'Upload' button should be displayed"()
     {
-        given: "creating of content with the required 'attachment'"
-        Content dateContent = buildAttachment1_1_Content( NORD_IMAGE_NAME );
-
-        when: "wizard is opened"
-        selectSitePressNew( dateContent.getContentTypeName() );
+        when: "new wizard with required 'attachment' is opened"
+        selectSitePressNew( "attachment1_1" );
         AttachmentsFormView attachmentsFormView = new AttachmentsFormView( getSession() );
 
         then: "Attachment-uploader should be displayed"
@@ -33,11 +30,10 @@ class Attachments_Content_Spec
         !attachmentsFormView.isValidationMessagePresent();
     }
 
-    def "GIVEN attachments wizard is opened WHEN 'Save' button has been pressed AND the required attachment is not selected THEN validation message should be present"()
+    def "GIVEN attachments wizard is opened WHEN 'Save' button has been pressed AND the required attachment is not selected THEN validation message should appear"()
     {
         given: "attachments wizard is opened"
-        Content dateContent = buildAttachment1_1_Content( NORD_IMAGE_NAME );
-        ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() );
+        ContentWizardPanel wizard = selectSitePressNew( "attachment1_1" );
         AttachmentsFormView attachmentsFormView = new AttachmentsFormView( getSession() );
 
         when: "Display name has been typed and 'Save' button has been pressed"
@@ -54,24 +50,22 @@ class Attachments_Content_Spec
         !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
-    def "GIVEN wizard for adding an attachments-content with 2 required occurrences is opened WHEN 'Save' button has been pressed AND the required attachment is not selected THEN validation message is present"()
+    def "GIVEN wizard content with 2 required attachment is opened WHEN 'Save' button has been pressed THEN validation message should appear"()
     {
-        given: "attachments wizard is opened"
-        Content dateContent = buildAttachment2_4_Content( NORD_IMAGE_NAME );
-        ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() );
+        given: "wizard for attachments content is opened"
+        ContentWizardPanel wizard = selectSitePressNew( "attachment2_4" );
         AttachmentsFormView attachmentsFormView = new AttachmentsFormView( getSession() );
 
-        when: "'Save draft' button has been pressed but the required attachment not selected"
+        when: "required attachment is not selected and 'Save' button has been pressed"
         wizard.typeDisplayName( NameHelper.uniqueName( "attachments" ) ).save();
 
-        then: "validation message should be displayed"
+        then: "validation message should appear"
         attachmentsFormView.isValidationMessagePresent();
 
-        and: "correct validation message is displayed"
+        and: "expected validation message is displayed"
         attachmentsFormView.getValidationMessage() == String.format( Application.MIN_OCCURRENCES_REQUIRED_MESSAGE, 2 );
 
         and: "'Publish' button should be disabled"
         !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
-
 }

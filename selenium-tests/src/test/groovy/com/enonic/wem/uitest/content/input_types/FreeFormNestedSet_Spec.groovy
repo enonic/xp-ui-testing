@@ -13,7 +13,6 @@ import spock.lang.Stepwise
  * Created on 5/25/2017.
  * Verifies:
  * OptionSet -Error appears when 'upload' button in the ImageSelector was pressed #4813
- *
  * */
 @Stepwise
 class FreeFormNestedSet_Spec
@@ -22,7 +21,7 @@ class FreeFormNestedSet_Spec
     @Shared
     Content SET_IN_SET_CONTENT
 
-    def "GIVEN wizard for FreeForm is opened WHEN 'Save' button has been pressed THEN red icon should be present on the wizard page"()
+    def "GIVEN wizard for FreeForm is opened WHEN 'Save' button has been pressed THEN red icon should be present in the wizard"()
     {
         given: "wizard for FreeForm is opened"
         SET_IN_SET_CONTENT = buildFreeFormOptionSet_Content();
@@ -32,11 +31,11 @@ class FreeFormNestedSet_Spec
         wizard.typeData( SET_IN_SET_CONTENT ).save();
         saveScreenshot( "set_in_set_empty" );
 
-        then: "red icon should be present on the wizard page, because required inputs are not filled"
+        then: "red icon should be present in the wizard page, because required inputs are not filled"
         wizard.isContentInvalid()
     }
 
-    def "GIVEN existing not valid 'FreeForm' content WHEN the content has been selected THEN the content should be invalid(in the grid)"()
+    def "GIVEN existing not valid 'FreeForm' content WHEN the content has been selected THEN the content should be invalid in browse panel"()
     {
         when: "'FreeForm' content is selected"
         findAndSelectContent( SET_IN_SET_CONTENT.getName() );
@@ -45,7 +44,7 @@ class FreeFormNestedSet_Spec
         contentBrowsePanel.isContentInvalid( SET_IN_SET_CONTENT.getName() )
     }
 
-    def "GIVEN existing not valid 'FreeForm' content is opened WHEN required radio button has been selected THEN red icon should not be present on the wizard page"()
+    def "GIVEN existing not valid 'FreeForm' content is opened WHEN required radio button has been selected THEN red icon should not be present in the wizard"()
     {
         given: "wizard for FreeForm is opened"
         ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET_CONTENT.getName() ) clickToolbarEdit();
@@ -63,7 +62,6 @@ class FreeFormNestedSet_Spec
         then: "red icon should not be displayed in the wizard page"
         !wizard.isContentInvalid();
     }
-
 
     def "GIVEN existing not valid 'FreeForm' content is opened WHEN required inputs has been cleared THEN red icon gets visible in the wizard page"()
     {

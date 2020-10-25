@@ -92,7 +92,6 @@ class BaseContentSpec
     @Shared
     String IMPORTED_BRO_IMAGE = "bro.jpg";
 
-
     @Shared
     String ELEPHANT_IMAGE_DISPLAY_NAME = "elephant";
 
@@ -300,7 +299,7 @@ class BaseContentSpec
     {
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( content.getContentTypeName() );
         wizard.typeData( content );
-        //MARK AS READY button gets visible on the wizard-toolbar
+        //MARK AS READY button gets visible in the wizard-toolbar:
         wizard.clickOnMarkAsReadyButton();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 1000 );
@@ -335,7 +334,7 @@ class BaseContentSpec
         String name = NameHelper.uniqueName( "site" );
         PropertyTree data = new PropertyTree();
         data.addStrings( SiteFormViewPanel.APP_KEY, "First Selenium App" );
-        data.addStrings( "description", "site based on the First App " )
+        data.addStrings( "description", "site with First App" )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( name ).
@@ -350,7 +349,7 @@ class BaseContentSpec
     {
         PropertyTree data = new PropertyTree();
         data.addStrings( SiteFormViewPanel.APP_KEY, "My First App" );
-        data.addStrings( "description", "My first Site " )
+        data.addStrings( "description", "My first Site" )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( NameHelper.uniqueName( siteName ) ).
@@ -366,7 +365,7 @@ class BaseContentSpec
         String name = NameHelper.uniqueName( "site" );
         PropertyTree data = new PropertyTree();
         data.addStrings( SiteFormViewPanel.APP_KEY, "Simple Site App" );
-        data.addStrings( "description", "simple site " )
+        data.addStrings( "description", "simple site" );
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( name ).
@@ -382,7 +381,7 @@ class BaseContentSpec
         String name = NameHelper.uniqueName( "site" );
         PropertyTree data = new PropertyTree();
         data.addStrings( SiteFormViewPanel.APP_KEY, appNames );
-        data.addStrings( "description", "simple site " )
+        data.addStrings( "description", "simple site" )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( name ).
@@ -398,7 +397,7 @@ class BaseContentSpec
         String name = NameHelper.uniqueName( "site" );
         PropertyTree data = new PropertyTree();
         data.addStrings( SiteFormViewPanel.APP_KEY, appNames );
-        data.addStrings( "description", "simple site " )
+        data.addStrings( "description", "simple site" )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( name ).
@@ -489,7 +488,7 @@ class BaseContentSpec
     {
         PropertyTree data = new PropertyTree();
         data.addString( SiteFormViewPanel.APP_KEY, APP_CONTENT_TYPES_DISPLAY_NAME );
-        data.addStrings( "description", "all content types  site" )
+        data.addStrings( "description", "site wit all content types" );
         Content site = Content.builder().
             name( siteName ).
             displayName( "site with content types" ).

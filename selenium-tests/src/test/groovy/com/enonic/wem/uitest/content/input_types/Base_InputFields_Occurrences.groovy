@@ -118,7 +118,6 @@ class Base_InputFields_Occurrences
             ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
                 site );
             wizard.showPublishMenu().clickOnMarkAsReadyMenuItem();
-            //dialog.pressYesButton();
             wizard.closeBrowserTab().switchToBrowsePanelTab();
         }
     }
@@ -134,11 +133,11 @@ class Base_InputFields_Occurrences
     {
         PropertyTree data = new PropertyTree();
         data.addString( SiteFormViewPanel.APP_KEY, APP_CONTENT_TYPES_DISPLAY_NAME );
-        data.addStrings( "description", "all content types  site " )
+        data.addStrings( "description", "site with all content types" );
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( SITE_NAME ).
-            displayName( "site-contenttypes-based" ).
+            displayName( "site-with-content-types" ).
             parent( ContentPath.ROOT ).
             contentType( "Site" ).data( data ).
             build();
@@ -176,7 +175,7 @@ class Base_InputFields_Occurrences
         }
         Content dateContent = Content.builder().
             name( NameHelper.uniqueName( name ) ).
-            displayName( "reqired time content" ).
+            displayName( "required time content" ).
             parent( ContentPath.from( SITE_NAME ) ).
             contentType( ALL_CONTENT_TYPES_APP_NAME + "time1_1" ).data( data ).
             build();

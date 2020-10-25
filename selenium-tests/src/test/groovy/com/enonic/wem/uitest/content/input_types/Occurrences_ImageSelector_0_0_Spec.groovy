@@ -220,6 +220,5 @@ class Occurrences_ImageSelector_0_0_Spec
 
         then: "this content with 'Published' status should be listed"
         contentBrowsePanel.getContentStatus( imageSelectorContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
-
     }
 }

@@ -31,7 +31,7 @@ class FieldSet_Spec
     String TEST_DOUBLE = "123.4";
 
 
-    def "GIVEN fieldset is saved WHEN all required fields are filled THEN content should be valid in Browse Panel"()
+    def "WHEN all required fields in fieldset are filled THEN content should be valid in Browse Panel"()
     {
         given: "'fieldset' content with all required values is saved"
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE, TEST_DOUBLE );
@@ -47,7 +47,7 @@ class FieldSet_Spec
         !contentBrowsePanel.isContentInvalid( FIELDSET_CONTENT.getName() );
     }
 
-    def "GIVEN wizard for 'fieldset' is opened WHEN required textline is empty THEN validation message should be displayed under the textline"()
+    def "GIVEN wizard for 'fieldset' is opened WHEN required text line is empty THEN validation message should be displayed under the textline"()
     {
         given: "wizard for 'fieldset' is opened"
         FIELDSET_CONTENT = build_FieldSet_Content( "", HTML_AREA_TEXT, TEST_DOUBLE, TEST_DOUBLE );
@@ -65,7 +65,7 @@ class FieldSet_Spec
         textLine1_1_formViewPanel.getValidationMessage() == Application.REQUIRED_MESSAGE
     }
 
-    def "GIVEN wizard for 'fieldset' is opened WHEN required text in the HTML-area is empty THEN content is not valid in the wizard"()
+    def "GIVEN wizard for 'fieldset' is opened WHEN required text in the HTML-area is empty THEN red icon should be present in the wizard"()
     {
         given: "wizard for 'fieldset' is opened"
         FIELDSET_CONTENT = build_FieldSet_Content( TEXT_LINE_TEXT, "", TEST_DOUBLE, TEST_DOUBLE );
@@ -91,7 +91,7 @@ class FieldSet_Spec
         DoubleFormViewPanel doubleFormViewPanel = new DoubleFormViewPanel( getSession() );
         saveScreenshot( "fieldset_double_is_empty" );
 
-        then: "correct message should be displayed"
+        then: "expected message should be displayed"
         doubleFormViewPanel.getValidationMessage() == "Min 2 occurrences required";
     }
 
@@ -111,6 +111,4 @@ class FieldSet_Spec
             build();
         return textLineContent;
     }
-
-
 }
