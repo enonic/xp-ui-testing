@@ -123,6 +123,8 @@ class Set_In_Set_Validation_Spec
         given: "existing valid 'Set in Set' content is opened"
         ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET.getName() ).clickToolbarEdit();
         SetInSetFormView setInSetFormView = new SetInSetFormView( getSession() );
+        setInSetFormView.expandFormByLabel( 'Contact Info' );
+        setInSetFormView.expandFormByLabel( 'Phone Numbers' );
 
         when: "'Add Phone Number' button has been pressed"
         setInSetFormView.selectImage( "seng" );

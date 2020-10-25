@@ -118,4 +118,11 @@ public class SetInSetFormView
     {
         return getDisplayedString( LAST_NAME_VALIDATION_MESSAGE );
     }
+
+    public void expandFormByLabel( String label )
+    {
+        String locator = String.format( "//div[contains(@id,'FormOccurrenceDraggableLabel') and text()='%s']", label );
+        findElement( By.xpath( locator ) ).click();
+        sleep( 500 );
+    }
 }
