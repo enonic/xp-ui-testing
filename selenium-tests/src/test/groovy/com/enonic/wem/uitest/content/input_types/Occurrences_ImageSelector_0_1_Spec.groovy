@@ -106,13 +106,15 @@ class Occurrences_ImageSelector_0_1_Spec
         images.get(0) == NORD_IMAGE_DISPLAY_NAME;
     }
 
-    def "GIVEN content with selected option is opened WHEN images has been clicked THEN buttons 'Edit' and 'Remove' should appear"() {
+    def "GIVEN content with image selector is opened WHEN image in wizard has been clicked THEN buttons 'Edit' and 'Remove' should appear in the selected option"()
+    {
         given: "'Image Selector'-content with selected image is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu(TEST_IMAGE_SELECTOR_CONTENT);
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel(getSession());
 
         when: "image has been clicked"
-        formViewPanel.clickOnImage(NORD_IMAGE_DISPLAY_NAME)
+        formViewPanel.clickOnImage( NORD_IMAGE_DISPLAY_NAME );
+        saveScreenshot( "img_sel_0_1_edit_button" );
 
         then: "buttons 'Edit' and 'Remove' should appear"
         formViewPanel.isRemoveButtonDisplayed();
@@ -121,7 +123,8 @@ class Occurrences_ImageSelector_0_1_Spec
         formViewPanel.isEditButtonDisplayed();
     }
 
-    def "GIVEN content with selected option is opened WHEN image has been clicked  AND 'Remove' button pressed THEN image should be removed and 'options filter' input should appear"() {
+    def "GIVEN content with image selector is opened WHEN image has been removed in selected option THEN image should be removed and 'options filter' input should appear"()
+    {
         given: "'Image Selector' content with selected image is opened"
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu(TEST_IMAGE_SELECTOR_CONTENT);
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel(getSession());

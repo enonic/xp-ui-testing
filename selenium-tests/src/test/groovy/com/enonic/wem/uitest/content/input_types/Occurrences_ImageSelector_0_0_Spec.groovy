@@ -90,7 +90,7 @@ class Occurrences_ImageSelector_0_0_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( TEST_IMAGE_SELECTOR_CONTENT );
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );
         List<String> images = formViewPanel.getSelectedImages();
-        saveScreenshot( "img_sel_content0_0_4" )
+        saveScreenshot( "img_sel_content0_0_4" );
 
         then: "four images should be present in the wizard page"
         images.size() == 4;
@@ -192,7 +192,7 @@ class Occurrences_ImageSelector_0_0_Spec
         wizard.clickOnMarkAsReadyButton();
         and: "Publish button has been pressed"
         wizard.clickOnWizardPublishButton().clickOnPublishButton();
-        String publishedMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
+        contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         and: "wizard tab was closed"
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
@@ -205,7 +205,7 @@ class Occurrences_ImageSelector_0_0_Spec
         !contentBrowsePanel.isContentInvalid( imageSelectorContent.getName().toString() );
     }
 
-    def "GIVEN 'Image Selector 0:0' content with one image is saved WHEN 'Publish' menu item has been clicked THEN 'PUBLISHED' status should be in the brose panel"()
+    def "GIVEN content with 'Image Selector 0:0' is saved WHEN 'Publish' menu item has been clicked THEN 'PUBLISHED' status should be in the brose panel"()
     {
         given: "new content 'Image Selector 0:0' is saved"
         Content imageSelectorContent = buildImageSelector0_0_Content( BOOK_IMAGE_DISPLAY_NAME );

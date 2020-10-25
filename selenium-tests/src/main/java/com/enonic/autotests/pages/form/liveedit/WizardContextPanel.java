@@ -82,8 +82,8 @@ public class WizardContextPanel
         sleep( 500 );
         if ( !isElementDisplayed( EMULATOR_OPTION_ITEM ) )
         {
-            saveScreenshot( NameHelper.uniqueName( "err_dependencies_option" ) );
-            throw new TestFrameworkException( "Content Wizard - dependencies option was not found!" );
+            saveScreenshot( NameHelper.uniqueName( "err_emulator_option" ) );
+            throw new TestFrameworkException( "Content Wizard - emulator option was not found!" );
         }
         getDisplayedElement( By.xpath( EMULATOR_OPTION_ITEM ) ).click();
         sleep( 700 );
