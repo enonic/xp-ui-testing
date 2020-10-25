@@ -33,28 +33,28 @@ class ContentWizardPanel_Toolbar_Spec
 
     def "GIVEN content wizard is opened WHEN name has been typed but not saved yet THEN all buttons in toolbar have correct state"()
     {
-        given: "content wizard is opened"
+        given: "new folder wizard is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ));
-        when: "display name is typed"
+        when: "display name has been filled"
         wizard.typeDisplayName( NameHelper.uniqueName( "toolbar" ) );
 
-        then: "'Delete' button should be enabled"
+        then: "'Delete...' button should be enabled"
         wizard.isDeleteButtonEnabled();
 
-        and: "'Save' button should be enabled"
+        and: "'Save' button gets enabled"
         wizard.isSaveButtonEnabled();
 
-        and: "'Publish' button should be enabled"
+        and: "'Publish' menu item gets enabled"
         wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
-        and: "'Duplicate' button should be enabled"
+        and: "'Duplicate...' button should be enabled"
         wizard.isDuplicateButtonEnabled();
 
         and: "content status should be 'New'"
         wizard.getStatus() == ContentStatus.NEW.getValue();
     }
 
-    def "GIVEN folder-wizard opened WHEN a name has been typed and content saved THEN all buttons in toolbar have correct state"()
+    def "GIVEN new folder-wizard opened WHEN a name has been typed and content saved THEN all buttons in toolbar have correct state"()
     {
         given: "wizard is opened"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
@@ -62,7 +62,7 @@ class ContentWizardPanel_Toolbar_Spec
         when: "display name has been typed and saved"
         wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
 
-        then: "'Delete' button should be enabled"
+        then: "'Delete...' button should be enabled"
         wizardPanel.isDeleteButtonEnabled();
 
         and: "'Saved' button should be disabled"
@@ -71,16 +71,16 @@ class ContentWizardPanel_Toolbar_Spec
         and: "'Publish' menu item should be enabled"
         wizardPanel.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
-        and: "'Duplicate' button should be enabled"
+        and: "'Duplicate...' button should be enabled"
         wizardPanel.isDuplicateButtonEnabled();
 
         and: "content status should be 'New'"
         wizardPanel.getStatus() == ContentStatus.NEW.getValue();
     }
 
-    def "GIVEN folder wizard is opened WHEN content saved AND published THEN 'online' status appears in the wizard AND publish-button should be disabled now"()
+    def "GIVEN new folder wizard is opened WHEN folder has been published THEN 'Published' status appears in the wizard AND publish menu item gets disabled now"()
     {
-        given: "wizard is opened"
+        given: "new wizard is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
         wizard.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
 
@@ -99,7 +99,7 @@ class ContentWizardPanel_Toolbar_Spec
         and: "'Publish' menu item should be disabled"
         !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
-        and: "content status should be 'online'"
+        and: "content status should be 'PUBLISHED'"
         wizard.getStatus() == ContentStatus.PUBLISHED.getValue();
     }
 
@@ -110,7 +110,7 @@ class ContentWizardPanel_Toolbar_Spec
         addContent( folderContent );
         ContentWizardPanel wizard = findAndSelectContent( folderContent.getName() ).clickToolbarEdit();
 
-        when: "'delete' button was pressed and deleting is confirmed"
+        when: "'delete' button has been pressed and deleting is confirmed"
         wizard.clickToolbarDelete().doDeleteAndSwitchToBrowsePanel();
 
         then: "content should not be present in the grid"

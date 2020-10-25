@@ -15,14 +15,14 @@ class ImageProperties_Wizard_Spec
 
     def "WHEN image content is opened THEN expected inputs should be present in Properties form"()
     {
-        given: "content wizard opened"
+        given: "image content is opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit();
 
-        when: "'Image Info' step was clicked"
+        when: "'Image Info' step has been clicked"
         wizard.clickOnWizardStep( "Properties" );
         ImagePropertiesFormViewPanel imagePropertiesFormViewPanel = new ImagePropertiesFormViewPanel( getSession() );
 
-        then: "input for size in pixels is present"
+        then: "input for size in pixels should be present"
         imagePropertiesFormViewPanel.isInputForSizeInPixelsDisplayed();
 
         and: "input for height is displayed"

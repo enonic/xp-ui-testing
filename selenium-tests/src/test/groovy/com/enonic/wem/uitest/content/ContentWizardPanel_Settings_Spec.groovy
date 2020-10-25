@@ -64,7 +64,7 @@ class ContentWizardPanel_Settings_Spec
         form.getLanguage() == null;
     }
 
-    def "GIVEN existing content with owner opened WHEN owner changed AND content saved  THEN new owner shown in settings"()
+    def "GIVEN existing content with owner is opened WHEN owner has been updated THEN new owner gets visible in settings tab"()
     {
         given: "when existing content opened for edit"
         ContentWizardPanel wizard = findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -77,7 +77,7 @@ class ContentWizardPanel_Settings_Spec
         findAndSelectContent( content.getName() ).clickToolbarEditAndSwitchToWizardTab().clickOnSettingsTabLink()
         saveScreenshot( "norsk-lang-owner-anonym" )
 
-        then: "new owner should be present in settings"
+        then: "new owner should be present in settings tab"
         form.getOwner() == ANONYMOUS_USER;
     }
 }

@@ -39,7 +39,7 @@ class ContentBrowsePanel_768_1024_Spec
         !contentBrowsePanel.isMoveButtonEnabled();
     }
 
-    def "GIVEN wizard for creating of folder is opened WHEN data has been typed and saved THEN new folder should be listed"()
+    def "GIVEN wizard for new folder is opened WHEN test data has been saved THEN new folder should be listed"()
     {
         given:
         TEST_FOLDER = buildFolderContent( "folder", "768-1024" );

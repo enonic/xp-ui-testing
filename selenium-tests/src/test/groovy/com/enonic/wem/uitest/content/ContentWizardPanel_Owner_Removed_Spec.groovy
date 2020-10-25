@@ -63,7 +63,7 @@ class ContentWizardPanel_Owner_Removed_Spec
         userBrowsePanel.exists( TEST_USER.getDisplayName(), true );
     }
 
-    def "GIVEN existing folder is opened WHEN just created user has been select in 'owner' form THEN expected user's name should be present in the settings"()
+    def "GIVEN existing folder is opened WHEN just created user has been select in 'owner' selector THEN expected user's name should be present in the settings"()
     {
         given: "creating of the new folder"
         TEST_FOLDER = buildFolderContent( "folder", "owner test 2" );
