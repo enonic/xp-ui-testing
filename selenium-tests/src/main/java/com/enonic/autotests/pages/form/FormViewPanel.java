@@ -91,4 +91,11 @@ public abstract class FormViewPanel
         String script = "document.getElementById(arguments[0]).scrollTop=arguments[1]";
         getJavaScriptExecutor().executeScript( script, id, scrollTop );
     }
+
+    public void expandFormByLabel( String label )
+    {
+        String locator = String.format( "//div[contains(@id,'FormOccurrenceDraggableLabel') and text()='%s']", label );
+        findElement( By.xpath( locator ) ).click();
+        sleep( 500 );
+    }
 }

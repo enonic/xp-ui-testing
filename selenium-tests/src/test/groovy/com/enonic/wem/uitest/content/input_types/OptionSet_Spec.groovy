@@ -52,6 +52,7 @@ class OptionSet_Spec
         given: "existing OptionSet content(not valid) is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
+        optionSetFormView.expandFormByLabel( "Single selection" );
 
         when: "Second radio button has been clicked:"
         optionSetFormView.getSingleSelectionOptionSet().clickOnSecondRadio();
@@ -78,6 +79,7 @@ class OptionSet_Spec
         given: "existing 'Option Set' content is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
+        optionSetFormView.expandFormByLabel( "Single selection" );
 
         when: "first radio button clicked AND required input has been filled"
         optionSetFormView.getSingleSelectionOptionSet().clickOnFirstRadio().typeSetName( "test" );
@@ -102,9 +104,11 @@ class OptionSet_Spec
         given: "existing 'Option Set' is opened"
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
+        optionSetFormView.expandFormByLabel( "Single selection" );
         optionSetFormView.getSingleSelectionOptionSet().clickOnSecondRadio();
         NotificationDialog dialog = new NotificationDialog( getSession() );
         dialog.clickOnOkButton();
+        optionSetFormView.expandFormByLabel( "Multi selection" );
 
         when: "option in 'Multi selection' has been clicked"
         optionSetFormView.getMultiSelectionOptionSet().clickOnCheckbox( 2 );
@@ -121,6 +125,7 @@ class OptionSet_Spec
         given: "existing 'Option Set'  is opened"
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
+        optionSetFormView.expandFormByLabel( "Multi selection" );
 
         when: "image has been selected"
         optionSetFormView.getMultiSelectionOptionSet().selectImage( "nord" );
