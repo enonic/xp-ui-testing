@@ -859,7 +859,7 @@ public class ContentBrowsePanel
     {
         String contentTeeGridId = getDisplayedElement( By.xpath( CONTENT_TREE_GRID ) ).getAttribute( "id" );
         String contentId = (String) getJavaScriptExecutor().executeScript(
-            "return libAdmin.store.map.get('ElementRegistry').elements.get(arguments[0]).getSelectedNodes()[0].getDataId()",
+            "return libAdmin.store.map.get('ElementRegistry').elements.get(arguments[0]).getFirstSelectedItem().getId()",
             contentTeeGridId );
         NavigatorHelper.switchToBrowserTab( getSession(), contentId );
         return new ContentWizardPanel( getSession() );
