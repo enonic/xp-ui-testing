@@ -17,7 +17,7 @@ class Occurrences_RadioButtons_Spec
 
     def "WHEN wizard for 'Radio Buttons'-content is opened THEN radio buttons should be present in the page AND options should not be selected"()
     {
-        when: "new wizard has been:"
+        when: "wizard for 'Radio Buttons'-content is opened:"
         String option = null;
         Content radioButtonsContent = buildRadioButtonsContent( option );
         selectSitePressNew( radioButtonsContent.getContentTypeName() );
@@ -44,7 +44,7 @@ class Occurrences_RadioButtons_Spec
         formViewPanel.getSelectedOption().isEmpty();
     }
 
-    def "GIVEN content with not required 'Radio Buttons' is created WHEN 'Publish' button pressed THEN the content gets 'Published'"()
+    def "GIVEN content with not required 'Radio Buttons' is created WHEN 'Publish' button has been pressed THEN the content gets 'Published'"()
     {
         given: "new 'Radio Buttons' content is added"
         String option = null;

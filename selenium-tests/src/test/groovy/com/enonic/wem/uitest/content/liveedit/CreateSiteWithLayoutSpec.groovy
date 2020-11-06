@@ -255,7 +255,7 @@ class CreateSiteWithLayoutSpec
 
         when: "'reset' menu-item has been clicked"
         pageComponentsView.expandItem( LAYOUT_NAME );
-        pageComponentsView.expandItem( "left" );
+        //pageComponentsView.expandItem( "left" );
         pageComponentsView.openMenu( TEST_IMAGE_DISPLAY_NAME ).selectMenuItem( "Reset" );
         wizardPanel.switchToLiveEditFrame();
 
@@ -281,7 +281,7 @@ class CreateSiteWithLayoutSpec
 
         when: "'duplicate' menu-item has been clicked"
         pageComponentsView.expandItem( LAYOUT_NAME );
-        pageComponentsView.expandItem( "left" );
+        //pageComponentsView.expandItem( "left" );
         pageComponentsView.openMenu( TEST_IMAGE_DISPLAY_NAME ).selectMenuItem( "Duplicate" );
         wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
@@ -305,7 +305,7 @@ class CreateSiteWithLayoutSpec
 
         when: "menu for image is opened and 'remove' menu-item selected"
         pageComponentsView.expandItem( LAYOUT_NAME );
-        pageComponentsView.expandItem( "left" );
+        //pageComponentsView.expandItem( "left" );
         pageComponentsView.openMenu( TEST_IMAGE_DISPLAY_NAME ).selectMenuItem( "Remove" );
         wizardPanel.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
