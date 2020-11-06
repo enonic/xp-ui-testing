@@ -82,6 +82,8 @@ class PageComponentView_Save_As_Template_Spec
         pageComponentsView.selectMenuItem( ComponentMenuItems.SAVE_AS_TEMPLATE.getValue() );
         and: "go to the browse panel"
         wizard.switchToBrowsePanelTab();
+        contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
+        contentBrowsePanel.expandContent( ContentPath.from( "_templates" ) );
 
         then: "new template should be listed in the grid"
         saveScreenshot( "saved_template" );
@@ -103,6 +105,8 @@ class PageComponentView_Save_As_Template_Spec
         inspectionPanel.clickOnSaveAsTemplateButton();
         and: "go to the browse panel"
         wizard.switchToBrowsePanelTab();
+        contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
+        contentBrowsePanel.expandContent( ContentPath.from( "_templates" ) );
 
         then: "new template should be listed in the grid"
         saveScreenshot( "saved_template2" );
