@@ -52,7 +52,8 @@ class FreeFormNestedSet_Spec
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
         freeForm.clickOnForm();
-        freeForm.expandItemSetRadio();
+        // Single occurrence of item-set should be expanded by default:
+        //freeForm.expandItemSetRadio();
         freeForm.clickOnButtonRadioButton();
 
         and: "the content has been saved"
@@ -71,7 +72,8 @@ class FreeFormNestedSet_Spec
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
         freeForm.clickOnForm();
-        freeForm.expandItemSetRadio();
+        // Single occurrence of item-set should be expanded by default:
+        //freeForm.expandItemSetRadio();
         freeForm.clickOnInputRadioButton();
         and: "the content has been saved"
         wizard.save();
@@ -96,8 +98,8 @@ class FreeFormNestedSet_Spec
         ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET_CONTENT.getName() ) clickToolbarEdit();
         FreeFormViewPanel freeForm = new FreeFormViewPanel( getSession() );
         freeForm.clickOnForm();
-        freeForm.expandItemSetRadio();
-        freeForm.expandItemSetRadio2();
+        //freeForm.expandItemSetRadio();
+        //freeForm.expandItemSetRadio2();
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
         freeForm.clickOnInputRadioButton().clickOnImageRadioButton().selectImage( "nord" );
