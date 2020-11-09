@@ -285,6 +285,7 @@ class ContentBrowsePanel_GridPanel_Spec
     {
         given: "row with the content is highlighted"
         contentBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
+        sleep( 500 );
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
         sleep( 1000 );
 
