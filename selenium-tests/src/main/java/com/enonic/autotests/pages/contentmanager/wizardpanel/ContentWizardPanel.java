@@ -321,7 +321,7 @@ public class ContentWizardPanel
     {
         if ( !isElementDisplayed( PUBLISH_MENU_ITEM ) )
         {
-            saveScreenshot( "err_unpublish_menu_item_not_visible " );
+            saveScreenshot( "err_publish_menu_item_not_visible_1" );
             throw new TestFrameworkException( "'Publish' menu item is not visible!" );
         }
         return !getAttribute( getDisplayedElement( By.xpath( PUBLISH_MENU_ITEM ) ), "class", Application.EXPLICIT_NORMAL ).contains(

@@ -55,6 +55,7 @@ class DetailsPanels_VersionHistory_Spec
         findAndSelectContent( folderContent.getName() );
         VersionHistoryWidget versionHistoryWidget = openVersionPanel();
         contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
+        contentBrowsePanel.waitForNotificationMessage();
 
         when: "content has been published"
         contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
