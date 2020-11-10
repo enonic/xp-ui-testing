@@ -598,7 +598,7 @@ public class ContentBrowsePanel
         waitForPublishButtonVisible( Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( PUBLISH_BUTTON_XPATH ) )
         {
-            saveScreenshot( "err_publish_button" );
+            saveScreenshot( NameHelper.uniqueName( "err_publish_button" ) );
             throw new TestFrameworkException( "Publish button is not visible on the toolbar" );
         }
         publishButton.click();
@@ -634,7 +634,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "Mark As Ready button is not visible on the toolbar" );
         }
         markAsReadyButton.click();
-        sleep( 500 );
+        sleep( 700 );
     }
 
     public ContentBrowsePanel clickToolbarUndodelete()

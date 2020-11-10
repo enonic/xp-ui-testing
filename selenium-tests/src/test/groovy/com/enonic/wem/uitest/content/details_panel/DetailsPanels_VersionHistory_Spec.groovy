@@ -54,7 +54,7 @@ class DetailsPanels_VersionHistory_Spec
         given: "existing content is selected"
         findAndSelectContent( folderContent.getName() );
         VersionHistoryWidget versionHistoryWidget = openVersionPanel();
-        contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
+        contentBrowsePanel.clickOnMarkAsReadySingleContent();
         contentBrowsePanel.waitForNotificationMessage();
 
         when: "content has been published"
