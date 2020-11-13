@@ -55,7 +55,7 @@ class ContentUnpublishDialog_Spec
         contentUnPublishDialog.getContentStatus( PARENT_CONTENT.getDisplayName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
-    def "GIVEN 'PUBLISHED' content is selected AND UnpublishDialog is opened WHEN cancel button on the top has been pressed THEN dialog is closing AND status of the content should not be changed"()
+    def "GIVEN Unpublish Dialog is opened WHEN cancel button on the top has been pressed THEN dialog closes AND status of the content should not be changed"()
     {
         given: "'PUBLISHED' content is selected"
         findAndSelectContent( PARENT_CONTENT.getName() );
@@ -64,10 +64,10 @@ class ContentUnpublishDialog_Spec
         when: "content selected and 'Unpublish' menu item is clicked"
         contentUnPublishDialog.clickOnCancelTopButton()
 
-        then: "'ContentUnPublishDialog' dialog is closing"
+        then: "'ContentUnPublishDialog' dialog closes"
         !contentUnPublishDialog.isOpened();
 
-        and: "content still has 'online' status"
+        and: "content has Published status"
         contentBrowsePanel.getContentStatus( PARENT_CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
 
         and: "publish button on the toolbar should be disabled"
