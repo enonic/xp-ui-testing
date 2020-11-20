@@ -416,11 +416,6 @@ public class ContentBrowsePanel
         return isElementDisplayed( DETAILS_TOGGLE_BUTTON );
     }
 
-    public boolean isFilterPanelShown()
-    {
-        return getFilterPanel().isFilterPanelDisplayed();
-    }
-
     public boolean isContentInvalid( String contentName )
     {
         String contentInGrid = String.format( CONTENT_SUMMARY_VIEWER, contentName );
@@ -673,16 +668,6 @@ public class ContentBrowsePanel
         return this;
     }
 
-    public ContentBrowsePanel deSelectContentInTable( String contentName )
-    {
-        boolean exist = doScrollAndFindGridItem( contentName );
-        if ( isRowSelected( contentName ) )
-        {
-            clickCheckboxAndSelectRow( contentName );
-        }
-        return this;
-    }
-
     public BrowsePanel pressKeyOnRow( ContentPath path, Keys key )
     {
         boolean result = doScrollAndFindGridItem( path.toString() );
@@ -775,40 +760,7 @@ public class ContentBrowsePanel
     }
 
     /**
-     * Expands all contents from 'content path' and clicks on a checkbox near the content, that will be parent for new content.
-     *
-     * @param contentPath {@link ContentPath} instance.
-     */
-    public ContentBrowsePanel clickOnParentCheckbox( ContentPath contentPath )
-    {
-        if ( contentPath.elementCount() == 0 )
-        {
-            return this;
-        }
-        if ( !doScrollAndFindGridItem( contentPath.toString() ) )
-        {
-            throw new TestFrameworkException( "content was not found: " + contentPath.toString() );
-        }
-
-        String checkBoxXpath = String.format( ROW_CHECKBOX_BY_NAME, contentPath.toString() );
-        boolean isPresentCheckbox = isDynamicElementPresent( By.xpath( checkBoxXpath ), 3 );
-        if ( !isPresentCheckbox )
-        {
-            saveScreenshot( "checkbox" + contentPath.getName() );
-            throw new TestFrameworkException( "wrong xpath:" + checkBoxXpath );
-        }
-        findElement( By.xpath( checkBoxXpath ) ).click();
-        sleep( 200 );
-        boolean isNewEnabled = waitUntilElementEnabledNoException( By.xpath( NEW_BUTTON_XPATH ), 2l );
-        if ( !isNewEnabled )
-        {
-            throw new SaveOrUpdateException( "Impossible to open 'ContentWizardPanel', because the 'New' button is disabled!" );
-        }
-        return this;
-    }
-
-    /**
-     * Clicks on 'Open' button in toolbar.
+     * Clicks on 'Preview' button in toolbar.
      *
      * @return {@link ItemViewPanelPage} instance.
      */
@@ -879,7 +831,7 @@ public class ContentBrowsePanel
     }
 
     /**
-     * Selects 'Delete' in a context menu.
+     * Selects 'Delete' in the context menu.
      *
      * @param contentName
      * @return {@link DeleteContentDialog} instance.
@@ -994,7 +946,7 @@ public class ContentBrowsePanel
     }
 
     /**
-     * Selects 'Edit' in a context menu.
+     * Selects 'Edit' in the context menu.
      *
      * @param contentName
      * @return {@link ContentWizardPanel} instance.
@@ -1078,7 +1030,7 @@ public class ContentBrowsePanel
     }
 
     /**
-     * Opens context menu and select a 'New' item
+     * Opens context menu and select 'New' menu item
      *
      * @param contentName
      * @return {@link NewContentDialog} instance.
