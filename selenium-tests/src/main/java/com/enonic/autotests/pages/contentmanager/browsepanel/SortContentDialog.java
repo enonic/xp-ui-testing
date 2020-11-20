@@ -115,7 +115,7 @@ public class SortContentDialog
         //sleep( 1000 );
         Actions builder = new Actions( getDriver() );
         builder.clickAndHold( source ).build().perform();
-        builder.moveToElement( target, 0, -20 ).build().perform();;
+        builder.moveToElement( target, 0, -20 ).build().perform();
         builder.release( target );
         builder.build().perform();
         sleep( 2000 );
@@ -151,6 +151,11 @@ public class SortContentDialog
 
     public SortContentDialog clickOnSaveButton()
     {
+        boolean isEnabled = this.waitUntilElementEnabledNoException( By.xpath( SAVE_BUTTON ), Application.EXPLICIT_NORMAL );
+        if ( !isEnabled )
+        {
+            throw new TestFrameworkException( "Sort Content Dialog - Save button is disabled" );
+        }
         saveButton.click();
         boolean isClosed = waitsElementNotVisible( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL );
         if ( !isClosed )

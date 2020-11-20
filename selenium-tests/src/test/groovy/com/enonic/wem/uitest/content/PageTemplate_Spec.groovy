@@ -13,8 +13,6 @@ import spock.lang.Stepwise
 /**
  * Created  on 4/5/2017.
  *
- * Verifies:
- * Page Template Wizard- button 'Edit' in the support-selected option does not open the content in new wizard tab #4745
  * */
 @Stepwise
 class PageTemplate_Spec
@@ -26,7 +24,7 @@ class PageTemplate_Spec
     @Shared
     Content TEST_TEMPLATE;
 
-    def "GIVEN site has been added WHEN 'page template' wizard is opened THEN ContentTypeFilter(support) should be present on the page"()
+    def "WHEN 'page template' wizard is opened THEN ContentTypeFilter(support) should be present on the page"()
     {
         given: "site has been added"
         TEST_SITE = buildMyFirstAppSite( "test-site" );
@@ -35,15 +33,15 @@ class PageTemplate_Spec
         and: "the site is expanded"
         filterPanel.typeSearchText( TEST_SITE.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( TEST_SITE.getName() ) );
-        and: "_templates folder is selected and 'New' button pressed"
+        when: "_templates folder is selected and 'New' button pressed"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             "Page Template" );
         PageTemplateFormViewPanel formViewPanel = new PageTemplateFormViewPanel( getSession() );
 
-        when: "'Support' combobox should be displayed"
+        then: "'Support' combobox should be displayed"
         formViewPanel.isSupportOptionFilterDisplayed();
 
-        then: "Live Edit frame should be displayed on the wizard page"
+        and: "Live Edit frame should be displayed on the wizard page"
         wizard.isLiveEditFrameDisplayed();
         and: "Page-template step should be present"
         wizard.isWizardStepPresent( "Page Template" );
@@ -51,10 +49,9 @@ class PageTemplate_Spec
 
     def "GIVEN existing site WHEN 'page template' wizard is opened AND display name typed AND Save button pressed THEN red icon should be displayed on the wizard"()
     {
-        given: "site has been added"
+        given: "site has been filtered"
         filterPanel.typeSearchText( TEST_SITE.getName() );
         and: "the site is expanded"
-
         contentBrowsePanel.expandContent( ContentPath.from( TEST_SITE.getName() ) );
 
         and: "_templates folder is selected and 'New' button pressed"
@@ -65,14 +62,13 @@ class PageTemplate_Spec
 
         when: "display name has been typed"
         wizard.typeData( TEST_TEMPLATE );
-        //wizard.clickOnMinimizeEditIcon();
         sleep( 500 );
         saveScreenshot( "support_not_selected" );
 
-        then: "red icon should be displayed on the wizard, the content is not valid"
+        then: "red icon should be displayed in the wizard, the content is not valid"
         wizard.isContentInvalid();
 
-        and:"Save button should be disabled, because auto-saving should be performed when the controller has been selected"
+        and: "'Save' button should be disabled, because site was automatically saved after selecting a controller"
         !wizard.isSaveButtonEnabled(  );
     }
 
@@ -100,9 +96,9 @@ class PageTemplate_Spec
         !contentBrowsePanel.isContentInvalid( TEST_TEMPLATE.getName() );
     }
 
-    def "GIVEN existing site WHEN page-template wizard is opened AND name and 'support' has been typed THEN the content should be displayed as valid in the wizard"()
+    def "WHEN wizard for new page-template is opened AND name and 'support' has been selected THEN the template should be valid in the wizard"()
     {
-        given: "site has been added"
+        given: "site has been filtered"
         filterPanel.typeSearchText( TEST_SITE.getName() );
         and: "the site is expanded"
         contentBrowsePanel.expandContent( ContentPath.from( TEST_SITE.getName() ) );
@@ -112,7 +108,7 @@ class PageTemplate_Spec
             "Page Template" );
         PageTemplateFormViewPanel formViewPanel = new PageTemplateFormViewPanel( getSession() );
 
-        when: "display name has been typed"
+        when: "display name has been filled"
         wizard.typeDisplayName( "test display name" );
 
         and: "'support' has been selected"
@@ -134,11 +130,11 @@ class PageTemplate_Spec
         wizard.save();
         saveScreenshot( "support_option_removed" )
 
-        then: "red icon should be displayed on the wizard, the content is invalid"
+        then: "red icon should be displayed in the wizard, the content is invalid"
         wizard.isContentInvalid();
     }
 
-    def "GIVEN existing page template with several versions WHEN the version with the selected 'support option' is restored THEN 'Site' content type should be selected"()
+    def "GIVEN existing page template with several versions WHEN the version with the selected 'support option' is reverted THEN 'Site' should be selected in 'Support' selctor"()
     {
         given: "existing page template with several versions"
         ContentWizardPanel wizard = findAndSelectContent( TEST_TEMPLATE.getName() ).clickToolbarEdit();

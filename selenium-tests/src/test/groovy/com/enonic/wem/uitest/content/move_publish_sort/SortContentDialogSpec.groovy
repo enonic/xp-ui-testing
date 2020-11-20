@@ -28,22 +28,9 @@ class SortContentDialogSpec
         and: "has 'save, close' buttons should be displayed"
         sortContentDialog.isCancelButtonEnabled();
         and:
-        sortContentDialog.isSaveButtonEnabled();
+        !sortContentDialog.isSaveButtonEnabled();
         and:
         sortContentDialog.isSortMenuButtonEnabled();
-    }
-
-    def "GIVEN sort dialog is opened WHEN 'Save' button on the modal dialog has been clicked THEN the dialog should be closed"()
-    {
-        given: "sort dialog is opened"
-        findAndSelectContent( IMPORTED_FOLDER_NAME )
-        SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
-
-        when: "'Save' has been clicked"
-        sortContentDialog.clickOnSaveButton();
-
-        then: "the dialog should be closed"
-        !sortContentDialog.isDisplayed();
     }
 
     def "GIVEN sort dialog is opened WHEN 'Cancel' button has been clicked THEN the modal dialog should be closed"()
@@ -65,24 +52,24 @@ class SortContentDialogSpec
         findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
-        when: "'Cancel' on top has been clicked"
+        when: "'Cancel' -top button has been clicked"
         sortContentDialog.clickOnCancelOnTop();
 
         then: "the modal dialog should be closed"
         !sortContentDialog.isDisplayed();
     }
 
-    def "GIVEN folder was selected and 'Sort' button clicked WHEN TabMenuButton on the Sort dialog was clicked THEN seven menu items should be displayed"()
+    def "GIVEN folder was selected and 'Sort' button clicked WHEN TabMenuButton has been clicked THEN five menu items get visible"()
     {
         given: "sort dialog is opened"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
-        when: "TabMenuButton on the Sort dialog was clicked"
+        when: "TabMenuButton has been clicked"
         sortContentDialog.clickOnTabMenu();
         List<String> items = sortContentDialog.getMenuItems();
 
-        then: "seven menu items should be displayed"
+        then: "five menu items should be displayed"
         items.size() == 5;
         and:
         items.contains( SortMenuItem.DISPLAY_NAME.getValue() );
@@ -96,20 +83,20 @@ class SortContentDialogSpec
         items.contains( SortMenuItem.CREATED_DATE.getValue() );
     }
 
-    def "GIVEN sort dialog is opened WHEN 'cancel' button on the top was clicked THEN dialog should not be displayed"()
+    def "GIVEN sort dialog is opened WHEN 'cancel'- top button has been clicked THEN dialog should not be closed"()
     {
         given: "content selected and 'Sort' pressed"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
 
-        when: "'Cancel' on top was clicked"
+        when: "'Cancel'- top has been clicked"
         sortContentDialog.clickOnCancelOnTop();
 
-        then: "dialog should not be displayed"
+        then: "dialog should be closed"
         !sortContentDialog.isDisplayed();
     }
 
-    def "GIVEN existing folder without children WHEN the folder has been selected  THEN 'Sort' button should be disabled"()
+    def "GIVEN existing folder without children WHEN the folder has been selected  THEN 'Sort'button should be disabled in the browse toolbar"()
     {
         given: "existing folder without children"
         PARENT_FOLDER = buildFolderContent( "folder", "sort-test" );
@@ -123,7 +110,7 @@ class SortContentDialogSpec
         saveScreenshot( "default_sorting" );
     }
 
-    def "GIVEN parent folder is selected WHEN sort dialog is opened THEN default sorting should be present on the dialog"()
+    def "GIVEN parent folder is selected WHEN sort dialog is opened THEN default sorting should be present in the dialog"()
     {
         given: "the parent folder is selected"
         findAndSelectContent( PARENT_FOLDER.getName() );
@@ -131,15 +118,12 @@ class SortContentDialogSpec
 
         and: "child content has been added"
         addContent( childFolder );
-        contentBrowsePanel.doClearSelection();
 
-        when: "parent folder has been selected and 'Sort' dialog is opened"
-        findAndSelectContent( PARENT_FOLDER.getName() );
-        and: "and 'Sort' dialog is opened"
+        when: "parent folder is selected and 'Sort' dialog has been opened"
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort();
-        saveScreenshot( "default_sorting" );
+        saveScreenshot( "sort_child_folder_deleted" );
 
-        then: "default sorting should be present on the dialog"
+        then: "default sorting should be present in the dialog"
         sortContentDialog.getCurrentSortingName() == SortMenuItem.MODIFIED_DATE.getValue();
     }
 

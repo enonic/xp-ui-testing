@@ -732,9 +732,10 @@ public class ContentBrowsePanel
 
     public SortContentDialog clickToolbarSort()
     {
-        if ( !isElementDisplayed( SORT_BUTTON_XPATH ) )
+        boolean isEnabled = this.waitUntilElementEnabledNoException( By.xpath( SORT_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isEnabled )
         {
-            clickOnFoldButton();
+            throw new TestFrameworkException( "Browse toolbar - Sort button - should be enabled!" );
         }
         sortButton.click();
         sleep( 500 );
