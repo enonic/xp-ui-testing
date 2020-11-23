@@ -12,12 +12,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 5/29/2017.
- *
- * Tasks:
- *
- * Verifies:
- * https://github.com/enonic/xp/issues/5023
- * Mobile(480x800) ImageEditor dialog- buttons 'Apply' and 'Close' are not available #5023
  * */
 @Stepwise
 @Ignore
@@ -34,7 +28,7 @@ class ContentBrowsePanel_480_800_Spec
 
     def "GIVEN browser dimension is 480x800 WHEN content grid is opened THEN required buttons should be present on the toolbar"()
     {
-        expect: "'More' button should be present on the toolbar"
+        expect: "'More' button should be present in the toolbar"
         contentBrowsePanel.isMoreButtonPresent();
         saveScreenshot( "480_800_1" );
 

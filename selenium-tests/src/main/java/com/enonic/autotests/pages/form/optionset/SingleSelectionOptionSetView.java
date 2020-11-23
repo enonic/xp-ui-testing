@@ -1,5 +1,6 @@
 package com.enonic.autotests.pages.form.optionset;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -17,9 +18,9 @@ public class SingleSelectionOptionSetView
     private final String CONTAINER =
         "//div[contains(@id,'FormView')]//div[contains(@id,'FormOptionSetView') and descendant::div[text()='Single selection']]";
 
-    private final String RADIO_1 = CONTAINER + "//span[contains(@id,'RadioButton') and child::label[text()='Option 1']]";
+    private final String RADIO_1 = CONTAINER + "//span[contains(@id,'RadioButton') and child::label[text()='Option 1']]//label";
 
-    private final String RADIO_2 = CONTAINER + "//span[contains(@id,'RadioButton') and child::label[text()='Option 2']]";
+    private final String RADIO_2 = CONTAINER + "//span[contains(@id,'RadioButton') and child::label[text()='Option 2']]//label";
 
     private final String OPTION_SET_NAME_INPUT =
         CONTAINER + "//div[contains(@id,'InputView') and descendant::div[text()='Name']]" + TEXT_INPUT;
@@ -53,6 +54,7 @@ public class SingleSelectionOptionSetView
 
     public SingleSelectionOptionSetView clickOnSecondRadio()
     {
+        //findElements( By.xpath(RADIO_2) );
         radio2.click();
         sleep( 200 );
         return this;
