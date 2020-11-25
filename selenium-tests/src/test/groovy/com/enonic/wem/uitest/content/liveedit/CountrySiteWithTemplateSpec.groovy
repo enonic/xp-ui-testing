@@ -163,7 +163,7 @@ class CountrySiteWithTemplateSpec
         sleep( 1000 );
         saveScreenshot( "USA_City" )
         contentBrowsePanel.clickToolbarPreview();
-        sleep( 1000 );
+        sleep( 1200 );
 
         then: "expected header should be in page source "
         String source = TestUtils.getPageSource( getSession(), COUNTRY_REGION_TITLE );
@@ -221,8 +221,8 @@ class CountrySiteWithTemplateSpec
         source.contains( USA_DESCRIPTION );
     }
 
-    @Ignore
-    def "GIVEN site is modified WHEN site opened in 'master' THEN old data for city-content should be displayed"()
+
+    def "GIVEN site is modified WHEN site opened in 'master' THEN data for city-content should not be updated in master"()
     {
         given: "city content was changed and content is 'Modified' now"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
@@ -239,10 +239,9 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + SF_POPULATION );
     }
 
-    @Ignore
-    def "GIVEN modified site has been 'Published' WHEN site has been opened in 'master' THEN new population should be displayed"()
+    def "GIVEN modified site has been 'Published' WHEN site has been opened in 'master' THEN population should be updated"()
     {
-        given: "city content changed and 'Published'"
+        given: "updated city content has been 'Published'"
         ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
         wizard.clickOnMarkAsReadyAndDoPublish();
         contentBrowsePanel.waitForNotificationMessage();
