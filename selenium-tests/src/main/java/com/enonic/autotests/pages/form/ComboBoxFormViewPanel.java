@@ -91,6 +91,11 @@ public class ComboBoxFormViewPanel
         return optionFilterInput.isEnabled();
     }
 
+    public boolean isOptionFilterInputDisplayed()
+    {
+        return optionFilterInput.isDisplayed();
+    }
+
     public List<String> getSelectedOptionValues()
     {
         return getDisplayedStrings( By.xpath( FORM_VIEW + "//div[@class='selected-option']//div[@class='option-value']" ) );

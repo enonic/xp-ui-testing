@@ -66,13 +66,13 @@ class Occurrences_ComboBox_1_1_Spec
         and: "red circle should be displayed on the wizard page"
         wizard.isContentInvalid();
 
-        and: "button 'Publish' should be disabled"
+        and: "'Publish' menu item should be disabled"
         !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
     }
 
     def "GIVEN ComboBox-content (1:1) with one option is saved WHEN the content has been opened THEN one selected option should be present and options filter input is disabled"()
     {
-        given: "ComboBox-content (1:1) with one option has been added"
+        given: "ComboBox-content (1:1) with one selected option has been added"
         content_with_opt = buildComboBox1_1_Content( 1 );
         selectSitePressNew( content_with_opt.getContentTypeName() ).typeData(
             content_with_opt ).save().closeBrowserTab().switchToBrowsePanelTab();
@@ -82,14 +82,14 @@ class Occurrences_ComboBox_1_1_Spec
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
         List<String> optValues = formViewPanel.getSelectedOptionValues();
 
-        then: "one option value  present in form view"
+        then: "one selected option should be present in form view"
         optValues.size() == 1;
 
-        and: "option with correct text present"
+        and: "expected option should be displayed"
         optValues.get( 0 ) == "option A";
 
-        and: "options filter input should be disabled, because the content has a maximum number of options"
-        !formViewPanel.isOptionFilterInputEnabled();
+        and: "options filter input should not be displayed, because the content has a maximum number of options"
+        !formViewPanel.isOptionFilterInputDisplayed();
 
         and: "content is valid, because option is selected"
         !formViewPanel.isValidationMessagePresent();

@@ -163,7 +163,7 @@ class ContentUnpublishDialog_Spec
     }
 
     //test verifies the XP-3584
-    def "GIVEN two existing 'New' contents WHEN both are selected in the BrowsePanel THEN 'Unpublish' menu item should be disabled"()
+    def "GIVEN two existing 'New' content WHEN both are selected in the BrowsePanel THEN 'Unpublish' menu item should be disabled"()
     {
         given: "first content is added"
         Content first = buildFolderContent( "unpublish", "test unpublish menu item" );
