@@ -18,8 +18,10 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class ContentPublishDialog
     extends Application
 {
-    public static final String DIALOG_ISSUE_MESSAGE_INVALID_CONTENT =
+    public static final String DIALOG_ISSUE_TOOLTIP_INVALID_CONTENT =
         "Invalid content cannot be published, remove from list or fix this issue";
+
+    public static final String DIALOG_INVALID_CONTENT = "Invalid items!";
 
     public static final String DIALOG_TITLE = "Publishing Wizard";
 
@@ -60,8 +62,8 @@ public class ContentPublishDialog
 
     private String STATUS_OF_ITEM_TO_PUBLISH = ITEM_ROW_TO_PUBLISH_BY_DISPLAY_NAME + "//div[contains(@class,'status')]";
 
-    private final String PUBLISH_ISSUES_TEXT_PART2 =
-        DIALOG_CONTAINER + "//div[contains(@id,'PublishIssuesStateBar')]//span[@class='part2']";
+    private final String PUBLISH_ISSUES_INVALID_CONTENT = DIALOG_CONTAINER +
+        "//div[contains(@id,'PublishIssuesStateBar')]//h6[ child::div[@class='state-icon invalid']]//span[@class='part1']";
 
     private final String STATUS_OF_CONTENT = ITEM_LIST +
         "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]/div[contains(@class,'status')][2]";
@@ -172,14 +174,14 @@ public class ContentPublishDialog
         return getDisplayedString( status );
     }
 
-    public String getDialogIsseesMessage()
+    public String getInvalidContentMessage()
     {
-        if ( !isElementDisplayed( PUBLISH_ISSUES_TEXT_PART2 ) )
+        if ( !isElementDisplayed( PUBLISH_ISSUES_INVALID_CONTENT ) )
         {
             saveScreenshot( "err_publish_dlg_subheader" );
-            throw new TestFrameworkException( "Publish dialog: subheader was not found!" );
+            throw new TestFrameworkException( "Publish dialog: Invalid Content warning was not found!" );
         }
-        return getDisplayedString( PUBLISH_ISSUES_TEXT_PART2 );
+        return getDisplayedString( PUBLISH_ISSUES_INVALID_CONTENT );
     }
 
     public List<String> getNamesOfContentsToPublish()

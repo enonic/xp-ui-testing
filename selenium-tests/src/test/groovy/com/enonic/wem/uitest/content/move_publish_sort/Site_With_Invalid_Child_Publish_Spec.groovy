@@ -18,7 +18,7 @@ class Site_With_Invalid_Child_Publish_Spec
     @Shared
     Content CHILD;
 
-    def "WHEN site has been added AND not valid child added THEN the site should be present in the grid"()
+    def "Precondition: new site with a child content should be added"()
     {
         given: "site has been added"
         SITE = buildSiteWithApps( APP_CONTENT_TYPES_DISPLAY_NAME );
@@ -49,11 +49,11 @@ class Site_With_Invalid_Child_Publish_Spec
         then: "'Publish now' button should be disabled, because its child is not valid"
         !publishWizard.isPublishButtonEnabled();
 
-        and: "expected warning should be displayed on the wizard"
-        publishWizard.getDialogIsseesMessage() == ContentPublishDialog.DIALOG_ISSUE_MESSAGE_INVALID_CONTENT;
+        and: "expected warning should be displayed in the wizard"
+        publishWizard.getInvalidContentMessage() == ContentPublishDialog.DIALOG_INVALID_CONTENT;
     }
 
-    def "GIVEN existing site with not valid child WHEN the invalid content has been removed from the dialog THEN 'Publish' button should be enabled"()
+    def "GIVEN existing site with not valid child WHEN the invalid content has been removed in the dialog THEN 'Publish' button gets enabled"()
     {
         given: "existing site with not valid child"
         findAndSelectContent( SITE.getName() );
@@ -70,7 +70,7 @@ class Site_With_Invalid_Child_Publish_Spec
         publishWizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN existing site with not valid child  AND Publish wizard opened WHEN 'Include Child' icon has been clicked twice THEN 'Publish' button should be enabled"()
+    def "GIVEN existing site with not valid child  AND Publish wizard is opened WHEN 'Include Child' icon has been clicked twice THEN 'Publish' button should be enabled"()
     {
         given: "existing site with not valid child"
         findAndSelectContent( SITE.getName() );
