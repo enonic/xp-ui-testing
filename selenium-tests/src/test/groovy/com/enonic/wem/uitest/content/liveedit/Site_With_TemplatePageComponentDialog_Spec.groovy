@@ -40,9 +40,9 @@ class Site_With_TemplatePageComponentDialog_Spec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    def "GIVEN existing site with a template is opened WHEN 'Show Component View' in wizard-toolbar has been clicked THEN 'Page Component dialog appears'"()
+    def "GIVEN existing site with a template is opened WHEN 'Show Component View' button has been clicked THEN 'Page Component dialog appears'"()
     {
-        given: "existing Site based on 'My First App'"
+        given: "existing site is filtered"
         filterPanel.typeSearchText( SITE.getName() );
 
         when: "the site is opened"
@@ -58,7 +58,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         then: "'Page Components View' should be opened"
         dialog.isOpened();
 
-        and: "correct title should be displayed on the view"
+        and: "correct title should be displayed in the dialog"
         dialog.getTextFromHeader() == PageComponentsViewDialog.DIALOG_HEADER;
 
         and: "one component should be displayed"

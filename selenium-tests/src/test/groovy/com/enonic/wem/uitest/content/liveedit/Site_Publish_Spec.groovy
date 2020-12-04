@@ -26,7 +26,7 @@ class Site_Publish_Spec
     @Shared
     String TEST_TEXT = "test text";
 
-    def "GIVEN creating of the new Site with a controller WHEN site has been published THEN 'Published' status should be displayed in the grid"()
+    def "GIVEN new site is created WHEN site has been published THEN 'Published' status should be displayed in the grid"()
     {
         given: "data typed and saved and the wizard is closed"
         SITE = buildMyFirstAppSite( "site" );
@@ -43,7 +43,7 @@ class Site_Publish_Spec
         contentBrowsePanel.getContentStatus( SITE.getName() ) == ContentStatus.PUBLISHED.getValue();
     }
 
-    def "GIVEN existing 'Published' site WHEN a text component has been added THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'Published' site WHEN a text component has been added THEN status in the wizard-page gets 'Modified'"()
     {
         given: "existing 'Published' site"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
@@ -57,15 +57,15 @@ class Site_Publish_Spec
         wizard.switchToDefaultWindow();
         pageComponentsView.doCloseDialog();
 
-        and: "site was saved in the wizard"
+        and: "site has been saved"
         wizard.save();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "status on the wizard-page is getting 'Modified'"
+        then: "status gets 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'modified' site  has been published WHEN text component was removed THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'modified' site  has been published WHEN text component has been removed THEN status in the wizard-page gets 'Modified'"()
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
@@ -76,55 +76,55 @@ class Site_Publish_Spec
         pageComponentsView.openMenu( TEST_TEXT ).selectMenuItem( "Remove" );
         pageComponentsView.doCloseDialog();
 
-        and: "site has been saved in the wizard"
+        and: "site has been saved"
         wizard.save();
         sleep( 500 );
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "status on the wizard-page is getting 'Modified'"
+        then: "status gets 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'modified' site  has been published WHEN display name was changed THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'Published' site WHEN display name has been updated THEN the site gets 'Modified'"()
     {
-        given: "existing 'modified' site  has been published"
+        given: "existing 'modified' site has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishButton();
 
-        when: "display name was changed"
+        when: "display name has been updated"
         wizard.typeDisplayName( "new name" )
 
-        and: "site was saved in the wizard"
+        and: "site has been saved"
         wizard.save();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "status on the wizard-page is getting 'Modified'"
+        then: "status gets 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'modified' site  has been published WHEN language was changed THEN status on the wizard-page is getting 'Modified'"()
+    def "GIVEN existing 'Published' site WHEN language has been updated THEN status gets 'Modified'"()
     {
         given: "existing 'modified' site  has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         wizard.clickOnMarkAsReadyAndDoPublish();
         saveScreenshot( "site_published_in_wizard" );
 
-        when: "language was changed"
+        when: "language has been changed"
         SettingsWizardStepForm settings = wizard.clickOnSettingsTabLink();
         settings.waitUntilDisplayed();
         settings.selectLanguage( ENGLISH_LANGUAGE );
 
-        and: "site was saved in the wizard"
+        and: "site has been saved"
         wizard.save();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "status on the wizard-page is getting 'Modified'"
+        then: "status gets 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 
-    def "GIVEN existing 'modified' site is opened AND it has been published WHEN new part has been inserted THEN status gets 'Modified'"()
+    def "GIVEN existing 'Published' site WHEN new part has been inserted THEN status gets 'Modified'"()
     {
-        given: "existing 'modified' site  has been published"
+        given: "existing 'modified' site has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
         wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
@@ -141,7 +141,7 @@ class Site_Publish_Spec
         wizard.switchToDefaultWindow();
         wizard.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        then: "status in the wizard-page gets 'Modified'"
+        then: "status gets 'Modified'"
         wizard.getStatus() == ContentStatus.MODIFIED.getValue();
     }
 }

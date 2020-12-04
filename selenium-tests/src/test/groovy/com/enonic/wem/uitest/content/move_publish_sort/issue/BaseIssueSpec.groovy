@@ -109,11 +109,11 @@ class BaseIssueSpec
         String siteName = NameHelper.uniqueName( "site" )
         PropertyTree data = new PropertyTree();
         data.addString( SiteFormViewPanel.APP_KEY, APP_CONTENT_TYPES_DISPLAY_NAME );
-        data.addStrings( "description", "all content types  site " )
+        data.addStrings( "description", "all content types site " )
         Content site = Content.builder().
             parent( ContentPath.ROOT ).
             name( siteName ).
-            displayName( "site-contenttypes-based" ).
+            displayName( "site-contenttypes" ).
             parent( ContentPath.ROOT ).
             contentType( "Site" ).data( data ).
             build();

@@ -44,7 +44,7 @@ class PortalContentCreating_Spec
     Content SITE;
 
 
-    def "GIVEN existing Site based on 'My First App' WHEN template with the 'country' region as a controller was added THEN new template should be listed"()
+    def "GIVEN new site is added WHEN template with the 'country' controller has been added THEN new template should be listed"()
     {
         given: "existing Site based on 'My First App'"
         SITE = buildMyFirstAppSite( "mysite" );
@@ -61,8 +61,6 @@ class PortalContentCreating_Spec
         when: "'Templates' folder selected and new page-template is added"
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE );
-
-        and: "the template is saved"
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );
 
@@ -71,12 +69,12 @@ class PortalContentCreating_Spec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    def "GIVEN existing page-template is opened WHEN 'country region' controller selected and 'country' part inserted THEN correct page-sources should be present in the HTML"()
+    def "GIVEN existing page-template is opened WHEN 'country' part has been inserted THEN correct page-sources should be present in the HTML"()
     {
         given: "existing page-template is opened"
         ContentWizardPanel wizard = findAndSelectContent( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
-        when: " 'country region' controller selected and 'country' part inserted"
+        when: "'country region' controller selected and 'country' part inserted"
         PageComponentsViewDialog componentView = wizard.showComponentView();
         insertPart( componentView, "country", wizard, "City Creation" );
 
@@ -89,16 +87,15 @@ class PortalContentCreating_Spec
         source.contains( "City Creation/Update" );
     }
 
-    def "GIVEN new country-content is added  WHEN city-creation page opened AND 'SUBMIT' button pressed  AND city-content added as child into the country THEN new child content should be listed beneath the parent"()
+    def "GIVEN new country-content is added WHEN city-creation page has been opened AND new city created THEN new child content should be listed beneath the parent"()
     {
-        given: "new country-content added"
+        given: "new country-content has been added"
         NOR_CONTENT = buildCountry_Content( "Norway", NOR_DESCRIPTION, "7000000", SITE.getName() );
-
         ContentWizardPanel wizard = selectSitePressNew( NOR_CONTENT.getContentTypeName(), SITE.getName() );
         wizard.typeData( NOR_CONTENT ).save();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
-        when: "the submit button pressed and new city-content added as child into the country"
+        when: "the submit button pressed and new city-content has been added"
         contentBrowsePanel.doClearSelection();
         openResourceInDraft( SITE.getName() + "/" + NOR_CONTENT.getName() );
         saveScreenshot( "oslo-creation-page" );
@@ -120,7 +117,7 @@ class PortalContentCreating_Spec
         contentBrowsePanel.exists( OSLO_CITY_NAME );
     }
 
-    def "WHEN just created through the portal Oslo-content is opened  THEN correct location and population should be displayed"()
+    def "WHEN just created through the portal Oslo-content is opened THEN expected location and population should be displayed"()
     {
         when: "Oslo-content is opened"
         findAndSelectContent( "oslo" ).clickToolbarEdit()
