@@ -28,7 +28,7 @@ public class ContentPublishDialog
     private final String TITLE_XPATH = DIALOG_CONTAINER + "//h2[@class='title']";
 
     private final String PUBLISH_BUTTON =
-        DIALOG_CONTAINER + "//button[contains(@id,'DialogButton') and child::span[contains(.,'Publish Now')]]";
+        DIALOG_CONTAINER + "//button[contains(@id,'ActionButton') and child::span[contains(.,'Publish Now')]]";
 
     private final String CANCEL_BUTTON_TOP = DIALOG_CONTAINER + APP_CANCEL_BUTTON_TOP;
 

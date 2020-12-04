@@ -13,7 +13,7 @@ class ImageEditor_Spec
 {
     def "GIVEN image content is opened WHEN 'Crop' button has been pressed THEN 'Image Editor' dialog appears with required control elements"()
     {
-        given: "content wizard opened"
+        given: "an image is opened"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = new ImageEditor( getSession() );
@@ -47,7 +47,7 @@ class ImageEditor_Spec
 
     def "GIVEN image content is opened WHEN 'Crop' button has been pressed THEN image should be cropped AND 'Reset Mask' link appears in the toolbar "()
     {
-        given: "content wizard is opened"
+        given: "an image is opened"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = new ImageEditor( getSession() );
@@ -70,7 +70,7 @@ class ImageEditor_Spec
 
     def "GIVEN a cropped image WHEN 'Reset Mask' has been pressed THEN the button gets hidden AND initial size should be restored"()
     {
-        given: "content wizard is opened"
+        given: "an image is opened"
         findAndSelectContent( IMPORTED_IMAGE_BOOK_NAME ).clickToolbarEdit().waitUntilWizardOpened();
         ImageFormViewPanel imageFormViewPanel = new ImageFormViewPanel( getSession() );
         ImageEditor imageEditor = new ImageEditor( getSession() );
@@ -172,7 +172,6 @@ class ImageEditor_Spec
 
         when: "image opened again"
         contentBrowsePanel.clickToolbarEdit().waitUntilWizardOpened();
-
 
         then: "'Reset' red-button displayed on the page"
         imageFormViewPanel.isButtonResetPresent();

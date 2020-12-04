@@ -16,7 +16,7 @@ class ImageEditor_Zoom_Reset_Spec
     extends BaseContentSpec
 {
 
-    def "GIVEN 'Image Editor' opened WHEN image has been zoomed THEN 'Reset' button should appear"()
+    def "GIVEN 'Image Editor' is opened WHEN image has been zoomed THEN 'Reset' button should appear"()
     {
         given: "'Image Editor' dialog opened"
         findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
@@ -39,7 +39,7 @@ class ImageEditor_Zoom_Reset_Spec
         formViewPanel.isButtonResetPresent();
     }
 
-    def "GIVEN 'Image Editor' opened WHEN image has been zoomed AND Apply button pressed AND 'Close' button pressed THEN 'Alert' dialog with warning messages should appear"()
+    def "GIVEN 'Image Editor' is opened WHEN image has been zoomed AND Apply button pressed AND 'Close' button pressed THEN 'Alert' dialog with warning messages should appear"()
     {
         given: "'Image Editor' dialog opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
@@ -61,7 +61,7 @@ class ImageEditor_Zoom_Reset_Spec
         wizard.isAlertPresent();
     }
 
-    def "GIVEN 'Image Editor' opened WHEN image has been zoomed AND Apply button pressed AND Save AND 'Close' button pressed THEN Alert modal dialog should not appear"()
+    def "GIVEN 'Image Editor' is opened WHEN image has been zoomed AND Apply button pressed AND Save AND 'Close' button pressed THEN Alert modal dialog should not appear"()
     {
         given: "'Image Editor' dialog opened"
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_MAN2_IMAGE ).clickToolbarEdit().waitUntilWizardOpened();
