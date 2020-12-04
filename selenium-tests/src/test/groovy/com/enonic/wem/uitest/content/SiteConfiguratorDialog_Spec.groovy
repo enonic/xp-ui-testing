@@ -21,12 +21,12 @@ class SiteConfiguratorDialog_Spec
     @Shared
     String BACKGROUND_RED_COLOR_VALUE = "213, 147, 146"
 
-    def "GIVEN creating of new Site with 2 applications WHEN site was saved and wizard closed THEN new site should be present"()
+    def "WHEN site with 2 applications is added THEN new site should be present"()
     {
-        given: "creating of new Site with 2 applications"
+        given: "site with 2 applications is added"
         SITE = buildSiteWithApps( SIMPLE_SITE_APP, MY_FIRST_APP );
 
-        when: "data saved and wizard closed"
+        when: "the site has been opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE );
         PageTemplateFormViewPanel pageTemplateFormViewPanel = new PageTemplateFormViewPanel( getSession() );
 
@@ -41,20 +41,17 @@ class SiteConfiguratorDialog_Spec
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN existing site is opened WHEN the 'edit-button' on the selected application was clicked THEN configurator dialog with correct title should appear"()
+    def "GIVEN existing site is opened WHEN the 'edit-button' in the application has been clicked THEN site configurator dialog should loaded"()
     {
         given: "site is opened"
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
 
-        when: "edit button was clicked"
+        when: "edit button has been clicked"
         SiteConfiguratorDialog dialog = formViewPanel.openSiteConfigurationDialog( SIMPLE_SITE_APP );
 
-        then: "dialog is not null"
-        dialog != null;
-
-        and: "dialog should be opened"
+        then: "dialog should be loaded"
         dialog.isOpened();
 
         and: "correct title is displayed"
@@ -72,13 +69,13 @@ class SiteConfiguratorDialog_Spec
 
     def "GIVEN configurator dialog is opened WHEN red color was selected for the background THEN correct background color should be displayed in the page-editor"()
     {
-        given: "site was opened and configurator dialog is opened"
+        given: "site configurator dialog is opened"
         filterPanel.typeSearchText( SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog dialog = formViewPanel.openSiteConfigurationDialog( SIMPLE_SITE_APP );
 
-        when: "red color for background was selected "
+        when: "red color for background has been selected"
         dialog.selectBackgroundColor( BACKGROUND_COLOR )
         saveScreenshot( "page-background-selected" );
 
@@ -89,19 +86,19 @@ class SiteConfiguratorDialog_Spec
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         wizard.switchToLiveEditFrame();
 
-        then: "correct background color present in the page-editor"
+        then: "correct background color should be in the page-editor"
         liveFormPanel.getBackgroundColor().contains( BACKGROUND_RED_COLOR_VALUE );
     }
 
     def "GIVEN configurator dialog is opened WHEN if something is changed and 'Cancel' button has been pressed THEN 'Confirmation Dialog' should not be present"()
     {
-        given: "site was opened and configurator dialog is opened"
+        given: "site configurator dialog is opened"
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog dialog = formViewPanel.openSiteConfigurationDialog( SIMPLE_SITE_APP );
 
-        when: "red color for background was selected "
+        when: "red color for background has been selected "
         dialog.selectBackgroundColor( "Blue" );
 
         and: "Cancel button has been pressed"
