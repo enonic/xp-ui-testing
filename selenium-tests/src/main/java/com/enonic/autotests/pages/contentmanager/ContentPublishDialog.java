@@ -230,6 +230,7 @@ public class ContentPublishDialog
             saveScreenshot( NameHelper.uniqueName( "err_publish_button" ) );
             throw new TestFrameworkException( "publish button was not found!" );
         }
+        waitUntilElementEnabledNoException( By.xpath( PUBLISH_BUTTON ), EXPLICIT_NORMAL );
         if ( !publishButton.isEnabled() )
         {
             saveScreenshot( NameHelper.uniqueName( "err_publish_button_disabled" ) );
