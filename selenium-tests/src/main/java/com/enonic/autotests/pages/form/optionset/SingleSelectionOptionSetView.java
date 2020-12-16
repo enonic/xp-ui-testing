@@ -16,7 +16,7 @@ public class SingleSelectionOptionSetView
     extends Application
 {
     private final String CONTAINER =
-        "//div[contains(@id,'FormView')]//div[contains(@id,'FormOptionSetView') and descendant::div[text()='Single selection']]";
+        "//div[contains(@id,'FormView')]//div[contains(@id,'FormOptionSetView') and descendant::p[text()='Single selection']]";
 
     private final String RADIO_1 = CONTAINER + "//span[contains(@id,'RadioButton') and child::label[text()='Option 1']]//label";
 
@@ -54,7 +54,7 @@ public class SingleSelectionOptionSetView
 
     public SingleSelectionOptionSetView clickOnSecondRadio()
     {
-        //findElements( By.xpath(RADIO_2) );
+        waitUntilVisible( By.xpath( RADIO_2 ) );
         radio2.click();
         sleep( 200 );
         return this;

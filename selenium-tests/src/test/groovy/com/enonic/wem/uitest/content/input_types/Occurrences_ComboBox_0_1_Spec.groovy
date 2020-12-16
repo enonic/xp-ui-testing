@@ -54,8 +54,8 @@ class Occurrences_ComboBox_0_1_Spec
         and: "option with expected text should be displayed"
         optValues.get( 0 ) == "option A";
 
-        and: "options filter input should be disabled"
-        !formViewPanel.isOptionFilterInputEnabled();
+        and: "options filter input should not be displayed"
+        !formViewPanel.isOptionFilterInputDisplayed();
     }
 
     def "GIVEN existing ComboBox 0:1 with (one selected option) is opened WHEN the content has been published THEN content's status is getting 'Published'"()
@@ -73,7 +73,7 @@ class Occurrences_ComboBox_0_1_Spec
         contentBrowsePanel.getContentStatus( content_with_opt.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
-    def "GIVEN existing ComboBox-content(0:1) AND selected option has been removed WHEN content has been re-opened THEN options should not be selected on the page"()
+    def "GIVEN existing ComboBox-content(0:1) is opened AND selected option has been removed WHEN content has been reopened THEN the option should not be selected in the combobox"()
     {
         given: "content with one option is opened "
         ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_with_opt );

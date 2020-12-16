@@ -99,7 +99,7 @@ class OptionSet_Spec
         !contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing 'Option Set' is opened WHEN option in 'Multi selection' has been clicked AND it is saved without required inputs THEN red icon should be displayed on the wizard page"()
+    def "GIVEN existing 'Option Set' is opened WHEN option in 'Multi selection' has been clicked AND it is saved without required inputs THEN red icon should be displayed, this content is invalid"()
     {
         given: "existing 'Option Set' is opened"
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
@@ -116,7 +116,7 @@ class OptionSet_Spec
         wizard.save();
         saveScreenshot( "opt_set_multi_invalid" );
 
-        then: "red icon should be displayed on the wizard page"
+        then: "red icon should be displayed, this content is invalid"
         wizard.isContentInvalid();
     }
 

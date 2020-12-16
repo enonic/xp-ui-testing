@@ -3,6 +3,7 @@ package com.enonic.autotests.pages.form.optionset;
 import org.openqa.selenium.By;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.LoaderComboBox;
 
@@ -15,9 +16,9 @@ public class MultiSelectionOptionSetView
     extends Application
 {
     private final String CONTAINER =
-        "//div[contains(@id,'FormView')]//div[contains(@id,'FormOptionSetView') and descendant::div[text()='Multi selection']]";
+        "//div[contains(@id,'FormView')]//div[contains(@id,'FormOptionSetView') and descendant::p[text()='Multi selection']]";
 
-    private final String OPTION_CHECKBOX = CONTAINER + CHECKBOX_ELEMENT;
+    private final String OPTION_CHECKBOX = CONTAINER + CHECKBOX_ELEMENT + "/label";
 
     public MultiSelectionOptionSetView( final TestSession session )
     {
@@ -35,6 +36,10 @@ public class MultiSelectionOptionSetView
         {
             getDisplayedElements( By.xpath( OPTION_CHECKBOX ) ).get( number ).click();
             sleep( 1000 );
+        }
+        else
+        {
+            throw new TestFrameworkException( "OptionSet error when clicking the checkbox in multi selection form" );
         }
         return this;
     }

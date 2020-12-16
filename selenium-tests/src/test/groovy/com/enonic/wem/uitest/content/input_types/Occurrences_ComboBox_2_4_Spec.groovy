@@ -118,8 +118,8 @@ class Occurrences_ComboBox_2_4_Spec
         String[] options = ["option A", "option B", "option C", "option D"];
         optValues.containsAll( options.toList() );
 
-        and: "options filter input should be disabled, because this content have a maximum options"
-        !formViewPanel.isOptionFilterInputEnabled();
+        and: "options filter input should not be displayed, because 4 options are selected"
+        !formViewPanel.isOptionFilterInputDisplayed();
     }
 
     def "WHEN content with 2 selected option has been published THEN the content should be with 'Published'-status"()

@@ -28,25 +28,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.exists( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN new folder-wizard is opened WHEN data has been saved THEN the folder should be present in the grid"()
-    {
-        given: "wizard is opened"
-        Content rootContent = buildFolderContent( "folder", "test folder" );
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( rootContent.getContentTypeName() ).
-            typeData( rootContent );
-
-        when: "the data has been saved"
-        wizard.save();
-        and: "go to browse panel"
-        wizard.switchToBrowsePanelTab();
-        and: "the name of the content is typed on the search input"
-        filterPanel.typeSearchText( rootContent.getName() );
-
-        then: "the folder should be present in the grid"
-        contentBrowsePanel.exists( rootContent.getName() );
-    }
-
-    def "GIVEN creating of new child beneath an existing unexpanded folder WHEN Save has been pressed AND wizard closed THEN parent folder should be collapsed"()
+    def "WHEN existing folder is collapsed and a child folder has been added THEN parent folder remains collapsed"()
     {
         given: "creating new Content beneath an existing unexpanded folder"
         Content childContent = buildFolderContentWithParent( "folder", "child-folder1", PARENT_FOLDER.getName() );
@@ -62,7 +44,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         !contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN creating of new child beneath an existing unexpanded WHEN content has been saved THEN parent should still be unexpanded"()
+    def "WHEN existing folder is unexpanded and a child folder has been saved THEN parent folder remains unexpanded"()
     {
         given: "creating new Content beneath an existing unexpanded folder"
         Content childContent = buildFolderContentWithParent( "folder", "child-folder2", PARENT_FOLDER.getName() );
@@ -70,7 +52,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( childContent.getContentTypeName() ).
             typeData( childContent );
 
-        when: "child content saved and tab with the grid is switched"
+        when: "child folder has been saved"
         wizard.save();
         and: "go to browse panel"
         wizard.switchToBrowsePanelTab();
@@ -79,9 +61,9 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         !contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN existing expanded folder is selected WHEN child content was added and wizard closed THEN parent folder should be expanded"()
+    def "GIVEN existing expanded folder is selected WHEN child content has been added THEN parent folder should be expanded"()
     {
-        given: "creating of new content beneath the existing expanded folder"
+        given: "select the parent folder and open new wizard"
         Content childContent = buildFolderContentWithParent( "folder", "child-folder3", PARENT_FOLDER.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( PARENT_FOLDER.getName() );
         contentBrowsePanel.expandContent( PARENT_FOLDER.getPath() );
@@ -97,10 +79,10 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
-    def "GIVEN existing child content is opened WHEN the name has been changed THEN the content should be listed with its new name"()
+    def "GIVEN existing child content is opened WHEN the name has been updated THEN the content should be listed with its new name"()
     {
         given: "new child content has been added"
-        Content contentToEdit = buildFolderContentWithParent( "edit-name", "child-folder5", PARENT_FOLDER.getName() );
+        Content contentToEdit = buildFolderContentWithParent( "folder", "child-folder5", PARENT_FOLDER.getName() );
         findAndSelectContent( PARENT_FOLDER.getName() );
         addContent( contentToEdit );
         contentBrowsePanel.doClearSelection();
@@ -120,7 +102,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
     def "GIVEN existing child content is opened WHEN display name has been changed THEN the content should be listed with its new displayName"()
     {
         given: "new child folder has been added"
-        Content contentToEdit = buildFolderContentWithParent( "edit-displayname", "child-folder6", PARENT_FOLDER.getName() );
+        Content contentToEdit = buildFolderContentWithParent( "folder", "child-folder6", PARENT_FOLDER.getName() );
         findAndSelectContent( PARENT_FOLDER.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( contentToEdit.getContentTypeName() );
         wizard.typeData( contentToEdit ).save().closeBrowserTab().switchToBrowsePanelTab();

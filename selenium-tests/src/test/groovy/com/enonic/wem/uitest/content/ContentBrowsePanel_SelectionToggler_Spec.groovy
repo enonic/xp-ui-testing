@@ -8,21 +8,21 @@ import com.enonic.autotests.pages.Application
 class ContentBrowsePanel_SelectionToggler_Spec
     extends BaseContentSpec
 {
-    def "GIVEN existing folder WHEN the row has been clicked THEN the 'selection toggler' should not be displayed"()
+    def "WHEN  existing folder has been highlighted THEN the 'selection toggler' should not be displayed"()
     {
         given: "content grid is opened"
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
-        when: "the row has been clicked and content is selected"
-        sleep(1000);
+        when: "the row has been highlighted"
+        sleep( 1000 );
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
-        sleep(1000);
+        sleep( 1000 );
 
         then: "the 'selection toggler' should not be displayed"
         !contentBrowsePanel.isSelectionTogglerDisplayed();
     }
 
-    def "GIVEN existing folder  WHEN checkbox has been clicked and the folder is selected THEN the 'selection toggler' should be displayed"()
+    def "WHEN existibg folder has been checked THEN the 'selection toggler' should be displayed"()
     {
         when: "checkbox is checked and existing content is selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
@@ -37,7 +37,7 @@ class ContentBrowsePanel_SelectionToggler_Spec
         contentBrowsePanel.getNumberInSelectionToggler() == "1";
     }
 
-    def "GIVEN existing folder is selected WHEN 'Show Selected Items' has been clicked THEN the button should be active"()
+    def "GIVEN existing folder has been checked WHEN 'Show Selected Items' has been clicked THEN grid should be filterd"()
     {
         when: "checkbox is checked and existing content is selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
@@ -51,7 +51,7 @@ class ContentBrowsePanel_SelectionToggler_Spec
         and: "the 'Show Selected Items' button should be active"
         contentBrowsePanel.waitUntilSelectionTogglerActive();
 
-        and: "correct number of selected contents should be displayed in the circle"
+        and: "1 number should be displayed in the circle"
         contentBrowsePanel.getNumberInSelectionToggler() == "1";
 
         and: "only one content should be present in the grid"
@@ -60,16 +60,16 @@ class ContentBrowsePanel_SelectionToggler_Spec
         names.get( 0 ).contains( IMPORTED_FOLDER_NAME );
     }
 
-    def "GIVEN content grid id opened WHEN two checkboxes have been clicked THEN expected number should be displayed in the 'circle'"()
+    def "WHEN two checkboxes have been clicked THEN expected number should be displayed in the 'circle'"()
     {
         given: "content grid is opened"
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
 
         when: "two checkboxes have been clicked"
-        sleep(1000);
+        sleep( 1000 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 0 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 1 );
-        sleep(1000);
+        sleep( 1000 );
 
         then: "the 'Show Selected Items' button should be not active"
         !contentBrowsePanel.isSelectionTogglerActive();
@@ -82,7 +82,7 @@ class ContentBrowsePanel_SelectionToggler_Spec
     {
         given: "two items are checked"
         contentBrowsePanel.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        sleep(1000);
+        sleep( 1000 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 0 );
         contentBrowsePanel.clickCheckboxAndSelectRow( 1 );
 
