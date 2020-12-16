@@ -20,7 +20,7 @@ public class ConfirmContentDeleteDialog
 {
     public static final String DIALOG_HEADER = "Confirm delete";
 
-    private final String DIALOG_CONTAINER = "//div[contains(@id,'ConfirmContentDeleteDialog')]";
+    private final String DIALOG_CONTAINER = "//div[contains(@id,'ConfirmValueDialog')]";
 
     private final String DIALOG_HEADER_XPATH = "div[contains(@id,'ModalDialogHeader')]";
 
@@ -28,7 +28,7 @@ public class ConfirmContentDeleteDialog
 
     private final String CANCEL_BUTTON_BOTTOM = DIALOG_CONTAINER + "//button[contains(@class,'cancel-button-bottom')]";
 
-    private final String CONFIRM_BUTTON = DIALOG_CONTAINER + "//button[contains(@class,'confirm-delete-action')]";
+    private final String CONFIRM_BUTTON = DIALOG_CONTAINER + "//button[contains(@class,'confirm-value-action')]";
 
     private final String DIALOG_CONTENT_PANEL = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogContentPanel')]";
 

@@ -42,7 +42,7 @@ public class NewContentDialog
 
     private final String AVAILABLE_CONTENT_TYPES = CONTAINER + "//ul[contains(@id,'FilterableItemsList')]" + "//li" + P_NAME;
 
-    private final String UPLOAD_FILE_BUTTON = CONTAINER + "//div[@class='upload-button']";
+    private final String UPLOAD_FILE_BUTTON = CONTAINER + "//button[contains(@id,'upload-button') and contains(@class,'upload-button')]";
 
     private final String MOST_POPULAR_BLOCK = CONTAINER + "//div[contains(@id,'MostPopularItemsBlock')]";
 

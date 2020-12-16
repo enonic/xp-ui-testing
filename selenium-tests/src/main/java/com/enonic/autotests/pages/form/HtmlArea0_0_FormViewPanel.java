@@ -18,7 +18,7 @@ public class HtmlArea0_0_FormViewPanel
     extends BaseHtmlAreaFormViewPanel
 {
 
-    private final String REMOVE_AREA_BUTTON_XPATH = FORM_VIEW + "//div[contains(@id,'HtmlArea')]//a[@class='remove-button']";
+    private final String REMOVE_AREA_BUTTON_XPATH = FORM_VIEW + "//div[contains(@id,'HtmlArea')]//button[@class='remove-button']";
 
     public HtmlArea0_0_FormViewPanel( final TestSession session )
     {
