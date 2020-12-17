@@ -15,7 +15,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public abstract class BaseTextLineFormViewPanel
     extends FormViewPanel
 {
-    protected final String REMOVE_TEXT_INPUT_BUTTON = FORM_VIEW + "//div[contains(@id,'TextLine')]//a[@class='remove-button']";
+    protected final String REMOVE_TEXT_INPUT_BUTTON = FORM_VIEW + "//div[contains(@id,'TextLine')]//button[@class='remove-button']";
 
     public BaseTextLineFormViewPanel( final TestSession session )
     {

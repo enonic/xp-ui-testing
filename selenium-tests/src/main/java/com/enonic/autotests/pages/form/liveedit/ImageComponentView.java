@@ -25,7 +25,7 @@ public class ImageComponentView
 
     private final String DROPDOWN_HANDLER = IMAGE_COMPONENT_VIEW + DROP_DOWN_HANDLE_BUTTON;
 
-    private final String UPLOAD_BUTTON = IMAGE_COMPONENT_VIEW + "//div[contains(@class,'upload-button')]";
+    private final String UPLOAD_BUTTON = IMAGE_COMPONENT_VIEW + "//button[contains(@class,'upload-button')]";
 
     private final String ERROR_IN_COMPONENT_MESSAGE = IMAGE_COMPONENT_VIEW + "//div[contains(@class,'error-container')]";
 
