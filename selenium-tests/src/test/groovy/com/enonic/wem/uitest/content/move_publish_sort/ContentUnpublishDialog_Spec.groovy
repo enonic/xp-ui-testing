@@ -28,7 +28,7 @@ class ContentUnpublishDialog_Spec
         PARENT_CONTENT = buildFolderContent( "parent", "content unpublish dialog" );
         addReadyContent( PARENT_CONTENT );
         and: "the content has been published"
-        findAndSelectContent( PARENT_CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();
+        findAndSelectContent( PARENT_CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
 
         when: "content selected and 'Unpublish' menu item is clicked"
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
@@ -125,7 +125,7 @@ class ContentUnpublishDialog_Spec
         findAndSelectContent( PARENT_CONTENT.getName() ).clickOnMarkAsReadySingleContent();
         addReadyContent( CHILD_CONTENT );
         and: "both contents should be published"
-        contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
+        contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
 
         when: "parent content was selected and 'Unpublish' menu item has been clicked"
         contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
@@ -153,7 +153,7 @@ class ContentUnpublishDialog_Spec
     {
         given: "existing parent and child has been published"
         findAndSelectContent( PARENT_CONTENT.getName() );
-        contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
+        contentBrowsePanel.clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
 
         when: "the parent is selected and 'Unpublish' dialog is opened"
         ContentUnpublishDialog contentUnPublishDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();

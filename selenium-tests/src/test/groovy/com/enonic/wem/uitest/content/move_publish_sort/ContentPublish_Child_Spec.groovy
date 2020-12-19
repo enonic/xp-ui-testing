@@ -33,8 +33,8 @@ class ContentPublish_Child_Spec
         childContent1 = buildFolderContentWithParent( "publish", "child-folder1", parentContent.getName() );
         addReadyContent( childContent1 );
 
-        when: "'publish' dialog is opened and parent content has been published without a child"
-        contentBrowsePanel.clickToolbarPublish().includeChildren( false ).clickOnPublishButton(); ;
+        when: "'publish' dialog is opened and parent content has been published without its child"
+        contentBrowsePanel.clickToolbarPublish().includeChildren( false ).clickOnPublishNowButton(); ;
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "child content should be with 'New' status"
@@ -89,7 +89,7 @@ class ContentPublish_Child_Spec
         ContentPublishDialog modalDialog = contentBrowsePanel.selectPublishTreeMenuItem();
 
         and: "'publish' button on modal dialog has been clicked"
-        modalDialog.clickOnPublishButton();
+        modalDialog.clickOnPublishNowButton();
 
         then: "child content should be 'online' now"
         filterPanel.typeSearchText( childContent1.getName() );
@@ -137,7 +137,7 @@ class ContentPublish_Child_Spec
     def "GIVEN existing parent folder with a child and status of both contents are 'DELETED' WHEN parent folder has been published THEN parent folder should be removed"()
     {
         when: "'deleted' parent folder has been published"
-        findAndSelectContent( parentContent.getName() ).clickToolbarPublish().clickOnPublishButton();
+        findAndSelectContent( parentContent.getName() ).clickToolbarPublish().clickOnPublishNowButton();
         String message = contentBrowsePanel.waitForNotificationMessage();
 
         then: "the folder should be removed"

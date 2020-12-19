@@ -289,7 +289,7 @@ public class ContentWizardPanel
     public ContentWizardPanel clickOnMarkAsReadyAndDoPublish()
     {
         clickOnMarkAsReadyButton();
-        clickOnWizardPublishButton().clickOnPublishButton();
+        clickOnPublishButton().clickOnPublishNowButton();
         return this;
     }
 
@@ -543,7 +543,8 @@ public class ContentWizardPanel
         return waitUntilVisibleNoException( By.xpath( TOOLBAR_PUBLISH_BUTTON_XPATH ), timeout );
     }
 
-    public ContentPublishDialog clickOnWizardPublishButton()
+    //Click on Default Publish... button in the toolbar
+    public ContentPublishDialog clickOnPublishButton()
     {
         if ( !waitForPublishButtonVisible( Application.EXPLICIT_QUICK ) )
         {

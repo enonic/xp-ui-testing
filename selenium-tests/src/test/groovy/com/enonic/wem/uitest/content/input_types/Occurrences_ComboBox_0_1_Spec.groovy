@@ -65,7 +65,7 @@ class Occurrences_ComboBox_0_1_Spec
 
         when: "the content has been published"
         wizard.showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
-        wizard.clickOnWizardPublishButton().clickOnPublishButton().waitForDialogClosed();
+        wizard.clickOnPublishButton().clickOnPublishNowButton().waitForDialogClosed();
         wizard.closeBrowserTab().switchToBrowsePanelTab(); ;
         filterPanel.typeSearchText( content_with_opt.getName() );
 

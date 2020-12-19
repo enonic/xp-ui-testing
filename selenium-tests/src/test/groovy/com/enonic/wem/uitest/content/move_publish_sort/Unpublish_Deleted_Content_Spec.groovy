@@ -26,7 +26,7 @@ class Unpublish_Deleted_Content_Spec
         addReadyContent( CONTENT );
 
         when: "the folder has been published"
-        findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();
+        findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
 
         then: "'Published' status should be displayed"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();
@@ -41,7 +41,7 @@ class Unpublish_Deleted_Content_Spec
         wizard.clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
 
         when: "'Unpublish' menu item has been clicked"
-        wizard.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
+        wizard.clic;
 
         then: "the content should be deleted"
         wizard.switchToBrowsePanelTab();

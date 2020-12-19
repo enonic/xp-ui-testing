@@ -191,7 +191,7 @@ class Occurrences_ImageSelector_0_0_Spec
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
         wizard.clickOnMarkAsReadyButton();
         and: "Publish button has been pressed"
-        wizard.clickOnWizardPublishButton().clickOnPublishButton();
+        wizard.clickOnPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         and: "wizard tab was closed"
         wizard.closeBrowserTab().switchToBrowsePanelTab();

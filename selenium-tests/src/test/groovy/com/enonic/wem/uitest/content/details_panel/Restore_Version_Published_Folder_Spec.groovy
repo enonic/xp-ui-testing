@@ -31,7 +31,7 @@ class Restore_Version_Published_Folder_Spec
 
         when: "the folder has been published"
         contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
-        contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
+        contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
         VersionHistoryWidget versionHistoryWidget = openVersionPanel();
         ContentVersionInfoView versionItem = versionHistoryWidget.clickOnVersionItem( 1 );
 

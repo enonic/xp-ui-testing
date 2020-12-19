@@ -36,8 +36,8 @@ class ContentWizard_Publish_Inputs_Spec
         when: "the folder has been marked as ready"
         wizard.showPublishMenu().clickOnMarkAsReadyMenuItem();
 
-        and: "'Publish' button has been pressed and the content published"
-        wizard.clickOnWizardPublishButton().clickOnPublishButton();
+        and: "'Publish' button has been pressed and this content has been published"
+        wizard.clickOnPublishButton().clickOnPublishNowButton();
         String nowDate = TimeUtils.getNowDate();
 
         then: "'Schedule' wizard step appears"

@@ -206,7 +206,7 @@ class CountrySiteWithTemplateSpec
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName(), );
         contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
         ContentPublishDialog dialog = contentBrowsePanel.clickToolbarPublish();
-        dialog.includeChildren( true ).clickOnPublishButton();
+        dialog.includeChildren( true ).clickOnPublishNowButton();
         sleep( 2000 );
         saveScreenshot( "country_site_published" );
 

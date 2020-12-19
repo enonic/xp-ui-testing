@@ -81,7 +81,7 @@ class Occurrences_Date_1_1_Spec
 
         when: "data was typed and saved and the content has been published"
         contentWizard.typeData( dateContent ).showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
-        contentWizard.clickOnWizardPublishButton().clickOnPublishButton();
+        contentWizard.clickOnPublishButton().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         contentWizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( dateContent.getName() );

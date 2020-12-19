@@ -109,7 +109,7 @@ class Occurrences_CustomRelation_0_1_Spec
             Application.EXPLICIT_NORMAL );
 
         when: "content has been published"
-        contentPublishDialog.clickOnPublishButton();
+        contentPublishDialog.clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "citation-published" );
 

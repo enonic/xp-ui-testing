@@ -67,7 +67,7 @@ class ContentInfoWidget_Spec
         contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
 
         when: "the folder has been published"
-        contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
+        contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
         contentBrowsePanel.openContentDetailsPanel();
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "info_widget-content-published" );

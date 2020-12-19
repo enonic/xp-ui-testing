@@ -163,7 +163,7 @@ class IssueListDialog_Spec
         and: "Publish button has been pressed"
         details.clickOnPublishButton();
         ContentPublishDialog contentPublishDialog = new ContentPublishDialog( getSession() );
-        contentPublishDialog.clickOnPublishButton()
+        contentPublishDialog.clickOnPublishNowButton();
         saveScreenshot( "issue_published" );
 
         then: "Issue Details Dialog should be loaded"

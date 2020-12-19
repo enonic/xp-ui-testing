@@ -80,7 +80,7 @@ class Occurrences_DateTime_1_1_Spec
 
         when: "data has been typed and 'Save' and  'Publish' has been pressed"
         contentWizard.typeData( dateTimeContent ).showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
-        contentWizard.clickOnWizardPublishButton().clickOnPublishButton();
+        contentWizard.clickOnPublishButton().clickOnPublishNowButton();
         String publishMessage = contentBrowsePanel.waitPublishNotificationMessage(Application.EXPLICIT_NORMAL);
         contentWizard.closeBrowserTab().switchToBrowsePanelTab();
         and: "the name of the content has been typed in the search input"

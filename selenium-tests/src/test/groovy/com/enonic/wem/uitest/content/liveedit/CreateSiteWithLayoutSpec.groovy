@@ -155,7 +155,7 @@ class CreateSiteWithLayoutSpec
         wizard.clickOnMarkAsReadyButton();
 
         when: "site is published with its children"
-        ContentPublishDialog modalDialog = wizard.clickOnWizardPublishButton().includeChildren( true ).clickOnPublishButton();
+        ContentPublishDialog modalDialog = wizard.clickOnPublishButton().includeChildren( true ).clickOnPublishNowButton();
 
         then: "publish dialog should be closed"
         modalDialog.waitForDialogClosed();

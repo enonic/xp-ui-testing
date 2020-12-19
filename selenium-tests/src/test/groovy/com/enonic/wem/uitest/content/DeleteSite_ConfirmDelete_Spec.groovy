@@ -120,7 +120,7 @@ class DeleteSite_ConfirmDelete_Spec
         and:"the site has been published"
         findAndSelectContent( site.getName() );
         contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
-        contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
+        contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
 
         when: "site selected and Delete pressed AND 'Delete now' button has been clicked"
         contentBrowsePanel.clickToolbarDelete().clickOnDeleteNowButton();

@@ -36,7 +36,7 @@ class Site_Publish_Spec
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site has been published"
-        findAndSelectContent( SITE.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
+        findAndSelectContent( SITE.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
         saveScreenshot( "site_published" );
 
         then: "'Published' status should be displayed in the grid"
@@ -89,7 +89,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishButton();
+        wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishNowButton();
 
         when: "display name has been updated"
         wizard.typeDisplayName( "new name" )
@@ -126,7 +126,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
-        wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishButton();
+        wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishNowButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "new part has been inserted"

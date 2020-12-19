@@ -87,7 +87,7 @@ class ContentWizardPanel_Toolbar_Spec
         when: "content has been published"
         wizard.showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
 
-        wizard.clickOnWizardPublishButton().clickOnPublishButton();
+        wizard.clickOnPublishButton().clickOnPublishButton();
         saveScreenshot( "folder_published_in_wizard" );
 
         then: "'Delete' button should be enabled"

@@ -28,7 +28,7 @@ class Delete_Published_Parent_Folder_Spec
         addReadyContent( child );
 
         when: "Include child has been checked"
-        findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
+        findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         saveScreenshot( "parent_with_child_published" );
 
@@ -56,7 +56,7 @@ class Delete_Published_Parent_Folder_Spec
     def "GIVEN existing 'Unpublished'-folder has been published WHEN the folder has been selected AND 'Delete' button has been clicked THEN expected notification message is displayed'"()
     {
         given: "existing Unpublished-folder has been published"
-        findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishButton();
+        findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
         sleep( 1000 );
 
         when: "the folder has been selected AND 'Delete' button clicked"
@@ -74,7 +74,7 @@ class Delete_Published_Parent_Folder_Spec
         sleep( 1000 );
 
         when: "the folder selected AND 'Unpublish' menu item has been clicked"
-        dialog.clickOnPublishButton();
+        dialog.clickOnPublishNowButton();
         def expectedMessage = String.format( Application.CONTENTS_PUBLISHED_AND_DELETED_MESSAGE, "2", "2" );
 
         then: "expected notification message should be displayed'"

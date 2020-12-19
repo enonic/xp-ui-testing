@@ -22,7 +22,7 @@ class Image_Change_And_Publish_Spec
         ContentWizardPanel wizard = findAndSelectContent( IMPORTED_BRO_IMAGE ).clickToolbarEdit();
         ImageFormViewPanel formViewPanel = new ImageFormViewPanel( getSession() );
         formViewPanel.waitUntilImageLoaded();
-        wizard.clickOnWizardPublishButton().clickOnPublishButton();
+        wizard.clickOnPublishButton().clickOnPublishNowButton();
         sleep( 1000 );
         formViewPanel.waitUntilImageLoaded();
 

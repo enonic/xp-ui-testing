@@ -26,7 +26,7 @@ class ContentWizard_UndoDelete_Spec
         addReadyContent( CONTENT );
 
         when: "the folder has been published"
-        findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishButton();
+        findAndSelectContent( CONTENT.getName() ).clickToolbarPublish().clickOnPublishNowButton();
 
         then: "'Published' status should be displayed"
         contentBrowsePanel.getContentStatus( CONTENT.getName() ) == ContentStatus.PUBLISHED.getValue();

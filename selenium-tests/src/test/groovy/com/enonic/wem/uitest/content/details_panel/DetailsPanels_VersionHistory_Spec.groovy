@@ -58,7 +58,7 @@ class DetailsPanels_VersionHistory_Spec
         contentBrowsePanel.waitForNotificationMessage();
 
         when: "content has been published"
-        contentBrowsePanel.clickToolbarPublish().clickOnPublishButton();
+        contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
         saveScreenshot( "history_panel_content_was_published" )
         LinkedList<ContentVersion> contentVersions = versionHistoryWidget.getAllVersions();
 

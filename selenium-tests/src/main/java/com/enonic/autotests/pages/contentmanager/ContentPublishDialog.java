@@ -222,7 +222,7 @@ public class ContentPublishDialog
         return isElementDisplayed( OTHER_ITEMS_WILL_BE_PUBLISHED );
     }
 
-    public ContentPublishDialog clickOnPublishButton()
+    public ContentPublishDialog clickOnPublishNowButton()
     {
         waitUntilVisibleNoException( By.xpath( PUBLISH_BUTTON ), Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( PUBLISH_BUTTON ) )
