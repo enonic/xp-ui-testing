@@ -13,7 +13,7 @@ import spock.lang.Stepwise
  *
  * */
 @Stepwise
-class Unpublish_Deleted_Content_Spec
+class Publish_Deleted_Content_Spec
     extends BaseContentSpec
 {
     @Shared
@@ -22,7 +22,7 @@ class Unpublish_Deleted_Content_Spec
     def "Preconditions: new folder should be added and published"()
     {
         given: "new folder has been added"
-        CONTENT = buildFolderContent( "folder", "unpublishing deleted" )
+        CONTENT = buildFolderContent( "folder", "publishing-deleted" );
         addReadyContent( CONTENT );
 
         when: "the folder has been published"
@@ -33,21 +33,19 @@ class Unpublish_Deleted_Content_Spec
     }
 
     //verifies issue https://github.com/enonic/app-contentstudio/issues/385
-    def "GIVEN existing 'Published' folder has been marked as deleted in the wizard WHEN the folder has been 'unpublished' in the wizard THEN wizard closes AND the content should not be listed in the grid"()
+    def "GIVEN existing folder is marked as deleted in the wizard WHEN the folder has been 'published' in the wizard THEN wizard closes AND the content should not be listed in the grid"()
     {
         given: "existing 'deleted' content is opened"
         findAndSelectContent( CONTENT.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();
         wizard.clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
 
-        when: "'Unpublish' menu item has been clicked"
-        wizard.clic;
+        when: "'Publish...' button has been clicked"
+        wizard.clickOnPublishButton().clickOnPublishNowButton();
 
-        then: "the content should be deleted"
+        then: "the content should not be displayed in the grid"
         wizard.switchToBrowsePanelTab();
         sleep( 400 );
         !contentBrowsePanel.exists( CONTENT.getName() );
-
-
     }
 }
