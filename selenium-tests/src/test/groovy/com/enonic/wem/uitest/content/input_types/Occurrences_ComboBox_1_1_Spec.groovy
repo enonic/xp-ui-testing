@@ -157,18 +157,17 @@ class Occurrences_ComboBox_1_1_Spec
         contentBrowsePanel.isContentInvalid( comboBox1_1.getName() )
     }
 
-    def "GIVEN not valid content with 'Deleted' status WHEN content selected and 'Publish' button pressed THEN content should not be deleted"()
+    def "GIVEN existing not valid content with 'Marked for Deletion' status WHEN content selected and 'Publish' menu item has been pressed THEN content should be deleted"()
     {
-        given: "not valid content with status is 'Deleted'"
+        given: "not valid content with status is 'Marked for Deletion'"
         filterPanel.typeSearchText( comboBox1_1.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( comboBox1_1.getName() );
 
-
-        when: "content was selected and 'Publish' button pressed"
-        contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem(  ).clickOnUnpublishButton(  );
+        when: "content has been selected and published"
+        contentBrowsePanel.showPublishMenu().clickOnPublishMenuItem().clickOnPublishNowButton();
         saveScreenshot( "invalid_cb_1_1_published" );
 
-        then: "content should not be deleted"
+        then: "content should be deleted:"
         !contentBrowsePanel.exists( comboBox1_1.getName() )
     }
 

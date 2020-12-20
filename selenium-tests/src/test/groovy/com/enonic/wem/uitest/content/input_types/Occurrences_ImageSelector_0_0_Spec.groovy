@@ -212,7 +212,7 @@ class Occurrences_ImageSelector_0_0_Spec
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
 
         when: "the content has been published(marked as ready automatically)"
-        wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishButton();
+        wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishNowButton();
         contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         and: "name of the content is typed in the search input"
