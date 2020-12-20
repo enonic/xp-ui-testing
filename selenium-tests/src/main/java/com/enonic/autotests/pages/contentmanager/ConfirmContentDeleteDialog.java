@@ -32,7 +32,7 @@ public class ConfirmContentDeleteDialog
 
     private final String DIALOG_CONTENT_PANEL = DIALOG_CONTAINER + "//div[contains(@id,'ModalDialogContentPanel')]";
 
-    private final String NUMBER_OF_CONTENT_TO_DELETE = DIALOG_CONTENT_PANEL + "//span[contains(@class,'confirm-delete-number')]";
+    private final String NUMBER_OF_CONTENT_TO_DELETE = DIALOG_CONTENT_PANEL + "//span[contains(@class,'confirm-value-data')]";
 
     private final String INPUT_FOR_CONFIRM_NUMBER = DIALOG_CONTENT_PANEL + "//input[contains(@id,'TextInput')]";
 

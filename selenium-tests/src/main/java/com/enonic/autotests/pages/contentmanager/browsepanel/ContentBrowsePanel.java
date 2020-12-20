@@ -287,7 +287,6 @@ public class ContentBrowsePanel
         }
         getDisplayedElement( By.xpath( MARK_AS_READY_MENU_ITEM ) ).click();
         sleep( 1000 );
-
     }
 
     public CreateIssueDialog clickOnCreateTaskMenuItem()
