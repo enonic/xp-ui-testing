@@ -104,6 +104,7 @@ public class ContentPublishDialog
         boolean result = waitUntilVisibleNoException( By.xpath( SHOW_DEPENDANT_ITEMS_LINK ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
+            saveScreenshot( NameHelper.uniqueName( "err_publish_dialog_show_dependent_link" ) );
             throw new TestFrameworkException( "Content Publish Dialog - Show Dependent Items Link is not visible!" );
         }
         showDependantItemsLink.click();
