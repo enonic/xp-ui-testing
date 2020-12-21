@@ -20,7 +20,7 @@ class ContentBrowsePanel_768_1024_Spec
     def "GIVEN browser dimension is 768x1024 WHEN content grid is opened THEN required buttons should be present on the toolbar"()
     {
         expect: "'More' button should be present on the toolbar"
-        contentBrowsePanel.isMoreButtonPresent();
+        !contentBrowsePanel.isMoreButtonPresent();
         saveScreenshot( "768_1024_1" );
 
         and: "'New' button should be displayed and enabled"
