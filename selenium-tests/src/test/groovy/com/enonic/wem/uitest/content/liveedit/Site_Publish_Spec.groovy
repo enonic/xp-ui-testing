@@ -89,6 +89,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
+        wizard.clickOnMarkAsReadyButton();
         wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishNowButton();
 
         when: "display name has been updated"
@@ -126,6 +127,7 @@ class Site_Publish_Spec
     {
         given: "existing 'modified' site has been published"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
+        wizard.clickOnMarkAsReadyButton();
         wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishNowButton();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
