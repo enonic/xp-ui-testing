@@ -108,7 +108,7 @@ class Occurrences_ItemSet_0_0_Spec
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
         when: "the ItemSet has been removed"
-        itemSetViewPanel.removeOneItem();
+        itemSetViewPanel.expandMenuClickOnDelete();
         saveScreenshot( "item_set_removed" );
 
         then: "no one ItemSet are displayed"
@@ -125,7 +125,7 @@ class Occurrences_ItemSet_0_0_Spec
         ItemSetViewPanel itemSetViewPanel = new ItemSetViewPanel( getSession() );
 
         when: "the ItemSet has been removed"
-        itemSetViewPanel.removeOneItem();
+        itemSetViewPanel.expandMenuClickOnDelete();
 
         and: "Close button pressed"
         wizard.executeCloseWizardScript();

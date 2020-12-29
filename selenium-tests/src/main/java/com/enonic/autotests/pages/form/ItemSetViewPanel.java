@@ -39,7 +39,8 @@ public class ItemSetViewPanel
 
     protected final String ADD_ITEM_SET_BUTTON = FORM_VIEW + "//button/span[text()='Add ItemSet']";
 
-    protected final String REMOVE_ITEM_SET_BUTTON = OCCURRENCE_VIEW + "/a[@class='remove-button']";
+    protected final String ITEM_SET_MENU_BUTTON = OCCURRENCE_VIEW + "//button[contains(@id,'MoreButton')]";
+
 
     @FindBy(xpath = ADD_ITEM_SET_BUTTON)
     private WebElement addItemSetButton;
@@ -115,15 +116,16 @@ public class ItemSetViewPanel
         return this;
     }
 
-    public void removeOneItem()
+    public void expandMenuClickOnDelete()
     {
-        if ( !isElementDisplayed( REMOVE_ITEM_SET_BUTTON ) )
-        {
-            saveScreenshot( "err_remove_set_button" );
-            throw new TestFrameworkException( "Button remove item set was not found!" );
-        }
-        findElement( By.xpath( REMOVE_ITEM_SET_BUTTON ) ).click();
+        findElement( By.xpath( ITEM_SET_MENU_BUTTON ) ).click();
+        sleep( 700 );
+        getDisplayedElement(
+            By.xpath( "//div[contains(@id,'FormItemSetOccurrenceView')]" + "//li[contains(@id,'MenuItem') and text()='Delete']" ) ).click();
+        sleep( 700 );
+
     }
+
 
     public boolean isFormItemSetDisplayed()
     {
@@ -170,8 +172,6 @@ public class ItemSetViewPanel
         sleep( 500 );
         return this;
     }
-
-//
 
     public long getNumberOfSets()
     {
