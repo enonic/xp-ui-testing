@@ -2,7 +2,7 @@ package com.enonic.wem.uitest.content.move_publish_sort.issue
 
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.BaseContentType
-import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
+import com.enonic.autotests.pages.contentmanager.ConfirmValueDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
@@ -120,11 +120,11 @@ class BaseIssueSpec
         return site;
     }
 
-    protected ConfirmContentDeleteDialog openConfirmDeleteDialog( String siteName )
+    protected ConfirmValueDialog openConfirmDeleteDialog( String siteName )
     {
         DeleteContentDialog deleteContentDialog = findAndSelectContent( siteName ).clickToolbarDelete()
         deleteContentDialog.waitForOpened();
         deleteContentDialog.clickOnDeleteButton();
-        return new ConfirmContentDeleteDialog( getSession() );
+        return new ConfirmValueDialog( getSession() );
     }
 }

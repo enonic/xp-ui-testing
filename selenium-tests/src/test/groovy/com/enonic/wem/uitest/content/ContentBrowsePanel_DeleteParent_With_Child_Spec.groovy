@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
+import com.enonic.autotests.pages.contentmanager.ConfirmValueDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import spock.lang.Shared
 
@@ -30,7 +30,7 @@ class ContentBrowsePanel_DeleteParent_With_Child_Spec
         contentBrowsePanel.clickToolbarDelete().clickOnDeleteNowButton();
 
         then: "confirmation dialog should be displayed"
-        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
+        ConfirmValueDialog confirmContentDeleteDialog = new ConfirmValueDialog( getSession() );
         confirmContentDeleteDialog.isOpened();
     }
 
@@ -41,7 +41,7 @@ class ContentBrowsePanel_DeleteParent_With_Child_Spec
 
         when: "Delete button has been pressed and it confirmed"
         contentBrowsePanel.clickToolbarDelete().clickOnDeleteNowButton();
-        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
+        ConfirmValueDialog confirmContentDeleteDialog = new ConfirmValueDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
         saveScreenshot( "parent_deleted" );
 

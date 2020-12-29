@@ -105,8 +105,7 @@ class Occurrences_CustomRelation_0_1_Spec
         given: "the citation content is selected and Publish dialog opened"
         findAndSelectContent( RELATIONSHIP_CONTENT.getName() ).showPublishMenu().clickOnMarkAsReadyMenuItem();
         sleep( 1000 );
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL );
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitForDialogLoaded();
 
         when: "content has been published"
         contentPublishDialog.clickOnPublishNowButton();

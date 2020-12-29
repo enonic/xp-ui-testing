@@ -33,7 +33,7 @@ class ContentPublishDialog_Sibling_Folders_Spec
         when: "'Publish' wizard has been opened"
         findAndSelectContent( FOLDER1.getName() )
         findAndSelectContent( FOLDER2.getName() )
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitForDialogLoaded(
             Application.EXPLICIT_NORMAL );
         saveScreenshot( "publish_wizard_two_sibling_node" );
 
@@ -54,8 +54,7 @@ class ContentPublishDialog_Sibling_Folders_Spec
         given: "Both folders were selected and 'Publish' button clicked"
         findAndSelectContent( FOLDER1.getName() )
         findAndSelectContent( FOLDER2.getName() )
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL );
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitForDialogLoaded();
         when: "'remove' icon has been clicked "
         contentPublishDialog.removeItem( FOLDER2.getDisplayName() );
         saveScreenshot( "publish_wizard_sibling_node_removed" );
@@ -72,8 +71,7 @@ class ContentPublishDialog_Sibling_Folders_Spec
         given: "Both folders were selected and 'Publish' button clicked"
         findAndSelectContent( FOLDER1.getName() )
         findAndSelectContent( FOLDER2.getName() )
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL );
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitForDialogLoaded();
         and: "'remove' icon has been clicked "
         contentPublishDialog.removeItem( FOLDER2.getDisplayName() );
 

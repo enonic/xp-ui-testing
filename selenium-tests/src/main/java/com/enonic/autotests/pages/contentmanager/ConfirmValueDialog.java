@@ -15,7 +15,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 /**
  * Confirm (Site)Delete Dialog
  */
-public class ConfirmContentDeleteDialog
+public class ConfirmValueDialog
     extends Application
 {
     public static final String DIALOG_HEADER = "Confirm delete";
@@ -48,7 +48,7 @@ public class ConfirmContentDeleteDialog
     @FindBy(xpath = INPUT_FOR_CONFIRM_NUMBER)
     private WebElement confirmInput;
 
-    public ConfirmContentDeleteDialog( final TestSession session )
+    public ConfirmValueDialog( final TestSession session )
     {
         super( session );
     }
@@ -101,7 +101,7 @@ public class ConfirmContentDeleteDialog
         return Integer.valueOf( getDisplayedString( NUMBER_OF_CONTENT_TO_DELETE ) );
     }
 
-    public ConfirmContentDeleteDialog typeNumber( String numberOfContent )
+    public ConfirmValueDialog typeNumber( String numberOfContent )
     {
         clearAndType( confirmInput, numberOfContent );
         return this;
@@ -112,16 +112,17 @@ public class ConfirmContentDeleteDialog
         return waitUntilElementEnabledNoException( By.xpath( CONFIRM_BUTTON ), Application.EXPLICIT_NORMAL );
     }
 
-    public ConfirmContentDeleteDialog clickOnConfirmButton()
+    public ConfirmValueDialog clickOnConfirmButton()
     {
+        waitUntilConfirmButtonEnabled();
         confirmButton.click();
         sleep( 1000 );
         return this;
     }
 
-    public ConfirmContentDeleteDialog waitUntilDialogShown( long timeout )
+    public ConfirmValueDialog waitForDialogLoaded()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout ) )
+        if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL ) )
         {
             TestUtils.saveScreenshot( getSession(), "err_confirm_delete_dialog_not_opened" );
             throw new TestFrameworkException( "Content confirm delete dialog was not shown!" );

@@ -1,7 +1,7 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
+import com.enonic.autotests.pages.contentmanager.ConfirmValueDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.vo.contentmanager.Content
@@ -35,7 +35,7 @@ class ContentBrowsePanel_Parent_UndoDelete_Spec
 
         when: "Delete button has been pressed and the deleting confirmed"
         contentBrowsePanel.clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
-        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
+        ConfirmValueDialog confirmContentDeleteDialog = new ConfirmValueDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
         saveScreenshot( "parent_child_deleted" );
 

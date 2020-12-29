@@ -59,8 +59,7 @@ class Publish_InvalidContent_Spec
         wizardPanel.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "parent content has been selected and 'Publish' button pressed"
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitUntilDialogShown(
-            Application.EXPLICIT_NORMAL );
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitForDialogLoaded();
         and: "'include child' icon has been clicked"
         contentPublishDialog.includeChildren( true );
 

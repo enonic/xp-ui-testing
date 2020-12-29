@@ -246,7 +246,7 @@ public class ContentBrowsePanel
         }
         getDisplayedElement( By.xpath( PUBLISH_TREE_MENU_ITEM ) ).click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        dialog.waitForDialogLoaded();
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return dialog;
     }
@@ -260,7 +260,7 @@ public class ContentBrowsePanel
         getDisplayedElement( By.xpath( PUBLISH_MENU_ITEM ) ).click();
         sleep( 300 );
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        dialog.waitForDialogLoaded();
         return dialog;
     }
 
@@ -274,7 +274,7 @@ public class ContentBrowsePanel
         getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ).click();
         sleep( 300 );
         ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        dialog.waitForDialogLoaded();
         return dialog;
     }
 
@@ -597,7 +597,7 @@ public class ContentBrowsePanel
         }
         publishButton.click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        dialog.waitForDialogLoaded();
         waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return dialog;
     }
@@ -873,7 +873,7 @@ public class ContentBrowsePanel
         }
         getDisplayedElement( By.xpath( publishMenuItem ) ).click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        dialog.waitForDialogLoaded();
         sleep( 500 );
         return dialog;
     }
@@ -894,7 +894,7 @@ public class ContentBrowsePanel
         }
         getDisplayedElement( By.xpath( unpublishMenuItem ) ).click();
         ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        dialog.waitForDialogLoaded();
         sleep( 500 );
         return dialog;
     }

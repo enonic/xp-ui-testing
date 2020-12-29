@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.ConfirmValueDialog
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
@@ -44,9 +45,12 @@ class Delete_Published_Parent_Folder_Spec
         given:
         findAndSelectContent( PARENT_FOLDER.getName() );
 
-        when: "'Unpublish' menu item was selected"
+        when: "'Unpublish' menu item has been selected"
         ContentUnpublishDialog modalDialog = contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem();
         modalDialog.clickOnUnpublishButton();
+        ConfirmValueDialog confirmValueDialog = new ConfirmValueDialog( getSession() );
+        and:
+        confirmValueDialog.typeNumber( "2" ).clickOnConfirmButton();
         String message = contentBrowsePanel.waitForNotificationMessage();
 
         then: "expected notification message appears"

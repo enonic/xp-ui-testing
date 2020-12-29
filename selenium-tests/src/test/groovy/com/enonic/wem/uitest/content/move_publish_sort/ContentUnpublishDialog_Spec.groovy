@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.Application
+import com.enonic.autotests.pages.contentmanager.ConfirmValueDialog
 import com.enonic.autotests.pages.contentmanager.ContentUnpublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
@@ -129,6 +130,9 @@ class ContentUnpublishDialog_Spec
 
         when: "parent content was selected and 'Unpublish' menu item has been clicked"
         contentBrowsePanel.showPublishMenu().selectUnPublishMenuItem().clickOnUnpublishButton();
+        ConfirmValueDialog confirmValueDialog = new ConfirmValueDialog( getSession() );
+        confirmValueDialog.waitForDialogLoaded();
+        confirmValueDialog.typeNumber( "2" ).clickOnConfirmButton();
         boolean isMessageAppeared = contentBrowsePanel.waitExpectedNotificationMessage( "2 items are unpublished",
                                                                                         Application.EXPLICIT_NORMAL );
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );

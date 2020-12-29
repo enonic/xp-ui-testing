@@ -178,7 +178,7 @@ class Occurrences_ImageSelector_0_0_Spec
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent );
 
         then: "'Publish' menu item should be enabled, because image-inputs are not required"
-        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
+        wizard.showPublishMenu().isPublishMenuItemEnabled();
 
         and: "red icon should not be displayed on the wizard page"
         !wizard.isContentInvalid();
@@ -210,6 +210,8 @@ class Occurrences_ImageSelector_0_0_Spec
         given: "new content 'Image Selector 0:0' is saved"
         Content imageSelectorContent = buildImageSelector0_0_Content( BOOK_IMAGE_DISPLAY_NAME );
         ContentWizardPanel wizard = selectSitePressNew( imageSelectorContent.getContentTypeName() ).typeData( imageSelectorContent ).save();
+        wizard.clickOnMarkAsReadyButton();
+        sleep( 1000 );
 
         when: "the content has been published(marked as ready automatically)"
         wizard.showPublishMenu().clickOnPublishMenuItem().clickOnPublishNowButton();

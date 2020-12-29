@@ -11,8 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
-import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog;
-import com.enonic.autotests.utils.TestUtils;
+import com.enonic.autotests.pages.contentmanager.ConfirmValueDialog;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -167,18 +166,18 @@ public class DeleteContentDialog
     public void clickOnDeleteNowButtonAndConfirm( String numberOfContent )
     {
         deleteNowButton.click();
-        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
-        confirmContentDeleteDialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
-        confirmContentDeleteDialog.typeNumber( numberOfContent ).clickOnConfirmButton().waitUntilDialogClosed(
+        ConfirmValueDialog confirmValueDialog = new ConfirmValueDialog( getSession() );
+        confirmValueDialog.waitForDialogLoaded();
+        confirmValueDialog.typeNumber( numberOfContent ).clickOnConfirmButton().waitUntilDialogClosed(
             Application.EXPLICIT_NORMAL );
     }
 
     public void clickOnMarkAsDeletedMenuItemAndConfirm( String numberOfContent )
     {
         clickOnMarkAsDeletedMenuItem();
-        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
-        confirmContentDeleteDialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
-        confirmContentDeleteDialog.typeNumber( numberOfContent ).clickOnConfirmButton().waitUntilDialogClosed(
+        ConfirmValueDialog confirmValueDialog = new ConfirmValueDialog( getSession() );
+        confirmValueDialog.waitForDialogLoaded();
+        confirmValueDialog.typeNumber( numberOfContent ).clickOnConfirmButton().waitUntilDialogClosed(
             Application.EXPLICIT_NORMAL );
     }
 

@@ -64,10 +64,10 @@ public class ItemSetViewPanel
      */
     public void doSwapItems()
     {
-        WebElement sourceElement = findElements( By.xpath( DRAG_HANDLER ) ).get( 1 );
-
+        WebElement source = findElements( By.xpath( DRAG_HANDLER ) ).get( 0 );
+        WebElement target = findElements( By.xpath( DRAG_HANDLER ) ).get( 1 );
         Actions builder = new Actions( getDriver() );
-        builder.clickAndHold( sourceElement ).moveByOffset( 0, -260 ).release().perform();
+        builder.dragAndDrop( source, target ).build().perform();
         sleep( 1000 );
     }
 
@@ -155,7 +155,7 @@ public class ItemSetViewPanel
     protected ItemSetViewPanel typeTextInHtmlArea( WebElement areaElement, String text )
     {
         setTextInCKE( areaElement.getAttribute( "id" ), text );
-        sleep(500);
+        sleep( 500 );
         return this;
     }
 
@@ -167,7 +167,7 @@ public class ItemSetViewPanel
             throw new TestFrameworkException( "Html areas were not found on the page" );
         }
         setTextInCKE( frames.get( 0 ).getAttribute( "id" ), text );
-        sleep(500);
+        sleep( 500 );
         return this;
     }
 

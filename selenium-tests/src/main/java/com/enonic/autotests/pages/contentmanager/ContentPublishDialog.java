@@ -52,6 +52,8 @@ public class ContentPublishDialog
 
     private final String SHOW_DEPENDANT_ITEMS_LINK = DIALOG_CONTAINER + "//div[@class='dependants']/h6[contains(.,'Show dependent items')]";
 
+    private final String HIDE_DEPENDANT_ITEMS_LINK = DIALOG_CONTAINER + "//div[@class='dependants']/h6[contains(.,'Hide dependent items')]";
+
     private String ITEM_ROW_TO_PUBLISH_BY_DISPLAY_NAME =
         ITEM_LIST + "//div[contains(@id,'StatusSelectionItem') and descendant::h6[contains(@class,'main-name') and contains(.,'%s')]]";
 
@@ -99,8 +101,18 @@ public class ContentPublishDialog
         sleep( 200 );
     }
 
+    public boolean isHideDependentItemsLinkDisplayed()
+    {
+        return isElementDisplayed( HIDE_DEPENDANT_ITEMS_LINK );
+
+    }
+
     public void clickOnShowDependentItemsLink()
     {
+        if ( isHideDependentItemsLinkDisplayed() )
+        {
+            return;
+        }
         boolean result = waitUntilVisibleNoException( By.xpath( SHOW_DEPENDANT_ITEMS_LINK ), Application.EXPLICIT_NORMAL );
         if ( !result )
         {
@@ -266,9 +278,9 @@ public class ContentPublishDialog
      *
      * @return {@link ContentPublishDialog} instance.
      */
-    public ContentPublishDialog waitUntilDialogShown( long timeout )
+    public ContentPublishDialog waitForDialogLoaded()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout ) )
+        if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_publish_dialog_opening" );
             throw new TestFrameworkException( "Content publish dialog was not loaded!" );

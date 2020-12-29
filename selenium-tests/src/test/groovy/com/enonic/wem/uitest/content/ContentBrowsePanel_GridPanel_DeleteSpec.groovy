@@ -1,12 +1,11 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
-import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
+import com.enonic.autotests.pages.contentmanager.ConfirmValueDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
-import com.enonic.autotests.utils.TestUtils
 import spock.lang.Stepwise
 
 @Stepwise
@@ -30,7 +29,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         DeleteContentDialog deleteContentDialog = contentBrowsePanel.clickToolbarDelete();
         deleteContentDialog.clickOnDeleteNowButton();
         and: "correct number of contents to delete is typed"
-        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
+        ConfirmValueDialog confirmContentDeleteDialog = new ConfirmValueDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
 
         then: "both folders should not be listed in the grid"
@@ -97,7 +96,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
             contentList ).clickToolbarDelete();
         deleteContentDialog.clickOnDeleteNowButton();
         and: "2 has been typed and deleting confirmed"
-        ConfirmContentDeleteDialog confirmContentDeleteDialog = new ConfirmContentDeleteDialog( getSession() );
+        ConfirmValueDialog confirmContentDeleteDialog = new ConfirmValueDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
 
         then: "child folder should not be displayed"

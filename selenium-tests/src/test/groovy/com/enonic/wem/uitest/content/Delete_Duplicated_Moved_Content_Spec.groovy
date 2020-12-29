@@ -1,6 +1,6 @@
 package com.enonic.wem.uitest.content
 
-import com.enonic.autotests.pages.contentmanager.ConfirmContentDeleteDialog
+import com.enonic.autotests.pages.contentmanager.ConfirmValueDialog
 import com.enonic.autotests.pages.contentmanager.DuplicateContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.utils.NameHelper
@@ -27,7 +27,7 @@ class Delete_Duplicated_Moved_Content_Spec
         dialog.waitForClosed(  );
 
         when: "the original site has been deleted"
-        ConfirmContentDeleteDialog confirmationDialog = openConfirmDeleteDialog( site.getName() );
+        ConfirmValueDialog confirmationDialog = openConfirmDeleteDialog( site.getName() );
         confirmationDialog.typeNumber( DEFAULT_NUMBER_OF_CONTENT_IN_SITE ).clickOnConfirmButton();
         saveScreenshot( "original_site_deleted" );
         filterPanel.clickOnCleanFilter();
@@ -69,11 +69,11 @@ class Delete_Duplicated_Moved_Content_Spec
         contentBrowsePanel.exists( childFolder.getName() );
     }
 
-    private ConfirmContentDeleteDialog openConfirmDeleteDialog( String siteName )
+    private ConfirmValueDialog openConfirmDeleteDialog( String siteName )
     {
         DeleteContentDialog deleteContentDialog = findAndSelectContent( siteName ).clickToolbarDelete()
         deleteContentDialog.waitForOpened();
         deleteContentDialog.clickOnDeleteNowButton();
-        return new ConfirmContentDeleteDialog( getSession() );
+        return new ConfirmValueDialog( getSession() );
     }
 }

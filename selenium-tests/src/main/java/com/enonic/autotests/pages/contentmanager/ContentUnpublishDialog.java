@@ -62,9 +62,9 @@ public class ContentUnpublishDialog
         return isElementDisplayed( DIALOG_CONTAINER );
     }
 
-    public ContentUnpublishDialog waitUntilDialogShown( long timeout )
+    public ContentUnpublishDialog waitForDialogLoaded()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), timeout ) )
+        if ( !waitUntilVisibleNoException( By.xpath( DIALOG_CONTAINER ), Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_unpublish_dialog_not_opened" );
             throw new TestFrameworkException( "Content unpublish dialog was not shown!" );

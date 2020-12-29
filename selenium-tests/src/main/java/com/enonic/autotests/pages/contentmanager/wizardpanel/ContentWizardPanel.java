@@ -92,8 +92,8 @@ public class ContentWizardPanel
 
     private final String TOOLBAR_PREVIEW_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
-    private final String CONTEXTN_PANEL_TOGGLER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ContextPanel')]" +
-        "//button[contains(@id, 'NonMobileContextPanelToggleButton')]";
+    private final String CONTEXTN_PANEL_TOGGLER =
+        DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ContextPanel')]" + "//button[contains(@id, 'NonMobileContextPanelToggleButton')]";
 
     private final String EDIT_PERMISSIONS_BUTTON =
         "//div[contains(@id,'WizardStepNavigatorAndToolbar')]" + "//div[contains(@class,'edit-permissions-button')]";
@@ -302,7 +302,7 @@ public class ContentWizardPanel
         }
         getDisplayedElement( By.xpath( UNPUBLISH_MENU_ITEM ) ).click();
         ContentUnpublishDialog dialog = new ContentUnpublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        dialog.waitForDialogLoaded();
         return dialog;
     }
 
@@ -553,7 +553,7 @@ public class ContentWizardPanel
         }
         toolbarPublishButton.click();
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        dialog.waitForDialogLoaded();
         dialog.waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
         return dialog;
     }
@@ -971,14 +971,15 @@ public class ContentWizardPanel
         getDisplayedElement( By.xpath( PUBLISH_MENU_ITEM ) ).click();
         sleep( 300 );
         ContentPublishDialog dialog = new ContentPublishDialog( getSession() );
-        dialog.waitUntilDialogShown( Application.EXPLICIT_NORMAL );
+        dialog.waitForDialogLoaded();
         return dialog;
     }
 
     public EditPermissionsDialog clickOnEditPermissionsButton()
     {
         boolean isDisplayed = waitUntilVisibleNoException( By.xpath( EDIT_PERMISSIONS_BUTTON ), Application.EXPLICIT_NORMAL );
-        if(!isDisplayed){
+        if ( !isDisplayed )
+        {
             this.saveScreenshot( NameHelper.uniqueName( "err_edit_permission_button" ) );
         }
         findElement( By.xpath( EDIT_PERMISSIONS_BUTTON ) ).click();
