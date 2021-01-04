@@ -130,7 +130,7 @@ class Occurrences_ComboBox_0_0_Spec
 
         when: "the content has been published"
         wizard.showPublishMenu().clickOnMarkAsReadyMenuItem();
-        wizard.clickOnPublishButton().waitForDialogLoaded( Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
+        wizard.clickOnPublishButton().waitForDialogLoaded().clickOnPublishNowButton().waitForDialogClosed();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.clickOnCleanFilter().typeSearchText( COMBOBOX_0_0_CONTENT.getName() );
 
@@ -148,7 +148,7 @@ class Occurrences_ComboBox_0_0_Spec
         wizard.showPublishMenu().clickOnMarkAsReadyMenuItem();
 
         when: "the content has been published in the wizard"
-        wizard.clickOnPublishButton().waitForDialogLoaded( Application.EXPLICIT_NORMAL ).clickOnPublishNowButton().waitForDialogClosed();
+        wizard.clickOnPublishButton().waitForDialogLoaded().clickOnPublishNowButton().waitForDialogClosed();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( comboBoxContent.getName() );
 

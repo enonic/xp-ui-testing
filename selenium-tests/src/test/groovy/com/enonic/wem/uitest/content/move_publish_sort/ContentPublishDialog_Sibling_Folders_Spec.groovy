@@ -33,8 +33,7 @@ class ContentPublishDialog_Sibling_Folders_Spec
         when: "'Publish' wizard has been opened"
         findAndSelectContent( FOLDER1.getName() )
         findAndSelectContent( FOLDER2.getName() )
-        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitForDialogLoaded(
-            Application.EXPLICIT_NORMAL );
+        ContentPublishDialog contentPublishDialog = contentBrowsePanel.clickToolbarPublish().waitForDialogLoaded();
         saveScreenshot( "publish_wizard_two_sibling_node" );
 
         then: "'remove' button should be disabled for both contents"
