@@ -33,8 +33,6 @@ public class Application
 
     protected final String SCRIPT_DATA_CKE = "return CKEDITOR.instances[arguments[0]].getData()";
 
-    public static final String NO_SELECTION_MESSAGE = "You are wasting this space - select something!";
-
     public static final String SWITCHING_TEMPLATE_MESSAGE =
         "Switching to a page template will discard all of the custom changes made to the page. Are you sure?";
 
@@ -56,10 +54,6 @@ public class Application
 
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
-    public static String GROUP_ALREADY_IN_USE_WARNING = "Principal [%s] could not be created. A principal with that name already exists";
-
-    public static String GROUP_CREATED_MESSAGE = "Group was created";
-
     public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "Item \"%s\" is unpublished.";
 
     public static String CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE = "%s items are unpublished";
@@ -69,8 +63,6 @@ public class Application
     public static String PENDING_ITEMS_ARE_DELETED = "%s items are deleted.";
 
     public static String ISSUE_IS_CLOSED_MESSAGE = "The issue is closed.";
-
-    public static String ISSUE_ITEM_DELETED = "One or more items from the issue cannot be found.";
 
     public static String TASK_IS_CREATED_MESSAGE = "New task created successfully.";
 

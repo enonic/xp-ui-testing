@@ -90,7 +90,7 @@ public class ImageFormViewPanel
         if ( !isClickable )
         {
             saveScreenshot( "err_crop_button" );
-            throw new TestFrameworkException( "button crop was not found" );
+            throw new TestFrameworkException( "button crop is not clickable" );
         }
         buttonCrop.click();
         sleep( 700 );
@@ -103,7 +103,7 @@ public class ImageFormViewPanel
         if ( !isClickable )
         {
             saveScreenshot( "err_focus_button" );
-            throw new TestFrameworkException( "button focus was not found" );
+            throw new TestFrameworkException( "button focus is not clickable" );
         }
         buttonFocus.click();
         sleep( 200 );
