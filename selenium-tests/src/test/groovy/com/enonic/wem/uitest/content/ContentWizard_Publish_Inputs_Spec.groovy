@@ -113,6 +113,7 @@ class ContentWizard_Publish_Inputs_Spec
 
         when: "the folder has been unpublished"
         ContentPublishDialog publishDialog = wizard.showPublishMenu().clickOnPublishMenuItem();
+        saveScreenshot( "schedule_wizard_add_schedule_button" );
         publishDialog.clickOnAddScheduleButton();
         publishDialog.typeOnlineFrom( TimeUtils.getTomorrowDateTime() ).clickOnScheduleButton();
 

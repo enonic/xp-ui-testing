@@ -75,6 +75,8 @@ public class ContentPublishDialog
     private final String ONLINE_FROM_INPUT = DIALOG_CONTAINER +
         "//div[contains(@id,'DateTimePicker') and preceding-sibling::label[text()='Online from']]//input[contains(@id,'TextInput')]";
 
+    private final String SCHEDULE_BUTTON = "//button[contains(@id,'DialogButton')]/span[text()='Schedule']";
+
     @FindBy(xpath = PUBLISH_BUTTON)
     private WebElement publishButton;
 
@@ -336,9 +338,8 @@ public class ContentPublishDialog
     {
         try
         {
-            waitUntilElementEnabled( By.xpath( DIALOG_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='Schedule']" ),
-                                     EXPLICIT_NORMAL );
-            getDisplayedElement( By.xpath( DIALOG_CONTAINER + "//button[contains(@id,'DialogButton')]/span[text()='Schedule']" ) ).click();
+            waitUntilElementEnabled( By.xpath( DIALOG_CONTAINER + SCHEDULE_BUTTON ), EXPLICIT_NORMAL );
+            getDisplayedElement( By.xpath( DIALOG_CONTAINER + SCHEDULE_BUTTON ) ).click();
             sleep( 500 );
             return this;
         }

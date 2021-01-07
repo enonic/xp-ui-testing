@@ -598,7 +598,7 @@ public class ContentWizardPanel
     @Override
     public ContentWizardPanel waitUntilWizardOpened()
     {
-        boolean result = waitUntilVisibleNoException( By.xpath( "//input[@name='displayName']" ), 10l );
+        boolean result = waitUntilVisibleNoException( By.xpath( "//div[contains(@id,'ContentWizardHeader')]" ), 8l );
         if ( !result )
         {
             saveScreenshot( NameHelper.uniqueName( "err_wizard" ) );
