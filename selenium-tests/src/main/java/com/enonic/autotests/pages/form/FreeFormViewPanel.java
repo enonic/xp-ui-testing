@@ -1,9 +1,13 @@
 package com.enonic.autotests.pages.form;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import com.enonic.autotests.TestSession;
+import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.LoaderComboBox;
+import com.enonic.autotests.utils.NameHelper;
 import com.enonic.xp.data.PropertyTree;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -16,22 +20,27 @@ public class FreeFormViewPanel
 {
     private final String ITEM_SET = "//div[contains(@id,'FormItemSetView')]";
 
-    private final String INPUT_RADIO_BUTTON = ITEM_SET +
-        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'RadioButton') and descendant::label[text()='Input']]//label";
+    private final String ELEMENT_TYPE_OPTION_FILTER_INPUT =
+        ITEM_SET + "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='element type']]" + DROPDOWN_OPTION_FILTER_INPUT;
 
-    private final String BUTTON_RADIO_BUTTON = ITEM_SET +
-        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'RadioButton') and descendant::label[text()='Button']]//label";
+    private final String INPUT_TYPE_OPTION_FILTER_INPUT =
+        ITEM_SET + "//div[contains(@id,'FormOptionSetOptionView') and descendant::h5[text()='input type']]" + DROPDOWN_OPTION_FILTER_INPUT;
 
-    private final String SELECT_RADIO_BUTTON = ITEM_SET +
-        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'RadioButton') and descendant::label[text()='Select']]//label";
+    private final String INPUT_TYPE_DROPDOWN =
+        "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='input type']]//div[contains(@id,'Dropdown')]";
 
-    private final String IMAGE_RADIO_BUTTON = ITEM_SET +
-        "//div[contains(@id,'FormOptionSetOptionView')]//span[contains(@id,'RadioButton') and descendant::label[text()='image']]//label";
+    private final String ELEMENT_TYPE_DROPDOWN =
+        "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='element type']]//div[contains(@id,'Dropdown')]";
 
     private final String ITEM_SET_2 = ITEM_SET + "//div[contains(@id,'FormOccurrenceDraggableLabel') and contains(.,'Input')]";
 
     private final String ITEM_SET_3 = ITEM_SET + "//div[contains(@id,'FormOccurrenceDraggableLabel') and contains(.,'element type')]";
 
+    @FindBy(xpath = ELEMENT_TYPE_OPTION_FILTER_INPUT)
+    private WebElement elementTypeOptionFilterInput;
+
+    @FindBy(xpath = INPUT_TYPE_OPTION_FILTER_INPUT)
+    private WebElement inputTypeOptionFilterInput;
 
     /**
      * The constructor.
@@ -49,33 +58,45 @@ public class FreeFormViewPanel
         return this;
     }
 
-    public FreeFormViewPanel clickOnInputRadioButton()
+
+    public FreeFormViewPanel selectElementType( String option )
     {
-        getDisplayedElement( By.xpath( INPUT_RADIO_BUTTON ) ).click();
+        findElement( By.xpath( ITEM_SET + ELEMENT_TYPE_DROPDOWN ) ).click();
+        sleep( 200 );
+        clearAndType( elementTypeOptionFilterInput, option );
+        sleep( 400 );
+        String appGridItem = "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='element type']]" +
+            String.format( NAMES_VIEW_BY_DISPLAY_NAME, option );
+        if ( !isElementDisplayed( appGridItem ) )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_freeform_" ) );
+            throw new TestFrameworkException( "Option: " + option + "  was not found!" );
+        }
+        buildActions().moveToElement( findElement( By.xpath( appGridItem ) ) );
+        findElement( By.xpath( appGridItem ) ).click();
+        sleep( 700 );
+        return this;
+    }
+
+    public FreeFormViewPanel selectInputType( String option )
+    {
+        findElement( By.xpath( ITEM_SET + INPUT_TYPE_DROPDOWN ) ).click();
+        sleep( 200 );
+        clearAndType( inputTypeOptionFilterInput, option );
         sleep( 1000 );
+        String appGridItem = "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='input type']]" +
+            String.format( NAMES_VIEW_BY_DISPLAY_NAME, option );
+        if ( !isElementDisplayed( appGridItem ) )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_freeform_" ) );
+            throw new TestFrameworkException( "Option: " + option + "  was not found!" );
+        }
+        buildActions().moveToElement( findElement( By.xpath( appGridItem ) ) );
+        findElement( By.xpath( appGridItem ) ).click();
+        sleep( 700 );
         return this;
     }
 
-    public FreeFormViewPanel clickOnButtonRadioButton()
-    {
-        buildActions().moveToElement( this.findElement( By.xpath( ITEM_SET_2 ) ) ).build().perform();
-        getDisplayedElement( By.xpath( BUTTON_RADIO_BUTTON ) ).click();
-        sleep( 1000 );
-        return this;
-    }
-
-    public FreeFormViewPanel clickOnSelectRadioButton()
-    {
-        getDisplayedElement( By.xpath( SELECT_RADIO_BUTTON ) ).click();
-        return this;
-    }
-
-    public FreeFormViewPanel clickOnImageRadioButton()
-    {
-        doScrollPanel( 250 );
-        getDisplayedElement( By.xpath( IMAGE_RADIO_BUTTON ) ).click();
-        return this;
-    }
 
     public FreeFormViewPanel selectImage( String imageName )
     {
@@ -92,13 +113,6 @@ public class FreeFormViewPanel
     {
         this.findElement( By.xpath( ITEM_SET ) ).click();
         sleep( 400 );
-    }
-
-    public void expandItemSetRadio()
-    {
-        this.findElement( By.xpath( ITEM_SET_2 ) ).click();
-        sleep( 400 );
-        this.findElement( By.xpath( ITEM_SET_3 ) ).click();
     }
 
 }

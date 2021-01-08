@@ -11,8 +11,6 @@ import spock.lang.Stepwise
 
 /**
  * Created on 5/25/2017.
- * Verifies:
- * OptionSet -Error appears when 'upload' button in the ImageSelector was pressed #4813
  * */
 @Stepwise
 class FreeFormNestedSet_Spec
@@ -51,10 +49,7 @@ class FreeFormNestedSet_Spec
         FreeFormViewPanel freeForm = new FreeFormViewPanel( getSession() );
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
-        freeForm.clickOnForm();
-        // Single occurrence of item-set should be expanded by default:
-        //freeForm.expandItemSetRadio();
-        freeForm.clickOnButtonRadioButton();
+        freeForm.selectElementType( "Button" );
 
         and: "the content has been saved"
         wizard.save();
@@ -71,10 +66,7 @@ class FreeFormNestedSet_Spec
         FreeFormViewPanel freeForm = new FreeFormViewPanel( getSession() );
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
-        freeForm.clickOnForm();
-        // Single occurrence of item-set should be expanded by default:
-        //freeForm.expandItemSetRadio();
-        freeForm.clickOnInputRadioButton();
+        freeForm.selectElementType( "Input" );
         and: "the content has been saved"
         wizard.save();
         saveScreenshot( "freeform_should_be_invalid" );
@@ -97,12 +89,9 @@ class FreeFormNestedSet_Spec
         given: "wizard for FreeForm is opened"
         ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET_CONTENT.getName() ) clickToolbarEdit();
         FreeFormViewPanel freeForm = new FreeFormViewPanel( getSession() );
-        freeForm.clickOnForm();
-        //freeForm.expandItemSetRadio();
-        //freeForm.expandItemSetRadio2();
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
-        freeForm.clickOnInputRadioButton().clickOnImageRadioButton().selectImage( "nord" );
+        freeForm.selectInputType( "image" ).selectImage( "nord" );
         and: "the content has been saved"
         wizard.save();
         saveScreenshot( "freeform_should_be_valid2" );
