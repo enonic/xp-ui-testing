@@ -19,7 +19,7 @@ class OptionSet_Spec
     @Shared
     Content OPTION_SET;
 
-    def "GIVEN wizard for OptionSet content is opened WHEN 'radio1' button in the 'single selection' clicked AND 'Save' button pressed THEN red circle should appear in the wizard page"()
+    def "GIVEN wizard for OptionSet content is opened WHEN 'Option 1' has been selected in the 'single selection' AND 'Save' button pressed THEN red circle should appear in the wizard page"()
     {
         given: "wizard for OptionSet is opened"
         OPTION_SET = build_OptionSet_Content();
@@ -27,7 +27,7 @@ class OptionSet_Spec
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
         wizard.typeDisplayName( OPTION_SET.getName() );
 
-        when: "first radio button in the 'single selection' is clicked and 'Option Items' are expanded"
+        when: "'Option 1' has been selected"
         optionSetFormView.getSingleSelectionOptionSet().selectOption( "Option 1" );
 
         and: "'Save' button has been pressed"
@@ -47,14 +47,13 @@ class OptionSet_Spec
         contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing OptionSet content(not valid) is opened WHEN required option in the 'Single Selection' is selected THEN the content gets valid in the wizard"()
+    def "GIVEN existing OptionSet content(not valid) is opened WHEN Option 2 has been selcted THEN the content gets valid in the wizard"()
     {
         given: "existing OptionSet content(not valid) is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
-        //optionSetFormView.expandFormByLabel( "Single selection" );
 
-        when: "Second radio button has been clicked:"
+        when: "'Option 2' has been selected:"
         optionSetFormView.getSingleSelectionOptionSet().selectOption( "Option 2" );
 
         and: "the content has been saved"
@@ -74,13 +73,13 @@ class OptionSet_Spec
         !contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing valid 'Option Set' content is opened WHEN first radio button has been clicked AND required input has been filled THEN the content gets valid"()
+    def "GIVEN existing valid 'Option Set' content is opened WHEN 'Option 1' has been selected AND required input has been filled iv THEN the content gets valid"()
     {
         given: "existing 'Option Set' content is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
 
-        when: "first radio button clicked AND required input has been filled"
+        when: "'Option 1' has been selected"
         optionSetFormView.getSingleSelectionOptionSet().selectOption( "Option 1" ).typeSetName( "test" );
         and: "the content has been saved"
         wizardPanel.save();
@@ -120,7 +119,6 @@ class OptionSet_Spec
         given: "existing 'Option Set'  is opened"
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
-        //optionSetFormView.expandFormByLabel( "Multi selection" );
 
         when: "image has been selected"
         optionSetFormView.getMultiSelectionOptionSet().selectImage( "nord" );
