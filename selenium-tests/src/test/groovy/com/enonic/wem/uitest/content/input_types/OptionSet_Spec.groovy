@@ -28,7 +28,7 @@ class OptionSet_Spec
         wizard.typeDisplayName( OPTION_SET.getName() );
 
         when: "first radio button in the 'single selection' is clicked and 'Option Items' are expanded"
-        optionSetFormView.getSingleSelectionOptionSet().clickOnFirstRadio();
+        optionSetFormView.getSingleSelectionOptionSet().selectOption( "Option 1" );
 
         and: "'Save' button has been pressed"
         wizard.save();
@@ -55,7 +55,7 @@ class OptionSet_Spec
         //optionSetFormView.expandFormByLabel( "Single selection" );
 
         when: "Second radio button has been clicked:"
-        optionSetFormView.getSingleSelectionOptionSet().clickOnSecondRadio();
+        optionSetFormView.getSingleSelectionOptionSet().selectOption( "Option 2" );
 
         and: "the content has been saved"
         wizardPanel.save();
@@ -79,10 +79,9 @@ class OptionSet_Spec
         given: "existing 'Option Set' content is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
-        //optionSetFormView.expandFormByLabel( "Single selection" );
 
         when: "first radio button clicked AND required input has been filled"
-        optionSetFormView.getSingleSelectionOptionSet().clickOnFirstRadio().typeSetName( "test" );
+        optionSetFormView.getSingleSelectionOptionSet().selectOption( "Option 1" ).typeSetName( "test" );
         and: "the content has been saved"
         wizardPanel.save();
 
@@ -104,11 +103,7 @@ class OptionSet_Spec
         given: "existing 'Option Set' is opened"
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
         OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
-        //optionSetFormView.expandFormByLabel( "Single selection" );
-        optionSetFormView.getSingleSelectionOptionSet().clickOnSecondRadio();
-        NotificationDialog dialog = new NotificationDialog( getSession() );
-        dialog.clickOnOkButton();
-        //optionSetFormView.expandFormByLabel( "Multi selection" );
+        optionSetFormView.getSingleSelectionOptionSet().selectOption( "Option 2" );
 
         when: "option in 'Multi selection' has been clicked"
         optionSetFormView.getMultiSelectionOptionSet().clickOnCheckbox( 2 );

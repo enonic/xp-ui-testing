@@ -16,20 +16,18 @@ public class SingleSelectionOptionSetView
     extends Application
 {
     private final String CONTAINER =
-        "//div[contains(@id,'FormView')]//div[contains(@id,'FormOptionSetView') and descendant::p[text()='Single selection']]";
+        "//div[contains(@id,'FormView')]//div[contains(@id,'FormOptionSetOccurrenceView') and contains(@class,'single-selection')]";
 
-    private final String RADIO_1 = CONTAINER + "//span[contains(@id,'RadioButton') and child::label[text()='Option 1']]//label";
+    private final String DROPDOWN_HANDLER = CONTAINER + "//div[contains(@id,'Dropdown')]" + DROP_DOWN_HANDLE_BUTTON;
 
     private final String RADIO_2 = CONTAINER + "//span[contains(@id,'RadioButton') and child::label[text()='Option 2']]//label";
 
     private final String OPTION_SET_NAME_INPUT =
         CONTAINER + "//div[contains(@id,'InputView') and descendant::div[text()='Name']]" + TEXT_INPUT;
 
-    @FindBy(xpath = RADIO_1)
-    protected WebElement radio1;
+    @FindBy(xpath = DROPDOWN_HANDLER)
+    protected WebElement dropDownHandle;
 
-    @FindBy(xpath = RADIO_2)
-    protected WebElement radio2;
 
     @FindBy(xpath = OPTION_SET_NAME_INPUT)
     protected WebElement setNameInput;
@@ -45,18 +43,13 @@ public class SingleSelectionOptionSetView
         return isElementDisplayed( CONTAINER );
     }
 
-    public SingleSelectionOptionSetView clickOnFirstRadio()
+    public SingleSelectionOptionSetView selectOption( String option )
     {
-        radio1.click();
-        sleep( 200 );
-        return this;
-    }
-
-    public SingleSelectionOptionSetView clickOnSecondRadio()
-    {
-        waitUntilVisible( By.xpath( RADIO_2 ) );
-        radio2.click();
-        sleep( 200 );
+        dropDownHandle.click();
+        sleep( 300 );
+        String optionLocator = CONTAINER + String.format( NAMES_VIEW_BY_DISPLAY_NAME, option );
+        waitUntilVisible( By.xpath( optionLocator ) );
+        getDisplayedElement( By.xpath( optionLocator ) ).click();
         return this;
     }
 
