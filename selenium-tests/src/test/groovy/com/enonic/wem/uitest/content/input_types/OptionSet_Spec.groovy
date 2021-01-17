@@ -1,7 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
-import com.enonic.autotests.pages.contentmanager.wizardpanel.NotificationDialog
 import com.enonic.autotests.pages.form.optionset.OptionSetFormView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -47,7 +46,7 @@ class OptionSet_Spec
         contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing OptionSet content(not valid) is opened WHEN Option 2 has been selcted THEN the content gets valid in the wizard"()
+    def "GIVEN existing OptionSet content(not valid) is opened WHEN Option 2 has been selected THEN the content gets valid in the wizard"()
     {
         given: "existing OptionSet content(not valid) is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();

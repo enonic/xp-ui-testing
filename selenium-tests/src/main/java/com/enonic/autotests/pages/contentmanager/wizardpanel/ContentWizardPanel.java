@@ -509,7 +509,7 @@ public class ContentWizardPanel
 
     public ContentWizardPanel waitForSaveButtonClickable()
     {
-        boolean isVisible = waitUntilVisibleNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_QUICK );
+        boolean isVisible = waitUntilVisibleNoException( By.xpath( TOOLBAR_SAVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
         boolean isEnabled = isSaveButtonEnabled();
         if ( !isVisible || !isEnabled )
         {

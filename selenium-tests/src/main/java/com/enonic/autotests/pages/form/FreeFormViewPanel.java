@@ -65,15 +65,15 @@ public class FreeFormViewPanel
         sleep( 200 );
         clearAndType( elementTypeOptionFilterInput, option );
         sleep( 400 );
-        String appGridItem = "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='element type']]" +
+        String gridItem = "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='element type']]" +
             String.format( NAMES_VIEW_BY_DISPLAY_NAME, option );
-        if ( !isElementDisplayed( appGridItem ) )
+        if ( !isElementDisplayed( gridItem ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_freeform_" ) );
             throw new TestFrameworkException( "Option: " + option + "  was not found!" );
         }
-        buildActions().moveToElement( findElement( By.xpath( appGridItem ) ) );
-        findElement( By.xpath( appGridItem ) ).click();
+        buildActions().moveToElement( findElement( By.xpath( gridItem ) ) );
+        findElement( By.xpath( gridItem ) ).click();
         sleep( 700 );
         return this;
     }
