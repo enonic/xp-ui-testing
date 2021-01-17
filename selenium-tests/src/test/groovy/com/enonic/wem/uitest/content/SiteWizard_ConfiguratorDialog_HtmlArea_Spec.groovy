@@ -33,10 +33,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     String EMAIL_TEXT = "email-text";
 
     @Shared
-    String PAGE_CONTROLLER = "Page"
-
-    @Shared
-    String MAIN_REGION_PAGE_CONTROLLER = "main region"
+    String PAGE_CONTROLLER = "Page";
 
     @Shared
     String EMAIL = "user1@gmail.com";
@@ -179,12 +176,13 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         sleep( 700 );
         when: "try to select external resource in Download tab"
         linkModalDialog.clickDownloadBarItem().doFilterComboBoxOption( WHALE_IMAGE_DISPLAY_NAME );
+        sleep( 500 );
         saveScreenshot( "conf-dialog-download" );
         then: "'No matching items' message should appear, because the dialog is limited to current site content"
         linkModalDialog.isNoMatchingItemsInComboBox();
     }
 
-    def "GIVEN site configurator dialog is opened WHEN Email-link inserted, and changes applied THEN correct text should be present in HtmlArea"()
+    def "GIVEN site configurator dialog is opened WHEN Email-link inserted THEN expected text should be present in HtmlArea"()
     {
         given: "site configurator dialog is opened"
         findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -208,14 +206,14 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.getTextFromCKE().contains( EMAIL_TEXT );
     }
 
-    def "GIVEN site configurator dialog is opened WHEN Image for the background was selected and changes applied THEN correct image file should be present in a page-source"()
+    def "GIVEN site configurator dialog is opened WHEN Image for site background has been selected THEN expected image should be present in the page-sources"()
     {
         given: "site configurator dialog is opened"
         ContentWizardPanel contentWizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
-        when: "Image for the background is selected and changes applied"
+        when: "Image for the background has been selected"
         configurationDialog.selectBackGroundImage( IMPORTED_MAN2_IMAGE_DISPLAY_NAME ).doApply();
         sleep( 700 );
         contentWizard.clickToolbarPreview();
@@ -225,7 +223,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         source.contains( backgroundPart );
     }
 
-    def "GIVEN site configurator dialog is opened WHEN 'embedded iframe' macro inserted, and changes applied THEN correct text should be present in page sources"()
+    def "GIVEN site configurator dialog is opened WHEN 'embedded iframe' macro inserted THEN expected text should be present in page sources"()
     {
         given: "site configurator dialog is opened"
         ContentWizardPanel contentWizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
