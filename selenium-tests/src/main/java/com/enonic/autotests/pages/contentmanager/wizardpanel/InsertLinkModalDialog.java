@@ -27,6 +27,8 @@ public class InsertLinkModalDialog
 
     private final String LINK_TEXT_FIELDSET = CONTAINER + "//fieldset[contains(id,'Fieldset') and child::label[text()='Text']]";
 
+    protected final String CONTENT_COMBOBOX_SELECTED_OPTION = "//div[contains(@id,'ContentSelectedOptionsView')]";
+
     private final String LINK_TEXT_VALIDATION_MESSAGE =
         "//div[contains(@id,'FormItem') and child::label[text()='Text']]/.." + VALIDATION_RECORDING_VIEWER;
 
@@ -122,6 +124,12 @@ public class InsertLinkModalDialog
         LoaderComboBox loaderComboBox = new LoaderComboBox( getSession() );
         loaderComboBox.selectOption( name );
         return this;
+    }
+
+    public String getSelectedComboBoxOption()
+    {
+        String locator = CONTENT_COMBOBOX_SELECTED_OPTION + H6_DISPLAY_NAME;
+        return this.getDisplayedString( locator );
     }
 
     public InsertLinkModalDialog typeText( String text )

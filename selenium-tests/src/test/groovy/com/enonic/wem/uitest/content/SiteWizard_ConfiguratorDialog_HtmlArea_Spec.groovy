@@ -120,6 +120,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         and: "correct URL should be present"
         source.contains( URL )
     }
+
     def "WHEN try to select external resource in 'Content' tab THEN 'No matching items' message should appear, because the dialog is limited to current site content"()
     {
         given: "site configurator dialog is opened"
@@ -163,6 +164,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.getTextFromCKE().contains( CONTENT_TEXT );
     }
 
+    //Content selector on the Downloads tab of the Insert Link dialog should not be limited to current site #2731
     def "WHEN try to select external resource in Download tab THEN 'No matching items' message should appear, because the dialog is limited to current site content"()
     {
         given: "site configurator dialog is opened"
@@ -173,13 +175,14 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
 
         and: "InsertLinkModalDialog is opened"
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
-        sleep( 700 );
+        linkModalDialog.clickDownloadBarItem();
+        sleep( 500 );
         when: "try to select external resource in Download tab"
-        linkModalDialog.clickDownloadBarItem().doFilterComboBoxOption( WHALE_IMAGE_DISPLAY_NAME );
+        linkModalDialog.selectComboBoxOption( WHALE_IMAGE_DISPLAY_NAME );
         sleep( 500 );
         saveScreenshot( "conf-dialog-download" );
-        then: "'No matching items' message should appear, because the dialog is limited to current site content"
-        linkModalDialog.isNoMatchingItemsInComboBox();
+        then: "expected content should be in selected option view, because Download tab is not limited to current site content"
+        linkModalDialog.getSelectedComboBoxOption() == WHALE_IMAGE_DISPLAY_NAME;
     }
 
     def "GIVEN site configurator dialog is opened WHEN Email-link inserted THEN expected text should be present in HtmlArea"()
