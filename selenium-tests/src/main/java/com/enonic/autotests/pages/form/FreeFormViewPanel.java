@@ -1,5 +1,7 @@
 package com.enonic.autotests.pages.form;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -23,8 +25,11 @@ public class FreeFormViewPanel
     private final String ELEMENT_TYPE_OPTION_FILTER_INPUT =
         ITEM_SET + "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='element type']]" + DROPDOWN_OPTION_FILTER_INPUT;
 
-    private final String INPUT_TYPE_OPTION_FILTER_INPUT =
-        ITEM_SET + "//div[contains(@id,'FormOptionSetOptionView') and descendant::h5[text()='input type']]" + DROPDOWN_OPTION_FILTER_INPUT;
+    private final String INPUT_TYPE_VIEW = "//div[contains(@id,'FormOptionSetOptionView') and descendant::h5[text()='input type']]";
+
+    private final String ELEMENT_TYPE_VIEW = "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='element type']]";
+
+    private final String INPUT_TYPE_OPTION_FILTER_INPUT = ITEM_SET + INPUT_TYPE_VIEW + DROPDOWN_OPTION_FILTER_INPUT;
 
     private final String INPUT_TYPE_DROPDOWN =
         "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='input type']]//div[contains(@id,'Dropdown')]";
@@ -36,11 +41,22 @@ public class FreeFormViewPanel
 
     private final String ITEM_SET_3 = ITEM_SET + "//div[contains(@id,'FormOccurrenceDraggableLabel') and contains(.,'element type')]";
 
+    private final String INPUT_TYPE_MENU_BUTTON = ITEM_SET + INPUT_TYPE_VIEW + OPTION_SET_MENU_BUTTON;
+
+    private final String ELEMENT_TYPE_MENU_BUTTON = ITEM_SET + ELEMENT_TYPE_VIEW + OPTION_SET_MENU_BUTTON;
+
     @FindBy(xpath = ELEMENT_TYPE_OPTION_FILTER_INPUT)
     private WebElement elementTypeOptionFilterInput;
 
     @FindBy(xpath = INPUT_TYPE_OPTION_FILTER_INPUT)
     private WebElement inputTypeOptionFilterInput;
+
+    @FindBy(xpath = INPUT_TYPE_MENU_BUTTON)
+    private WebElement inputTypeMenuButton;
+
+    @FindBy(xpath = INPUT_TYPE_MENU_BUTTON)
+    private WebElement elementTypeMenuButton;
+
 
     /**
      * The constructor.
@@ -58,11 +74,51 @@ public class FreeFormViewPanel
         return this;
     }
 
+    public FreeFormViewPanel expandInputTypeMenu()
+    {
+        List<WebElement> menuButtons = getDisplayedElements( By.xpath( INPUT_TYPE_MENU_BUTTON ) );
+        buildActions().moveToElement( menuButtons.get( 0 ) );
+        menuButtons.get( 0 ).click();
+        return this;
+    }
+
+    public FreeFormViewPanel expandElementTypeMenu()
+    {
+        List<WebElement> menuButtons = getDisplayedElements( By.xpath( ELEMENT_TYPE_MENU_BUTTON ) );
+        buildActions().moveToElement( menuButtons.get( 0 ) );
+        menuButtons.get( 0 ).click();
+        return this;
+    }
+
+    public FreeFormViewPanel resetInputTypeOption()
+    {
+        expandInputTypeMenu();
+        selectMenuItem( "Reset" );
+        return this;
+    }
+
+    public FreeFormViewPanel resetElementTypeOption()
+    {
+        expandElementTypeMenu();
+        selectMenuItem( "Reset" );
+        return this;
+    }
+
+    public FreeFormViewPanel selectMenuItem( String menuItem )
+    {
+        String locatorMenuItem = String.format( "//li[contains(@id,'MenuItem') and text()='%s']", menuItem );
+        boolean isVisible = this.waitUntilVisibleNoException( By.xpath( locatorMenuItem ), EXPLICIT_QUICK );
+        if ( !isVisible )
+        {
+            throw new TestFrameworkException( "Menu item was not found: " + menuItem );
+        }
+        getDisplayedElement( By.xpath( locatorMenuItem ) ).click();
+        sleep( 200 );
+        return this;
+    }
 
     public FreeFormViewPanel selectElementType( String option )
     {
-        findElement( By.xpath( ITEM_SET + ELEMENT_TYPE_DROPDOWN ) ).click();
-        sleep( 200 );
         clearAndType( elementTypeOptionFilterInput, option );
         sleep( 400 );
         String gridItem = "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='element type']]" +
@@ -80,8 +136,6 @@ public class FreeFormViewPanel
 
     public FreeFormViewPanel selectInputType( String option )
     {
-        findElement( By.xpath( ITEM_SET + INPUT_TYPE_DROPDOWN ) ).click();
-        sleep( 200 );
         clearAndType( inputTypeOptionFilterInput, option );
         sleep( 1000 );
         String appGridItem = "//div[contains(@id,'FormOptionSetView') and descendant::h5[text()='input type']]" +

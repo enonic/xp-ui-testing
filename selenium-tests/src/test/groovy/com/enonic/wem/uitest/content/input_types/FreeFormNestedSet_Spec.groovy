@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.NotificationDialog
 import com.enonic.autotests.pages.form.FreeFormViewPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
@@ -59,11 +60,12 @@ class FreeFormNestedSet_Spec
         !wizard.isContentInvalid();
     }
 
-    def "GIVEN existing not valid 'FreeForm' content is opened WHEN required inputs has been cleared THEN red icon gets visible in the wizard page"()
+    def "GIVEN existing valid 'FreeForm' content is opened WHEN option with required inputs has been selected and saved THEN red icon gets visible in the wizard page"()
     {
         given: "wizard for FreeForm is opened"
         ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET_CONTENT.getName() ) clickToolbarEdit();
         FreeFormViewPanel freeForm = new FreeFormViewPanel( getSession() );
+        freeForm.resetElementTypeOption();
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
         freeForm.selectElementType( "Input" );
@@ -71,7 +73,7 @@ class FreeFormNestedSet_Spec
         wizard.save();
         saveScreenshot( "freeform_should_be_invalid" );
 
-        then: "red icon should be displayed on  the wizard page"
+        then: "red icon gets visible now"
         wizard.isContentInvalid();
     }
 
@@ -87,16 +89,18 @@ class FreeFormNestedSet_Spec
     def "GIVEN existing not valid 'FreeForm' content is opened AND option with ImageSelector is selected WHEN image has been selected THEN red icon should should not be present in the wizard page"()
     {
         given: "wizard for FreeForm is opened"
-        ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET_CONTENT.getName() ) clickToolbarEdit();
+        ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET_CONTENT.getName() ).clickToolbarEdit();
         FreeFormViewPanel freeForm = new FreeFormViewPanel( getSession() );
 
         when: "the content should be displayed as invalid, because required inputs are not filled"
-        freeForm.selectInputType( "image" ).selectImage( "nord" );
+        freeForm.selectInputType( "image" );
+        freeForm.selectImage( "nord" );
+
         and: "the content has been saved"
         wizard.save();
         saveScreenshot( "freeform_should_be_valid2" );
 
-        then: "red icon should not be displayed on  the wizard page"
+        then: "red icon should not be displayed in the wizard page"
         !wizard.isContentInvalid();
     }
 
