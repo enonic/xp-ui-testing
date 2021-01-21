@@ -1,7 +1,10 @@
 package com.enonic.wem.uitest.content.input_types
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.NotificationDialog
+import com.enonic.autotests.pages.form.optionset.MultiSelectionOptionSetView
 import com.enonic.autotests.pages.form.optionset.OptionSetFormView
+import com.enonic.autotests.pages.form.optionset.SingleSelectionOptionSetView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
@@ -33,7 +36,7 @@ class OptionSet_Spec
         wizard.save();
         saveScreenshot( "opt_set_radio1_empty" );
 
-        then: "red circle should appear in the wizard page, because required inputs are not filled"
+        then: "this content is not valid, because required inputs are not filled"
         wizard.isContentInvalid();
     }
 
@@ -50,10 +53,11 @@ class OptionSet_Spec
     {
         given: "existing OptionSet content(not valid) is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
-        OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
+        SingleSelectionOptionSetView singleSelection = new SingleSelectionOptionSetView( getSession() );
 
         when: "'Option 2' has been selected:"
-        optionSetFormView.getSingleSelectionOptionSet().selectOption( "Option 2" );
+        singleSelection.expandMenuClickOnMenuItem( 0, "Reset" );
+        singleSelection.selectOption( "Option 2" );
 
         and: "the content has been saved"
         wizardPanel.save();
@@ -72,14 +76,15 @@ class OptionSet_Spec
         !contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing valid 'Option Set' content is opened WHEN 'Option 1' has been selected AND required input has been filled iv THEN the content gets valid"()
+    def "WHEN 'Option 1' has been selected AND required input has been filled THEN the content gets valid"()
     {
         given: "existing 'Option Set' content is opened"
         ContentWizardPanel wizardPanel = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
-        OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
+        SingleSelectionOptionSetView singleSelection = new SingleSelectionOptionSetView( getSession() );
 
         when: "'Option 1' has been selected"
-        optionSetFormView.getSingleSelectionOptionSet().selectOption( "Option 1" ).typeSetName( "test" );
+        singleSelection.expandMenuClickOnMenuItem( 0, "Reset" );
+        singleSelection.selectOption( "Option 1" ).typeSetName( "test" );
         and: "the content has been saved"
         wizardPanel.save();
 
@@ -96,15 +101,20 @@ class OptionSet_Spec
         !contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "GIVEN existing 'Option Set' is opened WHEN option in 'Multi selection' has been clicked AND it is saved without required inputs THEN red icon should be displayed, this content is invalid"()
+    def "WHEN option in 'Multi selection' has been saved with not filled required inputs THEN red icon should be displayed, this content is invalid"()
     {
         given: "existing 'Option Set' is opened"
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
-        OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
-        optionSetFormView.getSingleSelectionOptionSet().selectOption( "Option 2" );
+        SingleSelectionOptionSetView singleSelection = new SingleSelectionOptionSetView( getSession() );
+        MultiSelectionOptionSetView multiSelection = new MultiSelectionOptionSetView( getSession() );
+        NotificationDialog notificationDialog = new NotificationDialog( getSession() );
+        singleSelection.expandMenuClickOnMenuItem( 0, "Reset" );
+        notificationDialog.waitForOpened();
+        notificationDialog.clickOnOkButton();
+        singleSelection.selectOption( "Option 2" );
 
         when: "option in 'Multi selection' has been clicked"
-        optionSetFormView.getMultiSelectionOptionSet().clickOnCheckbox( 2 );
+        multiSelection.clickOnCheckbox( 2 );
         and: "it saved without required inputs"
         wizard.save();
         saveScreenshot( "opt_set_multi_invalid" );
@@ -117,10 +127,10 @@ class OptionSet_Spec
     {
         given: "existing 'Option Set'  is opened"
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
-        OptionSetFormView optionSetFormView = new OptionSetFormView( getSession() );
+        MultiSelectionOptionSetView multiSelection = new MultiSelectionOptionSetView( getSession() );
 
         when: "image has been selected"
-        optionSetFormView.getMultiSelectionOptionSet().selectImage( "nord" );
+        multiSelection.selectImage( "nord" );
         and: "'Save' button pressed"
         wizard.save();
         saveScreenshot( "opt_set_image_selected" );
