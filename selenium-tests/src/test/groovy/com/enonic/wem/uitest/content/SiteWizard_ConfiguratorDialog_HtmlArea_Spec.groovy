@@ -50,7 +50,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     @Shared
     String EMBEDDED_IFRAME_CODE_RESULT = "[embed]" + MACRO_TEXT + "[/embed]";
 
-    def "GIVEN creating new Site with configuration and a page-controller WHEN site was saved and wizard closed THEN new site should be present"()
+    def "Preconditions: site with controller should be added"()
     {
         given:
         SITE = buildSiteWithApps( APP_CONTENT_TYPES_DISPLAY_NAME );
@@ -64,14 +64,14 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN site configurator dialog is opened WHEN an image-name was typed but allow type is 'Folder' THEN 'no matching items' message should be displayed"()
+    def "GIVEN site configurator dialog is opened AND allow type is 'Folder' WHEN an image's name has been typed THEN 'no matching items' message should be displayed"()
     {
         given: "site-configurator dialog is opened"
         findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
         SiteConfiguratorDialog configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
 
-        when: "an image-name has been typed but allow type is 'Folder'"
+        when: "an image-name has been typed in post options filter input"
         configurationDialog.typePostsFilter( IMPORTED_IMAGE_BOOK_DISPLAY_NAME );
         sleep( 700 );
         saveScreenshot( "no_matching_items_allow_type" );
@@ -80,7 +80,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.isNoMatchingItemsForPostsFolder()
     }
 
-    def "GIVEN site configurator dialog is opened WHEN Link was inserted, and changes applied THEN correct text should be present in HtmlArea"()
+    def "GIVEN site configurator dialog is opened WHEN Link has been inserted THEN expected text should be present in HtmlArea"()
     {
         given: "site-configurator dialog is opened"
         findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
@@ -103,12 +103,12 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         configurationDialog.getTextFromCKE().contains( URL );
     }
 
-    def "GIVEN existing site is opened WHEN preview button was pressed THEN correct links should be present in page-source"()
+    def "GIVEN existing site is opened WHEN preview button has been pressed THEN correct links should be present in page-source"()
     {
         given: "existing site is opened"
         ContentWizardPanel contentWizard = findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();
 
-        when: "preview button was pressed"
+        when: "preview button has been pressed"
         contentWizard.clickToolbarPreview();
 
         then: "page source of new opened tab in a browser is not empty"
@@ -121,7 +121,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         source.contains( URL )
     }
 
-    def "WHEN try to select external resource in 'Content' tab THEN 'No matching items' message should appear, because the dialog is limited to current site content"()
+    def "WHEN try to select external resource in the site configurator THEN 'No matching items' message should appear, because the dialog is limited to current site content"()
     {
         given: "site configurator dialog is opened"
         findAndSelectContent( SITE.getName() ).clickToolbarEditAndSwitchToWizardTab();

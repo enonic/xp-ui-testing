@@ -107,6 +107,7 @@ public class InsertLinkModalDialog
     {
         WebElement optionsInput = getDisplayedElement( By.xpath( CONTAINER + COMBOBOX_OPTION_FILTER_INPUT ) );
         clearAndType( optionsInput, name );
+        sleep( 400 );
         return this;
     }
 
