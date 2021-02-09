@@ -20,7 +20,7 @@ public class ImageEditor
 
     private final String FOCUS_CIRCLE = CONTAINER_DIV + "//*[name()='svg']/*[name()='g' and contains(@class,'focus-group')]";
 
-    private final String CROP_HANDLE = CONTAINER_DIV + "//*[name()='svg' and contains(@id,'dragHandle')]//*[name()='use']";
+    private final String CROP_HANDLE = CONTAINER_DIV + "//*[name()='svg' and contains(@id,'dragHandle')]";
 
     private final String ZOOM_CONTAINER = CONTAINER_DIV + "//div[@class='zoom-container']";
 
