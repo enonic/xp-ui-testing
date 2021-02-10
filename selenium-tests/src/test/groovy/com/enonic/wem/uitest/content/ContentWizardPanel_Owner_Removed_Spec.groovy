@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
@@ -32,7 +33,7 @@ class ContentWizardPanel_Owner_Removed_Spec
     private String USER_NAME = NameHelper.uniqueName( "user" );
 
     @Shared
-    String USER_PASSWORD = "1q2w3e";
+    String USER_PASSWORD = Application.MEDIUM_PASSWORD;
 
     @Shared
     User TEST_USER;

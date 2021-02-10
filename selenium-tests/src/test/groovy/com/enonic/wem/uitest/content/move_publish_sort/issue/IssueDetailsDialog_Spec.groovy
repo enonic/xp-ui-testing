@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.move_publish_sort.issue
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueDetailsDialog
 import com.enonic.autotests.pages.contentmanager.issue.IssueListDialog
@@ -46,8 +47,8 @@ class IssueDetailsDialog_Spec
 
         and: "build the new user"
         String[] roles = [RoleName.ADMIN_CONSOLE.getValue(), RoleName.CM_APP.getValue()];
-        TEST_USER =
-            User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( "1q2w3e" ).roles( roles.toList() ).build();
+        TEST_USER = User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( Application.MEDIUM_PASSWORD ).roles(
+            roles.toList() ).build();
         and: "select the Users-folder"
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew(

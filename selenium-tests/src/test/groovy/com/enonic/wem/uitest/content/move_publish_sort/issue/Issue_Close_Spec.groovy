@@ -34,6 +34,9 @@ class Issue_Close_Spec
     @Shared
     Issue TEST_TASK;
 
+    @Shared
+    String PASSWORD = Application.MEDIUM_PASSWORD;
+
     def setup()
     {
         go "admin"
@@ -47,11 +50,10 @@ class Issue_Close_Spec
         and: "build the new user"
         String[] roles = [RoleName.ADMIN_CONSOLE.getValue(), RoleName.CM_APP.getValue(), RoleName.CONTENT_MANAGER_ADMINISTRATOR.getValue()];
         TEST_USER =
-            User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( "1q2w3e" ).roles( roles.toList() ).build();
+            User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( PASSWORD ).roles( roles.toList() ).build();
         and: "select the Users-folder"
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew(
-            UserItemName.USERS_FOLDER );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew( UserItemName.USERS_FOLDER );
 
         when: "data was typed and user saved"
         userWizardPanel.typeData( TEST_USER ).save().close( TEST_USER.getDisplayName() );

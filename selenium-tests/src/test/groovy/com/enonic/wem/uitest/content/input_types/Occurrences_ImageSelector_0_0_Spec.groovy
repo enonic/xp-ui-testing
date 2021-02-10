@@ -21,13 +21,13 @@ class Occurrences_ImageSelector_0_0_Spec
     @Shared
     Content TEST_IMAGE_SELECTOR_CONTENT;
 
-    //verifies the "Path-search in selectors doesn't work #4786'
+    //verifies the "Path-search in selectors doesn't work #4786'Occurrences_ImageSelector_0_0_Spec
     def "GIVEN wizard for Image Selector-content (0:0) is opened WHEN path to an image has been typed THEN the image should be filtered"()
     {
         given: "wizard for Image Selector-content (0:0) is opened"
         Content imageSelectorContent = buildImageSelector0_0_Content( NORD_IMAGE_DISPLAY_NAME );
         selectSitePressNew( imageSelectorContent.getContentTypeName() );
-        String pathToImage = "/all-content-types-images/" + NORD_IMAGE_NAME;
+        String pathToImage = "all-content-types-images/" + NORD_IMAGE_NAME;
 
         when: "path to an image has been typed"
         ImageSelectorFormViewPanel formViewPanel = new ImageSelectorFormViewPanel( getSession() );

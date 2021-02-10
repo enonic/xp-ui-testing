@@ -45,7 +45,7 @@ class Display_SourceButton_Spec
     User USER
 
     @Shared
-    String USER_PASSWORD = "1q2w3e";
+    String USER_PASSWORD = Application.MEDIUM_PASSWORD;
 
     @Shared
     Content SITE;

@@ -32,7 +32,7 @@ class DetailsPanel_OwnerName_Spec
     String USER_NAME = "owner";
 
     @Shared
-    String USER_PASSWORD = "1q2w3e";
+    String USER_PASSWORD = "password123";
 
     @Shared
     ContentBrowsePanel contentBrowsePanel;

@@ -47,8 +47,8 @@ class IssueListDialog_Spec
 
         and: "build the new user"
         String[] roles = [RoleName.ADMIN_CONSOLE.getValue(), RoleName.CM_APP.getValue(), RoleName.CONTENT_MANAGER_ADMINISTRATOR.getValue()];
-        TEST_USER =
-            User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( "1q2w3e" ).roles( roles.toList() ).build();
+        TEST_USER = User.builder().displayName( USER_NAME ).email( USER_NAME + "@gmail.com" ).password( Application.MEDIUM_PASSWORD ).roles(
+            roles.toList() ).build();
         and: "select the Users-folder"
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew( UserItemName.USERS_FOLDER );
