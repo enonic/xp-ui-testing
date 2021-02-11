@@ -133,7 +133,7 @@ class DeleteSite_ConfirmDelete_Spec
         saveScreenshot( "test_confirm_delete_site_online" );
 
         then: "expected notification message should appears"
-        contentBrowsePanel.waitExpectedNotificationMessage( "Item \"" + site.getName() + "\" is deleted.", 1 )
+        contentBrowsePanel.waitExpectedNotificationMessage( "2 items are deleted.", 1 )
 
         and: "site should be deleted"
         !contentBrowsePanel.exists( site.getName() );

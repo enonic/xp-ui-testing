@@ -81,7 +81,7 @@ class ContentWizard_Publish_Inputs_Spec
         wizard.typeOnlineTo( TimeUtils.getYesterdayDateTime() ).save();
         saveScreenshot( "schedule_wizard_notification_message" )
 
-        then: "correct notification messages appears"
+        then: "expected notification messages appears"
         String notification = wizard.waitNotificationWarning( Application.EXPLICIT_NORMAL );
         notification == wizard.ONLINE_FROM_MISSED_NOTIFICATION_MESSAGE
     }
