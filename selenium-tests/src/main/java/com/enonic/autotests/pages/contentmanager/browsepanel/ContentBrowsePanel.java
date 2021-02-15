@@ -765,9 +765,10 @@ public class ContentBrowsePanel
      */
     public ItemViewPanelPage clickToolbarPreview()
     {
-        if ( !isElementDisplayed( PREVIEW_BUTTON_XPATH ) )
+        if ( !waitIsElementEnabled( previewButton, EXPLICIT_NORMAL ) )
         {
-            clickOnFoldButton();
+            saveScreenshot( NameHelper.uniqueName( "err_preview" ) );
+            throw new TestFrameworkException( "Preview button is not enabled!" );
         }
         previewButton.click();
         sleep( 1000 );

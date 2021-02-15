@@ -1,13 +1,11 @@
 package com.enonic.wem.uitest.content.liveedit
 
-import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel
 import com.enonic.autotests.pages.form.CityFormView
 import com.enonic.autotests.pages.form.liveedit.ContextWindow
-import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.PageComponent
@@ -154,13 +152,9 @@ class CountrySiteWithTemplateSpec
             SAN_FR_CONTENT ).clickOnMarkAsReadyButton();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         findAndSelectContent( USA_CONTENT.getName() );
-        sleep( 3000 );
-        saveScreenshot( "san_francisco_added" )
-        contentBrowsePanel.doClearSelection();
+        sleep( 2000 );
 
         when: "country-content has been selected and 'Preview' button pressed"
-        findAndSelectContent( USA_CONTENT.getName() );
-        sleep( 1000 );
         saveScreenshot( "USA_City" )
         contentBrowsePanel.clickToolbarPreview();
         sleep( 1200 );
@@ -255,8 +249,7 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + NEW_SF_POPULATION );
     }
 
-    @Ignore
-    def "GIVEN existing country content WHEN 'Page Component View' is opened THEN all added components should be displayed"()
+    def "WHEN existing country content is opened THEN all added components should be displayed"()
     {
         given: "existing country content is opened"
         ContentWizardPanel wizard = findAndSelectContent( USA_CONTENT.getName() ).clickToolbarEdit();

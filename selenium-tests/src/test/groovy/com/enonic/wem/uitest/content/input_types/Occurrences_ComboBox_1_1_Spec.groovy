@@ -67,7 +67,7 @@ class Occurrences_ComboBox_1_1_Spec
         wizard.isContentInvalid();
 
         and: "'Publish' menu item should be disabled"
-        !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
+        !wizard.showPublishMenu().isPublishMenuItemEnabled();
     }
 
     def "GIVEN ComboBox-content (1:1) with one option is saved WHEN the content has been opened THEN one selected option should be present and options filter input is disabled"()
@@ -123,21 +123,18 @@ class Occurrences_ComboBox_1_1_Spec
         wizard.isContentInvalid();
     }
 
-    def "WHEN content with selected option has been published THEN the content with status equals 'Published' should be displayed"()
+    def "WHEN content with selected option has been published THEN this content gets 'Published'"()
     {
         when: "content with selected option has been published"
         comboBox1_1 = buildComboBox1_1_Content( 1 );
         ContentWizardPanel wizard = selectSitePressNew( comboBox1_1.getContentTypeName() );
         wizard.typeData( comboBox1_1 ).showPublishMenu().clickOnMarkAsReadyMenuItem();
         wizard.clickOnPublishButton().clickOnPublishNowButton();
-        String publishMessage = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( comboBox1_1.getName() );
 
-        then: "content should be with 'Published' status"
+        then: "this content gets 'Published'"
         contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
-        and:
-        publishMessage == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, comboBox1_1.getName() );
     }
 
     def "GIVEN not valid content with 'modified' status WHEN content selected and 'Delete' pressed THEN content with 'Deleted' status should be displayed"()
