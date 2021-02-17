@@ -88,7 +88,7 @@ class OptionSet_Spec
         and: "the content has been saved"
         wizardPanel.save();
 
-        then: "red icon should not be displayed in the wizard"
+        then: "red icon should not be displayed"
         !wizardPanel.isContentInvalid();
     }
 
@@ -101,7 +101,7 @@ class OptionSet_Spec
         !contentBrowsePanel.isContentInvalid( OPTION_SET.getName() );
     }
 
-    def "WHEN option in 'Multi selection' has been saved with not filled required inputs THEN red icon should be displayed, this content is invalid"()
+    def "WHEN required checkbox in 'Multi selection' has been unchecked AND saved THEN red icon gets visible, this content gets not valid"()
     {
         given: "existing 'Option Set' is opened"
         ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
@@ -113,13 +113,13 @@ class OptionSet_Spec
         notificationDialog.clickOnOkButton();
         singleSelection.selectOption( "Option 2" );
 
-        when: "option in 'Multi selection' has been clicked"
+        when: "required checkbox in 'Multi selection' has been unchecked"
         multiSelection.clickOnCheckbox( 2 );
-        and: "it saved without required inputs"
+        and: "content saved"
         wizard.save();
         saveScreenshot( "opt_set_multi_invalid" );
 
-        then: "red icon should be displayed, this content is invalid"
+        then: "red icon gets visible, this content gets not valid"
         wizard.isContentInvalid();
     }
 

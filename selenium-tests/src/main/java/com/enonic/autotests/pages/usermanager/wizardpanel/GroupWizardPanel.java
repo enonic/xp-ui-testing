@@ -25,7 +25,7 @@ public class GroupWizardPanel
 {
     private final String GROUP_WIZARD_PANEL = "//div[contains(@id,'GroupWizardPanel')]";
 
-    private final String MEMBERS_FORM = GROUP_WIZARD_PANEL + "//div[contains(@id,'GroupMembersWizardStepForm')]";
+    private final String MEMBERS_FORM = GROUP_WIZARD_PANEL + "//div[contains(@id,'MembersWizardStepForm')]";
 
     private final String TOOLBAR = "//div[contains(@id,'Toolbar')]";
 

@@ -88,7 +88,7 @@ public class ContextWindow
 
     public ContextWindow clickOnTabBarItem( String name )
     {
-        if (  getSession().isInLiveEditFrame() )
+        if ( getSession().isInLiveEditFrame() )
         {
             getDriver().switchTo().defaultContent();
             getSession().setInLiveEditFrame( false );

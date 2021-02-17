@@ -92,7 +92,7 @@ public class ContentWizardPanel
 
     private final String TOOLBAR_PREVIEW_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
-    private final String CONTEXTN_PANEL_TOGGLER =
+    private final String CONTEXT_PANEL_TOGGLER =
         DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ContextPanel')]" + "//button[contains(@id, 'NonMobileContextPanelToggleButton')]";
 
     private final String EDIT_PERMISSIONS_BUTTON =
@@ -124,7 +124,7 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_UNDO_DELETE_BUTTON_XPATH)
     private WebElement toolbarUndoDeleteButton;
 
-    @FindBy(xpath = CONTEXTN_PANEL_TOGGLER)
+    @FindBy(xpath = CONTEXT_PANEL_TOGGLER)
     private WebElement toolbarShowContextWindow;
 
     @FindBy(xpath = TOOLBAR_PUBLISH_DROPDOWN_HANDLER)
@@ -340,15 +340,15 @@ public class ContentWizardPanel
         ContextWindow cw = new ContextWindow( getSession() );
         if ( !cw.waitForContextWindowVisible() )
         {
-            boolean isTogglerVisible = waitUntilVisibleNoException( By.xpath( CONTEXTN_PANEL_TOGGLER ), Application.EXPLICIT_NORMAL );
+            boolean isTogglerVisible = waitUntilVisibleNoException( By.xpath( CONTEXT_PANEL_TOGGLER ), Application.EXPLICIT_NORMAL );
             if ( !isTogglerVisible )
             {
                 saveScreenshot( NameHelper.uniqueName( "err_icon-cog" ) );
                 throw new TestFrameworkException( "Toggler for Context Panel (icon-cog) was not found" );
             }
-            getDisplayedElement( By.xpath( CONTEXTN_PANEL_TOGGLER ) ).click();
+            getDisplayedElement( By.xpath( CONTEXT_PANEL_TOGGLER ) ).click();
             cw.waitUntilWindowLoaded( 1l );
-            sleep( 1500 );
+            sleep( 1000 );
         }
         return cw;
     }
@@ -703,7 +703,7 @@ public class ContentWizardPanel
      */
     public boolean isContextPanelTogglerDisplayed()
     {
-        return isElementDisplayed( CONTEXTN_PANEL_TOGGLER );
+        return isElementDisplayed( CONTEXT_PANEL_TOGGLER );
     }
 
     public ContentWizardPanel selectPageDescriptor( String pageDescriptorDisplayName )
