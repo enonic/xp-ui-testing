@@ -123,6 +123,19 @@ class OptionSet_Spec
         wizard.isContentInvalid();
     }
 
+    def "GIVEN existing 'option set' is opened WHEN image has been selected in the multi selection THEN red icon gets not visible"()
+    {
+        given: "existing 'Option Set'  is opened"
+        ContentWizardPanel wizard = findAndSelectContent( OPTION_SET.getName() ).clickToolbarEdit();
+        MultiSelectionOptionSetView multiSelection = new MultiSelectionOptionSetView( getSession() );
+        when: "image has been selected"
+        multiSelection.selectImage( "nord" );
+        and: "'Save' button pressed"
+        wizard.save();
+        saveScreenshot( "opt_set_image_selected" );
+        then: "red icon gets not visible"
+        !wizard.isContentInvalid()
+    }
 
     private Content build_OptionSet_Content()
     {

@@ -86,24 +86,6 @@ class FreeFormNestedSet_Spec
         contentBrowsePanel.isContentInvalid( SET_IN_SET_CONTENT.getName() )
     }
 
-    def "GIVEN existing not valid 'FreeForm' content is opened AND option with ImageSelector is selected WHEN image has been selected THEN red icon should should not be present in the wizard page"()
-    {
-        given: "wizard for FreeForm is opened"
-        ContentWizardPanel wizard = findAndSelectContent( SET_IN_SET_CONTENT.getName() ).clickToolbarEdit();
-        FreeFormViewPanel freeForm = new FreeFormViewPanel( getSession() );
-
-        when: "the content should be displayed as invalid, because required inputs are not filled"
-        freeForm.selectInputType( "image" );
-        freeForm.selectImage( "nord" );
-
-        and: "the content has been saved"
-        wizard.save();
-        saveScreenshot( "freeform_should_be_valid2" );
-
-        then: "red icon should not be displayed in the wizard page"
-        !wizard.isContentInvalid();
-    }
-
     protected Content buildFreeFormOptionSet_Content()
     {
         Content tinyMceContent = Content.builder().
