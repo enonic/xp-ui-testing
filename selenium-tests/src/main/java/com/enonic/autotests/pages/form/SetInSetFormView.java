@@ -33,10 +33,9 @@ public class SetInSetFormView
 
     private final String LAST_NAME_VALIDATION_MESSAGE = LAST_NAME_INPUT_VIEW + VALIDATION_RECORDING_VIEWER;
 
-    private final String ADD_CONTACT_INFO_BUTTON =
-        FORM_VIEW + "//button[contains(@id,'Button') and child::span[text()='Add Contact Info']]";
+    private final String ADD_CONTACT_INFO_BUTTON = FORM_VIEW + "//button[contains(@id,'Button') and child::span[text()='Add']]";
 
-    private final String ADD_PHONE_NUMBERS_BUTTON = FORM_VIEW + "//button[child::span[text()='Add Phone Numbers']]";
+    private final String ADD_PHONE_NUMBERS_BUTTON = FORM_VIEW + "//button[child::span[text()='Add']]";
 
     @FindBy(xpath = FIRST_NAME_INPUT)
     protected WebElement firstNameInput;

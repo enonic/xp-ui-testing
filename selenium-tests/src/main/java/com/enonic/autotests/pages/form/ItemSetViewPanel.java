@@ -37,7 +37,7 @@ public class ItemSetViewPanel
 
     protected final String HTML_AREA_INPUTS = FORM_ITEM_SET_VIEW + "//textarea[contains(@id,'TextArea')]";
 
-    protected final String ADD_ITEM_SET_BUTTON = FORM_VIEW + "//button/span[text()='Add ItemSet']";
+    protected final String ADD_ITEM_SET_BUTTON = FORM_VIEW + "//div[@class='bottom-button-row']//button[child::span[text()='Add']]";
 
     protected final String ITEM_SET_MENU_BUTTON = OCCURRENCE_VIEW + "//button[contains(@id,'MoreButton')]";
 
@@ -141,13 +141,13 @@ public class ItemSetViewPanel
     @Override
     public void clickOnAddButton()
     {
-        boolean isClickable = waitUntilClickableNoException( By.xpath( ADD_ITEM_SET_BUTTON ), Application.EXPLICIT_NORMAL );
-        if ( !isClickable )
+        List<WebElement> elements = getDisplayedElements( By.xpath( ADD_ITEM_SET_BUTTON ) );
+        if ( elements.size() == 0 )
         {
             saveScreenshot( "err_item_set_add_button" );
             throw new TestFrameworkException( "Add set button is not clickable!" );
         }
-        addItemSetButton.click();
+        elements.get( 0 ).click();
         sleep( 500 );
     }
 
