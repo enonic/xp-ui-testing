@@ -60,7 +60,7 @@ public class UserWizardPanel
     @FindBy(xpath = "//input[@type = 'email']")
     protected WebElement emailInput;
 
-    @FindBy(xpath = "//input[@type = 'text' and contains(@class,'password-input')]")
+    @FindBy(xpath = "//input[@type = 'password']")
     protected WebElement passwordInput;
 
     @FindBy(xpath = TOOLBAR_SAVE_BUTTON)
