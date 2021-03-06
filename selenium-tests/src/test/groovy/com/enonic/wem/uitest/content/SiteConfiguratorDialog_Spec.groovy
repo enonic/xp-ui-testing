@@ -25,6 +25,7 @@ class SiteConfiguratorDialog_Spec
     {
         given: "site with 2 applications is added"
         SITE = buildSiteWithApps( SIMPLE_SITE_APP, MY_FIRST_APP );
+        filterPanel.typeSearchText( SITE.getName() );
 
         when: "the site has been opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData( SITE );

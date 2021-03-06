@@ -147,6 +147,7 @@ class Display_SourceButton_Spec
         getTestSession().setUser( USER );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         saveScreenshot( "logged_" + USER_NAME );
+        contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
 
         when: "double click on the text component is performed"
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType( "htmlarea0_1" );
@@ -186,6 +187,7 @@ class Display_SourceButton_Spec
         getTestSession().setUser( USER );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         saveScreenshot( "logged_" + USER_NAME );
+        contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
@@ -206,6 +208,7 @@ class Display_SourceButton_Spec
         getTestSession().setUser( USER );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         saveScreenshot( "logged_" + USER_NAME );
+        contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
 
         when: "double click on the text component is performed"
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarNew().selectContentType( "htmlarea0_1" );

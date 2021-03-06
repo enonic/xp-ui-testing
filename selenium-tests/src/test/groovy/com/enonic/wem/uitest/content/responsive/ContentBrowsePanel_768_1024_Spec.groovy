@@ -2,10 +2,12 @@ package com.enonic.wem.uitest.content.responsive
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
  * Created on 5/30/2017.*/
+@Ignore
 class ContentBrowsePanel_768_1024_Spec
     extends BaseResponsiveSpec
 {
