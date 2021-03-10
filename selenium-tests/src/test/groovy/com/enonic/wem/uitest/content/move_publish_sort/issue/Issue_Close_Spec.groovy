@@ -88,6 +88,7 @@ class Issue_Close_Spec
 
         then: "Task details dialog should be closed"
         issueDetailsDialog.waitForClosed();
+        resetBrowser();
     }
 
     //verifies the xp#5300 Notification about unclosed issues doesn't disappear after publishing of the last open issue
@@ -113,6 +114,7 @@ class Issue_Close_Spec
         taskDetailsDialog.clickOnCancelButtonTop();
         sleep( 2000 );
         saveScreenshot( "last_task_closed" );
+        resetBrowser();
     }
 
     def "GIVEN existing task is closed by the user AND SU is 'logged in' WHEN 'task details' dialog has been opened THEN correct user-name should be present in the 'Closed by'"()

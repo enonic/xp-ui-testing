@@ -125,6 +125,7 @@ class IssueListDialog_Spec
 
         then: "the dialog should be closed"
         issueListDialog.waitForClosed();
+        resetBrowser();
     }
 
     def "GIVEN existing user is logged in WHEN the user has opened 'Issue List' dialog AND clicked on the 'Assigned to Me' checkbox THEN one issue should be present in the list"()

@@ -41,10 +41,6 @@ public class ItemSetViewPanel
 
     protected final String ITEM_SET_MENU_BUTTON = OCCURRENCE_VIEW + "//button[contains(@id,'MoreButton')]";
 
-
-    @FindBy(xpath = ADD_ITEM_SET_BUTTON)
-    private WebElement addItemSetButton;
-
     public ItemSetViewPanel( final TestSession session )
     {
         super( session );
@@ -123,7 +119,6 @@ public class ItemSetViewPanel
         getDisplayedElement(
             By.xpath( "//div[contains(@id,'FormItemSetOccurrenceView')]" + "//li[contains(@id,'MenuItem') and text()='Delete']" ) ).click();
         sleep( 700 );
-
     }
 
 
@@ -135,7 +130,7 @@ public class ItemSetViewPanel
     @Override
     public boolean isAddButtonPresent()
     {
-        return addItemSetButton.isDisplayed();
+        return getDisplayedElements( By.xpath( ADD_ITEM_SET_BUTTON ) ).size() > 0;
     }
 
     @Override

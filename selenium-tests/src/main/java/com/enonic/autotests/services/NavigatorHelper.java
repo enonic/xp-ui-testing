@@ -47,12 +47,6 @@ public class NavigatorHelper
     public static ContentBrowsePanel openContentStudioApp( TestSession testSession )
     {
         HomePage home = loginAndOpenHomePage( testSession );
-        //closeXpTourDialogIfPresent( testSession );
-//        if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3, testSession ) )
-//        {
-//            TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
-//            throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
-//        }
         ContentBrowsePanel cmPage = home.openContentStudioApplication();
         return cmPage;
     }
@@ -79,12 +73,12 @@ public class NavigatorHelper
     public static UserBrowsePanel openUsersApp( TestSession testSession )
     {
         HomePage home = loginAndOpenHomePage( testSession );
-        closeXpTourDialogIfPresent( testSession );
-        if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3, testSession ) )
-        {
-            TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
-            throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
-        }
+        //closeXpTourDialogIfPresent( testSession );
+//        if ( !waitInvisibilityOfElement( By.xpath( "//div[contains(@id,'BodyMask')]" ), 3, testSession ) )
+//        {
+//            TestUtils.saveScreenshot( testSession, NameHelper.uniqueName( "err_bodymask" ) );
+//            throw new TestFrameworkException( "Body Mask still displayed on the Home Page" );
+//        }
         UserBrowsePanel userBrowsePanel = home.openUsersApplication();
         userBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_LONG );
         return userBrowsePanel;
@@ -222,6 +216,10 @@ public class NavigatorHelper
     {
         User user = testSession.getCurrentUser();
         LoginPage loginPage = new LoginPage( testSession );
+        if ( !loginPage.isDisplayed() )
+        {
+            return new HomePage( testSession );
+        }
         //save window-handle for HomePage
         String homeTabHandle = testSession.getDriver().getWindowHandle();
         testSession.put( HomePage.HOME_PAGE_TAB_HANDLE, homeTabHandle );

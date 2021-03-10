@@ -92,6 +92,7 @@ class IssueDetailsDialog_Spec
         taskDetailsDialog.isBackButtonDisplayed();
         and: "status of the issue should be 'Open'"
         taskDetailsDialog.getIssueStatus() == "Open"
+        resetBrowser();
     }
 
     def "GIVEN existing user and an issue was assigned to him WHEN the user is logged in THEN 'Assigned to Me' button should be present in the toolbar"()

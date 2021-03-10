@@ -81,9 +81,10 @@ class DetailsPanel_OwnerName_Spec
         then: "folder should be listed in the grid"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() );
         contentBrowsePanel.exists( FOLDER_TO_DUPLICATE.getName() );
+        resetBrowser();
     }
 
-    def "GIVEN existing folder WHEN just created user has selected the folder AND pressed 'Duplicate' THEN new folder should appear in the grid"()
+    def "WHEN just created user duplicated the folder THEN new folder should appear in the grid"()
     {
         setup: "user is 'logged in'"
         getTestSession().setUser( TEST_USER );
@@ -102,7 +103,7 @@ class DetailsPanel_OwnerName_Spec
         contentBrowsePanel.exists( FOLDER_TO_DUPLICATE.getName() + "-copy" );
     }
 
-    def "GIVEN folder is created by existing user AND the folder is selected WHEN details panel has been opened THEN expected 'user name' should be present in the Properties Widget"()
+    def "GIVEN test user is logged in and selected a folder WHEN details panel has been opened THEN expected 'user name' should be present in the Properties Widget"()
     {
         setup: "user is 'logged in'"
         getTestSession().setUser( TEST_USER );
@@ -121,7 +122,7 @@ class DetailsPanel_OwnerName_Spec
         widget.getOwner() == TEST_USER.getDisplayName();
     }
 
-    def "GIVEN existing folder is selected WHEN version history has been opened THEN expected owner name should be displayed in the version widget"()
+    def "GIVEN test user is logged in and selected a folder WHEN version history has been opened THEN expected owner name should be displayed in the version widget"()
     {
         setup: "user is 'logged in'"
         getTestSession().setUser( TEST_USER );

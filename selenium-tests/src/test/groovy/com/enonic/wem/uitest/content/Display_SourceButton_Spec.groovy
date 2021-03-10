@@ -116,6 +116,7 @@ class Display_SourceButton_Spec
         then: "text component should be displayed"
         siteWizard.switchToLiveEditFrame();
         liveFormPanel.isTextComponentPresent();
+        resetBrowser();
     }
 
     def "GIVEN login with the User AND open the site WHEN user without required roles tries to edit the text component THEN Source Button should not be present"()
@@ -156,6 +157,7 @@ class Display_SourceButton_Spec
 
         then: "'Source Button button should not be displayed"
         !htmlArea.isSourceCodeButtonDisplayed();
+        resetBrowser();
     }
 
     def "GIVEN existing user opened in the wizard WHEN required role added THEN new role is displayed on the wizard"()
@@ -178,6 +180,7 @@ class Display_SourceButton_Spec
 
         then: "new role should be displayed on the wizard"
         TestUtils.isContains( userWizardPanel.getRoleNames(), RoleName.CM_EXPERT.getValue() );
+        resetBrowser();
     }
 
     def "GIVEN login with the User AND open the site WHEN user with required roles tries to edit the text component THEN Source Button should be displayed on the mce-toolbar"()
