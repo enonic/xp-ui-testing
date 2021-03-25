@@ -13,7 +13,7 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class TextAreaFormViewPanel
     extends FormViewPanel
 {
-    @FindBy(xpath = FORM_VIEW + "//textarea[@class='text-area form-input']")
+    @FindBy(xpath = FORM_VIEW + "//textarea[contains(@class,'text-area form-input')]")
     private WebElement textArea;
 
     public TextAreaFormViewPanel( final TestSession session )

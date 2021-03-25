@@ -42,7 +42,6 @@ class ContentWizard_Leave_Stay_Alert_Spec
         !deleteContentDialog.isOpened();
     }
 
-
     def "GIVEN try to close the browser-tab with unsaved changes WHEN 'Live' button has been pressed THEN content should not be updated"()
     {
         given: "content wizard is opened AND typed data was not saved"

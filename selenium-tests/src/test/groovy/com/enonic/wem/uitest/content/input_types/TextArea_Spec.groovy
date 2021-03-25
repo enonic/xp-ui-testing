@@ -80,7 +80,7 @@ class TextArea_Spec
         contentBrowsePanel.getContentStatus( textAreaContent.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() )
     }
 
-    def "GIVEN TextArea-content content with the text is added WHEN the content has been opened THEN expected text should be present in the text area"()
+    def "GIVEN new TextArea-content content is added WHEN the content has been opened THEN expected text should be present in the text area"()
     {
         given: "TextArea-content content with the text was added"
         Content textAreaContent = build_TextArea0_1_Content( "test text" );
