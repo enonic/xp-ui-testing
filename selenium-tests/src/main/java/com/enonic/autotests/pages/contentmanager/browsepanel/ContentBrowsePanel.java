@@ -1175,4 +1175,10 @@ public class ContentBrowsePanel
     {
         waitUntilVisible( By.xpath( CREATE_TASK_BUTTON_XPATH ) );
     }
+    public ContentBrowsePanel refreshInBrowser()
+    {
+        getDriver().navigate().refresh();
+        sleep( 3000 );
+        return this;
+    }
 }

@@ -151,6 +151,7 @@ class CountrySiteWithTemplateSpec
         findAndSelectContent( USA_CONTENT.getName() ).clickToolbarNew().selectContentType( SAN_FR_CONTENT.getContentTypeName() ).typeData(
             SAN_FR_CONTENT ).clickOnMarkAsReadyButton();
         wizard.closeBrowserTab().switchToBrowsePanelTab();
+        contentBrowsePanel.refreshInBrowser();
         findAndSelectContent( USA_CONTENT.getName() );
         sleep( 2000 );
 

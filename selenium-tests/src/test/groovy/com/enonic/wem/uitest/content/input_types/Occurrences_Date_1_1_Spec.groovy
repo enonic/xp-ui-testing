@@ -39,7 +39,7 @@ class Occurrences_Date_1_1_Spec
         Content dateContent = buildDate1_1_Content( TEST_DATE );
         ContentWizardPanel wizard = selectSitePressNew( dateContent.getContentTypeName() );
 
-        when: "only a name was typed and date input is empty(the content is not saved)"
+        when: "just a name has been typed but date input is empty(the content is not saved)"
         wizard.typeDisplayName( dateContent.getDisplayName() );
 
         then: "red icon should be present on the wizard-page, because required input is empty"
