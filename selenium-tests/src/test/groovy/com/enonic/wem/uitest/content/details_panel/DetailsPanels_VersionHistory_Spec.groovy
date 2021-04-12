@@ -8,7 +8,6 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 import com.enonic.autotests.utils.TimeUtils
 
-import java.time.LocalDateTime
 import java.time.LocalTime
 
 @Stepwise
