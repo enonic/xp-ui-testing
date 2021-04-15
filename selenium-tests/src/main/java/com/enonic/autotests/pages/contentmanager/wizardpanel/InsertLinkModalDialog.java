@@ -25,8 +25,6 @@ public class InsertLinkModalDialog
 
     private final String LINK_TEXT_INPUT = "//div[contains(@id,'FormItem') and child::label[text()='Text']]//input[@type='text']";
 
-    private final String LINK_TEXT_FIELDSET = CONTAINER + "//fieldset[contains(id,'Fieldset') and child::label[text()='Text']]";
-
     protected final String CONTENT_COMBOBOX_SELECTED_OPTION = "//div[contains(@id,'ContentSelectedOptionsView')]";
 
     private final String LINK_TEXT_VALIDATION_MESSAGE =
