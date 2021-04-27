@@ -60,7 +60,7 @@ class Restore_ComboBox_Spec
 
         and: "validation message should not be present on the form"
         contentBrowsePanel.switchToBrowserTabByTitle( COMBOBOX_CONTENT.getDisplayName() );
-        !formViewPanel.isValidationMessagePresent();
+        !formViewPanel.isFormValidationMessageDisplayed();
     }
 
     def "GIVEN version with two images has been reverted WHEN content has been opened THEN two options should be displayed in the wizard"()

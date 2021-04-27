@@ -109,7 +109,7 @@ class Occurrences_ImageSelector_2_4_Spec
         formViewPanel.getSelectedImages().size() == 1;
 
         and: "content is invalid, because only one image present on page"
-        formViewPanel.isValidationMessagePresent();
+        formViewPanel.getFormValidationRecording( 0 ) == "Min 2 occurrences required";
 
         and: "'Publish button' is disabled now"
         !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );

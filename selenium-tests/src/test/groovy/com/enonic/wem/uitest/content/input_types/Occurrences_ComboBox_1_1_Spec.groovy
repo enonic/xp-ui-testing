@@ -60,8 +60,8 @@ class Occurrences_ComboBox_1_1_Spec
         and: "options filter input should be enabled"
         formViewPanel.isOptionFilterInputEnabled();
 
-        and: "content should be invalid, because required field- combobox1:1 not selected"
-        formViewPanel.isValidationMessagePresent();
+        and: "content should be invalid, because required field- combobox1:1 is not selected"
+        formViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
 
         and: "red circle should be displayed on the wizard page"
         wizard.isContentInvalid();
@@ -92,7 +92,7 @@ class Occurrences_ComboBox_1_1_Spec
         !formViewPanel.isOptionFilterInputDisplayed();
 
         and: "content is valid, because option is selected"
-        !formViewPanel.isValidationMessagePresent();
+        !formViewPanel.isFormValidationMessageDisplayed();
 
         and: "red circle should not be displayed on the page, because the required option is selected"
         !wizard.isContentInvalid();
@@ -117,7 +117,7 @@ class Occurrences_ComboBox_1_1_Spec
         formViewPanel.isOptionFilterInputEnabled();
 
         and: "validation message should be displayed, because the option is required"
-        formViewPanel.isValidationMessagePresent();
+        formViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
 
         and: "red circle should be displayed, because required option is not selected"
         wizard.isContentInvalid();

@@ -33,7 +33,7 @@ class Occurrences_TextLine_1_1_Spec
         !formViewPanel.isAddButtonPresent();
 
         and: "validation message should be present, because required input is empty"
-        formViewPanel.isValidationMessagePresent();
+        formViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
 
         and: "red icon should be displayed in the wizard page"
         wizard.isContentInvalid();

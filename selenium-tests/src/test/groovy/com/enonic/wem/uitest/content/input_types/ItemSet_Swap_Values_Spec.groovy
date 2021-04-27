@@ -53,7 +53,7 @@ class ItemSet_Swap_Values_Spec
         saveScreenshot( "itemset_two_items_saved" );
 
         then: "content is valid, because all required inputs are filled"
-        !itemSetViewPanel.isValidationMessagePresent();
+        !itemSetViewPanel.isFormValidationMessageDisplayed();
 
         and: "Publish menu item gets enabled"
         wizard.showPublishMenu().isPublishMenuItemEnabled();

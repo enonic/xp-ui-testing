@@ -53,7 +53,7 @@ class Occurrences_ComboBox_2_4_Spec
         formViewPanel.isOptionFilterInputEnabled();
 
         and: "content should be invalid, because required options were not selected"
-        formViewPanel.isValidationMessagePresent();
+        formViewPanel.getFormValidationRecording( 0 ) == "Min 2 occurrences required";
     }
 
     def "GIVEN new ComboBox-content(2:4) with two option is created WHEN content has been opened THEN two selected options should be present on the page"()
@@ -96,7 +96,7 @@ class Occurrences_ComboBox_2_4_Spec
         optValues.size() == 1;
 
         and: "content is invalid, because required fields- combobox2:4 not selected"
-        formViewPanel.isValidationMessagePresent();
+        formViewPanel.getFormValidationRecording( 0 ) == "Min 2 occurrences required";
     }
 
     def "GIVEN new ComboBox-content(2:4) with four options is created WHEN content has been opened THEN four selected options should be displayed and 'filter input' is disabled"()
