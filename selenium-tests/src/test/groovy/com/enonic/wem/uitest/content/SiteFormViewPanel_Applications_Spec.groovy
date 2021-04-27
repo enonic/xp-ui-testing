@@ -20,7 +20,7 @@ class SiteFormViewPanel_Applications_Spec
 
         when: "data saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData(
-            SITE ).closeBrowserTab().switchToBrowsePanelTab();
+            SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
         contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );

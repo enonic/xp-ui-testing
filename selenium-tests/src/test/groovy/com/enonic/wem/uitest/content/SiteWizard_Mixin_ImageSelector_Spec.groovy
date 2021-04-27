@@ -27,7 +27,7 @@ class SiteWizard_Mixin_ImageSelector_Spec
         ImageSelectorFormViewPanel imageSelectorFormViewPanel = new ImageSelectorFormViewPanel( getSession() );
 
         when: "application with 'select-image mixin' has been selected"
-        wizard.typeData( SITE );
+        wizard.typeData( SITE ).save();
 
         then: "option filter input for a selecting an image should appear in the wizard's page"
         imageSelectorFormViewPanel.isOptionFilterIsDisplayed();
