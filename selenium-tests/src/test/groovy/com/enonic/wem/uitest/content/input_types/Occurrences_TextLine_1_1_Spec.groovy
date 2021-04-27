@@ -101,7 +101,7 @@ class Occurrences_TextLine_1_1_Spec
         then: "'Publish' button should be disabled on the wizard-toolbar"
         !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
 
-        and: "the content should be displayed with red icon on the wizard page"
+        and: "the content should be displayed with red icon in the wizard page"
         wizard.isContentInvalid();
     }
 }

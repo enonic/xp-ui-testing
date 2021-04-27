@@ -425,9 +425,12 @@ class BaseContentSpec
 
     protected void addSite( Content site )
     {
-        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
-            site ).save();
+        ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData( site );
         sleep( 500 );
+        if ( wizard.isSaveButtonEnabled() )
+        {
+            wizard.save();
+        }
         wizard.closeBrowserTab().switchToNewWizardTab();
     }
 
@@ -481,7 +484,7 @@ class BaseContentSpec
     {
         Content site = buildSiteWithAllTypes( siteName );
         contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
-            site ).save().closeBrowserTab().switchToBrowsePanelTab();
+            site ).closeBrowserTab().switchToBrowsePanelTab();
     }
 
     protected Content buildSiteWithAllTypes( String siteName )

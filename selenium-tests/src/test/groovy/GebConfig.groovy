@@ -147,7 +147,7 @@ environments {
             firefoxOptions.setBinary( firefoxBinary );
             FirefoxDriver driver = new FirefoxDriver( firefoxOptions );
 
-            driver.setLogLevel( Level.SEVERE )
+            driver.setLogLevel( Level.INFO );
             driver.manage().window().maximize()
             println "The end of firefox configuration";
             return driver

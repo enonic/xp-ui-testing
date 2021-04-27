@@ -20,7 +20,7 @@ class SiteFormViewPanel_Applications_Spec
 
         when: "data saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData(
-            SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
+            SITE ).closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be present"
         contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
@@ -58,7 +58,7 @@ class SiteFormViewPanel_Applications_Spec
         when: "one application was removed"
         formViewPanel.removeApp( MY_FIRST_APP );
         and: "site was saved and closed"
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         and: "site is opened"
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
@@ -79,7 +79,7 @@ class SiteFormViewPanel_Applications_Spec
 
         when: "name of an application has been typed in the options=filter and app-checkbox has been clicked and 'Apply' button pressed"
         formViewPanel.clickOnAppCheckBoxAndDoApply( MY_FIRST_APP )
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
+        wizard.closeBrowserTab().switchToBrowsePanelTab();
         contentBrowsePanel.clickToolbarEditAndSwitchToWizardTab();
         LinkedList<String> namesAfter = formViewPanel.getAppDisplayNames();
 
