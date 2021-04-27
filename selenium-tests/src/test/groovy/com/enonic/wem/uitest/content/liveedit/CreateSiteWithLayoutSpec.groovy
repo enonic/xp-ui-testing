@@ -52,7 +52,7 @@ class CreateSiteWithLayoutSpec
 
         when: "data has been typed and site saved "
         contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() ).typeData(
-            SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
+            SITE ).closeBrowserTab().switchToBrowsePanelTab();
 
         then: "new site should be listed in the grid"
         filterPanel.typeSearchText( SITE.getName() );
@@ -80,8 +80,8 @@ class CreateSiteWithLayoutSpec
 
         then: "new template should be listed beneath a 'Templates' folder"
         contentBrowsePanel.exists( pageTemplate.getName() );
-        and:"workflow state is Ready for publishing"
-        contentBrowsePanel.getWorkflowState(pageTemplate.getName(  )) == Application.WORKFLOW_STATE_READY_FOR_PUBLISHING;
+        and: "workflow state is Ready for publishing"
+        contentBrowsePanel.getWorkflowState( pageTemplate.getName() ) == Application.WORKFLOW_STATE_READY_FOR_PUBLISHING;
     }
 
     def "GIVEN existing page template is opened WHEN new text component has been inserted THEN new text should be present in the live edit frame"()
@@ -144,7 +144,7 @@ class CreateSiteWithLayoutSpec
         sleep( 2000 );
 
         then: "the template gets 'Ready to publish'"
-        contentBrowsePanel.getWorkflowState(pageTemplate.getName()) == Application.WORKFLOW_STATE_READY_FOR_PUBLISHING;
+        contentBrowsePanel.getWorkflowState( pageTemplate.getName() ) == Application.WORKFLOW_STATE_READY_FOR_PUBLISHING;
     }
 
     def "GIVEN existing site is opened WHEN site is published with its children THEN site should be with 'PUBLISHED' status in the wizard page"()

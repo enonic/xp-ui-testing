@@ -126,9 +126,9 @@ class Restore_Version_Site_Spec
 
         when: "application has been removed"
         siteFormViewPanel.removeApp( MY_FIRST_APP );
+        and: "the site automatically saved"
+        wizard.waitForNotificationMessage();
         saveScreenshot( "app_removed_from_wizard" );
-        and: "the site has been saved"
-        wizard.save();
         sleep( 1000 );
 
         and: "navigated to the tab with the Grid"

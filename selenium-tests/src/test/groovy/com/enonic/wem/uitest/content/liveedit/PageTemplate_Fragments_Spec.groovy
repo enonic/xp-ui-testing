@@ -28,7 +28,7 @@ class PageTemplate_Fragments_Spec
         given: "site with a controller has been added"
         SITE = buildMyFirstAppSite( "site" );
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( SITE.getContentTypeName() )
-        wizardPanel.typeData( SITE ).save().close( SITE.getDisplayName() );
+        wizardPanel.typeData( SITE ).close( SITE.getDisplayName() );
 
         and: "the site is expanded"
         filterPanel.typeSearchText( SITE.getName() );

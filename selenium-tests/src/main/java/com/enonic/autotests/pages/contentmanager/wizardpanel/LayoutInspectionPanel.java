@@ -17,7 +17,7 @@ public class LayoutInspectionPanel
 
     private final String CONTAINER = "//div[contains(@id,'LayoutInspectionPanel')]";
 
-    private final String LAYOUT_DESCRIPTOR_DROPDOWN = CONTAINER + "//div[contains(@id,'LayoutDescriptorDropdown')]";
+    private final String LAYOUT_DESCRIPTOR_DROPDOWN = CONTAINER + "//div[contains(@id,'ComponentDescriptorsDropdown')]";
 
     private final String LAYOUT_DROPDOWN_HANDLER = LAYOUT_DESCRIPTOR_DROPDOWN + "//button[contains(@id,'DropdownHandle')]";
 

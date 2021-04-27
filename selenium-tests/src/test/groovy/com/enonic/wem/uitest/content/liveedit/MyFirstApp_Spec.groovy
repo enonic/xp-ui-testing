@@ -25,7 +25,7 @@ class MyFirstApp_Spec
 
         when: "data was typed and saved and wizard closed"
         contentBrowsePanel.clickToolbarNew().selectContentType( MY_FIRST_SITE.getContentTypeName() ).typeData(
-            MY_FIRST_SITE ).save().closeBrowserTab().switchToBrowsePanelTab();
+            MY_FIRST_SITE ).closeBrowserTab().switchToBrowsePanelTab();
         saveScreenshot( "country_site_added" );
 
         then: "new site should be listed"

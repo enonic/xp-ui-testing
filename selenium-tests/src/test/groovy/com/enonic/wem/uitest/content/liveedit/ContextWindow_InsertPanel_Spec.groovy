@@ -22,7 +22,7 @@ class ContextWindow_InsertPanel_Spec
 
         when: "page controller was not selected"
         ContentWizardPanel wizardPanel = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_SITE.getContentTypeName() ).typeData(
-            TEST_SITE ).save();
+            TEST_SITE );
         saveScreenshot( "test-site-controller-not-selected" );
 
         then: "'Components View' toggler should not be displayed"

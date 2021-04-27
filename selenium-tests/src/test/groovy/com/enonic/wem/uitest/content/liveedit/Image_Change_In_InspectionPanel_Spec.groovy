@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewD
 import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.ImageInspectionPanel
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
+import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
@@ -27,7 +28,8 @@ class Image_Change_In_InspectionPanel_Spec
     def "GIVEN site wizard is opened WHEN new image component has been inserted THEN the image should be present in the 'selected option' on the Inspection Panel"()
     {
         given: "new site wizard is opened and a controller has been selected"
-        SITE1 = buildSiteWithAllTypes( "inspect" );
+        String generated = NameHelper.uniqueName( "inspect" );
+        SITE1 = buildSiteWithAllTypes( generated );
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( SITE1.getContentTypeName() ).typeData(
             SITE1 ).selectPageDescriptor( "main region" );
         and: "'Page Component View' has been opened"

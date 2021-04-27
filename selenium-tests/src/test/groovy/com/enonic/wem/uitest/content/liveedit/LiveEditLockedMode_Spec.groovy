@@ -123,7 +123,7 @@ class LiveEditLockedMode_Spec
         Content site;
         site = buildSite( name );
         contentBrowsePanel.clickToolbarNew().selectContentType( site.getContentTypeName() ).typeData(
-            site ).save().closeBrowserTab().switchToBrowsePanelTab();
+            site ).closeBrowserTab().switchToBrowsePanelTab();
     }
 
     private Content buildSite( String siteName )
