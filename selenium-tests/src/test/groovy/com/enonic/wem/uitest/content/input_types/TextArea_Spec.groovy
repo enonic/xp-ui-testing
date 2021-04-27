@@ -45,7 +45,7 @@ class TextArea_Spec
         wizard.isContentInvalid();
 
         and: "expected validation message should be displayed"
-        areaFormViewPanel.getValidationMessage() == Application.REQUIRED_MESSAGE;
+        areaFormViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
     }
 
     def "GIVEN wizard for TextArea-content(not required) is opened WHEN content has been published THEN the content should be 'Published' in browse panel"()

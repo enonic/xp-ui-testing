@@ -81,7 +81,7 @@ class Occurrences_Local_DateTime_0_1_Spec
         saveScreenshot( "wizard-datetime01-valid" );
 
         then: "content is valid and validation message should not be displayed"
-        !formViewPanel.isValidationMessagePresent();
+        !formViewPanel.isFormValidationMessageDisplayed();
 
         and: "'Publish' menu item gets enabled"
         wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );

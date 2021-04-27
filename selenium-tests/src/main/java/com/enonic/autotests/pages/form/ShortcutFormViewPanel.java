@@ -44,21 +44,6 @@ public class ShortcutFormViewPanel
         return this;
     }
 
-    public boolean isValidationMessageDisplayed()
-    {
-        return waitUntilVisibleNoException( By.xpath( VALIDATION_MESSAGE ), Application.EXPLICIT_NORMAL );
-    }
-
-    public String getValidationMessage()
-    {
-        if ( !isValidationMessageDisplayed() )
-        {
-            saveScreenshot( "err_shortcut_validation" );
-            throw new TestFrameworkException( "validation message not displayed!" );
-        }
-        return getDisplayedString( VALIDATION_MESSAGE );
-    }
-
     public ShortcutFormViewPanel selectTarget( String targetName )
     {
         clearAndType( optionFilterInput, targetName );

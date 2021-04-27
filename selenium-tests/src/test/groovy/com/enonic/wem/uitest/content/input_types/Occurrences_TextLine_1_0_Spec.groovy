@@ -55,7 +55,7 @@ class Occurrences_TextLine_1_0_Spec
         !wizard.isContentInvalid();
 
         and: "validation message should not be present on the page"
-        !formViewPanel.isValidationMessagePresent();
+        !formViewPanel.isFormValidationMessageDisplayed();
     }
 
     def "GIVEN wizard for adding a TextLine(1:0) content is opened WHEN  required data was not typed but the content is saved THEN red icon should be displayed on the wizard page"()
@@ -72,11 +72,8 @@ class Occurrences_TextLine_1_0_Spec
         then: "red icon should be present, because the required input is empty"
         wizard.isContentInvalid();
 
-        and: "validation message should be present on the page"
-        formViewPanel.isValidationMessagePresent();
-
         and: "correct validation message should be present"
-        formViewPanel.getValidationMessage() == Application.REQUIRED_MESSAGE;
+        formViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
     }
 
     def "GIVEN wizard for content with type TextLine(1:0) is opened WHEN 'Add' button has been pressed and 2 inputs now showed THEN two 'remove' button near the both text input are present  "()

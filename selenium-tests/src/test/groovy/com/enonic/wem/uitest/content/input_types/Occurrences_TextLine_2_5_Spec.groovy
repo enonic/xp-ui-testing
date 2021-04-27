@@ -173,8 +173,8 @@ class Occurrences_TextLine_2_5_Spec
         and: "content gets invalid"
         wizard.isContentInvalid();
 
-        and: "expected validation message should appear:"
-        formViewPanel.getValidationMessage() == "Min 2 occurrences required";
+        and: "expected form validation message should appear:"
+        formViewPanel.getFormValidationRecording() == "Min 2 occurrences required";
     }
 
     private Content buildTextLine2_5_Content()

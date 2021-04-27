@@ -59,10 +59,7 @@ class FieldSet_Spec
         TextLine1_1_FormViewPanel textLine1_1_formViewPanel = new TextLine1_1_FormViewPanel( getSession() );
 
         then: "validation message should be displayed under the text-line"
-        textLine1_1_formViewPanel.isValidationMessagePresent();
-
-        and: "correct message should be displayed"
-        textLine1_1_formViewPanel.getValidationMessage() == Application.REQUIRED_MESSAGE
+        textLine1_1_formViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE
     }
 
     def "GIVEN wizard for 'fieldset' is opened WHEN required text in the HTML-area is empty THEN red icon should be present in the wizard"()
@@ -77,7 +74,7 @@ class FieldSet_Spec
         HtmlArea0_1_FormViewPanel htmlArea0_1_formViewPanel = new HtmlArea0_1_FormViewPanel( getSession() );
 
         then: "correct message should be displayed"
-        htmlArea0_1_formViewPanel.getValidationMessage() == Application.REQUIRED_MESSAGE
+        htmlArea0_1_formViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE
     }
 
     def "GIVEN adding a content with type fieldset WHEN one required double is empty THEN content is not valid in the wizard"()
@@ -92,7 +89,7 @@ class FieldSet_Spec
         saveScreenshot( "fieldset_double_is_empty" );
 
         then: "expected message should be displayed"
-        doubleFormViewPanel.getValidationMessage() == "Min 2 occurrences required";
+        doubleFormViewPanel.getFormValidationRecording( 0 ) == "Min 2 occurrences required";
     }
 
     protected Content build_FieldSet_Content( String textLine, String areaText, String... values )

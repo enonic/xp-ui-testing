@@ -27,7 +27,7 @@ class Attachments_Content_Spec
         attachmentsFormView.isUploadButtonDisplayed();
 
         and: "validation message should not be displayed"
-        !attachmentsFormView.isValidationMessagePresent();
+        !attachmentsFormView.isFormValidationMessageDisplayed();
     }
 
     def "GIVEN attachments wizard is opened WHEN 'Save' button has been pressed AND the required attachment is not selected THEN validation message should appear"()
@@ -40,11 +40,8 @@ class Attachments_Content_Spec
         wizard.typeDisplayName( NameHelper.uniqueName( "attachment" ) );
         wizard.save();
 
-        then: "validation message should be displayed"
-        attachmentsFormView.isValidationMessagePresent();
-
-        and: "correct validation message is displayed"
-        attachmentsFormView.getValidationMessage() == Application.REQUIRED_MESSAGE;
+        then: "expected validation message is displayed"
+        attachmentsFormView.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
 
         and: "'Publish' menu item should be disabled"
         !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
@@ -59,11 +56,8 @@ class Attachments_Content_Spec
         when: "required attachment is not selected and 'Save' button has been pressed"
         wizard.typeDisplayName( NameHelper.uniqueName( "attachments" ) ).save();
 
-        then: "validation message should appear"
-        attachmentsFormView.isValidationMessagePresent();
-
-        and: "expected validation message is displayed"
-        attachmentsFormView.getValidationMessage() == String.format( Application.MIN_OCCURRENCES_REQUIRED_MESSAGE, 2 );
+        then: "expected validation message is displayed"
+        attachmentsFormView.getFormValidationRecording( 0 ) == String.format( Application.MIN_OCCURRENCES_REQUIRED_MESSAGE, 2 );
 
         and: "'Publish' button should be disabled"
         !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );

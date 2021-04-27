@@ -33,14 +33,11 @@ class Occurrences_CustomSelector_1_1_Spec
         then: "option filter input should be present"
         formViewPanel.isOptionFilterIsDisplayed();
 
-        and: "content is not valid, because the value is required"
-        formViewPanel.isValidationMessagePresent();
-
         and:"red icon should be displayed, because selector is required"
         wizard.isContentInvalid();
 
         and: "validation message appears"
-        formViewPanel.getValidationMessage() == FormViewPanel.VALIDATION_MESSAGE_OCCURRENCE;
+        formViewPanel.getFormValidationRecording( 0 ) == FormViewPanel.VALIDATION_MESSAGE_OCCURRENCE;
     }
 
     def "GIVEN wizard for adding a 'Custom Selector'-content(1:1) opened WHEN one option selected THEN option filter input is not displayed, one required option was selected"()
@@ -58,7 +55,7 @@ class Occurrences_CustomSelector_1_1_Spec
         !formViewPanel.isOptionFilterIsDisplayed();
 
         and: "validation message not displayed"
-        !formViewPanel.isValidationMessagePresent();
+        !formViewPanel.isFormValidationMessageDisplayed();
     }
 
     def "GIVEN existing content with one selected option WHEN content opened THEN correct selected option is displayed"()
@@ -92,6 +89,6 @@ class Occurrences_CustomSelector_1_1_Spec
         formViewPanel.isOptionFilterIsDisplayed();
 
         and: "validation message appears, because required option is not selected"
-        formViewPanel.isValidationMessagePresent();
+        formViewPanel.getFormValidationRecording( 0 ) == FormViewPanel.VALIDATION_MESSAGE_OCCURRENCE;
     }
 }

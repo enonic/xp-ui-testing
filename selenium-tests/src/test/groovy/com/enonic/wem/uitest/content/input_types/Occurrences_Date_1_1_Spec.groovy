@@ -57,9 +57,9 @@ class Occurrences_Date_1_1_Spec
         wizard.save();
 
         then: "validation message should be displayed"
-        formViewPanel.isValidationMessagePresent();
+        formViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
 
-        and: "red icon should be present on the wizard-page, because required input is empty"
+        and: "red icon should be present in the wizard-page, because required input is empty"
         wizard.isContentInvalid();
     }
 
@@ -75,7 +75,7 @@ class Occurrences_Date_1_1_Spec
 
     def "WHEN new Date(1:1) content has been published THEN content's status should be 'Published'"()
     {
-        given: "start to add a content with type 'Date'"
+        given: "wizard for new content 'Date' is opened"
         Content dateContent = buildDate1_1_Content( TEST_DATE );
         ContentWizardPanel contentWizard = selectSitePressNew( dateContent.getContentTypeName() );
 

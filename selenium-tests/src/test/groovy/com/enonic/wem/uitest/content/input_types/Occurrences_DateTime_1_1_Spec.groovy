@@ -56,7 +56,7 @@ class Occurrences_DateTime_1_1_Spec
         wizard.save();
 
         then: "content should be invalid, because required field is empty"
-        formViewPanel.isValidationMessagePresent();
+        formViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
     }
 
     def "WHEN content with empty required 'date time ' saved and wizard closed THEN the content should be with red-icon"() {

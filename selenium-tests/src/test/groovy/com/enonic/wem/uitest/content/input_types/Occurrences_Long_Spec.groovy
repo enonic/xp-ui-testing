@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.LongFormViewPanel
@@ -64,8 +65,8 @@ class Occurrences_Long_Spec
         and: "red icon should not be displayed, because the input is not required"
         !wizard.isContentInvalid();
 
-        and: "validation message should be displayed"
-        longFormViewPanel.isValidationMessagePresent();
+        and: "form validation message should be displayed"
+        !longFormViewPanel.isFormValidationMessageDisplayed();
 
         and: "'Publish' menu item should be enabled, because input is not required"
         wizard.showPublishMenu().isPublishMenuItemEnabled();
@@ -88,8 +89,8 @@ class Occurrences_Long_Spec
         and: "content should be displayed with red icon in the wizard page"
         wizard.isContentInvalid();
 
-        and: "validation message should be displayed, because this input is required and value is not allowed"
-        longFormViewPanel.isValidationMessagePresent();
+        and: "input occurrence validation message should be displayed, because this input is required and value is not allowed"
+        longFormViewPanel.getOccurrenceValidationRecording( 0 ) == Application.INVALID_VALUE_ENTERED;
 
         and: "'Publish' menu item should be disabled, because input is required"
         !wizard.showPublishMenu().isPublishMenuItemEnabled();
@@ -108,7 +109,7 @@ class Occurrences_Long_Spec
         saveScreenshot( "test_long_save_confirm1" );
 
         then: "validation message should be displayed, because this input is required and input is empty"
-        longFormViewPanel.isValidationMessagePresent();
+        longFormViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
 
         and: "confirmation dialog should not appear"
         !dialog.isOpened();
@@ -128,8 +129,8 @@ class Occurrences_Long_Spec
         wizard.typeData( doubleContent ).save();
         saveScreenshot( "test_max_long1" );
 
-        then: "validation message should not be displayed(the value is allowed)"
-        !longFormViewPanel.isValidationMessagePresent();
+        then: "form validation message should not be displayed(the value is allowed)"
+        !longFormViewPanel.isFormValidationMessageDisplayed();
 
         and: "input has no a red border"
         longFormViewPanel.isValueInInputValid( 0 );
@@ -151,6 +152,9 @@ class Occurrences_Long_Spec
 
         then: "input should be with red border, because the value is not allowed"
         !longFormViewPanel.isValueInInputValid( 0 );
+
+        and: "Invalid value entered - this message gets visible"
+        longFormViewPanel.getOccurrenceValidationRecording( 0 ) == Application.INVALID_VALUE_ENTERED;
 
         and: "red icon should be present on the wizard page, because the input is required and value is not allowed"
         wizard.isContentInvalid();
@@ -188,7 +192,7 @@ class Occurrences_Long_Spec
         longFormViewPanel.getLongValue() == MIN_SAFE_INTEGER
     }
 
-    def "GIVEN existing content with required input(long) is selected WHEN content has been opened AND input has been cleared THEN red icon gets visible in the wizard page"()
+    def "GIVEN existing content with required input(long) is opened WHEN input has been cleared THEN red icon gets visible in the wizard page"()
     {
         given: "existing content with required input(long)"
         findAndSelectContent( MIN_SAFE_CONTENT.getName() )
@@ -203,7 +207,7 @@ class Occurrences_Long_Spec
         saveScreenshot( "test_long_input_cleared" );
 
         then: "validation message should be present, because the input is required"
-        longFormViewPanel.isValidationMessagePresent();
+        longFormViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
 
         and: "the content gets invalid:"
         wizard.isContentInvalid();

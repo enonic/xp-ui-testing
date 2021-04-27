@@ -1,5 +1,6 @@
 package com.enonic.wem.uitest.content.input_types
 
+import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DoubleFormViewPanel
@@ -34,6 +35,9 @@ class Occurrences_Double_Spec
 
         then: "input should be with red border"
         !doubleFormViewPanel.isValueInInputValid( 0 );
+
+        and:
+        doubleFormViewPanel.getFormValidationRecording( 0 ) == Application.INVALID_VALUE_ENTERED;
 
         and: "'Publish' menu item should be enabled, because the input is not required"
         wizard.showPublishMenu().isPublishMenuItemEnabled();
@@ -104,7 +108,7 @@ class Occurrences_Double_Spec
         values.get( 0 ) == TEST_DOUBLE;
 
         and: "validation message should not be displayed, because content is valid"
-        !doubleFormViewPanel.isValidationMessagePresent();
+        !doubleFormViewPanel.isFormValidationMessageDisplayed();
 
         and: "double input has no a red border"
         doubleFormViewPanel.isValueInInputValid( 0 );
@@ -113,7 +117,7 @@ class Occurrences_Double_Spec
         !wizard.isContentInvalid();
     }
     //verifies the XP-3499  (ConfirmationDialog issue)
-    def "GIVEN creating a double content WHEN name typed AND save button pressed THEN 'confirmation' dialog should not be displayed"()
+    def "GIVEN creating a double content(0:1) WHEN name typed AND save button pressed THEN 'confirmation' dialog should not be displayed"()
     {
         given: "adding of content with empty value for double"
         Content doubleContent = buildDouble0_1_Content( null );
@@ -126,7 +130,7 @@ class Occurrences_Double_Spec
         wizard.save();
 
         then: "validation message should not be displayed"
-        !doubleFormViewPanel.isValidationMessagePresent();
+        !doubleFormViewPanel.isFormValidationMessageDisplayed();
 
         and: "confirmation dialog should not appear"
         !dialog.isOpened();
@@ -148,7 +152,7 @@ class Occurrences_Double_Spec
         saveScreenshot( "test_double_save_confirm1" );
 
         then: "validation message appears, because required input is empty"
-        doubleFormViewPanel.isValidationMessagePresent();
+        doubleFormViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
 
         and: "red icon should be present on the wizard page, because the input is required"
         wizard.isContentInvalid();
@@ -167,7 +171,7 @@ class Occurrences_Double_Spec
         saveScreenshot( "test_double_save_confirm2" );
 
         then: "validation message should not be displayed"
-        !doubleFormViewPanel.isValidationMessagePresent();
+        !doubleFormViewPanel.isFormValidationMessageDisplayed();
 
         and: "red icon should not be displayed, because 4 numbers were typed"
         !wizard.isContentInvalid();
@@ -186,7 +190,7 @@ class Occurrences_Double_Spec
         doubleFormViewPanel.isAddButtonPresent();
 
         and: "validation message should not be displayed"
-        !doubleFormViewPanel.isValidationMessagePresent();
+        !doubleFormViewPanel.isFormValidationMessageDisplayed();
 
         and: "red icon should not be displayed, because 3 numbers were typed"
         !wizard.isContentInvalid();
@@ -204,7 +208,7 @@ class Occurrences_Double_Spec
         saveScreenshot( "test_max_double" );
 
         then: "validation message should not be displayed"
-        !doubleFormViewPanel.isValidationMessagePresent();
+        !doubleFormViewPanel.isFormValidationMessageDisplayed();
 
         and: "red icon should not be displayed, the value is allowed and input is required"
         !wizard.isContentInvalid();
@@ -221,11 +225,14 @@ class Occurrences_Double_Spec
         wizard.typeData( doubleContent );
         saveScreenshot( "test_more_max_double" );
 
-        then: "validation message should be displayed"
-        doubleFormViewPanel.isValidationMessagePresent();
+        then: "input occurrence validation message should be displayed"
+        doubleFormViewPanel.getOccurrenceValidationRecording( 0 ) == Application.INVALID_VALUE_ENTERED;
 
         and: "input has a red border"
         !doubleFormViewPanel.isValueInInputValid( 0 );
+
+        and: "Form validation recording is not displayed"
+        !doubleFormViewPanel.isFormValidationMessageDisplayed();
 
         and: "red icon should be present, the value is not allowed and the input is required"
         wizard.isContentInvalid();

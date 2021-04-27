@@ -21,7 +21,6 @@ import static com.enonic.autotests.utils.SleepHelper.sleep;
 public class CustomSelectorFormViewPanel
     extends FormViewPanel
 {
-    private final String VALIDATION_MESSAGE = FORM_VIEW + "//div[contains(@id,'ValidationRecordingViewer')]//li";
 
     protected final String CONTAINER_DIV = FORM_VIEW + "//div[contains(@id,'CustomSelector')]";
 
@@ -87,20 +86,5 @@ public class CustomSelectorFormViewPanel
             return Collections.emptyList();
         }
         return getDisplayedStrings( By.xpath( SELECTED_OPTIONS ) );
-    }
-
-    public String getValidationMessage()
-    {
-        if ( !isValidationMessageDisplayed() )
-        {
-            saveScreenshot( "err_shortcut_validation" );
-            throw new TestFrameworkException( "validation message not displayed!" );
-        }
-        return getDisplayedString( VALIDATION_MESSAGE );
-    }
-
-    public boolean isValidationMessageDisplayed()
-    {
-        return waitUntilVisibleNoException( By.xpath( VALIDATION_MESSAGE ), Application.EXPLICIT_NORMAL );
     }
 }

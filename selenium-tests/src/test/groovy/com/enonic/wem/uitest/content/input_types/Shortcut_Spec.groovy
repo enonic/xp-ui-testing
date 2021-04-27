@@ -55,10 +55,7 @@ class Shortcut_Spec
         saveScreenshot( "shortcut_validation_message" );
 
         then: "validation message should be displayed"
-        formViewPanel.isValidationMessageDisplayed();
-
-        and: "validation message should be displayed"
-        formViewPanel.getValidationMessage() == "This field is required";
+        formViewPanel.getFormValidationRecording( 0 ) == "This field is required";
 
         and: "red icon should be present on the wizard-tab"
         wizard.isContentInvalid();
@@ -76,7 +73,7 @@ class Shortcut_Spec
         wizard.save();
 
         then: "validation message should not be displayed"
-        !formViewPanel.isValidationMessageDisplayed();
+        !formViewPanel.isFormValidationMessageDisplayed();
 
         and: "red icon should not be displayed on the wizard-tab"
         !wizard.isContentInvalid();
@@ -93,7 +90,7 @@ class Shortcut_Spec
         saveScreenshot( "shortcut_target_removed" );
 
         then: "validation message should be displayed"
-        formViewPanel.isValidationMessageDisplayed();
+        formViewPanel.isFormValidationMessageDisplayed();
 
         and: "red icon should appear on the wizard-tab"
         wizard.isContentInvalid();

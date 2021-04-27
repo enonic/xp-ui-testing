@@ -712,7 +712,8 @@ public class ContentWizardPanel
         {
             switchToLiveEditFrame();
         }
-        if ( !isElementDisplayed( DROPDOWN_OPTION_FILTER_INPUT ) )
+        boolean result = waitUntilVisibleNoException( By.xpath( DROPDOWN_OPTION_FILTER_INPUT ), Application.EXPLICIT_NORMAL );
+        if ( !result )
         {
             saveScreenshot( "err_content_wizard_dropdown_not_displayed" );
             throw new TestFrameworkException( "ContentWizard -tried to select page descriptor: option filter input was not found" );

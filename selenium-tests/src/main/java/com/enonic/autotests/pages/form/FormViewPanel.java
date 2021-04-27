@@ -19,11 +19,11 @@ public abstract class FormViewPanel
 {
     protected static final String FORM_VIEW = "//div[contains(@id,'FormView')]";
 
-    protected final String VALIDATION_VIEWER = "//div[contains(@id,'ValidationRecordingViewer')]";
-
     protected final String CONTENT_SELECTED_OPTION_VIEW = "//div[contains(@id,'ContentSelectedOptionView')]";
 
-    protected final String VALIDATION_MESSAGE = VALIDATION_VIEWER + "//li";
+    protected final String FORM_VALIDATION_VEW = "//div[contains(@id,'InputViewValidationViewer')]";
+
+    protected final String OCCURRENCE_ERROR_BLOCK = "//div[contains(@id,'InputOccurrenceView')]//div[contains(@class,'error-block')]";
 
     public static String VALIDATION_MESSAGE_OCCURRENCE = "This field is required";
 
@@ -73,14 +73,35 @@ public abstract class FormViewPanel
         return ( (String) getJavaScriptExecutor().executeScript( SCRIPT_DATA_CKE, id ) ).trim();
     }
 
-    public boolean isValidationMessagePresent()
+    protected String getOccurrenceValidationRecording( int index )
     {
-        return isElementDisplayed( VALIDATION_VIEWER );
+        String locator = FORM_VIEW + OCCURRENCE_ERROR_BLOCK;
+        List<WebElement> elements = findElements( By.xpath( locator ) );
+        if ( elements.size() == 0 )
+        {
+            throw new Error( "Occurrence Element was not found:" + locator );
+        }
+        return elements.get( index ).getText();
+
     }
 
-    public String getValidationMessage()
+    protected boolean isFormValidationMessageDisplayed()
     {
-        return getDisplayedString( VALIDATION_MESSAGE );
+        String locator = FORM_VIEW + FORM_VALIDATION_VEW;
+        List<WebElement> elements = getDisplayedElements( By.xpath( locator ) );
+        return elements.size() > 0;
+    }
+
+    protected String getFormValidationRecording( int index )
+    {
+        String locator = FORM_VIEW + FORM_VALIDATION_VEW;
+        List<WebElement> elements = getDisplayedElements( By.xpath( locator ) );
+        if ( elements.size() == 0 )
+        {
+            throw new TestFrameworkException( "Form validation recording is not visible" );
+        }
+        elements = getDisplayedElements( By.xpath( locator ) );
+        return elements.get( index ).getText();
     }
 
     public void doScrollPanel( int scrollTop )

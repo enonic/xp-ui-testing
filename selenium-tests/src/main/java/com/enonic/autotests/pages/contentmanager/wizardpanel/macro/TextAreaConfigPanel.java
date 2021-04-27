@@ -16,7 +16,7 @@ public class TextAreaConfigPanel
 
     private final String CODE_TEXT_AREA = CONFIG_PANEL + "//textarea[contains(@id,'TextArea')]";
 
-    private final String VALIDATION_MESSAGE = CONFIG_PANEL + "//div[contains(@id,'ValidationRecordingViewer')]//li";
+    protected final String FORM_VALIDATION_VEW = "//div[contains(@id,'InputViewValidationViewer')]";
 
     private String URL_INPUT_VIEW = CONFIG_PANEL + "//div[contains(@id,'InputView')][1]";
 
@@ -51,14 +51,14 @@ public class TextAreaConfigPanel
     {
         if ( isValidationMessagePresent() )
         {
-            return getDisplayedString( VALIDATION_MESSAGE );
+            return getDisplayedString( FORM_VALIDATION_VEW );
         }
         return null;
     }
 
     public boolean isValidationMessagePresent()
     {
-        return isElementDisplayed( VALIDATION_MESSAGE );
+        return isElementDisplayed( FORM_VALIDATION_VEW );
     }
 
 }
