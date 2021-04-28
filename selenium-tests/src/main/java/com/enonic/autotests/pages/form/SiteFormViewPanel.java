@@ -76,6 +76,7 @@ public class SiteFormViewPanel
             throw new TestFrameworkException( "'apply' button for application with name: " + appName + "  was not found!" );
         }
         findElement( By.xpath( applyButtonXpath ) ).click();
+        sleep( 1100 );
         return this;
     }
 
