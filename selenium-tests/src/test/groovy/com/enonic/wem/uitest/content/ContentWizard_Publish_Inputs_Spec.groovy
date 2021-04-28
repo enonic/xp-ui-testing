@@ -83,7 +83,10 @@ class ContentWizard_Publish_Inputs_Spec
 
         then: "expected notification messages appears"
         String notification = wizard.waitNotificationWarning( Application.EXPLICIT_NORMAL );
-        notification == wizard.ONLINE_FROM_MISSED_NOTIFICATION_MESSAGE
+        notification == wizard.ONLINE_FROM_MISSED_NOTIFICATION_MESSAGE;
+
+        and:
+        wizard.getScheduleValidationMessage() == Application.INVALID_VALUE_ENTERED;
     }
 
     def "WHEN existing folder has been unpublished THEN 'Online from' and 'Online to' inputs get hidden"()
@@ -109,7 +112,7 @@ class ContentWizard_Publish_Inputs_Spec
     def "WHEN 'Online from' has been set in the future AND Publish button pressed THEN folder gets 'Publishing Scheduling'"()
     {
         given: "existing published folder"
-        ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEditAndSwitchToWizardTab(  );
+        ContentWizardPanel wizard = findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarEditAndSwitchToWizardTab();
 
         when: "the folder has been unpublished"
         ContentPublishDialog publishDialog = wizard.showPublishMenu().clickOnPublishMenuItem();

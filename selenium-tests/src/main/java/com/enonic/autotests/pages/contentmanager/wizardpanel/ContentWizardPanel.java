@@ -109,6 +109,9 @@ public class ContentWizardPanel
 
     private final String HOME_BUTTON = "//div[contains(@class,'font-icon-default icon-tree-2')]";
 
+    protected final String SCHEDULE_ERROR_BLOCK =
+        "//div[contains(@id,'ScheduleWizardStepForm')]//div[contains(@id,'InputOccurrenceView')]//div[contains(@class,'error-block')]";
+
     @FindBy(xpath = TOOLBAR_PUBLISH_BUTTON_XPATH)
     private WebElement toolbarPublishButton;
 
@@ -936,9 +939,15 @@ public class ContentWizardPanel
         return this;
     }
 
-    public String getScheduleValidationMessage()
+
+    protected String getScheduleValidationMessage()
     {
-        return getDisplayedString( SCHEDULE_VALIDATION_MESSAGE_XPATH );
+        List<WebElement> elements = findElements( By.xpath( SCHEDULE_ERROR_BLOCK ) );
+        if ( elements.size() == 0 )
+        {
+            throw new Error( "Schedule Element was not found:" + SCHEDULE_ERROR_BLOCK );
+        }
+        return elements.get( 0 ).getText();
     }
 
     /**

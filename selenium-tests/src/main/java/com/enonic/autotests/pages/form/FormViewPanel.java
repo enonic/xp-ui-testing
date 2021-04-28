@@ -82,7 +82,6 @@ public abstract class FormViewPanel
             throw new Error( "Occurrence Element was not found:" + locator );
         }
         return elements.get( index ).getText();
-
     }
 
     protected boolean isFormValidationMessageDisplayed()

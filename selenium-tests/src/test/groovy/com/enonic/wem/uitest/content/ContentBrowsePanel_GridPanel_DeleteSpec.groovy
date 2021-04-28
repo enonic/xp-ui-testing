@@ -125,7 +125,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     }
 
 
-    def "GIVEN existing content is opened WHEN content has been moved to another location AND 'delete' button on the wizard-toolbar pressed THEN content deleted AND wizard closed"()
+    def "GIVEN existing content is opened WHEN content has been moved to another location AND 'delete' button in the wizard-toolbar pressed THEN content deleted AND wizard closed"()
     {
         given: "existing content is opened"
         Content parent = buildFolderContent( "folder", "destination folder" );
