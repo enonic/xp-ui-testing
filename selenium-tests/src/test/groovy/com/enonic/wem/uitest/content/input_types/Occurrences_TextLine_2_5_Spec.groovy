@@ -165,6 +165,7 @@ class Occurrences_TextLine_2_5_Spec
 
         when: "default values in text-lines are cleared"
         formViewPanel.clearAllInputs();
+        wizard.save();
         saveScreenshot( "text_lines_cleared" );
 
         then: "'Publish...' menu item should be disabled"
@@ -174,7 +175,7 @@ class Occurrences_TextLine_2_5_Spec
         wizard.isContentInvalid();
 
         and: "expected form validation message should appear:"
-        formViewPanel.getFormValidationRecording() == "Min 2 occurrences required";
+        formViewPanel.getFormValidationRecording( 0 ) == "Min 2 occurrences required";
     }
 
     private Content buildTextLine2_5_Content()

@@ -29,9 +29,9 @@ public class SetInSetFormView
 
     private final String LAST_NAME_NAME_INPUT = LAST_NAME_INPUT_VIEW + TEXT_INPUT;
 
-    private final String FIRST_NAME_VALIDATION_MESSAGE = FIRST_NAME_INPUT_VIEW + VALIDATION_RECORDING_VIEWER;
+    private final String FIRST_NAME_VALIDATION_MESSAGE = FIRST_NAME_INPUT_VIEW + FORM_VALIDATION_VEW;
 
-    private final String LAST_NAME_VALIDATION_MESSAGE = LAST_NAME_INPUT_VIEW + VALIDATION_RECORDING_VIEWER;
+    private final String LAST_NAME_VALIDATION_MESSAGE = LAST_NAME_INPUT_VIEW + FORM_VALIDATION_VEW;
 
     private final String ADD_CONTACT_INFO_BUTTON = FORM_VIEW + "//button[contains(@id,'Button') and child::span[text()='Add']]";
 

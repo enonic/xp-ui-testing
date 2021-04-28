@@ -37,7 +37,7 @@ class Occurrences_Double_Spec
         !doubleFormViewPanel.isValueInInputValid( 0 );
 
         and:
-        doubleFormViewPanel.getFormValidationRecording( 0 ) == Application.INVALID_VALUE_ENTERED;
+        doubleFormViewPanel.getOccurrenceValidationRecording( 0 ) == Application.INVALID_VALUE_ENTERED;
 
         and: "'Publish' menu item should be enabled, because the input is not required"
         wizard.showPublishMenu().isPublishMenuItemEnabled();
