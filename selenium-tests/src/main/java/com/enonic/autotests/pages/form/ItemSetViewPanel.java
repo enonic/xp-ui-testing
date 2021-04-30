@@ -61,8 +61,9 @@ public class ItemSetViewPanel
      */
     public void doSwapItems()
     {
-        WebElement source = findElements( By.xpath( DRAG_HANDLER ) ).get( 0 );
-        WebElement target = findElements( By.xpath( DRAG_HANDLER ) ).get( 1 );
+        List<WebElement> elements = getDisplayedElements( By.xpath( DRAG_HANDLER ) );
+        WebElement source = elements.get( 0 );
+        WebElement target = elements.get( 1 );
         Actions builder = new Actions( getDriver() );
         builder.dragAndDrop( source, target ).build().perform();
         sleep( 1000 );
