@@ -102,7 +102,7 @@ class ContentWizardPanel_Owner_Removed_Spec
         go "admin"
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        when: "the folder is opened"
+        when: "existing folder has been opened"
         contentBrowsePanel.getFilterPanel().typeSearchText( TEST_FOLDER.getName() );
         userBrowsePanel.clickCheckboxAndSelectRow( TEST_FOLDER.getName() );
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarEdit();

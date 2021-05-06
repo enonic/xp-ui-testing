@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <content-type>
-  <display-name>date0_1</display-name>
+  <display-name>date0_0</display-name>
   <super-type>base:structured</super-type>
   <form>
     <input name="date" type="Date">
