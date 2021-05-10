@@ -48,7 +48,7 @@ public abstract class BrowsePanel
     protected final String ALL_ROWS_IN_BROWSE_PANEL_XPATH = "//div[contains(@class,'slick-row')]";
 
     protected String CONTENT_SUMMARY_VIEWER =
-        "//div[contains(@id,'ContentSummaryAndCompareStatusViewer') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
+        "//div[contains(@id,'ContentSummaryListViewer') and descendant::p[contains(@class,'sub-name') and contains(.,'%s')]]";
 
     protected String ROW_CHECKBOX_BY_NAME =
         NAMES_VIEW_BY_NAME + "/ancestor::div[contains(@class,'slick-row')]/div[contains(@class,'slick-cell-checkboxsel')]/label";
