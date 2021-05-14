@@ -106,7 +106,7 @@ public class SiteFormViewPanel
         }
         //else select application from options.
         findElement( By.xpath( appGridItem ) ).click();
-        sleep( 500 );
+        sleep( 1000);
     }
 
     public SiteConfiguratorDialog openSiteConfigurationDialog( String appName )

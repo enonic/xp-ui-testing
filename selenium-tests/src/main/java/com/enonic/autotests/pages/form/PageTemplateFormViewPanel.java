@@ -96,6 +96,7 @@ public class PageTemplateFormViewPanel
     public void selectPageController( String pageName )
     {
         contentWizardPanel.switchToLiveEditFrame();
+        waitUntilVisibleNoException( By.xpath( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ), Application.EXPLICIT_NORMAL );
         if ( !isElementDisplayed( PAGE_DESCRIPTOR_DROP_DOWN_FILTER_INPUT ) )
         {
             saveScreenshot( "err_page_controller" );

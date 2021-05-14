@@ -95,8 +95,6 @@ public class Application
 
     protected final String TEXT_AREA_INPUT = "//textarea[contains(@id,'TextArea')]";
 
-    public final String CONTENT_SUMMARY_VIEWER = "//div[contains(@id,'ContentSummaryViewer')]";
-
     public final String CONTENT_SUMMARY_COMPARE_STATUS_VIEWER = "//div[contains(@id,'ContentSummaryAndCompareStatusViewer')]";
 
     protected final String DROPDOWN_OPTION_FILTER_INPUT = "//input[contains(@id,'DropdownOptionFilterInput')]";
