@@ -21,7 +21,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     Content SITE;
 
     @Shared
-    String URL = "http://test-link.com";
+    String URL_LINK = "http://test-link.com";
 
     @Shared
     String LINK_TEXT = "link-text";
@@ -91,7 +91,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         InsertLinkModalDialog linkModalDialog = configurationDialog.clickOnHtmlAreaInsertLinkButton();
         sleep( 700 );
         saveScreenshot( "insert-link-dialog" );
-        linkModalDialog.clickURLBarItem().typeURL( URL ).typeText( LINK_TEXT ).pressInsertButton();
+        linkModalDialog.clickURLBarItem().typeURL( URL_LINK ).typeText( LINK_TEXT ).pressInsertButton();
         and: "all changes were applied"
         configurationDialog.doApply();
 
@@ -100,7 +100,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         saveScreenshot( "conf-dialog-with-url" );
 
         then: "correct text should be present in the HtmlArea"
-        configurationDialog.getTextFromCKE().contains( URL );
+        configurationDialog.getTextFromCKE().contains( URL_LINK );
     }
 
     def "GIVEN existing site is opened WHEN preview button has been pressed THEN correct links should be present in page-source"()
@@ -118,7 +118,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         and: "correct text for the link should be displayed"
         source.contains( LINK_TEXT );
         and: "correct URL should be present"
-        source.contains( URL )
+        source.contains( URL_LINK )
     }
 
     def "WHEN try to select external resource in the site configurator THEN 'No matching items' message should appear, because the dialog is limited to current site content"()
