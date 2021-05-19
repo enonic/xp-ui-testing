@@ -98,9 +98,10 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
         and: "configurationDialog is opened again"
         configurationDialog = formViewPanel.openSiteConfigurationDialog( APP_CONTENT_TYPES_DISPLAY_NAME );
         saveScreenshot( "conf-dialog-with-url" );
+        String actualText = configurationDialog.getTextFromCKE();
 
-        then: "correct text should be present in the HtmlArea"
-        configurationDialog.getTextFromCKE().contains( URL_LINK );
+        then: "expected text should be present in the HtmlArea"
+        actualText.contains( URL_LINK );
     }
 
     def "GIVEN existing site is opened WHEN preview button has been pressed THEN correct links should be present in page-source"()

@@ -221,7 +221,9 @@ public class SiteConfiguratorDialog
     public String getTextFromCKE()
     {
         WebElement htmlArea = findElement( By.xpath( HTML_AREA ) );
-        return getCKEData( htmlArea.getAttribute( "id" ) );
+        String text =  getCKEData( htmlArea.getAttribute( "id" ) );
+        getLogger().info( "Site Configurator dialog, text in htmlarea: #### "+ text );
+        return text;
     }
 
     public void clickOnCancelButtonTop()
