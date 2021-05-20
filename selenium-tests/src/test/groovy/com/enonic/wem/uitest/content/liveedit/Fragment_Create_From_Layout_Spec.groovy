@@ -50,6 +50,7 @@ class Fragment_Create_From_Layout_Spec
         when: "click on the image-component and 'create fragment' menu item is selected"
         wizard.showComponentView();
         pageComponentsView.openMenu( LAYOUT_3_COL_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue() );
+        sleep( 3000 );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 4000 );
         wizard = contentBrowsePanel.switchToBrowserTabByTitle( LAYOUT_3_COL_DISPLAY_NAME );
