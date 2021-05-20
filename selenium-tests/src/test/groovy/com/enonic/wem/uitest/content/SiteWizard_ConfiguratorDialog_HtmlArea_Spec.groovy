@@ -21,7 +21,7 @@ class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     Content SITE;
 
     @Shared
-    String URL_LINK = "http://test-link.com";
+    String URL_LINK = "https://test-link.com";
 
     @Shared
     String LINK_TEXT = "link-text";
