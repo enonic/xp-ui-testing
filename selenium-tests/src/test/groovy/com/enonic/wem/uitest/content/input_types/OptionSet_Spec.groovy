@@ -139,12 +139,12 @@ class OptionSet_Spec
 
     private Content build_OptionSet_Content()
     {
-        Content tinyMceContent = Content.builder().
+        Content optionSetContent = Content.builder().
             name( NameHelper.uniqueName( "optionset" ) ).
             displayName( "option set content" ).
             parent( ContentPath.from( SITE_NAME ) ).
             contentType( ALL_CONTENT_TYPES_APP_NAME + "optionset" ).
             build();
-        return tinyMceContent;
+        return optionSetContent;
     }
 }

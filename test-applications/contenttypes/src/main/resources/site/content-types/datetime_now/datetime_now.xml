@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type>
+  <display-name>datetime now</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input name="dateTimeNow" type="DateTime">
+  <label>DateTime (current time as default value)</label>
+  <default>now</default>
+<occurrences minimum="2" maximum="4"/>
+
+</input>
+  </form>
+</content-type>

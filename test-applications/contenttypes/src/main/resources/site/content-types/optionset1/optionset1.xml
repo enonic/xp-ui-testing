@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type xmlns="urn:enonic:xp:model:1.0">
+  <display-name>optionset1</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+     <option-set name="checkOptionSet">
+      <label>Multi selection</label>
+      <expanded>true</expanded>
+      <help-text>Multi selection checkbox option set</help-text>
+      <occurrences minimum="1" maximum="1"/>
+      <options minimum="0" maximum="0">
+        <option name="option_1">
+          <label>Option 1</label>
+        </option>
+        <option name="option_2">
+          <label>Option 2</label>
+          <default>true</default>
+        </option>
+        <option name="option_3">
+          <label>Option 3</label>
+        </option>
+      </options>
+    </option-set>
+  </form>
+</content-type>

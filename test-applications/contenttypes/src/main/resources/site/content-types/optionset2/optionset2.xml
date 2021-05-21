@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type xmlns="urn:enonic:xp:model:1.0">
+  <display-name>optionset2</display-name>
+   <super-type>base:structured</super-type>
+  <form>
+    <option-set name="radioOptionSet">
+      <label>Single selection</label>
+      <occurrences minimum="1" maximum="1"/>
+      <options minimum="1" maximum="1">
+        <option name="ctbText">
+          <label i18n="ct.article.ctbText">Text block</label>
+          <items>
+            <input name="content" type="TextLine">
+              <label>Content</label>
+              <occurrences minimum="0" maximum="1"/>
+            </input>
+            <option-set name="ctbSettings">
+              <label>Settings for content block</label>
+              <occurrences minimum="1" maximum="1"/>
+              <options minimum="0" maximum="10">
+
+                <!-- Full Width -->
+                <option name="fullWidth">
+                  <label>Full width</label>
+                </option>
+
+                <!-- Sidebar image -->
+                <option name="sidebarImage">
+                  <label>Sidebar image</label>
+                  <items>
+                    <input name="image" type="ImageSelector">
+                      <label>Image</label>
+                      <occurrences minimum="1" maximum="1"/>
+                      <config>
+                        <allowPath>${site}/*</allowPath>
+                      </config>
+                    </input>
+                    <input name="caption" type="TextLine">
+                      <label>Caption</label>
+                      <occurrences minimum="0" maximum="1"/>
+                    </input>
+                  </items>
+                </option>
+              </options>
+            </option-set>
+          </items>
+        </option>
+        <option name="ctbImages">
+          <label>Images</label>
+          <items>
+            <option-set name="ctbSettings">
+              <label>Settings for content block</label>
+              <occurrences minimum="1" maximum="1"/>
+              <options minimum="0" maximum="10">
+                <!-- Full Width -->
+                <option name="fullWidth">
+                  <label>Full width</label>
+                </option>
+              </options>
+            </option-set>
+          </items>
+        </option>
+      </options>
+    </option-set>
+  </form>
+</content-type>
