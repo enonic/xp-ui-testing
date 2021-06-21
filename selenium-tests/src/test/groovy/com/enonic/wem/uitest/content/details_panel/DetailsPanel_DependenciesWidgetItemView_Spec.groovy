@@ -3,8 +3,10 @@ package com.enonic.wem.uitest.content.details_panel
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowseFilterPanel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.DependenciesWidgetItemView
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import com.enonic.autotests.pages.contentmanager.wizardpanel.InsertImageModalDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.form.liveedit.ImageComponentView
+import com.enonic.autotests.pages.form.liveedit.TextComponentView
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
@@ -178,13 +180,20 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         ContentWizardPanel wizard = findAndSelectContent( name ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsViewDialog = wizard.selectPageDescriptor(
             "Page" ).switchToDefaultWindow().showComponentView();
-        pageComponentsViewDialog.openMenu( "main" ).selectMenuItem( "Insert", "Image" );
+        pageComponentsViewDialog.openMenu( "main" ).selectMenuItem( "Insert", "Text" );
         pageComponentsViewDialog.doCloseDialog();
         wizard.switchToLiveEditFrame();
 
         and: "image has been selected from the options list"
-        ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageFromOptions( HAND_IMAGE_DISPLAY_NAME );
+        TextComponentView textComponentView = new TextComponentView( getSession() );
+        textComponentView.clickOnInsertImageButton();
+        wizard.switchToDefaultWindow(  );
+        InsertImageModalDialog insertImageModalDialog = new InsertImageModalDialog(getTestSession(  ));
+        insertImageModalDialog.waitForOpened(  );
+        insertImageModalDialog.selectImage(HAND_IMAGE_DISPLAY_NAME);
+        insertImageModalDialog.clickOnInsertButton(  );
+        insertImageModalDialog.waitForClosed(  );
+        wizard.save(  );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
 
         when: "site with the component was selected in the grid and dependency widget is opened"

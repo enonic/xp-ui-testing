@@ -89,7 +89,7 @@ class FieldSet_Spec
         saveScreenshot( "fieldset_double_is_empty" );
 
         then: "expected message should be displayed"
-        doubleFormViewPanel.getFormValidationRecording( 0 ) == "Min 2 occurrences required";
+        doubleFormViewPanel.getFormValidationRecording( 0 ) ==  String.format( Application.MIN_VALID_OCCURRENCE_REQUIRED, 2 );
     }
 
     protected Content build_FieldSet_Content( String textLine, String areaText, String... values )

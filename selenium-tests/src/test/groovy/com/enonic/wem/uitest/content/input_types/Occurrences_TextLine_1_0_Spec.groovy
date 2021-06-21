@@ -73,7 +73,7 @@ class Occurrences_TextLine_1_0_Spec
         wizard.isContentInvalid();
 
         and: "correct validation message should be present"
-        formViewPanel.getFormValidationRecording( 0 ) == Application.REQUIRED_MESSAGE;
+        formViewPanel.getFormValidationRecording( 0 ) == String.format( Application.MIN_VALID_OCCURRENCE_REQUIRED, 1 );
     }
 
     def "GIVEN wizard for content with type TextLine(1:0) is opened WHEN 'Add' button has been pressed and 2 inputs now showed THEN two 'remove' button near the both text input are present  "()

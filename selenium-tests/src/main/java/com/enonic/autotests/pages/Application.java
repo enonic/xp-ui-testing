@@ -180,9 +180,11 @@ public class Application
 
     public static String REQUIRED_MESSAGE = "This field is required";
 
+    public static String MIN_VALID_OCCURRENCE_REQUIRED = "Min %s valid occurrence(s) required";
+
     public static String INVALID_VALUE_ENTERED = "Invalid value entered";
 
-    public static String MIN_OCCURRENCES_REQUIRED_MESSAGE = "Min %s occurrences required";
+    public static String MIN_OCCURRENCES_REQUIRED_MESSAGE = "Min %s occurrence(s) required";
 
     protected final String MARK_AS_READY_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Mark as ready']";
 

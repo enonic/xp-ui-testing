@@ -549,7 +549,7 @@ public class ContentWizardPanel
     //Click on Default Publish... button in the toolbar
     public ContentPublishDialog clickOnPublishButton()
     {
-        if ( !waitForPublishButtonVisible( Application.EXPLICIT_QUICK ) )
+        if ( !waitForPublishButtonVisible( Application.EXPLICIT_NORMAL ) )
         {
             saveScreenshot( "err_toolbar_publish" );
             throw new TestFrameworkException( "publish button was not found in the wizard" );
