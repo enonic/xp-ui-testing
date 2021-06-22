@@ -817,7 +817,11 @@ public class ContentWizardPanel
             switchToDefaultWindow();
         }
         String width = getDisplayedElement( By.xpath( LIVE_EDIT_FRAME ) ).getCssValue( "width" );
+
         return Integer.valueOf( width.substring( 0, width.indexOf( "px" ) ) );
+        //String value = width.substring( 0, width.indexOf( "px" ) );
+        //String[] integralPart = String.valueOf(value).split("[.]");
+        //return Integer.valueOf(integralPart[0]);
     }
 
     public ContentBrowsePanel switchToBrowsePanelTab()

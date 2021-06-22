@@ -25,7 +25,7 @@ public class PageEmulatorPanel
 
     private String GRID_AVAILABLE_RESOLUTIONS_NAME = GRID_PANEL + SLICK_ROW + "//h5";
 
-    private String RESOLUTION_ROW = "//div[contains(@class,'slick-row') and descendant::h5[text()='%s']]";
+    private String RESOLUTION_ROW = "//div[contains(@class,'slick-row') and descendant::h5[text()='%s']]//h5";
 
     public PageEmulatorPanel( final TestSession session )
     {

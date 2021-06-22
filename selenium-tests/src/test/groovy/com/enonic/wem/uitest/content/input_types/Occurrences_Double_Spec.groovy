@@ -88,7 +88,7 @@ class Occurrences_Double_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN creating of 'Double' content WHEN the content opened THEN correct Double value should be present on the wizard AND content is valid"()
+    def "GIVEN 'Double' content has been created WHEN the content has been reopened THEN correct Double value should be present in the wizard AND content is valid"()
     {
         given: "add a content with type 'Double'"
         Content doubleContent = buildDouble0_1_Content( TEST_DOUBLE );

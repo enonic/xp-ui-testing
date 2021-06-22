@@ -57,7 +57,7 @@ class Attachments_Content_Spec
         wizard.typeDisplayName( NameHelper.uniqueName( "attachments" ) ).save();
 
         then: "expected validation message is displayed"
-        attachmentsFormView.getFormValidationRecording( 0 ) == String.format( Application.MIN_OCCURRENCES_REQUIRED_MESSAGE, 2 );
+        attachmentsFormView.getFormValidationRecording( 0 ) == String.format( Application.MIN_VALID_OCCURRENCE_REQUIRED, 2 );
 
         and: "'Publish' button should be disabled"
         !wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
