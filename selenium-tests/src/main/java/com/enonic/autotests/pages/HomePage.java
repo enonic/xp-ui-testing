@@ -114,7 +114,7 @@ public class HomePage
 
     public boolean checkLauncher()
     {
-        boolean isLauncherPresent = waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), 3 );
+        boolean isLauncherPresent = waitUntilVisibleNoException( By.xpath( LauncherPanel.CLOSE_LAUNCHER_BUTTON ), EXPLICIT_LONG );
         if ( !isLauncherPresent )
         {
             saveScreenshot( NameHelper.uniqueName( "err_launcher" ) );

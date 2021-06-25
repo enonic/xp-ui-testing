@@ -75,7 +75,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         wizard.showComponentView();
         saveScreenshot( "image-from-template" );
 
-        and: "and an image has been removed"
+        and: "and an image has been inserted"
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
         pageComponentsView.openMenu( IMAGE_DISPLAY_NAME_FOR_TEMPLATE ).selectMenuItem( "Remove" );
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
