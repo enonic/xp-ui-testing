@@ -60,11 +60,8 @@ class ContextWindow_InsertPanel_Spec
         insertablesPanel.isDisplayed();
         List<String> components = insertablesPanel.getAvailableComponents();
 
-        and: "correct number of available components should be shown"
-        components.size() == 5
-
-        and: "'Image' component should be available"
-        components.contains( "Image" );
+        and: "expected number of available components should be shown"
+        components.size() == 4;
 
         and: "'Part' component should be available"
         components.contains( "Part" );
@@ -73,7 +70,7 @@ class ContextWindow_InsertPanel_Spec
         components.contains( "Layout" );
 
         and: "'Text' component should be available"
-        components.contains( "Text" );
+        components.contains( "Rich Text Editor" );
 
         and: "'Fragment' component should be available"
         components.contains( "Fragment" );
