@@ -77,7 +77,7 @@ public class HomePage
     public ContentBrowsePanel openContentStudioApplication()
     {
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        checkLauncher();
+        //checkLauncher();
         launcherPanel.clickOnContentStudio();
         sleep( 500 );
         switchToContentBrowseTab();

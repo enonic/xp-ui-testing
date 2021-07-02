@@ -118,7 +118,7 @@ public class LauncherPanel
         boolean isDisplayed = waitUntilVisibleNoException( By.xpath( CONTENT_STUDIO_LINK ), Application.EXPLICIT_NORMAL );
         if ( !isDisplayed )
         {
-            //saveScreenshot( NameHelper.uniqueName( "err_content_studio_link" ) );
+            saveScreenshot( NameHelper.uniqueName( "err_cs_link" ) );
             throw new TestFrameworkException( "content-studio link is not displayed" );
         }
         contentStudioLink.click();
