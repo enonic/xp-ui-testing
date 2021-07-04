@@ -240,7 +240,7 @@ public class WaitHelper
                     }
                     catch ( Exception e )
                     {
-
+                        logger.info( "waitAndCheckAttrValue, error " + e.getMessage() );
                         return false;
                     }
                 }
@@ -248,6 +248,7 @@ public class WaitHelper
         }
         catch ( org.openqa.selenium.TimeoutException e )
         {
+            logger.info( "TimeoutException, attribute value :" + attributeValue + " timeout expired in sec: " + timeout );
             return false;
         }
 

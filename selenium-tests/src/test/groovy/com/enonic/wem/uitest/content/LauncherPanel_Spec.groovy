@@ -25,7 +25,7 @@ class LauncherPanel_Spec
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
 
         then: "launcher panel should be displayed"
-        launcherPanel.isDisplayed();
+        launcherPanel.waitForDisplayed();
 
         and: "'Applications link' should be present"
         launcherPanel.isApplicationsLinkDisplayed();

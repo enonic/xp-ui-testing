@@ -77,7 +77,7 @@ public class HomePage
     public ContentBrowsePanel openContentStudioApplication()
     {
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        //checkLauncher();
+        launcherPanel.waitForDisplayed();
         launcherPanel.clickOnContentStudio();
         sleep( 500 );
         switchToContentBrowseTab();
@@ -101,7 +101,7 @@ public class HomePage
     public UserBrowsePanel openUsersApplication()
     {
         LauncherPanel launcherPanel = new LauncherPanel( getSession() );
-        checkLauncher();
+        launcherPanel.waitForDisplayed();
         launcherPanel.clickOnUsers();
         sleep( 700 );
         switchToUsersTab();

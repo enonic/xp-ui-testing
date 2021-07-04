@@ -58,14 +58,21 @@ public class LauncherPanel
         super( session );
     }
 
-    public boolean isDisplayed()
+    public void waitForDisplayed()
     {
         if ( findElements( By.xpath( PANEL_DIV ) ).size() == 0 )
         {
             throw new TestFrameworkException( "Launcher was not found!" );
         }
         WebElement launcherPanel = findElement( By.xpath( PANEL_DIV ) );
-        return waitAndCheckAttrValue( launcherPanel, "class", "visible", Application.EXPLICIT_NORMAL );
+        sleep( 300 );
+        boolean result = waitAndCheckAttrValue( launcherPanel, "class", "visible", Application.EXPLICIT_LONG );
+        if ( !result )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_open_launcher" ) );
+            throw new TestFrameworkException( "Launcher Panel was not opened" );
+        }
+
     }
 
     public LauncherPanel clickOnApplications()
@@ -115,7 +122,7 @@ public class LauncherPanel
 
     public LauncherPanel clickOnContentStudio()
     {
-        boolean isDisplayed = waitUntilVisibleNoException( By.xpath( CONTENT_STUDIO_LINK ), Application.EXPLICIT_NORMAL );
+        boolean isDisplayed = waitUntilVisibleNoException( By.xpath( CONTENT_STUDIO_LINK ), 4 );
         if ( !isDisplayed )
         {
             saveScreenshot( NameHelper.uniqueName( "err_cs_link" ) );
@@ -175,7 +182,7 @@ public class LauncherPanel
 
     public boolean iButtonCloseLauncherDisplayed()
     {
-        return closePanelButton.getAttribute("class"  ).contains( "toggled" );
+        return closePanelButton.getAttribute( "class" ).contains( "toggled" );
     }
 
     public String getUserDisplayName()
@@ -190,7 +197,7 @@ public class LauncherPanel
 
     public boolean isOpenLauncherButtonPresent()
     {
-        return !closePanelButton.getAttribute("class"  ).contains( "toggled" );
+        return !closePanelButton.getAttribute( "class" ).contains( "toggled" );
     }
 
     public LauncherPanel openPanel()
