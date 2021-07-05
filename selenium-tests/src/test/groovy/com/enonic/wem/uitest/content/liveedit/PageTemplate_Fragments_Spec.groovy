@@ -22,8 +22,13 @@ class PageTemplate_Fragments_Spec
     @Shared
     Content PAGE_TEMPLATE;
 
+    @Shared
+    String PAGE_TEMPLATE_FRAGMENT_TEXT = "text2";
 
-    def "Preconditions: new site with a controller and new page template should be added"()
+    String SITE_FRAGMENT_TEXT = "text1";
+
+
+    def "Preconditions: new site and new page template should be added"()
     {
         given: "site with a controller has been added"
         SITE = buildMyFirstAppSite( "site" );
@@ -47,7 +52,7 @@ class PageTemplate_Fragments_Spec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    def "GIVEN existing site is opened WHEN new fragment has been cretaed from an image THEN new fragment wizard should be loaded in new browser tab"()
+    def "GIVEN existing site is opened WHEN new fragment has been created from text-component THEN new fragment wizard should be loaded in new browser tab"()
     {
         given: "existing site is opened"
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
@@ -59,20 +64,21 @@ class PageTemplate_Fragments_Spec
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "image component has been inserted"
-        pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
+        pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Text" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
-        ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageFromOptions( ELEPHANT_IMAGE_DISPLAY_NAME );
-        wizard.switchToDefaultWindow();
-        and: "and new fragment has been created"
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+        liveFormPanel.typeTextInTextComponent( SITE_FRAGMENT_TEXT );
+        wizard.switchToDefaultWindow().save();
+        wizard.waitForNotificationMessage();
+        and: "new fragment has been created"
         wizard.showComponentView();
-        pageComponentsView.openMenu( ELEPHANT_IMAGE_DISPLAY_NAME ).selectMenuItem( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue() );
+        pageComponentsView.openMenu( SITE_FRAGMENT_TEXT ).selectMenuItem( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue() );
         sleep( 2000 )
-        wizard = contentBrowsePanel.switchToBrowserTabByTitle( ELEPHANT_IMAGE_DISPLAY_NAME );
+        wizard = contentBrowsePanel.switchToBrowserTabByTitle( SITE_FRAGMENT_TEXT );
 
         then: "new fragment should be loaded in new browser tab:"
-        wizard.getNameInputValue() == buildFragmentName( ELEPHANT_IMAGE_DISPLAY_NAME );
+        wizard.getNameInputValue() == buildFragmentName( SITE_FRAGMENT_TEXT );
     }
 
     def "GIVEN existing page template is opened WHEN existing fragment has been inserted THEN the fragment should be present in the template"()
@@ -88,29 +94,31 @@ class PageTemplate_Fragments_Spec
 
         and: "existing fragment has been selected from the options"
         FragmentComponentView fragmentComponentView = new FragmentComponentView( getSession() );
-        fragmentComponentView.selectFragment( ELEPHANT_IMAGE_DISPLAY_NAME );
+        fragmentComponentView.selectFragment( SITE_FRAGMENT_TEXT );
 
         then: "template should be automatically saved"
-        !wizard.isSaveButtonEnabled(  );
+        !wizard.isSaveButtonEnabled();
     }
 
-    def "GIVEN existing page template is opened WHEN image has been clicked in the PageComponentView and context menu opened THEN 'Create Fragment' menu item should not be present "()
+    def "GIVEN existing page template is opened WHEN context menu for a text component has been opened THEN 'Create Fragment' menu item should not be present"()
     {
         given: "existing page template is opened"
         ContentWizardPanel wizard = findAndSelectContent( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
         and: "Image-component has been inserted"
-        pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
+        pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Text" );
         pageComponentsView.doCloseDialog();
         wizard.switchToLiveEditFrame();
 
         and: "image has been selected in options"
-        ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageFromOptions( ELEPHANT_IMAGE_DISPLAY_NAME );
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+        liveFormPanel.typeTextInTextComponent( PAGE_TEMPLATE_FRAGMENT_TEXT );
+        wizard.switchToDefaultWindow().save();
+        wizard.waitForNotificationMessage();
 
         when: "the image has been clicked in the PageComponentView and context menu opened"
-        wizard.switchToDefaultWindow().showComponentView();
-        pageComponentsView.openMenu( ELEPHANT_IMAGE_DISPLAY_NAME );
+        wizard.showComponentView();
+        pageComponentsView.openMenu( PAGE_TEMPLATE_FRAGMENT_TEXT );
 
         then: "'Save as Fragment' menu item should not be displayed, because it is the page-template"
         !pageComponentsView.isMenuItemPresent( ComponentMenuItems.SAVE_AS_FRAGMENT.getValue() );
