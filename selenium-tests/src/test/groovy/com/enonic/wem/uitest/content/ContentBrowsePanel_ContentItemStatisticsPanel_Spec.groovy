@@ -46,7 +46,7 @@ class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
         filterPanel.typeSearchText( site.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( site.getName() ) );
         and: "new template has been added"
-        contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+        contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).showPageEditor().typeData( template ).closeBrowserTab().switchToBrowsePanelTab();
         sleep( 3000 );
         saveScreenshot( "selection_controller1" );

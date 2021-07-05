@@ -34,7 +34,7 @@ class PageTemplate_Spec
         filterPanel.typeSearchText( TEST_SITE.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( TEST_SITE.getName() ) );
         when: "_templates folder is selected and 'New' button pressed"
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             "Page Template" );
         PageTemplateFormViewPanel formViewPanel = new PageTemplateFormViewPanel( getSession() );
 
@@ -57,7 +57,7 @@ class PageTemplate_Spec
         and: "_templates folder is selected and 'New' button pressed"
         TEST_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, null, "not-valid",
                                            TEST_SITE.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             "Page Template" );
 
         when: "display name has been typed"
@@ -104,7 +104,7 @@ class PageTemplate_Spec
         contentBrowsePanel.expandContent( ContentPath.from( TEST_SITE.getName() ) );
 
         and: "_templates folder is selected and 'New' button pressed"
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             "Page Template" );
         PageTemplateFormViewPanel formViewPanel = new PageTemplateFormViewPanel( getSession() );
 

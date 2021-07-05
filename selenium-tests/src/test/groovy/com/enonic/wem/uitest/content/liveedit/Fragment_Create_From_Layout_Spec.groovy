@@ -31,7 +31,7 @@ class Fragment_Create_From_Layout_Spec
     @Shared
     String LAYOUT_2_COL_DISPLAY_NAME = "25/75"
 
-    def "GIVEN Page Component View is opened AND layout component is inserted WHEN click on the layout-component and 'create fragment' menu item is selected THEN fragment-wizard is opened in the new browser tab"()
+    def "GIVEN layout component is inserted WHEN click on the layout-component and click 'Save as fragment' menu item THEN fragment-wizard should be opened in the new browser tab"()
     {
         given: "Page Components View is opened"
         SITE = buildSimpleSiteApp();
@@ -121,7 +121,7 @@ class Fragment_Create_From_Layout_Spec
         liveFormPanel.getLayoutColumnNumber() == INITIAL_NUMBER_OF_COLUMN - 1;
     }
 
-    def "GIVEN fragment wizard is opened WHEN the initial layout was set on the fragment-wizard THEN initial layout should be present on the site-wizard as well"()
+    def "GIVEN fragment wizard is opened WHEN the initial layout has been set in the fragment-wizard THEN initial layout(3-col) should be present in the site-wizard as well"()
     {
         given: "existing site with the fragment is opened "
         ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarEdit();
@@ -137,6 +137,7 @@ class Fragment_Create_From_Layout_Spec
 
         when: "'Layout Inspection' panel is opened, 2-col has been replaced with 3-col"
         LayoutInspectionPanel inspectionPanel = new LayoutInspectionPanel( getSession() );
+        saveScreenshot( "layout_fragment_wizard_2" );
         inspectionPanel.setLayout( LAYOUT_3_COL_DISPLAY_NAME );
 
         and: "switching to the site-wizard"
@@ -162,22 +163,22 @@ class Fragment_Create_From_Layout_Spec
         PageComponentsViewDialog pageComponentsView = fragmentWizard.showComponentView();
         pageComponentsView.expandItem( LAYOUT_3_COL_DISPLAY_NAME );
 
-        when: "Insert Image menu item has been clicked"
-        pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
+        when: "Insert Text menu item has been clicked"
+        pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Text" );
         pageComponentsView.doCloseDialog();
         fragmentWizard.switchToLiveEditFrame();
-        ImageComponentView imageComponentView = new ImageComponentView( getSession() );
 
-        and: "drop-down handler has been clicked"
-        imageComponentView.clickOnDropDownHandler();
-        imageComponentView.clickOnDropDownModeToggler().clickOnExpanderInDropDownList( "imagearchive" ).clickOnOption( "enterprise" );
+        and: "test text has been typed"
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+        liveFormPanel.typeTextInTextComponent( "test  text" );
 
         and: "the fragment should be automatically saved"
-        fragmentWizard.switchToLiveEditFrame();
-        saveScreenshot( "image_in_fragment_inserted" );
+        fragmentWizard.switchToDefaultWindow(  );
+        fragmentWizard.save(  );
+        saveScreenshot( "text_in_fragment_inserted" );
 
-        then: "new image should be present in the left-region "
-        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        liveFormPanel.getNumberImagesInLayout() == 1;
+        then: "new text component should be present in the left-region "
+        fragmentWizard.switchToLiveEditFrame();
+        liveFormPanel.getNumberTextComponentInLayout(  ) == 1;
     }
 }

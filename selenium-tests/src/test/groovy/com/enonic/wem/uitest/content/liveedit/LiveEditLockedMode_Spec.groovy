@@ -39,7 +39,7 @@ class LiveEditLockedMode_Spec
         filterPanel.typeSearchText( SIT_NAME );
 
         when: "site was selected and opened"
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( SIT_NAME ).clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( SIT_NAME ).clickToolbarEdit();
 
         then: "Page Editor should be shown by default"
         wizard.isLiveEditFrameDisplayed();
@@ -68,7 +68,7 @@ class LiveEditLockedMode_Spec
         Content template = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, "site", "site-template", SIT_NAME );
 
         when: "new template has been added"
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).typeData( template );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );

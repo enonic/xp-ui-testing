@@ -26,7 +26,7 @@ class ContentPublishDelete_Spec
 
         when: "the folder has been published"
         filterPanel.typeSearchText( content.getName() )
-        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        contentBrowsePanel.selectContentInGrid( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "'Published' status should be displayed in the grid"
@@ -42,7 +42,7 @@ class ContentPublishDelete_Spec
         filterPanel.typeSearchText( content.getName() )
 
         when: "content has been selected and 'Delete' button pressed"
-        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
+        contentBrowsePanel.selectContentInGrid( content.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
         String message = contentBrowsePanel.waitForNotificationMessage();
         saveScreenshot("content_should_be_pending");
 
@@ -56,7 +56,7 @@ class ContentPublishDelete_Spec
     {
         when: "existing content with 'Deleted' status"
         filterPanel.typeSearchText( content.getName() )
-        contentBrowsePanel.selectContentInTable( content.getName() );
+        contentBrowsePanel.selectContentInGrid( content.getName() );
         saveScreenshot( "test_deleted_content" );
 
         then: "'Undo deleted' button should be displayed"
@@ -68,7 +68,7 @@ class ContentPublishDelete_Spec
         when: "existing content with 'Deleted' status"
         filterPanel.typeSearchText( content.getName() );
         and: "content is selected and 'Publish' button pressed"
-        contentBrowsePanel.selectContentInTable( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
+        contentBrowsePanel.selectContentInGrid( content.getName() ).clickToolbarPublish().clickOnPublishNowButton();
         String message = contentBrowsePanel.waitPublishNotificationMessage( Application.EXPLICIT_NORMAL );
 
         then: "content should not be listed in the browse panel"

@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel
@@ -61,7 +62,7 @@ class CountrySiteWithTemplateSpec
                                            SITE.getName() );
 
         when: "'Templates' folder selected and new page-template is added"
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).typeData( PAGE_TEMPLATE );
         wizard.clickOnMarkAsReadyButton();
         sleep( 500 );
@@ -77,7 +78,7 @@ class CountrySiteWithTemplateSpec
     {
         given: "existing page-template is opened"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInGrid( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
         when: "'country' part has been inserted"
         PageComponentsViewDialog pageComponentsView = contentWizard.showComponentView();
@@ -122,7 +123,7 @@ class CountrySiteWithTemplateSpec
     {
         given: "existing page-template is opened"
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
-        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInTable( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
+        ContentWizardPanel contentWizard = contentBrowsePanel.selectContentInGrid( PAGE_TEMPLATE.getName() ).clickToolbarEdit();
 
         when: "the 'Inspect' link is clicked"
         ContextWindow contextWindow = contentWizard.showContextWindow();
@@ -197,8 +198,7 @@ class CountrySiteWithTemplateSpec
     def "WHEN site has been published AND site opened in 'master' THEN correct description and population should be present in page sources"()
     {
         given: "site has been 'published'"
-        filterPanel.typeSearchText( SITE.getName(), );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName(), );
+        findAndSelectContent( SITE.getName() );
         contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
         ContentPublishDialog dialog = contentBrowsePanel.clickToolbarPublish();
         dialog.includeChildren( true ).clickOnPublishNowButton();
@@ -237,8 +237,9 @@ class CountrySiteWithTemplateSpec
     def "GIVEN modified site has been 'Published' WHEN site has been opened in 'master' THEN population should be updated"()
     {
         given: "updated city content has been 'Published'"
-        ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnMarkAsReadyAndDoPublish();
+        ContentBrowsePanel browsePanel = findAndSelectContent( SAN_FR_CONTENT.getName() );
+        browsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
+        browsePanel.clickToolbarPublish().clickOnPublishNowButton();
         contentBrowsePanel.waitForNotificationMessage();
         sleep( 1000 );
 

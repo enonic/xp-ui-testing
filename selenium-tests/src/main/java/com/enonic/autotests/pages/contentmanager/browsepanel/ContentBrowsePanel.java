@@ -602,23 +602,7 @@ public class ContentBrowsePanel
         return dialog;
     }
 
-    public void clickOnMarkAsReadyOnToolbarAndConfirm()
-    {
-        waitUntilVisibleNoException( By.xpath( MARK_AS_READY_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
-        if ( !isElementDisplayed( MARK_AS_READY_BUTTON_XPATH ) )
-        {
-            saveScreenshot( "err_mark_as_ready_button1" );
-            throw new TestFrameworkException( "Mark As Ready button is not visible on the toolbar" );
-        }
-        markAsReadyButton.click();
-        ConfirmationDialog dialog = new ConfirmationDialog( getSession() );
-        dialog.waitForOpened();
-        dialog.pressYesButton();
-        dialog.waitForClosed();
-        sleep( 500 );
-    }
-
-    //waits for Mark as Ready button gets visible on the toolbar, then clicks on it
+    //waits for Mark as Ready button gets visible in the toolbar, then clicks on it
     public void clickOnMarkAsReadySingleContent()
     {
         waitUntilVisibleNoException( By.xpath( MARK_AS_READY_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
@@ -640,19 +624,13 @@ public class ContentBrowsePanel
         return this;
     }
 
-    public ContentBrowsePanel selectContentInTable( List<String> contentNames )
+    public ContentBrowsePanel selectContentInGrid( String... contentNames )
     {
-        contentNames.stream().forEach( name -> selectContentInTable( name ) );
+        Arrays.asList( contentNames ).forEach( name -> selectContentInGrid( name ) );
         return this;
     }
 
-    public ContentBrowsePanel selectContentInTable( String... contentNames )
-    {
-        Arrays.asList( contentNames ).forEach( name -> selectContentInTable( name ) );
-        return this;
-    }
-
-    public ContentBrowsePanel selectContentInTable( String contentName )
+    public ContentBrowsePanel selectContentInGrid( String contentName )
     {
         boolean exist = doScrollAndFindGridItem( contentName );
         if ( !exist )
@@ -1175,6 +1153,7 @@ public class ContentBrowsePanel
     {
         waitUntilVisible( By.xpath( CREATE_TASK_BUTTON_XPATH ) );
     }
+
     public ContentBrowsePanel refreshInBrowser()
     {
         getDriver().navigate().refresh();

@@ -59,7 +59,7 @@ class PortalContentCreating_Spec
                                            SITE.getName() );
 
         when: "'Templates' folder selected and new page-template is added"
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
         sleep( 500 );

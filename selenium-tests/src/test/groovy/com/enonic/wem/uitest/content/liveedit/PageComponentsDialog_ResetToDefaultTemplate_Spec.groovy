@@ -150,7 +150,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
 
     private void addTemplateWithImage( Content template, String imageName )
     {
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).showPageEditor().typeData( template );
         wizard.switchToDefaultWindow();
         wizard.showComponentView();

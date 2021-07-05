@@ -184,7 +184,7 @@ class ContentUnpublishDialog_Spec
         filterPanel.clickOnCleanFilter();
 
         when: "both contents are selected"
-        contentBrowsePanel.selectContentInTable( first.getName(), second.getName() );
+        contentBrowsePanel.selectContentInGrid( first.getName(), second.getName() );
         contentBrowsePanel.showPublishMenu();
         saveScreenshot( "test_unpublish_item_disabled" );
 

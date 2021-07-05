@@ -8,10 +8,12 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
 import com.enonic.wem.uitest.content.BaseContentSpec
 import spock.lang.Shared
+import spock.lang.Stepwise
 
 /**
  * Created on 3/28/2017.
  * */
+@Stepwise
 class ContentBrowsePanel_Parent_UndoDelete_Spec
     extends BaseContentSpec
 {

@@ -32,7 +32,7 @@ class Site_With_TemplatePageComponentDialog_Spec
         when: "page template was added"
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
-        contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+        contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             PAGE_TEMPLATE.getContentTypeName() ).showPageEditor().typeData( PAGE_TEMPLATE ).close( PAGE_TEMPLATE.getDisplayName() );
         filterPanel.typeSearchText( PAGE_TEMPLATE.getName() );
 

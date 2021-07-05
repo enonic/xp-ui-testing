@@ -49,7 +49,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         !contentBrowsePanel.exists( content.getName() );
     }
 
-    def "GIVEN parent folder and child folder are added WHEN parent folder has been expanded and child content deleted THEN child folder should not be displayed"()
+    def "GIVEN parent folder and child folder are added WHEN child content has been deleted THEN child folder should not be displayed"()
     {
         given: "folder content added at the root and added child content to this folder"
         Content parent = buildFolderContent( "parent", "parent" );
@@ -59,15 +59,14 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.clickCheckboxAndSelectRow( parent.getName() );
         Content childFolder = buildFolderContent( "folder", "child content to delete" );
         addContent( childFolder );
-        List<String> contentList = new ArrayList<>()
-        contentList.add( childFolder.getName() );
+
         and: "parent folder should be unchecked"
         contentBrowsePanel.clickOnRowCheckbox( parent.getName() );
         sleep( 1000 );
 
-        when: "parent folder expanded and child content selected and 'Delete' button on toolbar pressed"
-        DeleteContentDialog deleteContentDialog = contentBrowsePanel.expandContent( parent.getPath() ).selectContentInTable(
-            contentList ).clickToolbarDelete();
+        when: "child content has been selected and deleted"
+        DeleteContentDialog deleteContentDialog = contentBrowsePanel.expandContent( parent.getPath() ).selectContentInGrid(
+            childFolder.getName() ).clickToolbarDelete();
         deleteContentDialog.clickOnDeleteNowButton();
 
         then: "child folder should not be displayed"
@@ -76,7 +75,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         !contentBrowsePanel.isExpanderPresent( ContentPath.from( parent.getName() ) );
     }
 
-    def "GIVEN parent folder and child folder are added WHEN parent folder and child folders have been selected and deleted THEN both folders should not be displayed"()
+    def "GIVEN parent folder and child folder are added WHEN parent folder and its child folder have been deleted THEN both folders should not be displayed"()
     {
         given: "folder content added at the root and added child content to this folder"
         Content parent = buildFolderContent( "parent", "parent" );
@@ -86,14 +85,13 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.clickCheckboxAndSelectRow( parent.getName() );
         Content childFolder = buildFolderContent( "folder", "child content to delete" );
         addContent( childFolder );
-        List<String> contentList = new ArrayList<>()
-        contentList.add( childFolder.getName() );
+
         and: "parent folder should be unchecked"
         sleep( 1000 );
 
         when: "parent folder expanded and child content selected and 'Delete' button on toolbar pressed"
-        DeleteContentDialog deleteContentDialog = contentBrowsePanel.expandContent( parent.getPath() ).selectContentInTable(
-            contentList ).clickToolbarDelete();
+        DeleteContentDialog deleteContentDialog = contentBrowsePanel.expandContent( parent.getPath() ).selectContentInGrid(
+            childFolder.getName() ).clickToolbarDelete();
         deleteContentDialog.clickOnDeleteNowButton();
         and: "2 has been typed and deleting confirmed"
         ConfirmValueDialog confirmContentDeleteDialog = new ConfirmValueDialog( getSession() );
@@ -125,7 +123,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
     }
 
 
-    def "GIVEN existing content is opened WHEN content has been moved to another location AND 'delete' button in the wizard-toolbar pressed THEN content deleted AND wizard closed"()
+    def "GIVEN existing content is opened WHEN content has been moved to another location AND 'delete' button in the wizard-toolbar pressed THEN the content is deleting AND wizard closes"()
     {
         given: "existing content is opened"
         Content parent = buildFolderContent( "folder", "destination folder" );
@@ -139,7 +137,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         contentBrowsePanel.clickToolbarMove().typeSearchText( parent.getName() ).selectDestinationAndClickOnMove( parent.getName() );
         sleep( 1000 );
 
-        and: "content was deleted from the wizard"
+        and: "content has been deleted in the wizard"
         contentBrowsePanel.switchToBrowserTabByTitle( contentToDelete.getDisplayName() );
         wizard.clickToolbarDelete().doDeleteAndSwitchToBrowsePanel();
 

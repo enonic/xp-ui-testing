@@ -194,7 +194,7 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN existing content is selected WHEN 'arrow down' has been pressed THEN next row should be selected"()
     {
         given:
-        contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
+        contentBrowsePanel.selectContentInGrid( PARENT_CONTENT.getName() );
         int before = contentBrowsePanel.getSelectedRowsNumber();
         saveScreenshot( "test_arrow_down_before" );
 
@@ -208,7 +208,7 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN existing content is selected WHEN arrow up has been pressed THEN previous row should be selected"()
     {
         given:
-        contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
+        contentBrowsePanel.selectContentInGrid( PARENT_CONTENT.getName() );
         int before = contentBrowsePanel.getSelectedRowsNumber();
         saveScreenshot( "test_arrow_up_before" );
 
@@ -224,7 +224,7 @@ class ContentBrowsePanel_GridPanel_Spec
     def "GIVEN existing content is selected and expanded WHEN arrow left has been pressed THEN the folder becomes collapsed"()
     {
         given: "existing content is selected and expanded"
-        contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
+        contentBrowsePanel.selectContentInGrid( PARENT_CONTENT.getName() );
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
         saveScreenshot( "test_arrow_left_before" );
 
@@ -240,7 +240,7 @@ class ContentBrowsePanel_GridPanel_Spec
     {
         given: " existing content is selected and collapsed"
         contentBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
-        contentBrowsePanel.selectContentInTable( PARENT_CONTENT.getName() );
+        contentBrowsePanel.selectContentInGrid( PARENT_CONTENT.getName() );
 
         when: "arrow right has been pressed"
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_RIGHT );
@@ -254,7 +254,7 @@ class ContentBrowsePanel_GridPanel_Spec
     {
         given: "one content is selected"
         contentBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
-        contentBrowsePanel.selectContentInTable( IMPORTED_FOLDER_NAME );
+        contentBrowsePanel.selectContentInGrid( IMPORTED_FOLDER_NAME );
         saveScreenshot( "test_arrow_down_shift_before" );
 
         when: "hold the 'shift' and arrow down has been pressed 3-times"
@@ -289,7 +289,7 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
         sleep( 1000 );
 
-        when: "click on the content and unhighlight it "
+        when: "click on the content and unhighlight it"
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
         sleep( 1000 );
 

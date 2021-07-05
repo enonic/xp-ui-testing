@@ -115,7 +115,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         saveScreenshot( "test_LastModified_aggregation_before_deleting" );
 
         when: "the folder has been deleted"
-        contentBrowsePanel.selectContentInTable( TEST_FOLDER.getName() ).clickToolbarDelete().doDelete();
+        contentBrowsePanel.selectContentInGrid( TEST_FOLDER.getName() ).clickToolbarDelete().doDelete();
         sleep( 2000 );
         saveScreenshot( "test_LastModified_aggregation_folder_deleted" )
 

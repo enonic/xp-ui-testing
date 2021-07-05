@@ -165,6 +165,10 @@ public class LiveFormPanel
         return findElements( By.xpath( LAYOUT_COMPONENT + FIGURE ) ).size();
     }
 
+    public int getNumberTextComponentInLayout()
+    {
+        return findElements( By.xpath( LAYOUT_COMPONENT + TEXT_COMPONENT_VIEW ) ).size();
+    }
     public long getNumberImageComponentsInLayout()
     {
         return getNumberOfElements( By.xpath( LAYOUT_COMPONENT + IMAGE_COMPONENT_VIEW ) );

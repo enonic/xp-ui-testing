@@ -29,7 +29,7 @@ class ContentInfoWidget_Spec
 
         when: "details panel has been opened and info-widget opened"
         filterPanel.typeSearchText( FOLDER.getName() );
-        contentBrowsePanel.selectContentInTable( FOLDER.getName() ).openContentDetailsPanel();
+        contentBrowsePanel.selectContentInGrid( FOLDER.getName() ).openContentDetailsPanel();
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "folder_info_widget_opened1" );
         HashMap<String, String> props = contentInfo.getContentProperties();
@@ -63,7 +63,7 @@ class ContentInfoWidget_Spec
     {
         given: "existing folder that is 'New' and 'Marked as ready'"
         filterPanel.typeSearchText( FOLDER.getName() )
-        contentBrowsePanel.selectContentInTable( FOLDER.getName() );
+        contentBrowsePanel.selectContentInGrid( FOLDER.getName() );
         contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
 
         when: "the folder has been published"
@@ -106,7 +106,7 @@ class ContentInfoWidget_Spec
         filterPanel.typeSearchText( FOLDER.getName() )
 
         when: "content has been deleted"
-        contentBrowsePanel.selectContentInTable( FOLDER.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
+        contentBrowsePanel.selectContentInGrid( FOLDER.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
         contentBrowsePanel.openContentDetailsPanel();
         ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
         saveScreenshot( "det_panel_content_deleted" )

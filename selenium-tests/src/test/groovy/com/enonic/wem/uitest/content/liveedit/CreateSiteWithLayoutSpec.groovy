@@ -68,7 +68,7 @@ class CreateSiteWithLayoutSpec
         contentBrowsePanel.expandContent( ContentPath.from( SITE.getName() ) );
 
         when: "'Templates' folder has been selected and new page-template has been added(Marked as Ready)"
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             pageTemplate.getContentTypeName() );
         wizard.typeData( pageTemplate );
         wizard.clickOnMarkAsReadyButton();
@@ -88,7 +88,7 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' dialog is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
         when: "Menu is opened AND 'Insert/Text' menu items clicked and text typed"
@@ -168,13 +168,13 @@ class CreateSiteWithLayoutSpec
     {
         given: "template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel templateWizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        ContentWizardPanel templateWizard = contentBrowsePanel.selectContentInGrid( pageTemplate.getName() ).clickToolbarEdit();
         and: "and 'Page Components' view is opened"
         PageComponentsViewDialog pageComponentsView = templateWizard.showComponentView();
 
         when: "an image has been inserted in the left region"
         pageComponentsView.expandItem( LAYOUT_NAME );
-        pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Image" );
+        pageComponentsView.openMenu( "left" ).selectMenuItem( "Insert", "Text" );
         pageComponentsView.doCloseDialog();
         templateWizard.switchToLiveEditFrame();
         ImageComponentView imageComponentView = new ImageComponentView( getSession() );
@@ -200,7 +200,7 @@ class CreateSiteWithLayoutSpec
     {
         given: "template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( pageTemplate.getName() ).clickToolbarEdit();
         and: "and 'Page Components' view is opened"
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
@@ -225,7 +225,7 @@ class CreateSiteWithLayoutSpec
     {
         given: "template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( pageTemplate.getName() ).clickToolbarEdit();
         and: "and 'Page Components' view is opened"
         PageComponentsViewDialog pageComponentsView = wizard.showComponentView();
 
@@ -249,7 +249,7 @@ class CreateSiteWithLayoutSpec
     {
         given: "page template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInGrid( pageTemplate.getName() ).clickToolbarEdit();
         and: "and 'Page Components' view is opened"
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
@@ -275,7 +275,7 @@ class CreateSiteWithLayoutSpec
     {
         given: "page template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInGrid( pageTemplate.getName() ).clickToolbarEdit();
         and: "and 'Page Components' view is opened"
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
@@ -300,7 +300,7 @@ class CreateSiteWithLayoutSpec
     {
         given: "'Page Components' opened"
         filterPanel.typeSearchText( pageTemplate.getName() )
-        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInTable( pageTemplate.getName() ).clickToolbarEdit();
+        ContentWizardPanel wizardPanel = contentBrowsePanel.selectContentInGrid( pageTemplate.getName() ).clickToolbarEdit();
         PageComponentsViewDialog pageComponentsView = wizardPanel.showComponentView();
 
         when: "menu for image is opened and 'remove' menu-item selected"

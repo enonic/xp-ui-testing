@@ -53,7 +53,7 @@ class PageComponentView_Save_As_Template_Spec
         and: "new template has been added"
         Content template = buildPageTemplate( COUNTRY_LIST_CONTROLLER, TEMPLATE_SUPPORTS_SITE, "test statistics template",
                                               SITE.getName() );
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable( "_templates" ).clickToolbarNew().selectContentType(
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).showPageEditor().typeData( template );
 
         when: "Page Component View has been opened"

@@ -92,7 +92,7 @@ class DetailsPanel_OwnerName_Spec
 
         when: "the folder has been duplicated"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() );
-        contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() ).clickToolbarDuplicate();
+        contentBrowsePanel.selectContentInGrid( FOLDER_TO_DUPLICATE.getName() ).clickToolbarDuplicate();
 
         and: "Duplicate button in the dialog has been pressed"
         DuplicateContentDialog dialog = new DuplicateContentDialog( getSession() );
@@ -111,7 +111,7 @@ class DetailsPanel_OwnerName_Spec
 
         and: "folder that was copied by the user is selected"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
-        contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() + "-copy" );
+        contentBrowsePanel.selectContentInGrid( FOLDER_TO_DUPLICATE.getName() + "-copy" );
 
         when: "Details Panel and PropertiesWidget has been opened"
         contentBrowsePanel.openContentDetailsPanel();
@@ -130,7 +130,7 @@ class DetailsPanel_OwnerName_Spec
 
         and: "just added folder is selected"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
-        contentBrowsePanel.selectContentInTable( FOLDER_TO_DUPLICATE.getName() + "-copy" );
+        contentBrowsePanel.selectContentInGrid( FOLDER_TO_DUPLICATE.getName() + "-copy" );
         contentBrowsePanel.openContentDetailsPanel();
 
         when: "the first 'version history' item has been expanded"
@@ -151,7 +151,7 @@ class DetailsPanel_OwnerName_Spec
 
         when: "when the copy of the existing content was opened"
         contentBrowsePanel.getFilterPanel().typeSearchText( FOLDER_TO_DUPLICATE.getName() + "-copy" );
-        ContentWizardPanel wizard = contentBrowsePanel.selectContentInTable(
+        ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid(
             FOLDER_TO_DUPLICATE.getName() + "-copy" ).clickToolbarEditAndSwitchToWizardTab();
         SettingsWizardStepForm form = wizard.clickOnSettingsTabLink();
         saveScreenshot( "test_owner_wizard" );

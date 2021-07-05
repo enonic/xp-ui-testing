@@ -689,7 +689,7 @@ public class ContentWizardPanel
         getDisplayedElement( By.xpath( COMPONENT_VIEW_TOGGLER ) ).click();
         PageComponentsViewDialog dialog = new PageComponentsViewDialog( getSession() );
         dialog.waitForOpened();
-        sleep( 200 );
+        sleep( 300 );
         return dialog;
     }
 
