@@ -32,7 +32,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     String TEMPLATE_DISPLAY_NAME = "country template";
 
     @Shared
-    String IMAGE_DISPLAY_NAME_FOR_TEMPLATE = IMPORTED_IMAGE_BOOK_DISPLAY_NAME;
+    String TEST_TEXT_IN_TEMPLATE = "text2";
 
     @Shared
     String IMAGE_NAME_FOR_TEMPLATE = IMPORTED_IMAGE_BOOK_NAME;
@@ -41,7 +41,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     String TEST_IMAGE = IMPORTED_MAN2_IMAGE_DISPLAY_NAME;
 
     @Shared
-    String TEST_IMAGE_SWAP = WHALE_IMAGE_DISPLAY_NAME;
+    String TEST_TEXT_SWAP_TARGET = "text1";
 
     @Shared
     String TEST_IMAGE_NAME_SWAP = WHALE_IMAGE_NAME;
@@ -114,7 +114,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         filterPanel.typeSearchText( SITE_WITH_COMPONENTS_NAME )
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
-        LiveFormPanel liveFormPanel = addImageComponent( TEST_IMAGE_SWAP );
+        LiveFormPanel liveFormPanel = addTextComponent( TEST_IMAGE_SWAP );
         saveScreenshot( "two-images-in-view" );
         LinkedList<String> before = liveFormPanel.getImageNames();
 
@@ -122,7 +122,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         wizard.switchToDefaultWindow();
         wizard.showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
-        pageComponentsView.swapComponents( IMAGE_DISPLAY_NAME_FOR_TEMPLATE, TEST_IMAGE_SWAP );
+        pageComponentsView.swapComponents( IMAGE_DISPLAY_NAME_FOR_TEMPLATE, TEST_TEXT_SWAP_TARGET );
         wizard.save();
         sleep( 2000 );
         wizard.switchToLiveEditFrame();
@@ -135,26 +135,28 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         after.getFirst() == IMAGE_NAME_FOR_TEMPLATE;
     }
 
-    private LiveFormPanel addImageComponent( String imageName )
+    private LiveFormPanel addTextComponent( String text )
     {
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
-        pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
+        pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Text" );
         pageComponentsView.doCloseDialog();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+
+        LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
+        liveFormPanel.typeTextInTextComponent( text );
         wizard.switchToLiveEditFrame();
-        ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageFromOptions( imageName );
+        wizard.save(  );
         sleep( 1000 );
         return new LiveFormPanel( getSession() );
     }
 
-    private void addTemplateWithImage( Content template, String imageName )
+    private void addTemplateWithTextComponent( Content template, String text )
     {
         ContentWizardPanel wizard = contentBrowsePanel.selectContentInGrid( "_templates" ).clickToolbarNew().selectContentType(
             template.getContentTypeName() ).showPageEditor().typeData( template );
         wizard.switchToDefaultWindow();
         wizard.showComponentView();
-        addImageComponent( imageName );
+        addTextComponent( text );
         wizard.closeBrowserTab().switchToBrowsePanelTab();
     }
 }

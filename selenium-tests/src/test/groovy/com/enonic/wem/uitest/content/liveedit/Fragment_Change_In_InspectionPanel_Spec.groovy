@@ -54,7 +54,8 @@ class Fragment_Change_In_InspectionPanel_Spec
         siteWizard.showComponentView();
         pageComponentsView.openMenu( PART_FRAGMENT_CITY_LIST ).selectMenuItem( "Save as Fragment" );
         saveScreenshot( "fragment_inspection_panel1" );
-        sleep( 2000 );
+        sleep( 3000 );
+        saveScreenshot( "fragment_inspection_panel2" );
 
         when: "'Dropdown handle' has been clicked"
         FragmentInspectionPanel fragmentInspectionPanel = new FragmentInspectionPanel( getSession() );
