@@ -32,19 +32,10 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
     String TEMPLATE_DISPLAY_NAME = "country template";
 
     @Shared
-    String TEST_TEXT_IN_TEMPLATE = "text2";
+    String TEXT_2 = "second text";
 
     @Shared
-    String IMAGE_NAME_FOR_TEMPLATE = IMPORTED_IMAGE_BOOK_NAME;
-
-    @Shared
-    String TEST_IMAGE = IMPORTED_MAN2_IMAGE_DISPLAY_NAME;
-
-    @Shared
-    String TEST_TEXT_SWAP_TARGET = "text1";
-
-    @Shared
-    String TEST_IMAGE_NAME_SWAP = WHALE_IMAGE_NAME;
+    String TEXT_1 = "text1";
 
 
     def "Preconditions: new site with a template should be added"()
@@ -57,7 +48,7 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         PAGE_TEMPLATE = buildPageTemplate( COUNTRY_REGION_PAGE_CONTROLLER, TEMPLATE_SUPPORTS_SITE, TEMPLATE_DISPLAY_NAME, SITE.getName() );
 
         when: "'Templates' folder selected and new page-template added"
-        addTemplateWithImage( PAGE_TEMPLATE, IMAGE_DISPLAY_NAME_FOR_TEMPLATE )
+        addTemplateWithTextComponent( PAGE_TEMPLATE, TEXT_1 )
         sleep( 500 );
 
         then: "new page-template should be listed"
@@ -65,9 +56,9 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         contentBrowsePanel.exists( PAGE_TEMPLATE.getName() );
     }
 
-    def "GIVEN existing site is opened AND one image has been changed WHEN root element in page component dialog has been selected and 'Reset' menu item clicked THEN site should be reset to default template"()
+    def "GIVEN text in the text component is updated WHEN root element in page component dialog has been selected and 'Reset' menu item clicked THEN site should be reset to default template"()
     {
-        given: "site opened for edit  and site saved"
+        given: "site is opened"
         filterPanel.typeSearchText( SITE.getName() )
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         wizard.unlockPageEditorAndSwitchToContentStudio();
@@ -75,64 +66,59 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         wizard.showComponentView();
         saveScreenshot( "image-from-template" );
 
-        and: "and an image has been inserted"
+        and: "remove the text component and insert a text component wit another text"
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
-        pageComponentsView.openMenu( IMAGE_DISPLAY_NAME_FOR_TEMPLATE ).selectMenuItem( "Remove" );
-        pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Image" );
-        pageComponentsView.doCloseDialog();
-        wizard.switchToLiveEditFrame();
+        pageComponentsView.openMenu( TEXT_1 ).selectMenuItem( "Remove" );
+        pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Text" );
 
-        and: "new image was inserted"
-        ImageComponentView imageComponentView = new ImageComponentView( getSession() );
-        imageComponentView.selectImageFromOptions( TEST_IMAGE );
-
-        and: "the content should be automatically saved"
-        saveScreenshot( "new-image-set" );
-        wizard.switchToDefaultWindow();
-        String message1 = contentBrowsePanel.waitForNotificationMessage();
-
-        when: "root element in 'page component' dialog was selected and 'Reset' menu item selected"
-        wizard.showComponentView();
-        sleep( 1000 );
-        pageComponentsView.openMenu( PAGE_CONTROLLER_NAME ).selectMenuItem( "Reset" );
-        //String message2 = contentBrowsePanel.waitForNotificationMessage();
-        sleep( 3000 );
-        saveScreenshot( "image-reset-to-template" );
-
-        then: "site has been reset to default template, image from the template appeared in the page editor"
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
-        liveFormPanel.isImagePresent( IMAGE_DISPLAY_NAME_FOR_TEMPLATE );
+        liveFormPanel.typeTextInTextComponent( "test text" );
+        wizard.switchToDefaultWindow();
+        pageComponentsView.doCloseDialog();
+        wizard.save(  );
+        contentBrowsePanel.waitForNotificationMessage();
+        saveScreenshot( "new-text-inserted" );
 
-        and: "expected notification message should be displayed"
-        message1 == String.format( Application.CONTENT_SAVED, SITE.getName() );
+        when: "root element in 'page component' dialog has been selected and 'Reset' menu item clicked"
+        wizard.showComponentView();
+        sleep( 1000 );
+
+        then: "site has been reset to default template, the text from the template appeared in the page editor"
+        pageComponentsView.openMenu( PAGE_CONTROLLER_NAME ).selectMenuItem( "Reset" );
+        sleep( 1000 );
+        saveScreenshot( "text-reset-to-template" );
+
+        and: "Saved button remains disabled after the reset"
+        wizard.isSavedButtonDisplayed()
     }
 
-    def "GIVEN site with 2 image-components is opened WHEN swapping components by DnD THEN components should be displayed in the new order"()
+    def "GIVEN site with 2 text-components is opened WHEN components have been swapped by DnD THEN components should be displayed in the new order"()
     {
         given: "site with 2 image-components is opened"
         filterPanel.typeSearchText( SITE_WITH_COMPONENTS_NAME )
         ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         wizard.unlockPageEditorAndSwitchToContentStudio().showComponentView();
-        LiveFormPanel liveFormPanel = addTextComponent( TEST_IMAGE_SWAP );
-        saveScreenshot( "two-images-in-view" );
-        LinkedList<String> before = liveFormPanel.getImageNames();
+        LiveFormPanel liveFormPanel = addTextComponent( "second text" );
+        saveScreenshot( "two-text-component-in-view" );
+        wizard.switchToLiveEditFrame(  );
+        LinkedList<String> before = liveFormPanel.getTextInTextComponents();
 
-        when: "swapping of components by DnD"
+        when: "components have been swapped"
         wizard.switchToDefaultWindow();
         wizard.showComponentView();
         PageComponentsViewDialog pageComponentsView = new PageComponentsViewDialog( getSession() );
-        pageComponentsView.swapComponents( IMAGE_DISPLAY_NAME_FOR_TEMPLATE, TEST_TEXT_SWAP_TARGET );
+        pageComponentsView.swapComponents( TEXT_2, TEXT_1);
         wizard.save();
         sleep( 2000 );
         wizard.switchToLiveEditFrame();
-        LinkedList<String> after = liveFormPanel.getImageNames();
+        LinkedList<String> after = liveFormPanel.getTextInTextComponents();
         saveScreenshot( "page_comp_view_images-swapped" );
 
-        then: "images should be swapped"
-        before.getFirst() == TEST_IMAGE_NAME_SWAP;
+        then: "components should be displayed in the new order"
+        before.getFirst() == "second text" ;
         and: "components should be displayed in the new order"
-        after.getFirst() == IMAGE_NAME_FOR_TEMPLATE;
+        after.getFirst() == TEXT_1;
     }
 
     private LiveFormPanel addTextComponent( String text )
@@ -141,10 +127,10 @@ class PageComponentsDialog_ResetToDefaultTemplate_Spec
         pageComponentsView.openMenu( "country" ).selectMenuItem( "Insert", "Text" );
         pageComponentsView.doCloseDialog();
         ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
-
+        wizard.switchToLiveEditFrame(  )
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
         liveFormPanel.typeTextInTextComponent( text );
-        wizard.switchToLiveEditFrame();
+        wizard.switchToDefaultWindow(  );
         wizard.save(  );
         sleep( 1000 );
         return new LiveFormPanel( getSession() );

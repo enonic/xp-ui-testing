@@ -169,6 +169,7 @@ public class LiveFormPanel
     {
         return findElements( By.xpath( LAYOUT_COMPONENT + TEXT_COMPONENT_VIEW ) ).size();
     }
+
     public long getNumberImageComponentsInLayout()
     {
         return getNumberOfElements( By.xpath( LAYOUT_COMPONENT + IMAGE_COMPONENT_VIEW ) );
@@ -204,6 +205,14 @@ public class LiveFormPanel
     {
         String img = String.format( "//img[contains(@src,'%s')]", imageName );
         return getDisplayedElements( By.xpath( LAYOUT_COMPONENT + FIGURE + img ) ).size();
+    }
+
+    public LinkedList<String> getTextInTextComponents()
+    {
+        LinkedList<String> list = getDisplayedElements( By.xpath( "//div[contains(@id,'TextComponentView')]//section/p" ) ).stream().map(
+            e -> e.getText() ).collect( Collectors.toCollection( LinkedList::new ) );
+
+        return list;
     }
 
     public String getBackgroundColor()
