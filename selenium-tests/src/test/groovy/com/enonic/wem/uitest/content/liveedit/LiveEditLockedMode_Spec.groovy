@@ -46,7 +46,7 @@ class LiveEditLockedMode_Spec
         and: "button show-hide the 'Page Editor' should be displayed"
         wizard.isShowPageEditorButtonDisplayed();
 
-        and: "'Show Component view' should not be displayed on the toolbar"
+        and: "'Show Component view' should not be displayed in the toolbar"
         !wizard.isComponentViewTogglerDisplayed()
 
         and: "'Context Panel' toggler should be present on toolbar"

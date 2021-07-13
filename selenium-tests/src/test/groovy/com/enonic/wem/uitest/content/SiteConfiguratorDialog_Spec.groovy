@@ -48,6 +48,7 @@ class SiteConfiguratorDialog_Spec
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
+        saveScreenshot( "site-config-icon2" );
 
         when: "edit button has been clicked"
         SiteConfiguratorDialog dialog = formViewPanel.openSiteConfigurationDialog( SIMPLE_SITE_APP );
@@ -97,6 +98,7 @@ class SiteConfiguratorDialog_Spec
         filterPanel.typeSearchText( SITE.getName() );
         contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         SiteFormViewPanel formViewPanel = new SiteFormViewPanel( getSession() );
+        saveScreenshot( "site-config-icon1" );
         SiteConfiguratorDialog dialog = formViewPanel.openSiteConfigurationDialog( SIMPLE_SITE_APP );
 
         when: "red color for background has been selected "
