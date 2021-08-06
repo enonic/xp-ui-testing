@@ -36,7 +36,7 @@ class ManualSortContent_Spec
         SortContentDialog sortContentDialog = contentBrowsePanel.clickToolbarSort().clickOnTabMenu().doSort(
             SortMenuItem.MODIFIED_DATE.getValue() ,SortOrder.DESCENDING);
         LinkedList<String> defaultSortingList = sortContentDialog.getContentNames();
-        sleep(1000);
+        sleep(2000);
 
         when:
         sortContentDialog.dragAndSwapItems( "nord.jpg", "whale.jpg" );

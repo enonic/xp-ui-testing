@@ -52,6 +52,7 @@ public class ContentBrowsePanel
     protected final String DISPLAY_NAMES_FROM_TREE_GRID_XPATH = CONTENT_TREE_GRID + H6_DISPLAY_NAME;
 
     private final String NEW_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='New...']]";
+    private final String TOOLBAR_OPEN_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "/*[contains(@id, 'ActionButton') and child::span[text()='Open']]";
 
     private final String OPEN_TASKS_TOOLBAR_BUTTON = APP_BAR + "//button[contains(@id,'ShowIssuesDialogButton')]";
 
@@ -1159,5 +1160,41 @@ public class ContentBrowsePanel
         getDriver().navigate().refresh();
         sleep( 3000 );
         return this;
+    }
+    public ContentBrowsePanel clickOnToolbarOpen()
+    {
+
+        boolean isDisplayed = waitUntilVisibleNoException( By.xpath( TOOLBAR_OPEN_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isDisplayed )
+        {
+            saveScreenshot( "err_open_button" );
+            throw new TestFrameworkException( "Open button is not displayed" );
+        }
+        boolean isEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_OPEN_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isEnabled )
+        {
+            saveScreenshot( "err_open_button" );
+            throw new TestFrameworkException( "button Open disabled, but expected is enabled" );
+        }
+        getDisplayedElement( By.xpath( TOOLBAR_OPEN_BUTTON_XPATH ) ).click();
+        return this;
+    }
+
+    public ContentWizardPanel clickToolbarOpenAndSwitchToWizardTab()
+    {
+        boolean isEditButtonEnabled = waitUntilElementEnabledNoException( By.xpath( TOOLBAR_OPEN_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        if ( !isEditButtonEnabled )
+        {
+            saveScreenshot( "err_open_button" );
+            throw new TestFrameworkException( "Open button should be enabled!" );
+        }
+        getDisplayedElement( By.xpath( TOOLBAR_OPEN_BUTTON_XPATH ) ).click();
+        sleep( 1000 );
+        switchToContentWizardTabBySelectedContent();
+        ContentWizardPanel wizard = new ContentWizardPanel( getSession() );
+        wizard.waitUntilWizardOpened();
+        waitInvisibilityOfSpinner( 7l );
+        wizard.setInLiveEditFrame( false );
+        return wizard;
     }
 }

@@ -102,8 +102,8 @@ public class SortContentDialog
     public SortContentDialog dragAndSwapItems( String sourceName, String targetName )
     {
         scrollViewPortToTop( getViewportElement() );
-        String sourceItem = String.format( GRID_ITEM, sourceName );
-        String targetItem = String.format( GRID_ITEM, targetName );
+        String sourceItem = String.format( GRID_ITEM, sourceName ) +"//div[contains(@class,'slick-cell l0')]";
+        String targetItem = String.format( GRID_ITEM, targetName )+"//div[contains(@class,'slick-cell l0')]";
         if ( findElements( By.xpath( sourceItem ) ).size() == 0 || findElements( By.xpath( targetItem ) ).size() == 0 )
         {
             throw new TestFrameworkException(
