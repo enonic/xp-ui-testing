@@ -11,10 +11,12 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.schema.content.ContentTypeName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class CreateSiteWithLayoutSpec
     extends BaseContentSpec
 {
@@ -164,6 +166,8 @@ class CreateSiteWithLayoutSpec
         wizard.getStatus() == ContentStatus.PUBLISHED.getValue();
     }
 
+    //////////////////////////////////////////////////////////////Not reimplemented
+
     def "GIVEN page-template is opened WHEN an image has been inserted in the left region THEN the image should be present in the layout"()
     {
         given: "template is opened"
@@ -221,7 +225,7 @@ class CreateSiteWithLayoutSpec
         liveFormPanel.getNumberImagesInLayout() == 2;
     }
 
-    def "GIVEN existing page template is opened WHEN an image has been inserted in the right region THEN the image should be displayed in the lauot"()
+    def "GIVEN existing page template is opened WHEN an image has been inserted in the right region THEN the image should be displayed in the layout"()
     {
         given: "template is opened"
         filterPanel.typeSearchText( pageTemplate.getName() )

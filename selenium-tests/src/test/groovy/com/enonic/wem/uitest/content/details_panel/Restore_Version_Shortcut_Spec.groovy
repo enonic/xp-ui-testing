@@ -6,10 +6,12 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ShortcutFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class Restore_Version_Shortcut_Spec
     extends BaseVersionHistorySpec
 {
@@ -104,6 +106,6 @@ class Restore_Version_Shortcut_Spec
         ShortcutFormViewPanel formViewPanel = new ShortcutFormViewPanel( getSession() );
 
         then: "expected target should be displayed in the wizard"
-        formViewPanel.getTargetDisplayName() == TARGET_1
+        formViewPanel.getTargetDisplayName() == TARGET_1;
     }
 }
