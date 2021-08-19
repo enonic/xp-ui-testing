@@ -6,6 +6,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.Page
 import com.enonic.autotests.pages.form.liveedit.ComponentMenuItems
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -14,6 +15,7 @@ import spock.lang.Stepwise
  * verifies : #5393 Page Template Wizard - 'Save as Template' menu item should not be displayed
  * */
 @Stepwise
+@Ignore
 class PageComponentView_Save_As_Template_Spec
     extends BaseSiteSpec
 {
