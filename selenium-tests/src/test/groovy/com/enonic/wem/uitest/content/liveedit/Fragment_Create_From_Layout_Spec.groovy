@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.form.liveedit.LayoutComponentView
 import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -16,6 +17,7 @@ import spock.lang.Stepwise
  * Created on 12.01.2017.
  * */
 @Stepwise
+@Ignore
 class Fragment_Create_From_Layout_Spec
     extends BaseContentSpec
 {
@@ -173,12 +175,12 @@ class Fragment_Create_From_Layout_Spec
         liveFormPanel.typeTextInTextComponent( "test  text" );
 
         and: "the fragment should be automatically saved"
-        fragmentWizard.switchToDefaultWindow(  );
-        fragmentWizard.save(  );
+        fragmentWizard.switchToDefaultWindow();
+        fragmentWizard.save();
         saveScreenshot( "text_in_fragment_inserted" );
 
         then: "new text component should be present in the left-region "
         fragmentWizard.switchToLiveEditFrame();
-        liveFormPanel.getNumberTextComponentInLayout(  ) == 1;
+        liveFormPanel.getNumberTextComponentInLayout() == 1;
     }
 }

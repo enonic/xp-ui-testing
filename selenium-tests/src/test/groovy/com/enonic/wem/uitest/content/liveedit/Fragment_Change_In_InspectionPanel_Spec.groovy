@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -20,6 +21,7 @@ import spock.lang.Stepwise
  * XP #5454 Inspection Panel - DropDown list of options not updated, when new fragment has been created
  * */
 @Stepwise
+@Ignore
 class Fragment_Change_In_InspectionPanel_Spec
     extends BaseContentSpec
 {
