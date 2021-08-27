@@ -5,8 +5,10 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.TextLine0_1_FormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class Occurrences_TextLine_0_1_Spec
     extends Base_InputFields_Occurrences
 

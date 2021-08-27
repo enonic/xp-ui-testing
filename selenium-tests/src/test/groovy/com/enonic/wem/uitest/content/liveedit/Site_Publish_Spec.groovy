@@ -9,14 +9,15 @@ import com.enonic.autotests.pages.form.liveedit.LiveFormPanel
 import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
  * Created on 01.11.2016.
- * verifies bug XP-4367 Wizard - Status/Publish button state are not updated after modifying a published content
  * */
 @Stepwise
+@Ignore
 class Site_Publish_Spec
     extends BaseContentSpec
 {
