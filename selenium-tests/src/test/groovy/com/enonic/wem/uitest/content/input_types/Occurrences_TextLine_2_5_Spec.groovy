@@ -8,8 +8,10 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class Occurrences_TextLine_2_5_Spec
     extends Base_InputFields_Occurrences
 
