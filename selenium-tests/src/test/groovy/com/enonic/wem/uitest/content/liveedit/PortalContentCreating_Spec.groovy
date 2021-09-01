@@ -9,12 +9,14 @@ import com.enonic.autotests.pages.form.liveedit.PartComponentView
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 import static com.enonic.autotests.utils.SleepHelper.sleep
 
 @Stepwise
+@Ignore
 class PortalContentCreating_Spec
     extends BaseSiteSpec
 {
