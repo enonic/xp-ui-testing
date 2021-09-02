@@ -10,12 +10,14 @@ import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import com.enonic.xp.schema.content.ContentTypeName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 import static com.enonic.autotests.utils.SleepHelper.sleep
 
 @Stepwise
+@Ignore
 class LiveEditLockedMode_Spec
     extends BaseContentSpec
 {
@@ -33,7 +35,7 @@ class LiveEditLockedMode_Spec
         contentBrowsePanel.exists( SIT_NAME );
     }
 
-    def "GIVEN existing site WHEN site is opened THEN 'Page Editor' should be shown AND buttons 'Show Component view' 'Show Inspection panel' should not be visible"()
+    def "WHEN existing site is opened THEN button 'Show Page Editor' should be present AND buttons 'Show Component view' 'Show Inspection panel' should not be visible"()
     {
         given: "add a site, based on the test application"
         filterPanel.typeSearchText( SIT_NAME );
@@ -52,12 +54,12 @@ class LiveEditLockedMode_Spec
         and: "'Context Panel' toggler should be present on toolbar"
         wizard.isContextPanelTogglerDisplayed();
 
-        and:"Context Panel should be opened"
-        WizardContextPanel contextPanel= new WizardContextPanel( getSession(  ));
-        contextPanel.waitForLoaded(  );
+        and: "Context Panel should be opened"
+        WizardContextPanel contextPanel = new WizardContextPanel( getSession() );
+        contextPanel.waitForLoaded();
 
-        and:"Widget Selector dropdown should be visible"
-        contextPanel.isWidgetSelectorVisible(  );
+        and: "Widget Selector dropdown should be visible"
+        contextPanel.isWidgetSelectorVisible();
     }
 
     def "GIVEN existing site WHEN new template has been added THEN it should be listed beneath the '_templates' folder"()
