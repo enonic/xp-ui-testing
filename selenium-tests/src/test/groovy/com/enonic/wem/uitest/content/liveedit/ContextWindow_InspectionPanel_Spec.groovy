@@ -8,10 +8,12 @@ import com.enonic.autotests.pages.form.liveedit.ContextWindow
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class ContextWindow_InspectionPanel_Spec
     extends BaseContentSpec
 {
