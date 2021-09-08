@@ -2,8 +2,10 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PdfFormViewPanel
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class Content_TextExtractionData_Spec
     extends BaseContentSpec
 {
