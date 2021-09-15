@@ -6,7 +6,9 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ConfirmationDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 
+@Ignore
 class ContentWizardPanel_Toolbar_Spec
     extends BaseContentSpec
 {
