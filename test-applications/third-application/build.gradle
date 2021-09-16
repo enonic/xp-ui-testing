@@ -28,4 +28,3 @@ repositories {
         url 'http://repo.enonic.com/dev'
     }
 }
-

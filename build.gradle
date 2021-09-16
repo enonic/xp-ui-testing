@@ -7,9 +7,9 @@ allprojects {
 
     repositories {
         mavenLocal()
-        jcenter()
+        mavenCentral()
         maven {
-            url 'https://repo.enonic.com/dev'
+            url 'http://repo.enonic.com/dev'
         }
     }
 }
