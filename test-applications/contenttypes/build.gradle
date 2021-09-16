@@ -28,9 +28,7 @@ dependencies {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven {
-        url 'http://repo.enonic.com/dev'
-    }
+    xp.enonicRepo()
 }
 
 
