@@ -7,6 +7,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PageTemplateFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -15,6 +16,7 @@ import spock.lang.Stepwise
  *
  * */
 @Stepwise
+@Ignore
 class PageTemplate_Spec
     extends BaseContentSpec
 {
