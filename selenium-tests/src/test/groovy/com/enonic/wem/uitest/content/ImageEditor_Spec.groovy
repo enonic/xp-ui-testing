@@ -4,10 +4,12 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditorToolbar
 import com.enonic.autotests.pages.form.ImageFormViewPanel
+import spock.lang.Ignore
 
 /**
  * Created on 28.09.2016.
  * */
+@Ignore
 class ImageEditor_Spec
     extends BaseContentSpec
 {

@@ -12,6 +12,7 @@ import spock.lang.Stepwise
  *
  * */
 @Stepwise
+@Ignore
 class ImageEditor_Zoom_Reset_Spec
     extends BaseContentSpec
 {
