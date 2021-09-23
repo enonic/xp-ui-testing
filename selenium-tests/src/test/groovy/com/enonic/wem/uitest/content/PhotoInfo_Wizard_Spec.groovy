@@ -2,10 +2,12 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.PhotoInfoFormViewPanel
+import spock.lang.Ignore
 
 /**
  * Created on 23.09.2016.
  * */
+@Ignore
 class PhotoInfo_Wizard_Spec
     extends BaseContentSpec
 {
@@ -45,7 +47,6 @@ class PhotoInfo_Wizard_Spec
 
         and: "input for 'aperture' is displayed"
         photoInfoFormViewPanel.isApertureInputPresent();
-
 
         and: "input for 'auto flash compensation' is displayed"
         photoInfoFormViewPanel.isAutoFlashCompensationPresent();

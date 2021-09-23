@@ -2,11 +2,13 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ImagePropertiesFormViewPanel
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
  * Created  on 22.09.2016.
  * */
+@Ignore
 class ImageProperties_Wizard_Spec
     extends BaseContentSpec
 {

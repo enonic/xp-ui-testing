@@ -2,11 +2,13 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.LocationFormViewPanel
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
  * Created on 27.09.2016.
  * */
+@Ignore
 class Location_ImageWizard_Spec
     extends BaseContentSpec
 {
