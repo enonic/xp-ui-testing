@@ -12,6 +12,7 @@ import spock.lang.Stepwise
  * Created on 30.09.2016.
  * */
 @Stepwise
+@Ignore
 class ImageEditor_Crop_Reset_Spec
     extends BaseContentSpec
 {
