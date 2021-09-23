@@ -12,6 +12,7 @@ import spock.lang.Stepwise
  * Created on 04.10.2016.
  * */
 @Stepwise
+@Ignore
 class ImageEditor_Focus_Spec
     extends BaseContentSpec
 {
