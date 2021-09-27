@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TimeUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -17,11 +18,12 @@ import spock.lang.Stepwise
  *
  * */
 @Stepwise
+@Ignore
 class ContentWizard_Publish_Inputs_Spec
     extends BaseContentSpec
 {
     @Shared
-    Content TEST_FOLDER;
+    Content TEST_FOLDER;///
 
     def "GIVEN existing folder is opened WHEN the folder has been published THEN 'Online from' and 'Online to' appear in the Schedule step form"()
     {
