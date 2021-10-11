@@ -14,6 +14,7 @@ import spock.lang.Stepwise
 /**
  * Created on 26.08.2016.*/
 @Stepwise
+@Ignore
 class Shortcut_Spec
     extends BaseContentSpec
 {
