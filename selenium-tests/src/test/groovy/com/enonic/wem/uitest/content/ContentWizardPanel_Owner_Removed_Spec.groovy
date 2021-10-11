@@ -15,6 +15,7 @@ import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -22,6 +23,7 @@ import spock.lang.Stepwise
  * Created on 3/6/2017.
  * */
 @Stepwise
+@Ignore
 class ContentWizardPanel_Owner_Removed_Spec
     extends BaseGebSpec
 
