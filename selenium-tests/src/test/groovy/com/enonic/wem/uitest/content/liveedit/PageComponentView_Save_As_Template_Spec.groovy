@@ -15,7 +15,6 @@ import spock.lang.Stepwise
  * verifies : #5393 Page Template Wizard - 'Save as Template' menu item should not be displayed
  * */
 @Stepwise
-@Ignore
 class PageComponentView_Save_As_Template_Spec
     extends BaseSiteSpec
 {

@@ -17,7 +17,6 @@ import spock.lang.Stepwise
  * Created on 12.01.2017.
  * */
 @Stepwise
-@Ignore
 class Fragment_Create_From_Layout_Spec
     extends BaseContentSpec
 {

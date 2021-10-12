@@ -13,7 +13,6 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-@Ignore
 class ContextWindow_InspectionPanel_Spec
     extends BaseContentSpec
 {

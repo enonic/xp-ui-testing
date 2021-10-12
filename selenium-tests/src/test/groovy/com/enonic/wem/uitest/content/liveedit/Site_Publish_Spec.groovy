@@ -17,7 +17,6 @@ import spock.lang.Stepwise
  * Created on 01.11.2016.
  * */
 @Stepwise
-@Ignore
 class Site_Publish_Spec
     extends BaseContentSpec
 {

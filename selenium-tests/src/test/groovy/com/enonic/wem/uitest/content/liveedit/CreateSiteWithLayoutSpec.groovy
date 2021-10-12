@@ -16,7 +16,6 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
-@Ignore
 class CreateSiteWithLayoutSpec
     extends BaseContentSpec
 {

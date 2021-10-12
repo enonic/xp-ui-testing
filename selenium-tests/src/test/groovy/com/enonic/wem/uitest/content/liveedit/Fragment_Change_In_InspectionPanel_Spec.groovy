@@ -21,7 +21,6 @@ import spock.lang.Stepwise
  * XP #5454 Inspection Panel - DropDown list of options not updated, when new fragment has been created
  * */
 @Stepwise
-@Ignore
 class Fragment_Change_In_InspectionPanel_Spec
     extends BaseContentSpec
 {

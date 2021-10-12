@@ -17,7 +17,6 @@ import spock.lang.Stepwise
 import static com.enonic.autotests.utils.SleepHelper.sleep
 
 @Stepwise
-@Ignore
 class LiveEditLockedMode_Spec
     extends BaseContentSpec
 {
