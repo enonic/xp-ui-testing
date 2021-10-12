@@ -6,8 +6,10 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DateTimePickerPopup
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class Occurrences_DateTime_1_1_Spec
         extends Base_InputFields_Occurrences {
 
