@@ -30,9 +30,9 @@ class ContextWindow_EmulatorPanel_Spec
     @Shared
     int LARGE_HEIGHT = 736;
 
-    def "GIVEN creating of new site WHEN When context window opened and Emulator link clicked THEN Emulator panel is activated AND correct title displayed"()
+    def "GIVEN wizard for new site is opened WHEN Emulator menu item has been clicked THEN Emulator panel gets visible AND 8 available resolutions should be present"()
     {
-        given: "new site is added"
+        given: "new site is opened"
         TEST_SITE = buildMyFirstAppSite( "emulator_panel" );
         ContentWizardPanel siteWizard = contentBrowsePanel.clickToolbarNew().selectContentType( TEST_SITE.getContentTypeName() ).typeData(
             TEST_SITE );
@@ -41,10 +41,11 @@ class ContextWindow_EmulatorPanel_Spec
         when: "When context window has been opened and 'Emulator' option has been clicked"
         siteWizard.showContextWindow();
         WizardContextPanel contextPanel = new WizardContextPanel(getSession(  ));
+        saveScreenshot( "emulator-panel-not-activated" );
         PageEmulatorPanel emulatorPanel = contextPanel.openEmulatorWidget(  );
         saveScreenshot( "emulator-panel-activated" );
 
-        then: "emulator panel is displayed"
+        then: "emulator panel gets visible"
         emulatorPanel.isDisplayed();
 
         and: "8 available resolutions are present"

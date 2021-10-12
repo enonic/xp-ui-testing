@@ -1,6 +1,7 @@
 package com.enonic.wem.uitest.content.liveedit
 
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
+import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.PageComponentsViewDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.context_window.PageInspectionPanel
@@ -167,7 +168,7 @@ class CountrySiteWithTemplateSpec
         source.contains( "Population: " + SF_POPULATION );
     }
 
-    def "WHEN site is not published yet WHEN site opened in 'master', through the portal THEN '404' page should be loaded"()
+    def "GIVEN site is not published yet WHEN site opened in 'master', through the portal THEN '404' page should be loaded"()
     {
         given: "site not published and opened in the 'master'"
         openResourceInMaster( SITE.getName() + "/" + USA_CONTENT.getName() );
@@ -193,12 +194,11 @@ class CountrySiteWithTemplateSpec
         and: "correct description shown"
         source.contains( USA_DESCRIPTION );
     }
-
+/////////////////////////////
     def "WHEN site has been published AND site opened in 'master' THEN correct description and population should be present in page sources"()
     {
         given: "site has been 'published'"
-        filterPanel.typeSearchText( SITE.getName(), );
-        contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName(), );
+        findAndSelectContent( SITE.getName() );
         contentBrowsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
         ContentPublishDialog dialog = contentBrowsePanel.clickToolbarPublish();
         dialog.includeChildren( true ).clickOnPublishNowButton();
@@ -237,8 +237,9 @@ class CountrySiteWithTemplateSpec
     def "GIVEN modified site has been 'Published' WHEN site has been opened in 'master' THEN population should be updated"()
     {
         given: "updated city content has been 'Published'"
-        ContentWizardPanel wizard = findAndSelectContent( SAN_FR_CONTENT.getName() ).clickToolbarEdit();
-        wizard.clickOnMarkAsReadyAndDoPublish();
+        ContentBrowsePanel browsePanel = findAndSelectContent( SAN_FR_CONTENT.getName() );
+        browsePanel.showPublishMenu().clickOnMarkAsReadyMenuItem();
+        browsePanel.clickToolbarPublish().clickOnPublishNowButton();
         contentBrowsePanel.waitForNotificationMessage();
         sleep( 1000 );
 
