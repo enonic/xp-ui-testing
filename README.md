@@ -5,7 +5,7 @@
 1. Start the XP-server on your machine
 2. Run the task: 'xp-ui-testing>gradlew deploy' ( all required applications will be put into the
    'XP_HOME/deploy' folder
-3. Download the required chromedriver from https://chromedriver.chromium.org/downloads
+3. Check your local version of chrome browser and download the required chromedriver from https://chromedriver.chromium.org/downloads
 4. Open the "xp-ui-testing/selenium-tests/tests.properties" and specify a path to the your local "chromedriver" 
 5. Run a task with tests: 'xp-ui-testing>gradlew testInputTypesLocal'
    It also possible to run a task with tests from an Idea. Just need to open Gradle window in Idea and do double click on a task whit tests,
