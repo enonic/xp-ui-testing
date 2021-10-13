@@ -3,11 +3,13 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
  * Created  on 17.08.2016.
  * */
+@Ignore
 class DateTime_April_Spec
     extends Base_InputFields_Occurrences
 {

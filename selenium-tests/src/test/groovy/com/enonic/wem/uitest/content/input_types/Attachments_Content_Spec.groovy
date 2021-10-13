@@ -5,11 +5,13 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.AttachmentsFormView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 
 /**
  * Created on 26.12.2016.
  *
  * */
+@Ignore
 class Attachments_Content_Spec
     extends Base_InputFields_Occurrences
 {

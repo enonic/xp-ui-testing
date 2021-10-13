@@ -6,8 +6,9 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DatePickerPopup
 import com.enonic.autotests.pages.form.DateFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
-
+@Ignore
 class Occurrences_Date_1_1_Spec
     extends Base_InputFields_Occurrences
 {
