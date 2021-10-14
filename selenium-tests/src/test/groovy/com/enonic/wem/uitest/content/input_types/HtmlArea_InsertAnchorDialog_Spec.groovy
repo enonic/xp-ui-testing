@@ -10,10 +10,11 @@ import spock.lang.Ignore
  *
  * verifies XP-4949 HTML Area - Modal dialogs must handle close on Esc
  * */
+@Ignore
 class HtmlArea_InsertAnchorDialog_Spec
     extends Base_InputFields_Occurrences
 {
-    def "GIVEN wizard for html-area content is opened WHEN 'Insert Image' button has been clicked THEN modal dialog should appear"()
+    def "GIVEN wizard for html-area content is opened WHEN 'Insert Anchor' button has been clicked THEN modal dialog should appear"()
     {
         given: "wizard for html-area content is opened"
         Content htmlAreaContent = buildHtmlArea0_1_Content( null );

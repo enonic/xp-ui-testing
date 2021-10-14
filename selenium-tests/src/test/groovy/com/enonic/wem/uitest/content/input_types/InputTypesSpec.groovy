@@ -5,10 +5,12 @@ import com.enonic.autotests.pages.form.DateFormViewPanel
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.pages.form.TimeFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class InputTypesSpec
     extends Base_InputFields_Occurrences
 {
