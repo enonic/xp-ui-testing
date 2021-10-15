@@ -11,6 +11,7 @@ import spock.lang.Ignore
  * verifies:
  * Error appears in the console when an Image has been inserted into HtmlArea #4957
  * */
+@Ignore
 class HtmlArea_InsertImageDialog_Spec
     extends Base_InputFields_Occurrences
 {
