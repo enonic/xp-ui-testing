@@ -4,10 +4,12 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.ConfirmValueDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class DeleteSite_ConfirmDelete_Spec
     extends BaseContentSpec
 {

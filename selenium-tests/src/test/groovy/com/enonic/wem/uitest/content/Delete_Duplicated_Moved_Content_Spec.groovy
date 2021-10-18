@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.DuplicateContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 
 /**
  * Created  on 17.11.2016.
@@ -14,6 +15,7 @@ class Delete_Duplicated_Moved_Content_Spec
     extends BaseContentSpec
 {
 
+    @Ignore
     def "GIVEN existing site and its copy WHEN the original site has been deleted THEN duplicated site should not be deleted"()
     {
         given: "existing site and its copy"

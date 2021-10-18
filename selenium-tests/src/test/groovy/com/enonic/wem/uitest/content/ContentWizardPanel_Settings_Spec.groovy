@@ -5,10 +5,12 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class ContentWizardPanel_Settings_Spec
     extends BaseContentSpec
 {
