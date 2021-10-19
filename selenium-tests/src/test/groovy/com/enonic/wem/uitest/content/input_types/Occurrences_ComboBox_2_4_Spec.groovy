@@ -5,8 +5,10 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class Occurrences_ComboBox_2_4_Spec
     extends Base_InputFields_Occurrences
 {

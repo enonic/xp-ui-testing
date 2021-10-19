@@ -15,6 +15,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class Occurrences_ComboBox_0_0_Spec
     extends Base_InputFields_Occurrences
 
