@@ -5,10 +5,10 @@
   <description>test:checkbox</description>
   <form>
     <input name="checkbox0_1" type="Checkbox">
-      <label>To Check</label>
+      <label>To Check(Not required)</label>
       <indexed>true</indexed>
       <custom-text>Custom text</custom-text>
-      <occurrences minimum="1" maximum="1"/>
+      <occurrences minimum="0" maximum="1"/>
       <help-text>checkbox</help-text>
     </input>
   </form>
