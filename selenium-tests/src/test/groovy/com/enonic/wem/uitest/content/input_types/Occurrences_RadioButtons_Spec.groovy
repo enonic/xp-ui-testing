@@ -6,10 +6,12 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.SingleSelectorRadioFormView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class Occurrences_RadioButtons_Spec
     extends Base_InputFields_Occurrences
 
@@ -29,7 +31,7 @@ class Occurrences_RadioButtons_Spec
         contentBrowsePanel.selectAndOpenContentFromToolbarMenu( content_wit_opt );
         SingleSelectorRadioFormView formViewPanel = new SingleSelectorRadioFormView( getSession() );
 
-        then:"expected option should be selected"
+        then: "expected option should be selected"
         formViewPanel.getSelectedOption() == option;
     }
 

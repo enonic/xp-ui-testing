@@ -5,9 +5,10 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.Conten
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ComboBoxFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
-
+@Ignore
 class Restore_ComboBox_Spec
     extends Base_InputFields_Occurrences
 {
@@ -49,7 +50,7 @@ class Restore_ComboBox_Spec
         allContentVersionsView.getAllVersions();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 1 );
         versionItem.doRevertVersion();
-        sleep(1000);
+        sleep( 1000 );
 
         then: "content should be displayed as valid in the grid"
         saveScreenshot( "combobox_valid_version" );
@@ -63,13 +64,13 @@ class Restore_ComboBox_Spec
         !formViewPanel.isFormValidationMessageDisplayed();
     }
 
-    def "GIVEN version with two images has been reverted WHEN content has been opened THEN two options should be displayed in the wizard"()
+    def "GIVEN version with two selected options has been reverted WHEN content has been opened THEN two options should be displayed in the wizard"()
     {
         when: "version of content with two options has been restored and content opened"
         ContentWizardPanel wizard = findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();
         ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
 
-        then: "two options should be displayed on the form"
+        then: "two options should be displayed in the form"
         formViewPanel.getSelectedOptionValues().size() == 2;
 
         and: "'Mark as ready' button is getting visible"
@@ -101,7 +102,7 @@ class Restore_ComboBox_Spec
         wizard.isContentInvalid();
     }
 
-    def "GIVEN version with one images has been reverted WHEN content has been opened THEN one image should be displayed in the wizard"()
+    def "GIVEN version with one selected option has been reverted WHEN content has been reopened THEN one option should be selected"()
     {
         when: "version of content with one option has been restored and content is opened "
         findAndSelectContent( COMBOBOX_CONTENT.getName() ).clickToolbarEdit();

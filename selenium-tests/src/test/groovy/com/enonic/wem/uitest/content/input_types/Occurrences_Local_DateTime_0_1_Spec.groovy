@@ -4,8 +4,11 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.date.DateTimePickerPopup
 import com.enonic.autotests.pages.form.DateTimeFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
+import spock.lang.IgnoreIf
 import spock.lang.Shared
 
+@Ignore
 class Occurrences_Local_DateTime_0_1_Spec
     extends Base_InputFields_Occurrences
 {
@@ -15,7 +18,7 @@ class Occurrences_Local_DateTime_0_1_Spec
     @Shared
     String NOT_VALID_DATE_TIME = "016-03-15 19:01";
 
-    def "GIVEN wizard for adding a Local DateTime without timezone opened WHEN click in the date time input THEN date time picker popup dialog is displayed"()
+    def "GIVEN wizard for adding a datetime(0:1) without timezone opened WHEN click in the date time input THEN date time picker popup dialog is displayed"()
     {
         given: "wizard for adding a DateTime with timezone opened"
         Content dateTimeContent = buildDateTime0_1_Content( VALID_DATE_TIME1 );
@@ -50,7 +53,7 @@ class Occurrences_Local_DateTime_0_1_Spec
         !formViewPanel.isAddButtonPresent();
 
         and: "content should be valid, because 'datetime' is not required"
-        !wizard.isContentInvalid(  );
+        !wizard.isContentInvalid();
 
         and: "date time input should be empty"
         formViewPanel.getDateTimeValue().isEmpty();
@@ -66,7 +69,7 @@ class Occurrences_Local_DateTime_0_1_Spec
         wizard.typeData( dateTimeNotValid );
 
         then: "the content should be valid, because the input is not required"
-        !wizard.isContentInvalid(  );
+        !wizard.isContentInvalid();
     }
 
     def "GIVEN 'date time' wizard is opened AND dateTime input is empty WHEN content has been saved THEN wizard has no red icon"()
@@ -84,7 +87,7 @@ class Occurrences_Local_DateTime_0_1_Spec
         !formViewPanel.isFormValidationMessageDisplayed();
 
         and: "'Publish' menu item gets enabled"
-        wizard.showPublishMenu(  ).isPublishMenuItemEnabled(  );
+        wizard.showPublishMenu().isPublishMenuItemEnabled();
     }
 
     def "GIVEN 'date time' wizard is opened AND dateTime input is empty WHEN the content has been saved and wizard closed THEN content should be valid in the browse panel"()

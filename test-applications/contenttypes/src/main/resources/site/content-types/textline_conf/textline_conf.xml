@@ -6,9 +6,10 @@
     <!-- Example using regex validation and a default value. -->
     <input name="socialSecurityNumber" type="TextLine">
       <label>SSN</label>
-      <occurrences minimum="0" maximum="0"/>
+      <occurrences minimum="1" maximum="4"/>
       <config>
         <max-length>11</max-length>
+        <show-counter>true</show-counter>
       </config>
       <default>000-00-0000</default>
     </input>
