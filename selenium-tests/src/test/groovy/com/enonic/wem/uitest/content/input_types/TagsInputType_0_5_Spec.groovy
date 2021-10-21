@@ -8,7 +8,9 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 
+@Ignore
 class TagsInputType_0_5_Spec
     extends Base_InputFields_Occurrences
 
@@ -21,7 +23,7 @@ class TagsInputType_0_5_Spec
         ContentWizardPanel contentWizardPanel = selectSitePressNew( tagContent.getContentTypeName() );
 
         when: "type a data and 'save' and 'publish'"
-        contentWizardPanel.typeData( tagContent ).clickOnMarkAsReadyAndDoPublish(  );
+        contentWizardPanel.typeData( tagContent ).clickOnMarkAsReadyAndDoPublish();
         contentWizardPanel.closeBrowserTab().switchToBrowsePanelTab();
         filterPanel.typeSearchText( tagContent.getName() );
 
