@@ -5,8 +5,10 @@ import com.enonic.autotests.pages.LoginPage
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentBrowsePanel
 import com.enonic.autotests.services.NavigatorHelper
 import com.enonic.wem.uitest.BaseGebSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class LauncherPanel_Spec
     extends BaseGebSpec
 {
@@ -65,7 +67,7 @@ class LauncherPanel_Spec
         then: "'Content Studio' link should be active in 'Launcher Panel'"
         launcherPanel.getActiveLink() == "Content Studio";
     }
-    
+
     def "WHEN 'Users' has been opened THEN 'Users' link should be active in 'Launcher Panel'"()
     {
         when: "'Users' has been opened"
