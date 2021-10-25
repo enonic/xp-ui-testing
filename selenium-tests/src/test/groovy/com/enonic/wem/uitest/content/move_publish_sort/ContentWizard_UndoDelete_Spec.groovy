@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -13,6 +14,7 @@ import spock.lang.Stepwise
  *
  * */
 @Stepwise
+@Ignore
 class ContentWizard_UndoDelete_Spec
     extends BaseContentSpec
 {
