@@ -4,11 +4,13 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.CustomSelectorFormViewPanel
 import com.enonic.autotests.pages.form.FormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
  * Created  on 08.09.2016.
  * */
+@Ignore
 class Occurrences_CustomSelector_1_1_Spec
     extends Base_InputFields_Occurrences
 {
