@@ -6,6 +6,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepForm
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -15,6 +16,7 @@ import spock.lang.Stepwise
  * -Path-search in selectors doesn't work #4786
  * */
 @Stepwise
+@Ignore
 class Occurrences_ImageSelector_0_0_Spec
     extends Base_InputFields_Occurrences
 {
