@@ -10,6 +10,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class Publish_InvalidContent_Spec
     extends BaseContentSpec
 {

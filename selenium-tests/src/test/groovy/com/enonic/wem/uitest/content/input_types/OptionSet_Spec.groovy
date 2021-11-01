@@ -8,6 +8,7 @@ import com.enonic.autotests.pages.form.optionset.SingleSelectionOptionSetView
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -15,6 +16,7 @@ import spock.lang.Stepwise
  * Created  on 5/12/2017.
  * */
 @Stepwise
+@Ignore
 class OptionSet_Spec
     extends Base_InputFields_Occurrences
 {
