@@ -10,6 +10,7 @@ import com.enonic.autotests.pages.form.ItemSetViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.TestItemSet
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -18,6 +19,7 @@ import spock.lang.Stepwise
  * Verifies Bug: XP-4422 ItemSet content wizard - 'save before close' should appear, when there are unsaved changes
  * */
 @Stepwise
+@Ignore
 class Occurrences_ItemSet_0_0_Spec
     extends Base_InputFields_Occurrences
 {

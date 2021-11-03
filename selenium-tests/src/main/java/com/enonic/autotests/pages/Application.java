@@ -140,9 +140,9 @@ public class Application
 
     protected final String CHECKBOX_ELEMENT = "//div[contains(@id,'Checkbox')]";
 
-    public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-content']";
+    public final String NOTIFICATION_ERROR = "//div[@class='notification error']//div[@class='notification-text']";
 
-    public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-content']";
+    public final String NOTIFICATION_WARNING = "//div[@class='notification warning']//div[@class='notification-text']";
 
     public static String ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE = "Item \"%s\" is published.";
 
@@ -167,16 +167,16 @@ public class Application
 
     public static final String SPINNER_XPATH = "//div[@class='spinner']";
 
-    public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage')]//div[@class='notification-content']";
+    public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage')]//div[@class='notification-text']";
 
     public String EXPECTED_NOTIFICATION_MESSAGE_XPATH =
-        "//div[contains(@id,'NotificationMessage')]//div[contains(@class,'notification-content') and contains(.,'%s')]";
+        "//div[contains(@id,'NotificationMessage')]//div[contains(@class,'notification-text') and contains(.,'%s')]";
 
     public final String ERROR_NOTIFICATION_MESSAGE_XPATH =
-        "//div[contains(@id,'NotificationMessage') and @class='notification error']//div[contains(@class,'notification-content')]";
+        "//div[contains(@id,'NotificationMessage') and @class='notification error']//div[contains(@class,'notification-text')]";
 
     public String PUBLISH_SUCCESS_NOTIFICATION_MESSAGE_XPATH =
-        "//div[contains(@id,'NotificationMessage') and contains(@class,'success')]//div[@class='notification-content']";
+        "//div[contains(@id,'NotificationMessage') and contains(@class,'success')]//div[@class='notification-text']";
 
     public static String REQUIRED_MESSAGE = "This field is required";
 
