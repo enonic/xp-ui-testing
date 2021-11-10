@@ -15,7 +15,6 @@ import com.enonic.autotests.pages.BrowsePanel;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel;
-import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -118,7 +117,6 @@ public class UserBrowsePanel
         return this;
     }
 
-    @Override
     public DeleteUserItemDialog clickToolbarDelete()
     {
         boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
@@ -269,9 +267,8 @@ public class UserBrowsePanel
         UserItemName selectedItem = (UserItemName) getSession().get( USER_ITEM_TYPE );
         if ( selectedItem == null )
         {
-            wizard = new UserStoreWizardPanel( getSession() );
-            wizard.waitUntilWizardOpened();
-            return wizard;
+
+            return null;
         }
         switch ( selectedItem )
         {
@@ -283,9 +280,6 @@ public class UserBrowsePanel
                 break;
             case USER:
                 wizard = new UserWizardPanel( getSession() );
-                break;
-            case USER_STORE:
-                wizard = new UserStoreWizardPanel( getSession() );
                 break;
             default:
                 throw new TestFrameworkException( "unknown type of item!" );

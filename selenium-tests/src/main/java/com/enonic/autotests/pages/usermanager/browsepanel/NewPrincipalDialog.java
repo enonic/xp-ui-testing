@@ -12,7 +12,6 @@ import com.enonic.autotests.pages.Application;
 import com.enonic.autotests.pages.WizardPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.GroupWizardPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.RoleWizardPanel;
-import com.enonic.autotests.pages.usermanager.wizardpanel.UserStoreWizardPanel;
 import com.enonic.autotests.pages.usermanager.wizardpanel.UserWizardPanel;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
@@ -123,12 +122,6 @@ public class NewPrincipalDialog
                 //click on the expander
                 getDisplayedElement( By.xpath( String.format( USER_ITEM, ItemsToCreate.USER.getValue() ) ) ).click();
                 wizard = new UserWizardPanel( getSession() );
-                break;
-            }
-            case USER_STORE:
-            {
-                getDisplayedElement( By.xpath( String.format( USER_ITEM, ItemsToCreate.USER_STORE.getValue() ) ) ).click();
-                wizard = new UserStoreWizardPanel( getSession() );
                 break;
             }
             default:

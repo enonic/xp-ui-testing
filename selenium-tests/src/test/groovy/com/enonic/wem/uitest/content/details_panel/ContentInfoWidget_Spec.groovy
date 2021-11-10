@@ -99,19 +99,4 @@ class ContentInfoWidget_Spec
         and: "'First Published' should be displayed"
         contentInfo.getContentProperties().get( ContentInfoTerms.FIRST_PUBLISHED.getValue() ).contains( LocalDate.now().toString() );
     }
-
-    def "GIVEN existing folder with 'Modified' status  WHEN content has been deleted THEN 'Deleted' status appears on the 'Details Panel'"()
-    {
-        given: "existing folder with 'Modified' status"
-        filterPanel.typeSearchText( FOLDER.getName() )
-
-        when: "content has been deleted"
-        contentBrowsePanel.selectContentInGrid( FOLDER.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
-        contentBrowsePanel.openContentDetailsPanel();
-        ContentInfoWidget contentInfo = contentDetailsPanel.openDetailsWidget();
-        saveScreenshot( "det_panel_content_deleted" )
-
-        then: "'Deleted' status should appear on the 'Detail Panel'"
-        contentInfo.getContentStatus().equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
-    }
 }

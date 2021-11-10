@@ -12,7 +12,7 @@ class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
     def "WHEN folder has been selected AND widget dropdown selector has been clicked THEN expected options should be displayed"()
     {
         given: "new folder has been added"
-        folderContent = buildFolderContent( "details_p", "details_panel_test" );
+        folderContent = buildFolderContent( "folder", "details_panel_test" );
         addContent( folderContent );
         contentBrowsePanel.openContentDetailsPanel();
 

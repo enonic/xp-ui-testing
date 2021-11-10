@@ -13,7 +13,7 @@ class ContentBrowsePanel_ContextMenuImage_Spec
         saveScreenshot( "image-context-menu" );
 
         then: "'Delete...' menu item should be enabled"
-        contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.DELETE.getName() );
+        contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.ARCHIVE.getName() );
         and: "'Preview' menu item should be disabled"
         !contentBrowsePanel.isContextMenuItemEnabled( ContentMenuItem.PREVIEW.getName() );
         and: "'Edit' menu item should be enabled"

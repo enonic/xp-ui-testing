@@ -67,8 +67,8 @@ public class ContentBrowsePanel
     private final String EDIT_BUTTON_XPATH =
         CONTENT_BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Edit']]";
 
-    private final String DELETE_BUTTON_XPATH =
-        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Delete...']]";
+    private final String ARCHIVE_BUTTON_XPATH =
+        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Archive...']]";
 
     private final String SORT_BUTTON_XPATH = BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Sort...']]";
 
@@ -83,17 +83,14 @@ public class ContentBrowsePanel
     private final String MARK_AS_READY_BUTTON_XPATH =
         BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Mark as ready']]";
 
-    private final String UNDO_DELETE_BUTTON_XPATH =
-        BROWSE_TOOLBAR_XPATH + "//*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
-
     private final String PUBLISH_MENU_DROPDOWN_HANDLER =
         BROWSE_TOOLBAR_XPATH + "//div[contains(@id,'MenuButton')]" + DROP_DOWN_HANDLE_BUTTON;
 
     protected final String DETAILS_TOGGLE_BUTTON = BASE_PANEL_XPATH + "//button[contains(@id,'NonMobileContextPanelToggleButton')]";
 
 
-    @FindBy(xpath = DELETE_BUTTON_XPATH)
-    protected WebElement deleteButton;
+    @FindBy(xpath = ARCHIVE_BUTTON_XPATH)
+    protected WebElement archiveButton;
 
     @FindBy(xpath = NEW_BUTTON_XPATH)
     private WebElement newButton;
@@ -130,9 +127,6 @@ public class ContentBrowsePanel
 
     @FindBy(xpath = DETAILS_TOGGLE_BUTTON)
     WebElement detailsToggleButton;
-
-    @FindBy(xpath = UNDO_DELETE_BUTTON_XPATH)
-    private WebElement undoDeleteButton;
 
     private ContentBrowseFilterPanel filterPanel;
 
@@ -572,16 +566,16 @@ public class ContentBrowsePanel
      *
      * @return {@link DeleteContentDialog} instance.
      */
-    public DeleteContentDialog clickToolbarDelete()
+    public DeleteContentDialog clickToolbarArchive()
     {
-        waitUntilVisibleNoException( By.xpath( DELETE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
-        boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( DELETE_BUTTON_XPATH ), 2l );
+        waitUntilVisibleNoException( By.xpath( ARCHIVE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
+        boolean isEnabledDeleteButton = waitUntilElementEnabledNoException( By.xpath( ARCHIVE_BUTTON_XPATH ), 2l );
         if ( !isEnabledDeleteButton )
         {
             saveScreenshot( "err_delete_button" );
             throw new SaveOrUpdateException( "Impossible to delete content, because the 'Delete' button is disabled!" );
         }
-        deleteButton.click();
+        archiveButton.click();
         DeleteContentDialog dialog = new DeleteContentDialog( getSession() );
         dialog.waitForOpened();
         sleep( 500 );
@@ -614,15 +608,6 @@ public class ContentBrowsePanel
         }
         markAsReadyButton.click();
         sleep( 700 );
-    }
-
-    public ContentBrowsePanel clickToolbarUndodelete()
-    {
-        waitUntilVisibleNoException( By.xpath( UNDO_DELETE_BUTTON_XPATH ), Application.EXPLICIT_NORMAL );
-        undoDeleteButton.click();
-        sleep( 500 );
-        waitInvisibilityOfSpinner( Application.EXPLICIT_NORMAL );
-        return this;
     }
 
     public ContentBrowsePanel selectContentInGrid( String... contentNames )
@@ -823,7 +808,7 @@ public class ContentBrowsePanel
             throw new TestFrameworkException( "content was not found: " + contentName );
         }
         openContextMenu( contentName );
-        String deleteMenuItem = String.format( CONTEXT_MENU_ITEM, "Delete..." );
+        String deleteMenuItem = String.format( CONTEXT_MENU_ITEM, ContentMenuItem.ARCHIVE.getName() );
         if ( !waitIsElementEnabled( findElement( By.xpath( deleteMenuItem ) ), 2 ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_context-publish" ) );
@@ -877,20 +862,6 @@ public class ContentBrowsePanel
         dialog.waitForDialogLoaded();
         sleep( 500 );
         return dialog;
-    }
-
-    public ContentBrowsePanel selectUndoDeleteFromContextMenu( String contentName )
-    {
-        openContextMenu( contentName );
-        String undoDeleteMenuItem = String.format( CONTEXT_MENU_ITEM, ContentMenuItem.UNDO_DELETE.getName() );
-        if ( !isElementDisplayed( undoDeleteMenuItem ) )
-        {
-            saveScreenshot( NameHelper.uniqueName( "err_context-undo-delete" ) );
-            throw new TestFrameworkException( "undo delete context-menu item is not visible!" );
-        }
-        getDisplayedElement( By.xpath( undoDeleteMenuItem ) ).click();
-        sleep( 500 );
-        return this;
     }
 
     public ContentBrowsePanel doDuplicateContent( String contentName )
@@ -1068,16 +1039,16 @@ public class ContentBrowsePanel
     }
 
     /**
-     * @return true if 'Delete' button enabled, otherwise false.
+     * @return true if 'Archive' button enabled, otherwise false.
      */
-    public boolean isDeleteButtonEnabled()
+    public boolean isArchiveButtonEnabled()
     {
-        return deleteButton.isEnabled();
+        return archiveButton.isEnabled();
     }
 
-    public boolean isDeleteButtonDisplayed()
+    public boolean isArchiveButtonDisplayed()
     {
-        return deleteButton.isDisplayed();
+        return archiveButton.isDisplayed();
     }
 
     public boolean isEditButtonDisplayed()
@@ -1118,11 +1089,6 @@ public class ContentBrowsePanel
     public boolean isEditButtonEnabled()
     {
         return editButton.isEnabled();
-    }
-
-    public boolean isUndoDeleteButtonDisplayed()
-    {
-        return undoDeleteButton.isDisplayed();
     }
 
     public boolean isPublishButtonEnabled()

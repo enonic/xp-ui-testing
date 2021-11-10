@@ -63,7 +63,7 @@ class Delete_Duplicated_Moved_Content_Spec
         contentBrowsePanel.doClearSelection();
 
         and: "the parent folder has been deleted"
-        findAndSelectContent( parentFolder.getName() ).clickToolbarDelete().doDelete();
+        findAndSelectContent( parentFolder.getName() ).clickToolbarArchive().clickOnDeleteNowAndWaitForClosed();
         filterPanel.typeSearchText( childFolder.getName() );
         saveScreenshot( "moved_content_was_not_deleted" )
 
@@ -73,9 +73,9 @@ class Delete_Duplicated_Moved_Content_Spec
 
     private ConfirmValueDialog openConfirmDeleteDialog( String siteName )
     {
-        DeleteContentDialog deleteContentDialog = findAndSelectContent( siteName ).clickToolbarDelete()
+        DeleteContentDialog deleteContentDialog = findAndSelectContent( siteName ).clickToolbarArchive();
         deleteContentDialog.waitForOpened();
-        deleteContentDialog.clickOnDeleteNowButton();
+        deleteContentDialog.clickOnDeleteNowMenuItem();
         return new ConfirmValueDialog( getSession() );
     }
 }

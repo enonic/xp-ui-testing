@@ -57,7 +57,7 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-    def "GIVEN existing content is selected WHEN spacebar was pressed THEN row is no longer selected"()
+    def "GIVEN existing content is selected WHEN space bar was pressed THEN row is no longer selected"()
     {
         given: "existing content is selected"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
@@ -94,8 +94,8 @@ class ContentBrowsePanel_GridPanel_Spec
         then: "all rows should be selected"
         contentBrowsePanel.getRowsCount() == contentBrowsePanel.getSelectedRowsNumber();
 
-        and: "'Delete' button should be enabled"
-        contentBrowsePanel.isDeleteButtonEnabled();
+        and: "'Archive' button should be enabled"
+        contentBrowsePanel.isArchiveButtonEnabled();
 
         and: "'New' button should be disabled"
         !contentBrowsePanel.isNewButtonEnabled();
@@ -117,38 +117,31 @@ class ContentBrowsePanel_GridPanel_Spec
         and: "'Preview' button should be disabled"
         !contentBrowsePanel.isPreviewButtonEnabled();
 
-        and: "'Delete' button should be disabled"
-        !contentBrowsePanel.isDeleteButtonEnabled();
+        and: "'Archive' button should be disabled"
+        !contentBrowsePanel.isArchiveButtonEnabled();
 
         and: "'New' button should be enabled"
         contentBrowsePanel.isNewButtonEnabled();
     }
 
-    def "GIVEN existing parent folder WHEN the child folder has been added THEN 'expand icon' should be displayed for the parent folder"()
+    def "GIVEN existing parent folder WHEN expander icon has been clicked THEN child folder gets visible"()
     {
         given: "parent folder has been added and selected"
         PARENT_CONTENT = buildFolderContent( "parentfolder", "folder-test" );
-        CHILD_CONTENT = buildFolderContentWithParent( "child-content", "child folder", PARENT_CONTENT.getName() );
+        CHILD_CONTENT = buildFolderContentWithParent( "folder", "child folder", PARENT_CONTENT.getName() );
         addContent( PARENT_CONTENT );
         findAndSelectContent( PARENT_CONTENT.getName() );
-
-        when: "child folder has been added"
         addContent( CHILD_CONTENT );
 
-        then: "'expand icon' should be displayed for the parent folder"
-        contentBrowsePanel.isExpanderPresent( PARENT_CONTENT.getName() )
-    }
-
-    def "GIVEN existing parent folder with a child WHEN 'expand icon' for the content has been clicked THEN child content should be displayed"()
-    {
-        given: "existing parent folder with a child is selected"
-        findAndSelectContent( PARENT_CONTENT.getName() )
-
-        when: "'expand icon' for the parent folder has been clicked"
+        when: "'expander icon' has been clicked"
         contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
 
-        then: "child content should be displayed"
+        then: "child content gets visible"
         contentBrowsePanel.exists( CHILD_CONTENT.getName() );
+
+        List<String> childNames = contentBrowsePanel.getChildNames()
+        and: "child content should be displayed"
+        childNames.size() == 1;
     }
 
     def "GIVEN existing folder without children EXPECT 'expand icon' should not be displayed for the content"()
@@ -160,35 +153,6 @@ class ContentBrowsePanel_GridPanel_Spec
 
         expect: "'expand icon' should not be displayed for the content"
         !contentBrowsePanel.isExpanderPresent( ContentPath.from( folder.getName() ) );
-    }
-
-    def "GIVEN existing collapsed folder WHEN 'expand icon' has been clicked THEN child content should be displayed"()
-    {
-        expect: "existing collapsed folder"
-        !contentBrowsePanel.isRowExpanded( PARENT_CONTENT.getName() );
-
-        when: "'expand icon' has been clicked"
-        filterPanel.typeSearchText( PARENT_CONTENT.getName() );
-        contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
-        List<String> childNames = contentBrowsePanel.getChildNames()
-
-        then: "child content should be displayed"
-        childNames.size() == 1;
-        and:
-        childNames.get( 0 ) == CHILD_CONTENT.getName();
-    }
-
-    def "GIVEN existing unexpanded folder WHEN 'expand icon' has been clicked THEN the folder should be collapsed"()
-    {
-        given: "existing unexpanded folder"
-        contentBrowsePanel.expandContent( PARENT_CONTENT.getPath() );
-
-        when:
-        contentBrowsePanel.unExpandContent( PARENT_CONTENT.getPath() );
-        saveScreenshot( "test_unexpand_folder" );
-
-        then: "the folder should be collapsed"
-        contentBrowsePanel.getChildNames().size() == 0;
     }
 
     def "GIVEN existing content is selected WHEN 'arrow down' has been pressed THEN next row should be selected"()
@@ -211,7 +175,6 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.selectContentInGrid( PARENT_CONTENT.getName() );
         int before = contentBrowsePanel.getSelectedRowsNumber();
         saveScreenshot( "test_arrow_up_before" );
-
 
         when: "arrow up has been pressed"
         contentBrowsePanel.pressKeyOnRow( PARENT_CONTENT.getPath(), Keys.ARROW_UP );
@@ -281,7 +244,7 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.getSelectedRowsNumber() == 4
     }
 
-    def "GIVEN a row with the content is highlighted WHEN highlighting has been removed THEN 'Edit', 'Delete', 'Duplicate 'buttons get disabled"()
+    def "GIVEN a row with the content is highlighted WHEN highlighting has been removed THEN 'Edit', 'Archive', 'Duplicate 'buttons get disabled"()
     {
         given: "row with the content is highlighted"
         contentBrowsePanel.waitUntilPageLoaded( Application.EXPLICIT_NORMAL );
@@ -289,7 +252,7 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
         sleep( 1000 );
 
-        when: "click on the content and unhighlight it"
+        when: "the row has been unhighlighted"
         contentBrowsePanel.clickOnRowByName( IMPORTED_FOLDER_NAME );
         sleep( 1000 );
 
@@ -299,7 +262,7 @@ class ContentBrowsePanel_GridPanel_Spec
         !contentBrowsePanel.isSortButtonEnabled();
         and: "'Move' button should be disabled"
         !contentBrowsePanel.isMoveButtonEnabled();
-        and: "'Delete' button should be disabled"
-        !contentBrowsePanel.isDeleteButtonEnabled();
+        and: "'Archive' button gets disabled"
+        !contentBrowsePanel.isArchiveButtonEnabled();
     }
 }

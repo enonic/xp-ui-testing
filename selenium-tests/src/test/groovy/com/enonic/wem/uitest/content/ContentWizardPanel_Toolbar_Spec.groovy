@@ -40,8 +40,8 @@ class ContentWizardPanel_Toolbar_Spec
         when: "display name has been filled"
         wizard.typeDisplayName( NameHelper.uniqueName( "toolbar" ) );
 
-        then: "'Delete...' button should be enabled"
-        wizard.isDeleteButtonEnabled();
+        then: "'Archive...' button should be enabled"
+        wizard.isArchiveButtonEnabled(  );
 
         and: "'Save' button gets enabled"
         wizard.isSaveButtonEnabled();
@@ -64,8 +64,8 @@ class ContentWizardPanel_Toolbar_Spec
         when: "display name has been typed and saved"
         wizardPanel.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
 
-        then: "'Delete...' button should be enabled"
-        wizardPanel.isDeleteButtonEnabled();
+        then: "'Archiv...' button should be enabled"
+        wizardPanel.isArchiveButtonEnabled();
 
         and: "'Saved' button should be disabled"
         wizardPanel.isSavedButtonDisplayed();
@@ -84,7 +84,7 @@ class ContentWizardPanel_Toolbar_Spec
     {
         given: "new wizard is opened"
         ContentWizardPanel wizard = contentBrowsePanel.clickToolbarNew().selectContentType( BaseContentType.FOLDER.getDisplayName(  ) );
-        wizard.typeDisplayName( NameHelper.uniqueName( "toolbar" ) ).save();
+        wizard.typeDisplayName( NameHelper.uniqueName( "folder" ) ).save();
 
         when: "content has been published"
         wizard.showPublishMenu(  ).clickOnMarkAsReadyMenuItem(  );
@@ -92,10 +92,7 @@ class ContentWizardPanel_Toolbar_Spec
         wizard.clickOnPublishButton().clickOnPublishNowButton();
         saveScreenshot( "folder_published_in_wizard" );
 
-        then: "'Delete' button should be enabled"
-        wizard.isDeleteButtonEnabled();
-
-        and: "'Saved' button should be disabled"
+        then: "'Saved' button should be disabled"
         !wizard.isSavedButtonEnabled();
 
         and: "'Publish' menu item should be disabled"
@@ -112,8 +109,8 @@ class ContentWizardPanel_Toolbar_Spec
         addContent( folderContent );
         ContentWizardPanel wizard = findAndSelectContent( folderContent.getName() ).clickToolbarEdit();
 
-        when: "'delete' button has been pressed and deleting is confirmed"
-        wizard.clickToolbarDelete().doDeleteAndSwitchToBrowsePanel();
+        when: "'Archive...' button has been pressed and deleting is confirmed"
+        wizard.clickToolbarArchive().clickOnDeleteNowAndWaitForClosed();
 
         then: "content should not be present in the grid"
         filterPanel.typeSearchText( folderContent.getName() );

@@ -139,37 +139,6 @@ class Occurrences_ComboBox_1_1_Spec
         contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
     }
 
-    def "GIVEN not valid content with 'modified' status WHEN content selected and 'Delete' pressed THEN content with 'Deleted' status should be displayed"()
-    {
-        given: "not valid content with 'modified' status"
-        ContentWizardPanel wizard = contentBrowsePanel.selectAndOpenContentFromToolbarMenu( comboBox1_1 );
-        ComboBoxFormViewPanel formViewPanel = new ComboBoxFormViewPanel( getSession() );
-        formViewPanel.clickOnLastRemoveButton();
-        wizard.save().closeBrowserTab().switchToBrowsePanelTab();
-
-        when: "content selected and 'Delete' has been pressed"
-        filterPanel.typeSearchText( comboBox1_1.getName() );
-        contentBrowsePanel.clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
-        then:
-        contentBrowsePanel.getContentStatus( comboBox1_1.getName() ).equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
-        and: "red icon should be present, because required option was removed"
-        contentBrowsePanel.isContentInvalid( comboBox1_1.getName() )
-    }
-
-    def "GIVEN existing not valid content with 'Marked for Deletion' status WHEN content selected and 'Publish' menu item has been pressed THEN content should be deleted"()
-    {
-        given: "not valid content with status is 'Marked for Deletion'"
-        filterPanel.typeSearchText( comboBox1_1.getName() );
-        contentBrowsePanel.clickCheckboxAndSelectRow( comboBox1_1.getName() );
-
-        when: "content has been selected and published"
-        contentBrowsePanel.showPublishMenu().clickOnPublishMenuItem().clickOnPublishNowButton();
-        saveScreenshot( "invalid_cb_1_1_published" );
-
-        then: "content should be deleted:"
-        !contentBrowsePanel.exists( comboBox1_1.getName() )
-    }
-
     def "WHEN required option is not selected in wizard THEN the content should be displayed in browse panel with red icon"()
     {
         given: "new combobox content(1:1) is added'"

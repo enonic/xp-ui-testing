@@ -46,8 +46,8 @@ public class UserWizardPanel
 
     private final String APPLY_ROLE_BUTTON = ROLE_COMBOBOX + "//span[text()='Apply']";
 
-    private String REMOVE_ROLE_BUTTON = ROLE_COMBOBOX +
-        "//div[contains(@class,'principal-selected-option-view') and descendant::p[contains(.,'%s')]]" + ICON_REMOVE;
+    private String REMOVE_ROLE_BUTTON =
+        ROLE_COMBOBOX + "//div[contains(@class,'principal-selected-option-view') and descendant::p[contains(.,'%s')]]" + ICON_REMOVE;
 
     private final String ALL_ROLES = USER_WIZARD_PANEL + "//div[contains(@id,'PrincipalSelectedOptionsView')]" + P_NAME;
 
@@ -255,13 +255,11 @@ public class UserWizardPanel
         return this;
     }
 
-    @Override
     public boolean isDeleteButtonEnabled()
     {
         return getDisplayedElement( By.xpath( TOOLBAR_DELETE_BUTTON ) ).isEnabled();
     }
 
-    @Override
     public ConfirmationDialog clickToolbarDelete()
     {
         getDisplayedElement( By.xpath( TOOLBAR_DELETE_BUTTON ) ).click();

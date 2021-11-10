@@ -30,7 +30,7 @@ class DeleteContentDialog_With_DependantList_Spec
         addContent( CHILD_CONTENT );
 
         when: "parent content is selected and 'Delete' in the browse toolbar has been pressed"
-        DeleteContentDialog modalDialog = contentBrowsePanel.clickToolbarDelete();
+        DeleteContentDialog modalDialog = contentBrowsePanel.clickToolbarArchive();
 
         and: "'Hide dependent items' link should be present"
         modalDialog.isHideDependantItemsLinkDisplayed();
@@ -59,7 +59,7 @@ class DeleteContentDialog_With_DependantList_Spec
         ContentWizardPanel wizard = findAndSelectContent( PARENT_CONTENT.getName() ).clickToolbarEditAndSwitchToWizardTab(); ;
 
         when: "'Delete' button on the wizard-toolbar pressed"
-        DeleteContentDialog modalDialog = wizard.clickToolbarDelete();
+        DeleteContentDialog modalDialog = wizard.clickToolbarArchive();
 
         and: "'Hide dependent items' link has been clicked"
         modalDialog.clickOnHideDependentItemsLink();

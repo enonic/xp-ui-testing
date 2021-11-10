@@ -57,31 +57,18 @@ class Delete_Published_Parent_Folder_Spec
         message == String.format( Application.CONTENTS_UNPUBLISHED_NOTIFICATION_MESSAGE, "2" );
     }
 
-    def "GIVEN existing 'Unpublished'-folder has been published WHEN the folder has been selected AND 'Delete' button has been clicked THEN expected notification message is displayed'"()
+    def "GIVEN existing 'Unpublished'-folder has been published WHEN the folder has been selected AND 'Archive...' AND  button has been clicked THEN expected notification message is displayed'"()
     {
         given: "existing Unpublished-folder has been published"
         findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true ).clickOnPublishNowButton();
         sleep( 1000 );
 
         when: "the folder has been selected AND 'Delete' button clicked"
-        contentBrowsePanel.clickToolbarDelete().clickOnMarkAsDeletedMenuItemAndConfirm( "2" );
-        def expectedMessage = String.format( Application.CONTENTS_DELETED_AND_MARKED_FOR_DELETION_MESSAGE, "2", "2" );
+        contentBrowsePanel.clickToolbarArchive().clickOnDeleteNowMenuItemAndConfirm( "2" );
+        def expectedMessage = "2 items are deleted."
 
-        then: "'Deleted 2 items ( Marked for deletion: 2 ).' - message should appear"
+        then: "2 items are deleted. - message should appear"
         contentBrowsePanel.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
     }
 
-    def "GIVEN existing pending-folder with a child WHEN the folder has been selected AND 'Unpublish' menu item has been clicked THEN expected notification message is displayed"()
-    {
-        given: "existing online-folder with a child"
-        ContentPublishDialog dialog = findAndSelectContent( PARENT_FOLDER.getName() ).clickToolbarPublish().includeChildren( true );
-        sleep( 1000 );
-
-        when: "the folder selected AND 'Unpublish' menu item has been clicked"
-        dialog.clickOnPublishNowButton();
-        def expectedMessage = String.format( Application.CONTENTS_PUBLISHED_AND_DELETED_MESSAGE, "2", "2" );
-
-        then: "expected notification message should be displayed'"
-        contentBrowsePanel.waitExpectedNotificationMessage( expectedMessage, Application.EXPLICIT_NORMAL );
-    }
 }

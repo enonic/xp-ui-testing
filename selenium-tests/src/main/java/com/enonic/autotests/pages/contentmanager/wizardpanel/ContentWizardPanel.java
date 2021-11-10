@@ -56,9 +56,6 @@ public class ContentWizardPanel
     private final String TOOLBAR_DUPLICATE_BUTTON_XPATH =
         TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Duplicate...']]";
 
-    private final String TOOLBAR_UNDO_DELETE_BUTTON_XPATH =
-        TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Undo delete']]";
-
     private final String TOOLBAR_SAVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
 
     private final String TOOLBAR_SAVED_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Saved']]";
@@ -88,13 +85,13 @@ public class ContentWizardPanel
     private final String TOOLBAR_MARK_AS_READY_BUTTON_XPATH =
         TOOLBAR + "//button[contains(@id,'ActionButton') and child::span[text()='Mark as ready']]";
 
-    private final String TOOLBAR_DELETE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete...']]";
+    private final String TOOLBAR_ARCHIVE_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Archive...']]";
 
     private final String TOOLBAR_PREVIEW_BUTTON_XPATH = TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Preview']]";
 
     //Show Context Panel button:
-    private final String CONTEXT_PANEL_TOGGLER =
-        DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ContentWizardToolbar')]" + "//button[contains(@id, 'NonMobileContextPanelToggleButton')]";
+    private final String CONTEXT_PANEL_TOGGLER = DIV_CONTENT_WIZARD_PANEL + "//div[contains(@id,'ContentWizardToolbar')]" +
+        "//button[contains(@id, 'NonMobileContextPanelToggleButton')]";
 
     private final String EDIT_PERMISSIONS_BUTTON =
         "//div[contains(@id,'WizardStepNavigatorAndToolbar')]" + "//div[contains(@class,'edit-permissions-button')]";
@@ -116,17 +113,14 @@ public class ContentWizardPanel
     @FindBy(xpath = TOOLBAR_PUBLISH_BUTTON_XPATH)
     private WebElement toolbarPublishButton;
 
-    @FindBy(xpath = TOOLBAR_DELETE_BUTTON_XPATH)
-    private WebElement toolbarDeleteButton;
+    @FindBy(xpath = TOOLBAR_ARCHIVE_BUTTON_XPATH)
+    private WebElement toolbarArchiveButton;
 
     @FindBy(xpath = TOOLBAR_PREVIEW_BUTTON_XPATH)
     private WebElement toolbarPreviewButton;
 
     @FindBy(xpath = TOOLBAR_DUPLICATE_BUTTON_XPATH)
     private WebElement toolbarDuplicateButton;
-
-    @FindBy(xpath = TOOLBAR_UNDO_DELETE_BUTTON_XPATH)
-    private WebElement toolbarUndoDeleteButton;
 
     @FindBy(xpath = CONTEXT_PANEL_TOGGLER)
     private WebElement toolbarShowContextWindow;
@@ -180,14 +174,9 @@ public class ContentWizardPanel
         return homeButton.isEnabled();
     }
 
-    public boolean isDeleteButtonDisplayed()
+    public boolean isArchiveButtonDisplayed()
     {
-        return isElementDisplayed( By.xpath( TOOLBAR_DELETE_BUTTON_XPATH ) );
-    }
-
-    public boolean isUndoDeleteButtonDisplayed()
-    {
-        return isElementDisplayed( By.xpath( TOOLBAR_UNDO_DELETE_BUTTON_XPATH ) );
+        return isElementDisplayed( By.xpath( TOOLBAR_ARCHIVE_BUTTON_XPATH ) );
     }
 
     public boolean isSaveButtonDisplayed()
@@ -370,10 +359,9 @@ public class ContentWizardPanel
         return this;
     }
 
-    @Override
-    public DeleteContentDialog clickToolbarDelete()
+    public DeleteContentDialog clickToolbarArchive()
     {
-        toolbarDeleteButton.click();
+        toolbarArchiveButton.click();
         sleep( 1000 );
         DeleteContentDialog deleteContentDialog = new DeleteContentDialog( getSession() );
         deleteContentDialog.waitForOpened();
@@ -757,10 +745,9 @@ public class ContentWizardPanel
         return waitUntilVisibleNoException( By.xpath( button ), Application.EXPLICIT_NORMAL );
     }
 
-    @Override
-    public boolean isDeleteButtonEnabled()
+    public boolean isArchiveButtonEnabled()
     {
-        return toolbarDeleteButton.isEnabled();
+        return toolbarArchiveButton.isEnabled();
     }
 
     public boolean isDuplicateButtonEnabled()

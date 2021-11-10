@@ -47,24 +47,24 @@ public class DeleteContentDialog
     private final String ITEMS_TO_DELETE_BY_DISPLAY_NAME = CONTAINER_DIV + "//ul[contains(@id,'DialogItemList')]" + H6_DISPLAY_NAME;
 
     private final String TITLE_HEADER_XPATH =
-        CONTAINER_DIV + "//div[contains(@id,'ModalDialogHeader') and child::h2[contains(.,'Delete item')]]";
+        CONTAINER_DIV + "//div[contains(@id,'ModalDialogHeader') and child::h2[contains(.,'Archive item(s)')]]";
 
     private final String TITLE_TEXT = CONTAINER_DIV + "//div[contains(@id,'ModalDialogHeader')]//h2[@class='title']";
 
-    protected final String DELETE_NOW_BUTTON_XPATH = CONTAINER_DIV + "//button/span[contains(.,'Delete Now')]";
+    protected final String ARCHIVE_BUTTON_XPATH = CONTAINER_DIV + "//button/span[contains(.,'Archive')]";
 
     protected final String CANCEL_BUTTON = CONTAINER_DIV + "//button/span[text()='Cancel']";
 
     private final String CANCEL_BUTTON_TOP = CONTAINER_DIV + APP_CANCEL_BUTTON_TOP;
 
-    private final String MARK_AS_DELETED_MENU_ITEM = "//li[contains(@id,'MenuItem') and text()='Mark As Deleted']";
+    private final String DELETE_NOW_MENU_ITEM = "//li[contains(@id,'MenuItem') and contains(.,'Delete Now')]";
 
     private final String DELETE_MENU = "//div[contains(@id,'MenuButton')]";
 
     private final String DELETE_MENU_DROPDOWN = CONTAINER_DIV + DELETE_MENU + DROP_DOWN_HANDLE_BUTTON;
 
-    @FindBy(xpath = DELETE_NOW_BUTTON_XPATH)
-    private WebElement deleteNowButton;
+    @FindBy(xpath = ARCHIVE_BUTTON_XPATH)
+    private WebElement archiveButton;
 
     @FindBy(xpath = CANCEL_BUTTON)
     private WebElement cancelButton;
@@ -85,9 +85,9 @@ public class DeleteContentDialog
         super( session );
     }
 
-    public boolean isDeleteNowButtonPresent()
+    public boolean isArchiveButtonDispplayed()
     {
-        return deleteNowButton.isDisplayed();
+        return archiveButton.isDisplayed();
     }
 
     public boolean isCancelButtonPresent()
@@ -98,19 +98,10 @@ public class DeleteContentDialog
     /**
      * Clicks on 'Delete' button and waits until the wizard will be closed
      */
-    public void doDelete()
+    public void clickOnDeleteNowAndWaitForClosed()
     {
-        deleteNowButton.click();
+        clickOnDeleteNowMenuItem();
         waitForClosed();
-        sleep( 1000 );
-    }
-
-    /**
-     * Delete the content, close the wizard and switch to the grid:
-     */
-    public void doDeleteAndSwitchToBrowsePanel()
-    {
-        deleteNowButton.click();
         switchToBrowsePanelTab();
     }
 
@@ -144,41 +135,34 @@ public class DeleteContentDialog
         return this;
     }
 
-    public DeleteContentDialog clickOnMarkAsDeletedMenuItem()
+    //Call the method for deleting single content, Delete Content should be closed after clicking on the menu item
+    public DeleteContentDialog clickOnDeleteNowMenuItem()
     {
         waitUntilVisible( By.xpath( DELETE_MENU_DROPDOWN ) );
         menuDropDown.click();
         sleep( 300 );
-        String menuItem = CONTAINER_DIV + MARK_AS_DELETED_MENU_ITEM;
+        String menuItem = CONTAINER_DIV + DELETE_NOW_MENU_ITEM;
         findElement( By.xpath( menuItem ) ).click();
         this.waitForClosed();
         sleep( 900 );
         return this;
     }
 
-    public DeleteContentDialog clickOnDeleteNowButton()
+    /**
+     * Clicks on 'Archive' button.(Confirm Archive dialog can appear)
+     */
+    public void clickOnArchiveButton()
     {
-        deleteNowButton.click();
+        archiveButton.click();
         sleep( 1000 );
-        return this;
     }
 
-    public void clickOnDeleteNowButtonAndConfirm( String numberOfContent )
+    public void clickOnDeleteNowMenuItemAndConfirm( String numberOfContent )
     {
-        deleteNowButton.click();
+        clickOnDeleteNowMenuItem();
         ConfirmValueDialog confirmValueDialog = new ConfirmValueDialog( getSession() );
         confirmValueDialog.waitForDialogLoaded();
-        confirmValueDialog.typeNumber( numberOfContent ).clickOnConfirmButton().waitUntilDialogClosed(
-            Application.EXPLICIT_NORMAL );
-    }
-
-    public void clickOnMarkAsDeletedMenuItemAndConfirm( String numberOfContent )
-    {
-        clickOnMarkAsDeletedMenuItem();
-        ConfirmValueDialog confirmValueDialog = new ConfirmValueDialog( getSession() );
-        confirmValueDialog.waitForDialogLoaded();
-        confirmValueDialog.typeNumber( numberOfContent ).clickOnConfirmButton().waitUntilDialogClosed(
-            Application.EXPLICIT_NORMAL );
+        confirmValueDialog.typeNumber( numberOfContent ).clickOnConfirmButton().waitUntilDialogClosed( Application.EXPLICIT_NORMAL );
     }
 
     public void clickOnCancelButton()

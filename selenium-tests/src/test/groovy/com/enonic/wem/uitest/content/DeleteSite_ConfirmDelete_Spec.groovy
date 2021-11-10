@@ -127,7 +127,7 @@ class DeleteSite_ConfirmDelete_Spec
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
 
         when: "site selected and Delete pressed AND 'Delete now' button has been clicked"
-        contentBrowsePanel.clickToolbarDelete().clickOnDeleteNowButton();
+        contentBrowsePanel.clickToolbarArchive().clickOnDeleteNowMenuItem(  );
         ConfirmValueDialog confirmDialog = new ConfirmValueDialog( getSession() );
 
         and: "required number of resources has been typed"
@@ -143,9 +143,9 @@ class DeleteSite_ConfirmDelete_Spec
 
     private ConfirmValueDialog openConfirmDeleteDialog( String siteName )
     {
-        DeleteContentDialog deleteContentDialog = findAndSelectContent( siteName ).clickToolbarDelete()
+        DeleteContentDialog deleteContentDialog = findAndSelectContent( siteName ).clickToolbarArchive();
         deleteContentDialog.waitForOpened();
-        deleteContentDialog.clickOnDeleteNowButton();
+        deleteContentDialog.clickOnDeleteNowMenuItem();
         return new ConfirmValueDialog( getSession() );
     }
 }

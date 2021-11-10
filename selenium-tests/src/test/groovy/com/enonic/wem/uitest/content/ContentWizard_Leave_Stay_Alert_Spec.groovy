@@ -16,8 +16,8 @@ class ContentWizard_Leave_Stay_Alert_Spec
         String displayName = NameHelper.uniqueName( "delete-dialog" );
 
         when: "display name typed and 'Delete' button  has been pressed"
-        DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
-        deleteContentDialog.doDeleteAndSwitchToBrowsePanel();
+        DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarArchive();
+        deleteContentDialog.clickOnDeleteNowAndWaitForClosed();
 
         then: "content should be deleted:"
         filterPanel.typeSearchText( displayName );
@@ -31,7 +31,7 @@ class ContentWizard_Leave_Stay_Alert_Spec
         String displayName = NameHelper.uniqueName( "delete-dialog" );
 
         when: "display name has been typed and Delete button pressed"
-        DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarDelete();
+        DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarArchive();
         saveScreenshot( "save_before_close_delete" )
         deleteContentDialog.clickOnCancelButton();
 

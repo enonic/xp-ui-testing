@@ -85,21 +85,4 @@ class DetailsPanels_VersionHistory_Spec
         and: "'Modified' status should be in the widget"
         versionHistoryWidget.getContentStatus().equalsIgnoreCase( ContentStatus.MODIFIED.getValue() );
     }
-
-    def "GIVEN 'modified'-content is selected WHEN the folder has been 'Mark as Deleted' THEN 'Marked for deletion' status should be in the widget"()
-    {
-        given: "the content is selected and Delete content dialog is opened "
-        findAndSelectContent( folderContent.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItem();
-
-        when: "Versions panel has been opened"
-        VersionHistoryWidget versionHistoryWidget = openVersionPanel();
-        LinkedList<ContentVersion> contentVersions = versionHistoryWidget.getAllVersions();
-        saveScreenshot( "version_panel_deleted" );
-
-        then: "number of versions should not be increased"
-        contentVersions.size() == INITIAL_NUMBER_OF_VERSIONS + 2;
-
-        and: "'Marked for deletion' status should be in the widget"
-        versionHistoryWidget.getContentStatus().equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
-    }
 }

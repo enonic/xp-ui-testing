@@ -135,8 +135,7 @@ public class RoleWizardPanel
     {
         String removeButton = String.format( MEMBERS_FORM +
                                                  "//div[contains(@class,'principal-selected-options-view') and descendant::h6[contains(@class,'main-name') and text()='%s']]" +
-                                                 ICON_REMOVE,
-                                             displayName );
+                                                 ICON_REMOVE, displayName );
 
         if ( !isElementDisplayed( removeButton ) )
         {
@@ -202,13 +201,11 @@ public class RoleWizardPanel
         return this;
     }
 
-    @Override
     public boolean isDeleteButtonEnabled()
     {
         return toolbarDeleteButton.isEnabled();
     }
 
-    @Override
     public ConfirmationDialog clickToolbarDelete()
     {
         toolbarDeleteButton.click();

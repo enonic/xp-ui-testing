@@ -6,8 +6,8 @@ package com.enonic.autotests.pages.contentmanager;
 public enum ContentMenuItem
 {
 
-    NEW( "New..." ), EDIT( "Edit" ), DELETE( "Delete..." ), DUPLICATE( "Duplicate..." ), MOVE( "Move..." ), SORT( "Sort..." ), PREVIEW(
-    "Preview" ), PUBLISH( "Publish..." ), UNPUBLISH( "Unpublish..." ), UNDO_DELETE( "Undo delete" );
+    NEW( "New..." ), EDIT( "Edit" ), ARCHIVE( "Archive..." ), DUPLICATE( "Duplicate..." ), MOVE( "Move..." ), SORT(
+    "Sort..." ), PREVIEW( "Preview" ), PUBLISH( "Publish..." ), UNPUBLISH( "Unpublish..." );
 
     private String name;
 

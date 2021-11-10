@@ -29,8 +29,8 @@ public class GroupWizardPanel
 
     private final String TOOLBAR = "//div[contains(@id,'Toolbar')]";
 
-    public final String TOOLBAR_SAVE_BUTTON = GROUP_WIZARD_PANEL + TOOLBAR +
-        "//*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
+    public final String TOOLBAR_SAVE_BUTTON =
+        GROUP_WIZARD_PANEL + TOOLBAR + "//*[contains(@id, 'ActionButton') and child::span[text()='Save']]";
 
     private final String TOOLBAR_DELETE_BUTTON =
         GROUP_WIZARD_PANEL + TOOLBAR + "/*[contains(@id, 'ActionButton') and child::span[text()='Delete']]";
@@ -38,8 +38,8 @@ public class GroupWizardPanel
     private final String DESCRIPTION_INPUT =
         GROUP_WIZARD_PANEL + "//div[contains(@id,'PrincipalDescriptionWizardStepForm')]//input[contains(@id,'TextInput')]";
 
-    private final String MEMBERS_OPTIONS_FILTER_INPUT = GROUP_WIZARD_PANEL +
-        "//div[contains(@id,'FormItem') and child::label[text()='Members']]" + COMBOBOX_OPTION_FILTER_INPUT;
+    private final String MEMBERS_OPTIONS_FILTER_INPUT =
+        GROUP_WIZARD_PANEL + "//div[contains(@id,'FormItem') and child::label[text()='Members']]" + COMBOBOX_OPTION_FILTER_INPUT;
 
     @FindBy(xpath = TOOLBAR_DELETE_BUTTON)
     private WebElement toolbarDeleteButton;
@@ -83,7 +83,6 @@ public class GroupWizardPanel
         return this;
     }
 
-    @Override
     public ConfirmationDialog clickToolbarDelete()
     {
         toolbarDeleteButton.click();
@@ -173,8 +172,9 @@ public class GroupWizardPanel
 
     public GroupWizardPanel removeMember( String displayName )
     {
-        String removeButton = MEMBERS_FORM +
-            "//div[contains(@class,'principal-selected-options-view') and descendant::h6[contains(@class,'main-name')]]" + ICON_REMOVE;
+        String removeButton =
+            MEMBERS_FORM + "//div[contains(@class,'principal-selected-options-view') and descendant::h6[contains(@class,'main-name')]]" +
+                ICON_REMOVE;
         if ( !isElementDisplayed( removeButton ) )
         {
             saveScreenshot( NameHelper.uniqueName( "err_member" + displayName ) );
@@ -198,7 +198,6 @@ public class GroupWizardPanel
         return this;
     }
 
-    @Override
     public boolean isDeleteButtonEnabled()
     {
         return toolbarDeleteButton.isEnabled();

@@ -80,7 +80,7 @@ class ContentPublish_Child_Spec
         dependantList.get( 0 ).contains( childContent1.getName() );
     }
 
-    def "GIVEN parent 'Published' folder with one 'New'-child WHEN 'Publish Tree' in the context menu selected THEN child content should be 'Published' now"()
+    def "GIVEN parent 'Published' folder with one 'New'-child WHEN 'Publish Tree' menu item has been clicked THEN child content should be 'Published'"()
     {
         given: "parent folder with a not published child"
         findAndSelectContent( parentContent.getName() );
@@ -94,56 +94,5 @@ class ContentPublish_Child_Spec
         then: "child content should be 'online' now"
         filterPanel.typeSearchText( childContent1.getName() );
         contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.PUBLISHED.getValue() );
-    }
-
-    def "GIVEN existing published parent folder with a child WHEN one more child content has been added to the parent THEN the child content should be 'New'"()
-    {
-        given: "add one more content is added to the published folder"
-        findAndSelectContent( parentContent.getName() );
-        childContent2 = buildFolderContentWithParent( "publish", "child-folder2", parentContent.getName() );
-        addContent( childContent2 );
-
-        when: "the name of the child content is typed"
-        filterPanel.typeSearchText( childContent2.getName() );
-
-        then: "new added content should be with 'New' status"
-        contentBrowsePanel.getContentStatus( childContent2.getName() ).equalsIgnoreCase( ContentStatus.NEW.getValue() );
-    }
-
-    def "GIVEN existing 'Published' parent folder and child content is 'New' WHEN the parent folder has been selected and 'Delete' button pressed THEN 'New' child content should be removed, but parent folder and 'Published' child content should be 'Deleted' "()
-    {
-        when: "parent 'Published'-folder is selected and 'Delete' button pressed AND number of contents has been typed"
-        findAndSelectContent( parentContent.getName() ).clickToolbarDelete().clickOnMarkAsDeletedMenuItemAndConfirm( "3" );
-        String message = contentBrowsePanel.waitForNotificationMessage();
-        sleep( 1000 );
-
-        and: "parent folder has been expanded"
-        contentBrowsePanel.expandItem( parentContent.getPath().toString() );
-        saveScreenshot( "parent_child_are_deleted" );
-
-        then: "published parent content becomes 'deleted'"
-        contentBrowsePanel.getContentStatus( parentContent.getName() ).equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
-
-        and: "published child content becomes 'deleted' as well"
-        contentBrowsePanel.getContentStatus( childContent1.getName() ).equalsIgnoreCase( ContentStatus.MARKED_FOR_DELETION.getValue() );
-
-        and: "'New' child content should be removed"
-        !contentBrowsePanel.exists( childContent2.getName() );
-
-        and: "expected notification message should appear"
-        message == "3 items are deleted ( 2 are marked for deletion ).";
-    }
-
-    def "GIVEN existing parent folder with a child and status of both contents are 'DELETED' WHEN parent folder has been published THEN parent folder should be removed"()
-    {
-        when: "'deleted' parent folder has been published"
-        findAndSelectContent( parentContent.getName() ).clickToolbarPublish().clickOnPublishNowButton();
-        String message = contentBrowsePanel.waitForNotificationMessage();
-
-        then: "the folder should be removed"
-        !contentBrowsePanel.exists( parentContent.getName() );
-
-        and: "expected notification message should be displayed"
-        message == "2 items are published ( 2 deleted ).";
     }
 }

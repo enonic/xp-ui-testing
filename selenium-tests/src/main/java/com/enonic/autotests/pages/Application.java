@@ -42,16 +42,6 @@ public class Application
 
     public static final String CONTENT_STUDIO_TAB_HANDLE = "content_studio_window_id_key";
 
-    public static String ONE_CONTENT_MARKED_FOR_DELETION_MESSAGE = "Item \"%s\" is marked for deletion.";
-
-    public static String ITEM_IS_UNDELETED = "Item is undeleted";
-
-    public static String ITEMS_IS_UNDELETED = "Items are undeleted";
-
-    public static String CONTENTS_DELETED_AND_MARKED_FOR_DELETION_MESSAGE = "%s items are deleted ( %s are marked for deletion ).";
-
-    public static String CONTENTS_PUBLISHED_AND_DELETED_MESSAGE = "%s items are published ( %s deleted ).";
-
     public static String CONTENT_ALREADY_IN_USE_WARNING = "Content [%s] could not be updated. A content with that name already exists";
 
     public static String ONE_CONTENT_UNPUBLISHED_NOTIFICATION_MESSAGE = "Item \"%s\" is unpublished.";
@@ -69,6 +59,8 @@ public class Application
     public static String TASK_IS_CLOSED = "The task is Closed.";
 
     public static String CONTENT_SAVED = "Item \"%s\" is saved.";
+
+    public static String ITEM_IS_ARCHIVED = "Item \"%s\" is archived";
 
     public static String ITEM_IS_DELETED = "Item \"%s\" is deleted.";
 
@@ -167,7 +159,7 @@ public class Application
 
     public static final String SPINNER_XPATH = "//div[@class='spinner']";
 
-    public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage')]//div[@class='notification-text']";
+    public final String NOTIFICATION_MESSAGE_XPATH = "//div[contains(@id,'NotificationMessage')]//div[contains(@class,'notification-text')]";
 
     public String EXPECTED_NOTIFICATION_MESSAGE_XPATH =
         "//div[contains(@id,'NotificationMessage')]//div[contains(@class,'notification-text') and contains(.,'%s')]";

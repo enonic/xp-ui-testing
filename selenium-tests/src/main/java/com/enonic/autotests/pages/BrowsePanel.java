@@ -70,8 +70,8 @@ public abstract class BrowsePanel
     public String APP_BAR_TAB_MENU_ITEM =
         APP_BAR_TAB_MENU + "//li[contains(@id,'AppBarTabMenuItem') and descendant::span[contains(.,'%s')]]";
 
-    protected String CONTEXT_MENU_ITEM =
-        "//ul[contains(@id,'TreeGridContextMenu')]//li[contains(@id,'MenuItem') and contains(.,'%s')]";
+    protected String CONTEXT_MENU_ITEM = "//ul[contains(@id,'TreeGridContextMenu')]//li[contains(@id,'MenuItem') and contains(.,'%s')]";
+
     protected final String UNPUBLISH_MENU_ITEM = "//ul[contains(@id,'Menu')]//li[contains(@id,'MenuItem') and text()='Unpublish...']";
 
     @FindBy(xpath = SHOW_FILTER_PANEL_BUTTON)
@@ -111,8 +111,6 @@ public abstract class BrowsePanel
     public abstract <T extends WizardPanel> T clickToolbarEdit();
 
     public abstract <T extends Application> T clickToolbarNew();
-
-    public abstract <T extends Application> T clickToolbarDelete();
 
     public abstract BaseBrowseFilterPanel getFilterPanel();
 
@@ -454,7 +452,7 @@ public abstract class BrowsePanel
 
     public boolean isSelectionControllerChecked()
     {
-        WebElement checkbox = findElement( By.xpath( SELECTION_CONTROLLER_CHECKBOX+ "//input[@type='checkbox']" ) );
+        WebElement checkbox = findElement( By.xpath( SELECTION_CONTROLLER_CHECKBOX + "//input[@type='checkbox']" ) );
         //return TestUtils.isCheckBoxChecked( getSession(), checkbox.getAttribute( "id" ) );
         return checkbox.isSelected();
     }
@@ -969,11 +967,8 @@ public abstract class BrowsePanel
 
     public String waitForNotificationMessage()
     {
-        if ( !waitUntilVisibleNoException( By.xpath( NOTIFICATION_MESSAGE_XPATH ), Application.EXPLICIT_NORMAL ) )
-        {
-            return null;
-        }
-        String message = getDisplayedString( NOTIFICATION_MESSAGE_XPATH );
+        sleep( 200 );
+        String message = findElement( By.xpath( NOTIFICATION_MESSAGE_XPATH ) ).getText();
         getLogger().info( "Notification message " + message );
         return message.trim();
     }
@@ -992,6 +987,7 @@ public abstract class BrowsePanel
     public boolean waitExpectedNotificationMessage( String message, long timeout )
     {
         String expectedMessage = String.format( EXPECTED_NOTIFICATION_MESSAGE_XPATH, message );
+        List<WebElement> messages = this.findElements( By.xpath( NOTIFICATION_MESSAGE_XPATH ) );
         return waitUntilVisibleNoException( By.xpath( expectedMessage ), timeout );
     }
 }
