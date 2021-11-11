@@ -800,7 +800,7 @@ public class ContentBrowsePanel
      * @param contentName
      * @return {@link DeleteContentDialog} instance.
      */
-    public DeleteContentDialog selectDeleteFromContextMenu( String contentName )
+    public DeleteContentDialog clickOnArchiveInContextMenu( String contentName )
     {
         if ( !doScrollAndFindGridItem( contentName ) )
         {

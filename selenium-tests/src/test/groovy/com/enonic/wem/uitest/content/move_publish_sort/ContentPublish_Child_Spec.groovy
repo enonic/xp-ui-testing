@@ -88,7 +88,7 @@ class ContentPublish_Child_Spec
         when: "'publish tree' menu item is selected"
         ContentPublishDialog modalDialog = contentBrowsePanel.selectPublishTreeMenuItem();
 
-        and: "'publish' button on modal dialog has been clicked"
+        and: "'publish now' button on modal dialog has been clicked"
         modalDialog.clickOnPublishNowButton();
 
         then: "child content should be 'online' now"
