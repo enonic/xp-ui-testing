@@ -471,6 +471,7 @@ public class ContentWizardPanel
             sleep( 700 );
             saveScreenshot( NameHelper.uniqueName( "acl_" + content.getName() ) );
         }
+        sleep( 500 );
         return this;
     }
 

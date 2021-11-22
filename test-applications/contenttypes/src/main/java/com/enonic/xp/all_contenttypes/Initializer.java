@@ -44,6 +44,8 @@ public class Initializer
 
     private static final String FOLDER_NAME = "all-content-types-images";
 
+    private static final String CHILD_FOLDER_NAME = "nested-imported-folder";
+
     private static final String SHORTCUT_NAME = "shortcut-imported";
 
     private static final String TEST_FOLDER_NAME = "selenium-tests-folder";
@@ -247,6 +249,9 @@ public class Initializer
             createTXT_Content( testFolderPath );
             createPDF_Content( testFolderPath );
             addShortcut( testFolderPath );
+            addChildFolder( testFolderPath );
+            final ContentPath testFolderPath2 = ContentPath.from( "/" + TEST_FOLDER_NAME + "/" + CHILD_FOLDER_NAME );
+            createImageContent( testFolderPath2, "severomor.jpg");
         }
 
     }
@@ -262,12 +267,32 @@ public class Initializer
             build() );
     }
 
+    private void addChildFolder( final ContentPath parent )
+    {
+        contentService.create( makeChildFolder().
+            name( CHILD_FOLDER_NAME ).
+            displayName( CHILD_FOLDER_NAME ).
+            parent( parent ).
+            permissions( PERMISSIONS ).
+            inheritPermissions( false ).
+            build() );
+    }
+
     private CreateContentParams.Builder makeShortcut()
     {
         return CreateContentParams.create().
             owner( PrincipalKey.ofAnonymous() ).
             contentData( new PropertyTree() ).
             type( ContentTypeName.shortcut() ).
+            inheritPermissions( true );
+    }
+
+    private CreateContentParams.Builder makeChildFolder()
+    {
+        return CreateContentParams.create().
+            owner( PrincipalKey.ofAnonymous() ).
+            contentData( new PropertyTree() ).
+            type( ContentTypeName.folder() ).
             inheritPermissions( true );
     }
 
