@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import com.enonic.autotests.TestSession;
 import com.enonic.autotests.exceptions.TestFrameworkException;
 import com.enonic.autotests.pages.Application;
+import com.enonic.autotests.utils.NameHelper;
 
 import static com.enonic.autotests.utils.SleepHelper.sleep;
 
@@ -50,12 +51,21 @@ public class DuplicateContentDialog
         return isElementDisplayed( CONTAINER );
     }
 
+
     public DuplicateContentDialog clickOnDuplicateButton()
     {
-        waitUntilElementEnabledNoException( By.xpath( BUTTON_DUPLICATE ), Application.EXPLICIT_NORMAL );
-        duplicateButton.click();
-        sleep( 1000 );
-        return this;
+        try
+        {
+            waitUntilElementEnabled( By.xpath( BUTTON_DUPLICATE ), Application.EXPLICIT_NORMAL );
+            duplicateButton.click();
+            sleep( 1000 );
+            return this;
+        }
+        catch ( Exception e )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_duplicate" ) );
+            throw new TestFrameworkException( "Error - Duplicate button " + e.getMessage() );
+        }
     }
 
     public boolean waitForClosed()
