@@ -57,11 +57,14 @@ class DetailsPanel_OwnerName_Spec
             roles.toList() ).build();
 
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
-        UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew(
-            UserItemName.USERS_FOLDER );
+        UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew( UserItemName.USERS_FOLDER );
 
         when: "data typed and new user has been saved"
-        userWizardPanel.typeData( TEST_USER ).save().close( TEST_USER.getDisplayName() );
+        userWizardPanel.typeData( TEST_USER );
+        saveScreenshot( "issue_user1" );
+        userWizardPanel.save();
+        saveScreenshot( "issue_user2" );
+        userWizardPanel.close( TEST_USER.getDisplayName() );
         userBrowsePanel.getFilterPanel().typeSearchText( TEST_USER.getDisplayName() );
 
         then: "new user should be present beneath the system store"
@@ -136,7 +139,6 @@ class DetailsPanel_OwnerName_Spec
         when: "the first 'version history' item has been expanded"
         VersionHistoryWidget allContentVersionsView = contentBrowsePanel.getContentDetailsPanel().openVersionHistory();
         ContentVersionInfoView versionItem = allContentVersionsView.clickOnVersionItem( 0 );
-
 
         then: "expected 'owner name' should be displayed"
         saveScreenshot( "test_owner_version-history_user_name" );
