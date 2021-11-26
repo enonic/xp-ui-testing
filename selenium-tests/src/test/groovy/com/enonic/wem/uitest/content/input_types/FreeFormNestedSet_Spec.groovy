@@ -14,6 +14,7 @@ import spock.lang.Stepwise
  * Created on 5/25/2017.
  * */
 @Stepwise
+@Ignore
 class FreeFormNestedSet_Spec
     extends Base_InputFields_Occurrences
 {
