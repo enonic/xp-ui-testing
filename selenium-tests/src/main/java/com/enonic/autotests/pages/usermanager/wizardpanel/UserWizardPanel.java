@@ -132,6 +132,11 @@ public class UserWizardPanel
         names.stream().forEach( roleName -> addRole( roleName ) );
     }
 
+    public void addRolesByDisplayName( List<String> displayNames )
+    {
+        displayNames.stream().forEach( roleDisplayName -> addRoleByDisplayName( roleDisplayName ) );
+    }
+
     public UserWizardPanel clickOnRolesAndGroupsTabLink()
     {
         String rolesAndGroupsTabXpath = String.format( NAVIGATOR_TAB_ITEM_LINK, ROLES_AND_GROUPS_LINK_TEXT );
@@ -196,15 +201,47 @@ public class UserWizardPanel
         {
             findElement( By.xpath( rowCheckboxXpath ) ).click();
             //roleOptionsFilter.sendKeys( Keys.ENTER );
-            sleep( 300 );
+            sleep( 1000 );
             getDisplayedElement( By.xpath( APPLY_ROLE_BUTTON ) ).click();
-            sleep( 1500 );
+            sleep( 1000 );
+        }
+    }
+
+    public void addRoleByDisplayName( String roleDisplayNameName )
+    {
+        clearAndType( roleOptionsFilter, roleDisplayNameName );
+        sleep( 1000 );
+        String rowCheckboxXpath =
+            String.format( SLICK_ROW_BY_DISPLAY_NAME + "//label[child::input[@type='checkbox']]", roleDisplayNameName );
+        if ( findElements( By.xpath( rowCheckboxXpath ) ).size() == 0 )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_role" ) );
+            throw new TestFrameworkException( "Role was not found!" );
+        }
+        if ( !isRoleOrGroupSelected( roleDisplayNameName ) )
+        {
+            findElement( By.xpath( rowCheckboxXpath ) ).click();
+            //roleOptionsFilter.sendKeys( Keys.ENTER );
+            sleep( 500 );
+            getDisplayedElement( By.xpath( APPLY_ROLE_BUTTON ) ).click();
+            sleep( 500 );
         }
     }
 
     private boolean isRoleOrGroupAlreadySelected( String name )
     {
         String rowXpath = String.format( SLICK_ROW_BY_NAME + "//input[@type='checkbox']", name );
+        if ( findElements( By.xpath( rowXpath ) ).size() == 0 )
+        {
+            saveScreenshot( NameHelper.uniqueName( "err_" ) );
+            throw new TestFrameworkException( "checkbox for role or group was not found: " + name );
+        }
+        return findElement( By.xpath( rowXpath ) ).getAttribute( "checked" ) != null;
+    }
+
+    private boolean isRoleOrGroupSelected( String name )
+    {
+        String rowXpath = String.format( SLICK_ROW_BY_DISPLAY_NAME + "//input[@type='checkbox']", name );
         if ( findElements( By.xpath( rowXpath ) ).size() == 0 )
         {
             saveScreenshot( NameHelper.uniqueName( "err_" ) );

@@ -52,15 +52,15 @@ class DetailsPanel_OwnerName_Spec
 
         and: "build new user with roles"
         String generatedName = NameHelper.uniqueName( USER_NAME );
-        String[] roles = [RoleName.ADMIN_CONSOLE.getValue(), RoleName.SYSTEM_ADMIN.getValue(), RoleName.CM_APP.getValue(),];
-        TEST_USER = User.builder().displayName( generatedName ).email( generatedName + "@gmail.com" ).password( USER_PASSWORD ).roles(
-            roles.toList() ).build();
+        String[] roles = ["Administration Console Login", "Content Manager Administrator", "Content Manager App"];
+        TEST_USER = User.builder().displayName( generatedName ).email( generatedName + "@gmail.com" ).password( USER_PASSWORD ).build();
 
         userBrowsePanel.clickOnExpander( UserItemName.SYSTEM.getValue() );
         UserWizardPanel userWizardPanel = userBrowsePanel.clickOnRowByName( "users" ).clickOnToolbarNew( UserItemName.USERS_FOLDER );
 
         when: "data typed and new user has been saved"
         userWizardPanel.typeData( TEST_USER );
+        userWizardPanel.addRolesByDisplayName( roles.toList() );
         saveScreenshot( "issue_user1" );
         userWizardPanel.save();
         saveScreenshot( "issue_user2" );
