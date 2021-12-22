@@ -99,7 +99,7 @@ class MacroModalDialog_DisableMacros_Spec
         previewPanel.getPreviewMessage() == MacroConfigPanel.NOT_COMPLETE_PREVIEW_MESSAGE;
     }
 
-    def "GIVEN MacroModalDialog opened WHEN 'Disable macros' has been selected AND text has been typed in the textArea AND 'preview' link on the dialog clicked THEN expected text appears in the preview-content panel"()
+    def "GIVEN 'Disable macros' option is selected AND config textArea is filled in WHEN 'preview' link has been clicked in the dialog THEN expected text appears in the dialog's preview-content panel"()
     {
         given: "existing content with html-area is opened"
         findAndSelectContent( HTML_AREA_CONTENT.getName() ).clickToolbarEdit();

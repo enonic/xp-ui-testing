@@ -8,6 +8,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
 import org.apache.commons.lang.StringUtils
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -15,6 +16,7 @@ import spock.lang.Stepwise
  * Created on 5/15/2017.
  * */
 @Stepwise
+@Ignore
 class Set_In_Set_Validation_Spec
     extends Base_InputFields_Occurrences
 {

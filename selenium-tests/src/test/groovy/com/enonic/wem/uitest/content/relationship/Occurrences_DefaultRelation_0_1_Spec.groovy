@@ -8,10 +8,12 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.input_types.Base_InputFields_Occurrences
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class Occurrences_DefaultRelation_0_1_Spec
     extends Base_InputFields_Occurrences
 
@@ -164,7 +166,7 @@ class Occurrences_DefaultRelation_0_1_Spec
         Content content = Content.builder().
             name( generated ).
             displayName( displayName ).
-            contentType( BaseContentType.FOLDER.getDisplayName(  )).
+            contentType( BaseContentType.FOLDER.getDisplayName() ).
             parent( ContentPath.ROOT ).
             build();
         return content;
