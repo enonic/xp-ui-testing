@@ -110,7 +110,7 @@ class ContentWizardPanel_Toolbar_Spec
         ContentWizardPanel wizard = findAndSelectContent( folderContent.getName() ).clickToolbarEdit();
 
         when: "'Archive...' button has been pressed and deleting is confirmed"
-        wizard.clickToolbarArchive().clickOnDeleteNowAndWaitForClosed();
+        wizard.clickToolbarArchive().clickOnDeleteAndWaitForClosed();
 
         then: "content should not be present in the grid"
         filterPanel.typeSearchText( folderContent.getName() );

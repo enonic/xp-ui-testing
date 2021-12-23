@@ -29,7 +29,7 @@ class ContentWizardPanel_NameCollisions_Spec
     def "GIVEN deleting of existing folder WHEN folder was deleted AND new folder with the same name adding AND 'save' button pressed THEN new content successfully added"()
     {
         given:
-        findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarArchive().clickOnDeleteNowAndWaitForClosed(  );
+        findAndSelectContent( TEST_FOLDER.getName() ).clickToolbarArchive().clickOnDeleteAndWaitForClosed(  );
         String expectedMessage = String.format( Application.CONTENT_SAVED, TEST_FOLDER.getName() );
 
         when:

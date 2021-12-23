@@ -64,7 +64,7 @@ class Delete_Published_Parent_Folder_Spec
         sleep( 1000 );
 
         when: "the folder has been selected AND 'Delete' button clicked"
-        contentBrowsePanel.clickToolbarArchive().clickOnDeleteNowMenuItemAndConfirm( "2" );
+        contentBrowsePanel.clickToolbarArchive().clickOnDeleteMenuItemAndConfirm( "2" );
         def expectedMessage = "2 items are deleted."
 
         then: "2 items are deleted. - message should appear"

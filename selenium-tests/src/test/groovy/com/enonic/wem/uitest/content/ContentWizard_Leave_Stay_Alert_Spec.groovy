@@ -17,7 +17,7 @@ class ContentWizard_Leave_Stay_Alert_Spec
 
         when: "display name typed and 'Delete' button  has been pressed"
         DeleteContentDialog deleteContentDialog = wizardPanel.typeDisplayName( displayName ).clickToolbarArchive();
-        deleteContentDialog.clickOnDeleteNowAndWaitForClosed();
+        deleteContentDialog.clickOnDeleteAndWaitForClosed();
 
         then: "content should be deleted:"
         filterPanel.typeSearchText( displayName );

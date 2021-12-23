@@ -114,7 +114,7 @@ class DeleteSite_ConfirmDelete_Spec
         !contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN new site has been added then published WHEN the site has been selected and Delete pressed AND 'Delete now' button has been pressed THEN site should be deleted"()
+    def "GIVEN new site has been added then published WHEN the site has been selected and Delete pressed AND 'Delete' button has been pressed THEN site should be deleted"()
     {
         given: "new site has been added"
         Content site = buildSiteWithNameAndDispalyNameAndDescription( "site", "confirm delete online", "description" );
@@ -126,8 +126,8 @@ class DeleteSite_ConfirmDelete_Spec
         sleep( 1000 );
         contentBrowsePanel.clickToolbarPublish().clickOnPublishNowButton();
 
-        when: "site selected and Delete pressed AND 'Delete now' button has been clicked"
-        contentBrowsePanel.clickToolbarArchive().clickOnDeleteNowMenuItem(  );
+        when: "site selected and Delete pressed AND 'Delete' button has been clicked"
+        contentBrowsePanel.clickToolbarArchive().clickOnDeleteMenuItem(  );
         ConfirmValueDialog confirmDialog = new ConfirmValueDialog( getSession() );
 
         and: "required number of resources has been typed"
@@ -145,7 +145,7 @@ class DeleteSite_ConfirmDelete_Spec
     {
         DeleteContentDialog deleteContentDialog = findAndSelectContent( siteName ).clickToolbarArchive();
         deleteContentDialog.waitForOpened();
-        deleteContentDialog.clickOnDeleteNowMenuItem();
+        deleteContentDialog.clickOnDeleteMenuItem();
         return new ConfirmValueDialog( getSession() );
     }
 }

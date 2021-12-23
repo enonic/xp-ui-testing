@@ -23,11 +23,11 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         List<String> contentList = new ArrayList<>();
         sleep( 1000 );
 
-        when: "both folders are selected and 'Archive...' button pressed AND Delete Now menu item has been pressed."
+        when: "both folders are selected and 'Archive...' button pressed AND 'Delete' menu item has been pressed."
         findAndSelectContent( content1.getName() );
         findAndSelectContent( content2.getName() );
         DeleteContentDialog deleteContentDialog = contentBrowsePanel.clickToolbarArchive();
-        deleteContentDialog.clickOnDeleteNowMenuItem();
+        deleteContentDialog.clickOnDeleteMenuItem();
         and: "correct number of contents to delete is typed"
         ConfirmValueDialog confirmContentDeleteDialog = new ConfirmValueDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
@@ -43,7 +43,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         addContent( content );
 
         when: "the folder was selected and 'Delete' button on toolbar  pressed and 'Yes' pressed on confirm dialog "
-        findAndSelectContent( content.getName() ).clickToolbarArchive().clickOnDeleteNowAndWaitForClosed();
+        findAndSelectContent( content.getName() ).clickToolbarArchive().clickOnDeleteAndWaitForClosed();
 
         then: "deleted folder is no longer listed in the root"
         !contentBrowsePanel.exists( content.getName() );
@@ -67,7 +67,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         when: "child content has been selected and deleted"
         DeleteContentDialog deleteContentDialog = contentBrowsePanel.expandContent( parent.getPath() ).selectContentInGrid(
             childFolder.getName() ).clickToolbarArchive();
-        deleteContentDialog.clickOnDeleteNowMenuItem();
+        deleteContentDialog.clickOnDeleteMenuItem();
 
         then: "child folder should not be displayed"
         !contentBrowsePanel.exists( childFolder.getName(), true );
@@ -92,7 +92,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         when: "parent folder expanded and child content selected and 'Delete' button on toolbar pressed"
         DeleteContentDialog deleteContentDialog = contentBrowsePanel.expandContent( parent.getPath() ).selectContentInGrid(
             childFolder.getName() ).clickToolbarArchive();
-        deleteContentDialog.clickOnDeleteNowMenuItem();
+        deleteContentDialog.clickOnDeleteMenuItem();
         and: "2 has been typed and deleting confirmed"
         ConfirmValueDialog confirmContentDeleteDialog = new ConfirmValueDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();
@@ -111,7 +111,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
         addContent( folder );
 
         when: "just created folder has been deleted"
-        findAndSelectContent( folder.getName() ).clickToolbarArchive().clickOnDeleteNowAndWaitForClosed();
+        findAndSelectContent( folder.getName() ).clickToolbarArchive().clickOnDeleteAndWaitForClosed();
         sleep( 400 );
 
         then: "New-button should be enabled"
@@ -139,7 +139,7 @@ class ContentBrowsePanel_GridPanel_DeleteSpec
 
         and: "content has been deleted in the wizard"
         contentBrowsePanel.switchToBrowserTabByTitle( contentToDelete.getDisplayName() );
-        wizard.clickToolbarArchive().clickOnDeleteNowAndWaitForClosed();
+        wizard.clickToolbarArchive().clickOnDeleteAndWaitForClosed();
 
         then: "content should not be listed in the grid"
         saveScreenshot( "test_content_moved_and_deleted" );

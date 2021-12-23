@@ -57,7 +57,7 @@ public class DeleteContentDialog
 
     private final String CANCEL_BUTTON_TOP = CONTAINER_DIV + APP_CANCEL_BUTTON_TOP;
 
-    private final String DELETE_NOW_MENU_ITEM = "//li[contains(@id,'MenuItem') and contains(.,'Delete Now')]";
+    private final String DELETE_MENU_ITEM = "//li[contains(@id,'MenuItem') and contains(.,'Delete')]";
 
     private final String DELETE_MENU = "//div[contains(@id,'MenuButton')]";
 
@@ -85,7 +85,7 @@ public class DeleteContentDialog
         super( session );
     }
 
-    public boolean isArchiveButtonDispplayed()
+    public boolean isArchiveButtonDisplayed()
     {
         return archiveButton.isDisplayed();
     }
@@ -98,9 +98,9 @@ public class DeleteContentDialog
     /**
      * Clicks on 'Delete' button and waits until the wizard will be closed
      */
-    public void clickOnDeleteNowAndWaitForClosed()
+    public void clickOnDeleteAndWaitForClosed()
     {
-        clickOnDeleteNowMenuItem();
+        clickOnDeleteMenuItem();
         waitForClosed();
         switchToBrowsePanelTab();
     }
@@ -136,12 +136,12 @@ public class DeleteContentDialog
     }
 
     //Call the method for deleting single content, Delete Content should be closed after clicking on the menu item
-    public DeleteContentDialog clickOnDeleteNowMenuItem()
+    public DeleteContentDialog clickOnDeleteMenuItem()
     {
         waitUntilVisible( By.xpath( DELETE_MENU_DROPDOWN ) );
         menuDropDown.click();
         sleep( 300 );
-        String menuItem = CONTAINER_DIV + DELETE_NOW_MENU_ITEM;
+        String menuItem = CONTAINER_DIV + DELETE_MENU_ITEM;
         findElement( By.xpath( menuItem ) ).click();
         this.waitForClosed();
         sleep( 900 );
@@ -157,9 +157,9 @@ public class DeleteContentDialog
         sleep( 1000 );
     }
 
-    public void clickOnDeleteNowMenuItemAndConfirm( String numberOfContent )
+    public void clickOnDeleteMenuItemAndConfirm( String numberOfContent )
     {
-        clickOnDeleteNowMenuItem();
+        clickOnDeleteMenuItem();
         ConfirmValueDialog confirmValueDialog = new ConfirmValueDialog( getSession() );
         confirmValueDialog.waitForDialogLoaded();
         confirmValueDialog.typeNumber( numberOfContent ).clickOnConfirmButton().waitUntilDialogClosed( Application.EXPLICIT_NORMAL );
