@@ -126,9 +126,8 @@ class Display_SourceButton_Spec
         getTestSession().setUser( USER );
         ContentBrowsePanel contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
         saveScreenshot( "logged_" + USER_NAME );
-        //contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
-        ContentWizardPanel wizard = findAndSelectContent( SITE.getName() ).clickToolbarOpenAndSwitchToWizardTab();
-        //ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarOpenAndSwitchToWizardTab();
+        contentBrowsePanel.getFilterPanel().typeSearchText( SITE.getName() );
+        ContentWizardPanel wizard = contentBrowsePanel.clickCheckboxAndSelectRow( SITE.getName() ).clickToolbarEdit();
         sleep( 1000 );
         wizard.switchToLiveEditFrame();
         LiveFormPanel liveFormPanel = new LiveFormPanel( getSession() );
