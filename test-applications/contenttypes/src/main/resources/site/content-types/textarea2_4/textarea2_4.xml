@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type>
+  <display-name>textarea2_4</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input name="textarea" type="TextArea">
+      <label>Text Area</label>
+      <occurrences minimum="2" maximum="4"/>
+    </input>
+  </form>
+</content-type>

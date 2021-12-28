@@ -5,10 +5,12 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.macro.*
 import com.enonic.autotests.pages.form.HtmlArea0_1_FormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class MacroModalDialog_EmbedIFrame_Spec
     extends Base_InputFields_Occurrences
 {

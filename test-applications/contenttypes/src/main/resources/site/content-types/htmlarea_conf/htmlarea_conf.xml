@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type>
+  <display-name>htmlarea_conf</display-name>
+  <super-type>base:structured</super-type>
+  <form>   
+    <input name="htmlarea_conf" type="HtmlArea">
+      <label>HTML Area with customized toolbar</label>
+      <occurrences minimum="0" maximum="2"/>
+      <config>
+        <exclude>*</exclude>
+        <include>JustifyLeft JustifyRight | Bold Italic</include>
+      </config>
+    </input>
+  </form>
+</content-type>

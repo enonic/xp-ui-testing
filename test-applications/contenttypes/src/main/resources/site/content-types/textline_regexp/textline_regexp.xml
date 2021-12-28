@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<content-type>
+  <display-name>text_line_regexp</display-name>
+  <super-type>base:structured</super-type>
+  <form>
+    <input name="textline_regexp" type="TextLine">
+      <label>Regexp IP address</label>
+      <occurrences minimum="1" maximum="1"/>
+      <config>
+        <regexp>\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b</regexp>
+      </config>
+    </input>
+  </form>
+</content-type>
