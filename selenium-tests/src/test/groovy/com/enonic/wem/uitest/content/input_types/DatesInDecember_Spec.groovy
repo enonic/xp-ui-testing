@@ -3,7 +3,7 @@ package com.enonic.wem.uitest.content.input_types
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.DateFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
-import org.junit.Ignore
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
