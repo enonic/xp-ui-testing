@@ -1,7 +1,9 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.ContentMenuItem
+import spock.lang.Ignore
 
+@Ignore
 class ContentBrowsePanel_ContextMenuImage_Spec
     extends BaseContentSpec
 {

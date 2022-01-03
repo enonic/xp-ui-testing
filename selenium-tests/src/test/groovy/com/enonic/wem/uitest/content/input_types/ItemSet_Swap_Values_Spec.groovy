@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.form.ItemSetViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.TestItemSet
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -16,6 +17,7 @@ import spock.lang.Stepwise
  *    XP-4397 After an item-set has been drag'n'dropped, HTML Area inside stops working
  * */
 @Stepwise
+@Ignore
 class ItemSet_Swap_Values_Spec
     extends Base_InputFields_Occurrences
 {
