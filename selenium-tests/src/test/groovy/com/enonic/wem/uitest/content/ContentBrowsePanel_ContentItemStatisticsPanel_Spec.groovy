@@ -3,7 +3,9 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 
+@Ignore
 class ContentBrowsePanel_ContentItemStatisticsPanel_Spec
     extends BaseContentSpec
 {

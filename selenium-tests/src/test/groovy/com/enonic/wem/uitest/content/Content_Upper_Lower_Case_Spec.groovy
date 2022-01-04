@@ -3,16 +3,15 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 /**
  * Created on 14.10.2016.
- * BUG: XP-4088 Its possible to store more that one node with case difference
- *
- * Task: XP-4093 Create tests to verify that multiple content with same letter name, but different case is illegal name of new content.
  * */
 @Stepwise
+@Ignore
 class Content_Upper_Lower_Case_Spec
     extends BaseContentSpec
 {

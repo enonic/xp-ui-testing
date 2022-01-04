@@ -3,8 +3,10 @@ package com.enonic.wem.uitest.content
 import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class ContentWizardPanel_NameCollisions_Spec
     extends BaseContentSpec
 {
