@@ -4,10 +4,12 @@ import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class ContentBrowsePanel_GridPanel_SaveSpec
     extends BaseContentSpec
 {
@@ -44,7 +46,7 @@ class ContentBrowsePanel_GridPanel_SaveSpec
         !contentBrowsePanel.isRowExpanded( PARENT_FOLDER.getName() );
     }
 
-    def "WHEN existing folder is unexpanded and a child folder has been saved THEN parent folder remains unexpanded"()
+    def "WHEN existing folder is collapsed and a child folder has been saved THEN parent folder remains collapsed"()
     {
         given: "creating new Content beneath an existing unexpanded folder"
         Content childContent = buildFolderContentWithParent( "folder", "child-folder2", PARENT_FOLDER.getName() );

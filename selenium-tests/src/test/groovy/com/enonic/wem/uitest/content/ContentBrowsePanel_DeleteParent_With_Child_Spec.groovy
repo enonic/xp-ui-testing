@@ -2,11 +2,13 @@ package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.contentmanager.ConfirmValueDialog
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
  * Created on 3/28/2017.
  * */
+@Ignore
 class ContentBrowsePanel_DeleteParent_With_Child_Spec
     extends BaseContentSpec
 {
@@ -26,7 +28,7 @@ class ContentBrowsePanel_DeleteParent_With_Child_Spec
         and: "child folder has been added"
         addContent( CHILD_FOLDER );
 
-        when: "Delete button has been pressed and it confirmed"
+        when: "Delete button has been pressed and the deleting has been confirmed"
         contentBrowsePanel.clickToolbarArchive().clickOnDeleteMenuItem();
         ConfirmValueDialog confirmContentDeleteDialog = new ConfirmValueDialog( getSession() );
         confirmContentDeleteDialog.typeNumber( "2" ).clickOnConfirmButton();

@@ -1,8 +1,10 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class ContentBrowsePanel_DetailsPanel_ContentDetails_Spec
     extends BaseContentSpec
 {
