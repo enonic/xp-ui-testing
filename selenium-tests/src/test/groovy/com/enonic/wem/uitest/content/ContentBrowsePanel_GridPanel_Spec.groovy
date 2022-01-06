@@ -8,6 +8,7 @@ import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
+@Ignore
 class ContentBrowsePanel_GridPanel_Spec
     extends BaseContentSpec
 {
@@ -30,7 +31,7 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.isRefreshButtonDisplayed();
     }
 
-    def "GIVEN one content is selected in the root WHEN refresh button was pressed THEN the row stays should be selected"()
+    def "GIVEN single content is selected WHEN refresh button has been clicked THEN the row remains selected"()
     {
         given: "one content is selected ( root directory)"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
@@ -57,7 +58,7 @@ class ContentBrowsePanel_GridPanel_Spec
         contentBrowsePanel.getSelectedRowsNumber() == 1;
     }
 
-    def "GIVEN existing content is selected WHEN space bar was pressed THEN row is no longer selected"()
+    def "GIVEN existing content is selected WHEN space bar has been pressed THEN row is no longer selected"()
     {
         given: "existing content is selected"
         List<String> contentNames = contentBrowsePanel.getContentNamesFromGrid();
