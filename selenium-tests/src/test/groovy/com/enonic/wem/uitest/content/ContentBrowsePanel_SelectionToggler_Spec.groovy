@@ -1,10 +1,12 @@
 package com.enonic.wem.uitest.content
 
 import com.enonic.autotests.pages.Application
+import spock.lang.Ignore
 
 /**
  * Created on 2/21/2017.
  * */
+@Ignore
 class ContentBrowsePanel_SelectionToggler_Spec
     extends BaseContentSpec
 {
@@ -37,7 +39,7 @@ class ContentBrowsePanel_SelectionToggler_Spec
         contentBrowsePanel.getNumberInSelectionToggler() == "1";
     }
 
-    def "GIVEN existing folder has been checked WHEN 'Show Selected Items' has been clicked THEN grid should be filterd"()
+    def "GIVEN existing folder has been checked WHEN 'Show Selected Items' has been clicked THEN grid should be filtered"()
     {
         when: "checkbox is checked and existing content is selected"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
