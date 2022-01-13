@@ -6,12 +6,14 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.form.ImageFormViewPanel
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Stepwise
 
 /**
  * Created  on 28.10.2016.
  * */
 @Stepwise
+@Ignore
 class Image_Change_And_Publish_Spec
     extends BaseContentSpec
 {

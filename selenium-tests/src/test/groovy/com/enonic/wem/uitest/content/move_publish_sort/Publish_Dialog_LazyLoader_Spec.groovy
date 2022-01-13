@@ -2,6 +2,7 @@ package com.enonic.wem.uitest.content.move_publish_sort
 
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 
 /**
  * Created  on 23.12.2016.
@@ -9,6 +10,7 @@ import com.enonic.wem.uitest.content.BaseContentSpec
  * Verifies:
  *   XP-4754 Publish Dialog - Lazy loader stops loading items after turning "Include child items" off and on again
  * */
+@Ignore
 class Publish_Dialog_LazyLoader_Spec
     extends BaseContentSpec
 {

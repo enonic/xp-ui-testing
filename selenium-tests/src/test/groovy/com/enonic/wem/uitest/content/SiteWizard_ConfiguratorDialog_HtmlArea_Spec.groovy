@@ -10,10 +10,12 @@ import com.enonic.autotests.pages.form.SiteFormViewPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class SiteWizard_ConfiguratorDialog_HtmlArea_Spec
     extends BaseContentSpec
 {
