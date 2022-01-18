@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.form.ImageSelectorFormViewPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -12,6 +13,7 @@ import spock.lang.Stepwise
  * Created on 18.10.2016.
  * */
 @Stepwise
+@Ignore
 class SiteWizard_Mixin_ImageSelector_Spec
     extends BaseContentSpec
 {

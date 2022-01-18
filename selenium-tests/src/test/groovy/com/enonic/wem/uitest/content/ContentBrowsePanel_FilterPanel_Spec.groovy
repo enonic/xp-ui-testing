@@ -6,12 +6,14 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.FilterPanelLastModi
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 import static com.enonic.autotests.utils.SleepHelper.sleep
 
 @Stepwise
+@Ignore
 class ContentBrowsePanel_FilterPanel_Spec
     extends BaseContentSpec
 {
@@ -115,7 +117,7 @@ class ContentBrowsePanel_FilterPanel_Spec
         saveScreenshot( "test_LastModified_aggregation_before_deleting" );
 
         when: "the folder has been deleted"
-        contentBrowsePanel.selectContentInGrid( TEST_FOLDER.getName() ).clickToolbarArchive().clickOnDeleteAndWaitForClosed(  );
+        contentBrowsePanel.selectContentInGrid( TEST_FOLDER.getName() ).clickToolbarArchive().clickOnDeleteAndWaitForClosed();
         sleep( 2000 );
         saveScreenshot( "test_LastModified_aggregation_folder_deleted" )
 
