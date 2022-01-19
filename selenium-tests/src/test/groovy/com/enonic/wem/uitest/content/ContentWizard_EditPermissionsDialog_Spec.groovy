@@ -9,10 +9,12 @@ import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.xp.security.PrincipalKey
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class ContentWizard_EditPermissionsDialog_Spec
     extends BaseContentSpec
 {
@@ -93,7 +95,7 @@ class ContentWizard_EditPermissionsDialog_Spec
         modalDialog.isPrincipalOptionsFilterDisplayed();
     }
 
-    def "WHEN 'Edit Permissions' is opened THEN two default permissions should be displayed "()
+    def "WHEN 'Edit Permissions' is opened THEN three default permissions should be displayed"()
     {
         when: "content selected and 'Edit Permissions' dialog has been opened"
         EditPermissionsDialog modalDialog = findAndSelectContent(
@@ -101,7 +103,7 @@ class ContentWizard_EditPermissionsDialog_Spec
         List<String> principals = modalDialog.getPrincipalNames();
         saveScreenshot( "test_default_acl_entries" );
 
-        then: "two default acl-entry should be displayed"
+        then: "three default acl-entry should be displayed"
         principals.size() == DEFAULT_NUMBER_OF_ACL_ENTRIES;
 
         and: "expected acl-entries and actual are equal"

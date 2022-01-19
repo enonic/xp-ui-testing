@@ -9,6 +9,7 @@ import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.contentmanager.security.PermissionSuite
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.SystemUserName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -17,6 +18,7 @@ import spock.lang.Stepwise
  *
  * */
 @Stepwise
+@Ignore
 class ContentWizard_Overwrite_Child_Permissions_Spec
     extends BaseContentSpec
 {
@@ -97,7 +99,7 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
         then: "the same entry should appear in the child content"
         ContentAclEntry expected = ContentAclEntry.builder().principalName( "/system/users/anonymous" ).suite(
             PermissionSuite.CAN_READ ).build();
-        childFolder.clickOnEditPermissionsButton(  ).getAclEntries().contains( expected );
+        childFolder.clickOnEditPermissionsButton().getAclEntries().contains( expected );
     }
 
     def "GIVEN existing child folder is opened AND 'Edit Permission' dialog is opened WHEN 'Inherit permissions' set in false AND new Permission was added in the child THEN the permissions should be displayed on the wizard"()
@@ -109,20 +111,16 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
 
         when: "'Inherit permissions' set in false"
         dialog.setInheritPermissionsCheckbox( false );
-        and: "User Administrator role was added"
+        and: "User Administrator role has been added"
         dialog.addPermissionByClickingCheckbox( userAdminRoleEntry ).clickOnApply();
         ContentAclEntry expectedEntryFromUI = ContentAclEntry.builder().principalName( USER_ADMIN_ROLE ).suite(
             PermissionSuite.CAN_READ ).build();
 
-        and: "child folder has been saved"
-        //childWizard.save();
-        saveScreenshot( "inherit_perm_false_perm_changed" );
-
-        then: "expected role should be present on the Security form in the wizard"
-        childWizard.clickOnEditPermissionsButton(  ).getAclEntries().contains( expectedEntryFromUI );
+        then: "expected role should be present in the Security form in the wizard"
+        childWizard.clickOnEditPermissionsButton().getAclEntries().contains( expectedEntryFromUI );
     }
 
-    def "GIVEN existing child folder is opened AND 'Edit Permission' dialog is opened WHEN 'Inherit permissions' set in true THEN permissions list should be updated to permissions from the parent folder"()
+    def "GIVEN existing child folder is opened WHEN 'Inherit permissions' set in true THEN permissions list should be updated to permissions from the parent folder"()
     {
         given: "existing parent folder with a child is opened"
         ContentWizardPanel childWizard = findAndSelectContent( CHILD_FOLDER.getName() ).clickToolbarEdit();
@@ -141,8 +139,8 @@ class ContentWizard_Overwrite_Child_Permissions_Spec
             PermissionSuite.CAN_READ ).build();
         saveScreenshot( "inherit_perm_true_initial_perm_restored" );
 
-        then: "permissions should be the same as in the parent folder"
-        !childWizard.clickOnEditPermissionsButton(  ).getAclEntries().contains( entryToRemove );
+        then: "the same permissions should be in child and parent folders"
+        !childWizard.clickOnEditPermissionsButton().getAclEntries().contains( entryToRemove );
     }
     //verifies xp5400 (Confirmation Dialog should appear)
     def "GIVEN 'Edit Permissions Dialog' is opened WHEN changes is not saved AND 'Cancel'-top button pressed THEN Confirmation Dialog should not appear"()
