@@ -4,8 +4,9 @@ import com.enonic.autotests.pages.BaseContentType
 import com.enonic.autotests.pages.contentmanager.browsepanel.DeleteContentDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.utils.NameHelper
+import spock.lang.Ignore
 
-
+@Ignore
 class ContentWizard_Leave_Stay_Alert_Spec
     extends BaseContentSpec
 {
