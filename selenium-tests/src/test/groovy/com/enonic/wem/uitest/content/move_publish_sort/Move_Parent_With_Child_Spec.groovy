@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.MoveContentDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Stepwise
 
 /**
@@ -11,10 +12,11 @@ import spock.lang.Stepwise
  * verifies: XP-4111 Incorrect filtering of options when parent and its child were selected for moving
  * */
 @Stepwise
+@Ignore
 class Move_Parent_With_Child_Spec
     extends BaseContentSpec
 {
-    def "GIVEN existing folder is selected AND 'Move' button pressed WHEN own name of the folder has been typed THEN 'No matching items' message appears"()
+    def "GIVEN existing folder is selected AND 'Move' button pressed WHEN own name of the folder has been typed THEN all options should be disabled in the selector"()
     {
         given: "existing folder is selected AND 'Move' button pressed"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
@@ -29,7 +31,7 @@ class Move_Parent_With_Child_Spec
         dialog.isDestinationDisabled( IMPORTED_FOLDER_NAME )
     }
 
-    def "GIVEN parent folder and its child are selected AND 'Move' button pressed WHEN name of parent folder is typed THEN 'No matching items' message appears"()
+    def "GIVEN parent folder and its child are selected AND 'Move' button pressed WHEN name of parent folder is typed THEN all options should be disabled in the selector"()
     {
         given: "parent folder and its child are selected AND 'Move' button pressed"
         findAndSelectContent( IMPORTED_FOLDER_NAME );
