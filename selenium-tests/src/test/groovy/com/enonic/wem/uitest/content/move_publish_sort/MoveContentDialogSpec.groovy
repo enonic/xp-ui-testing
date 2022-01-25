@@ -3,10 +3,12 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.contentmanager.browsepanel.MoveContentDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class MoveContentDialogSpec
     extends BaseContentSpec
 {
