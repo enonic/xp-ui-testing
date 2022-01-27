@@ -13,6 +13,7 @@ import spock.lang.Shared
 /**
  * Created on 24.10.2016.
  * */
+@Ignore
 class Delete_Published_Parent_Folder_Spec
     extends BaseContentSpec
 {
