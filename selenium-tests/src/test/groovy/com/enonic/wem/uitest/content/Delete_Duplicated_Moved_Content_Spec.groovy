@@ -11,11 +11,11 @@ import spock.lang.Ignore
  * Created  on 17.11.2016.
  *
  * */
+@Ignore
 class Delete_Duplicated_Moved_Content_Spec
     extends BaseContentSpec
 {
 
-    @Ignore
     def "GIVEN existing site and its copy WHEN the original site has been deleted THEN duplicated site should not be deleted"()
     {
         given: "existing site and its copy"
@@ -41,7 +41,7 @@ class Delete_Duplicated_Moved_Content_Spec
         contentBrowsePanel.isExpanderPresent( site.getName() + "-copy" );
     }
 
-    def "GIVEN first-folder with a child AND the empty folder WHEN the child content moved to the empty folder AND first folder has been deleted THEN moved content should not be deleted"()
+    def "GIVEN parent-folder with a child WHEN the child content has been moved to an empty folder AND parent folder has been deleted THEN moved content should not be deleted"()
     {
         given: "parent folder has been added"
         Content parentFolder = buildFolderContent( "parent", "parent folder" );
