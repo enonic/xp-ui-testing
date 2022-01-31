@@ -22,6 +22,7 @@ import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
 import com.enonic.xp.data.PropertyTree
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -29,6 +30,7 @@ import spock.lang.Stepwise
  * Created  on 08.12.2016.
  * */
 @Stepwise
+@Ignore
 class Display_SourceButton_Spec
     extends BaseGebSpec
 {

@@ -2,8 +2,10 @@ package com.enonic.wem.uitest.content.portal
 
 import com.enonic.wem.uitest.content.BaseContentSpec
 import org.openqa.selenium.Cookie
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class Cookies_Service_Spec
     extends BaseContentSpec
 {
