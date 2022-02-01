@@ -11,6 +11,7 @@ import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class ContentUnpublishDialog_Spec
     extends BaseContentSpec
 {
