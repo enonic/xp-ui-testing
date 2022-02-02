@@ -5,10 +5,12 @@ import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class ContentPublish_Child_Spec
     extends BaseContentSpec
 {
@@ -22,7 +24,7 @@ class ContentPublish_Child_Spec
     @Shared
     Content childContent2;
 
-    def "GIVEN existing parent folder with child WHEN parent content selected but 'Include child' checkbox unchecked and 'Publish' button on toolbar pressed THEN parent content has 'Online' status but child should not be published"()
+    def "GIVEN existing parent folder with child is selected and Publish dialog is opened WHEN 'Publish Now' button has been clicked  THEN parent content get 'published'  but child folder remains 'new'"()
     {
         setup: "parent folder has been added"
         parentContent = buildFolderContent( "publish", "parent-folder" );
@@ -45,20 +47,6 @@ class ContentPublish_Child_Spec
         message == String.format( Application.ITEM_IS_PUBLISHED_NOTIFICATION_MESSAGE, parentContent.getName() );
     }
 
-    def "GIVEN existing 'Published' folder with not published child WHEN the parent folder has been clicked THEN Publish-menu becomes available"()
-    {
-        given: "existing 'Published' folder with not published child"
-        filterPanel.typeSearchText( parentContent.getName() );
-
-        when: "the parent folder has been selected"
-        contentBrowsePanel.clickCheckboxAndSelectRow( parentContent.getName() )
-
-        then: "'Publish' button on the toolbar should be disabled"
-        !contentBrowsePanel.isPublishButtonEnabled();
-
-        and: "Publish-menu becomes available"
-        contentBrowsePanel.isPublishMenuAvailable();
-    }
 
     def "GIVEN parent 'Published' folder with one 'New' child WHEN 'publish' menu expanded AND 'Publish Tree' selected THEN 'Publish Dialog' appears and correct name of child should be displayed"()
     {
