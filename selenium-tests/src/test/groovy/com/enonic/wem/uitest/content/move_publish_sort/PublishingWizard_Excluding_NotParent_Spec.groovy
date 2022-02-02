@@ -3,12 +3,14 @@ package com.enonic.wem.uitest.content.move_publish_sort
 import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
  * Created  on 3/1/2017.
  *
  * */
+@Ignore
 class PublishingWizard_Excluding_NotParent_Spec
     extends BaseContentSpec
 {
