@@ -4,8 +4,10 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class SortContentDialogSpec
     extends BaseContentSpec
 {
@@ -83,7 +85,7 @@ class SortContentDialogSpec
         items.contains( SortMenuItem.CREATED_DATE.getValue() );
     }
 
-    def "GIVEN sort dialog is opened WHEN 'cancel'- top button has been clicked THEN dialog should not be closed"()
+    def "GIVEN sort dialog is opened WHEN 'cancel'- top button has been clicked THEN dialog should be closed"()
     {
         given: "content selected and 'Sort' pressed"
         findAndSelectContent( IMPORTED_FOLDER_NAME )
