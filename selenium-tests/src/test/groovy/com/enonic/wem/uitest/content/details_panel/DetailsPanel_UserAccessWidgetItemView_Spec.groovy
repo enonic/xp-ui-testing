@@ -7,8 +7,10 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.usermanager.SystemUserName
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
+@Ignore
 class DetailsPanel_UserAccessWidgetItemView_Spec
     extends BaseContentSpec
 {
