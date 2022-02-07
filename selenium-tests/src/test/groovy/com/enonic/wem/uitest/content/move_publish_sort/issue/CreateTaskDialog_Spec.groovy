@@ -4,19 +4,21 @@ import com.enonic.autotests.pages.Application
 import com.enonic.autotests.pages.contentmanager.issue.CreateIssueDialog
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
  * Created on 7/6/2017.
  *
  * */
+@Ignore
 class CreateTaskDialog_Spec
     extends BaseContentSpec
 {
     @Shared
     Content CONTENT;
 
-    def "GIVEN existing folder WHEN the folder has been published THEN 'Published' status should be displayed"()
+    def "GIVEN existing folder is selected WHEN Create Task dialog has been opened THEN expected elements should be displayed"()
     {
         given: "existing folder"
         CONTENT = buildFolderContent( "folder", "create test dialog test" )

@@ -4,11 +4,13 @@ import com.enonic.autotests.pages.contentmanager.ContentPublishDialog
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 
 /**
  * Created  on 5/24/2017.
  * */
+@Ignore
 class Site_With_Invalid_Child_Publish_Spec
     extends BaseContentSpec
 {
@@ -34,7 +36,7 @@ class Site_With_Invalid_Child_Publish_Spec
         contentBrowsePanel.exists( SITE.getName() );
     }
 
-    def "GIVEN existing site with not valid child WHEN the site has been selected and Publish Wizard opened AND 'Include child' icon clicked THEN 'Publish' button should be disabled"()
+    def "GIVEN existing site with invalid child WHEN the site has been selected and Publish Wizard opened AND 'Include child' icon clicked THEN 'Publish' button should be disabled"()
     {
         given: "existing site with not valid child"
         findAndSelectContent( SITE.getName() );
@@ -53,7 +55,7 @@ class Site_With_Invalid_Child_Publish_Spec
         publishWizard.getInvalidContentMessage() == ContentPublishDialog.DIALOG_INVALID_CONTENT;
     }
 
-    def "GIVEN existing site with not valid child WHEN the invalid content has been removed in the dialog THEN 'Publish' button gets enabled"()
+    def "GIVEN existing site with invalid child WHEN the invalid content has been removed in the dialog THEN 'Publish' button gets enabled"()
     {
         given: "existing site with not valid child"
         findAndSelectContent( SITE.getName() );
@@ -70,7 +72,7 @@ class Site_With_Invalid_Child_Publish_Spec
         publishWizard.isPublishButtonEnabled();
     }
 
-    def "GIVEN existing site with not valid child  AND Publish wizard is opened WHEN 'Include Child' icon has been clicked twice THEN 'Publish' button should be enabled"()
+    def "GIVEN existing site with invalid child  AND Publish wizard is opened WHEN 'Include Child' icon has been clicked twice THEN 'Publish' button should be enabled"()
     {
         given: "existing site with not valid child"
         findAndSelectContent( SITE.getName() );

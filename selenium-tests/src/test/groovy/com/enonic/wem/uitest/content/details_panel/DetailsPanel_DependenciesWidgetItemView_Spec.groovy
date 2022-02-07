@@ -172,7 +172,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         TestUtils.isContains( names, imageSelector.getName() )
     }
     // verifies the XP-3893 Dependencies Widget: outbound dependencies not displayed, when site with inserted images was selected
-    def "GIVEN existing site with inserted Image Component WHEN site selected and dependency widget is opened THEN correct outbound dependency should be displayed"()
+    def "GIVEN existing site with inserted Image is selected WHEN dependency widget has been opened THEN expected outbound dependency should be displayed"()
     {
         given: "Image Component was added on the site"
         def name = NameHelper.uniqueName( "site" );
@@ -199,7 +199,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         when: "site with the component was selected in the grid and dependency widget is opened"
         DependenciesWidgetItemView dependencies = openDependenciesWidgetView();
         dependencies.clickOnShowOutboundButton();
-        sleep( 1500 );
+        sleep( 2000 );
         NavigatorHelper.switchToNextTab( getTestSession() );
         contentBrowsePanel.waitsForSpinnerNotVisible();
         List<String> names = contentBrowsePanel.getContentNamesFromGrid();
