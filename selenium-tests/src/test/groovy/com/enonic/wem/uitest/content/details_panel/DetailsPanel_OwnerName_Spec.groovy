@@ -18,10 +18,12 @@ import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
 import com.enonic.wem.uitest.BaseGebSpec
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class DetailsPanel_OwnerName_Spec
     extends BaseGebSpec
 {
