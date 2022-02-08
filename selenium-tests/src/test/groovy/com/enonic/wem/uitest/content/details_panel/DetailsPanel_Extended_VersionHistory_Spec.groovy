@@ -4,10 +4,12 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.Versio
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.ContentVersionInfoView
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class DetailsPanel_Extended_VersionHistory_Spec
     extends BaseContentSpec
 {
@@ -15,8 +17,6 @@ class DetailsPanel_Extended_VersionHistory_Spec
     @Shared
     Content FOLDER;
 
-    @Shared
-    String NEW_DISPLAY_NAME = "version-info-changed"
 
     def "GIVEN existing content is selected AND 'Version History' is opened WHEN current 'version item' has been clicked THEN the item should be expanded"()
     {
