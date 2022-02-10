@@ -11,10 +11,12 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.autotests.vo.contentmanager.security.ContentAclEntry
 import com.enonic.autotests.vo.usermanager.SystemUserName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class Restore_Version_Site_Spec
     extends BaseVersionHistorySpec
 {
@@ -175,7 +177,6 @@ class Restore_Version_Site_Spec
         pageTemplateFormViewPanel.selectPageController( COUNTRY_REGION_PAGE_CONTROLLER );
         sleep( 500 );
         saveScreenshot( "site_version_controller_added_wizard" );
-
 
         and: "home button has been clicked"
         wizard.switchToBrowsePanelTab();

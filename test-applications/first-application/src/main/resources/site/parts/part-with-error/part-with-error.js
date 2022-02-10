@@ -5,14 +5,9 @@ var view = resolve('part-with-error.html');
 
 function handlePost(req) {
 
-    var createResult = JSON.stringify(contentJsLib.create(), null, 4);
+     throw 'Error';
 
-    var params = {
-        createResult: createResult,
-
-    };
-
-    var body = thymeleaf.render(view, params);
+    var body = thymeleaf.render(view, {});
 
     return {
         contentType: 'text/html',

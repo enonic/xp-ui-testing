@@ -3,10 +3,12 @@ package com.enonic.wem.uitest.content.details_panel
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.AttachmentsWidgetItemView
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class DetailsPanel_AttachmentsWidgetItemView_Spec
     extends BaseContentSpec
 {
