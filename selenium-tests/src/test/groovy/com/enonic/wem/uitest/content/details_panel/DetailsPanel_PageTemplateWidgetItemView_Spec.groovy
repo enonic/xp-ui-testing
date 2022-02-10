@@ -9,6 +9,7 @@ import com.enonic.autotests.pages.form.liveedit.ContextWindow
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -16,6 +17,7 @@ import spock.lang.Stepwise
  * Create on 8/3/2017.
  * */
 @Stepwise
+@Ignore
 class DetailsPanel_PageTemplateWidgetItemView_Spec
     extends BaseContentSpec
 {
