@@ -6,12 +6,14 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.SettingsWizardStepF
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentSettings
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 import java.time.LocalDate
 
 @Stepwise
+@Ignore
 class DetailsPanel_PropertiesWidgetItemView_Spec
     extends BaseContentSpec
 {
