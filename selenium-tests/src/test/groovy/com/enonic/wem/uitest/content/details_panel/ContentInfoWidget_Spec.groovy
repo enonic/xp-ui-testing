@@ -8,12 +8,14 @@ import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.schema.content.ContentTypeName
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 import java.time.LocalDate
 
 @Stepwise
+@Ignore
 class ContentInfoWidget_Spec
     extends BaseContentSpec
 {
