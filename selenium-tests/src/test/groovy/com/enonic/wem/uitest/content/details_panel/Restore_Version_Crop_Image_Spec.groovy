@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.Conten
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.form.ImageFormViewPanel
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -13,6 +14,7 @@ import spock.lang.Stepwise
  * Verifies XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
  * */
 @Stepwise
+@Ignore
 class Restore_Version_Crop_Image_Spec
     extends BaseVersionHistorySpec
 {

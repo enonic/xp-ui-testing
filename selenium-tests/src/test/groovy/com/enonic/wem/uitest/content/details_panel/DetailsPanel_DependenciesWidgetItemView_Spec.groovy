@@ -12,10 +12,12 @@ import com.enonic.autotests.utils.NameHelper
 import com.enonic.autotests.utils.TestUtils
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class DetailsPanel_DependenciesWidgetItemView_Spec
     extends BaseContentSpec
 {
@@ -72,7 +74,7 @@ class DetailsPanel_DependenciesWidgetItemView_Spec
         dependencies.isShowOutboundButtonDisplayed();
     }
 
-    def "GIVEN existing shortcut has been selected AND Dependencies Widget opened WHEN 'show outbound'- button clicked THEN Dependencies Section appears on the filter panel AND expected label for dependencies is displayed"()
+    def "GIVEN existing shortcut has been selected WHEN 'show outbound'- button has been clicked THEN Dependencies Section appears in the filter panel"()
     {
         given:
         findAndSelectContent( SHORTCUT_CONTENT.getName() );

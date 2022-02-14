@@ -5,10 +5,12 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.Conten
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.form.ImageFormViewPanel
+import spock.lang.Ignore
 
 /**
  * Created  on 25.10.2016.
  * */
+@Ignore
 class Restore_Version_Focus_Image_Spec
     extends BaseVersionHistorySpec
 {

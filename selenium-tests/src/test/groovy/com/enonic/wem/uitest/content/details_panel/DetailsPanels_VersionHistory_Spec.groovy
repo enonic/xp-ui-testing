@@ -4,6 +4,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.ContentStatus
 import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.VersionHistoryWidget
 import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.ContentVersion
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 import com.enonic.autotests.utils.TimeUtils
@@ -11,6 +12,7 @@ import com.enonic.autotests.utils.TimeUtils
 import java.time.LocalTime
 
 @Stepwise
+@Ignore
 class DetailsPanels_VersionHistory_Spec
     extends BaseVersionHistorySpec
 {
