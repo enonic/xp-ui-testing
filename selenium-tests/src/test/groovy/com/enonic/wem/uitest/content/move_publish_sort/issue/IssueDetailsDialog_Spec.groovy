@@ -12,6 +12,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.Issue
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -19,6 +20,7 @@ import spock.lang.Stepwise
  * Created on 7/10/2017.
  * */
 @Stepwise
+@Ignore
 class IssueDetailsDialog_Spec
     extends BaseIssueSpec
 {
@@ -42,7 +44,7 @@ class IssueDetailsDialog_Spec
 
     def "setup: add a test user to the system user store"()
     {
-        setup: "'Users' app is opened"
+        setup: "Go to Users"
         userBrowsePanel = NavigatorHelper.openUsersApp( getTestSession() );
 
         and: "build the new user"
