@@ -13,6 +13,7 @@ import com.enonic.autotests.vo.contentmanager.Content
 import com.enonic.autotests.vo.contentmanager.Issue
 import com.enonic.autotests.vo.usermanager.RoleName
 import com.enonic.autotests.vo.usermanager.User
+import spock.lang.Ignore
 import spock.lang.Shared
 import spock.lang.Stepwise
 
@@ -20,6 +21,7 @@ import spock.lang.Stepwise
  * Created on 7/12/2017.
  * */
 @Stepwise
+@Ignore
 class IssueListDialog_Spec
     extends BaseIssueSpec
 {
@@ -61,7 +63,7 @@ class IssueListDialog_Spec
         userBrowsePanel.exists( TEST_USER.getDisplayName(), true );
     }
 
-    def "GIVEN create issue dialog is opened WHEN data has been typed AND 'Create Task' button has been pressed THEN Issue Details dialog should be correctly displayed"()
+    def "GIVEN create task dialog is opened WHEN data has been typed AND 'Create Task' button has been pressed THEN Issue Details dialog should be correctly displayed"()
     {
         setup: "Content Studio is opened"
         contentBrowsePanel = NavigatorHelper.openContentStudioApp( getTestSession() );
