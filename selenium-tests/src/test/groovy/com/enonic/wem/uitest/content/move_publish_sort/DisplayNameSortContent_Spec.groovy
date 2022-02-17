@@ -5,9 +5,11 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortOrder
 import com.enonic.wem.uitest.content.BaseContentSpec
 import com.enonic.xp.content.ContentPath
+import spock.lang.Ignore
 import spock.lang.Stepwise
 
 @Stepwise
+@Ignore
 class DisplayNameSortContent_Spec
         extends BaseContentSpec {
 
