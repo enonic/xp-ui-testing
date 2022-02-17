@@ -4,7 +4,9 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.SortContentDialog
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortMenuItem
 import com.enonic.autotests.pages.contentmanager.browsepanel.SortOrder
 import com.enonic.wem.uitest.content.BaseContentSpec
+import spock.lang.Ignore
 
+@Ignore
 class ManualSortContent_Spec
     extends BaseContentSpec
 {
