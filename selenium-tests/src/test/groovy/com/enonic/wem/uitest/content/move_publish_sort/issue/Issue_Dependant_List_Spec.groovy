@@ -20,6 +20,7 @@ import spock.lang.Stepwise
  * Created on 7/26/2017.
  * */
 @Stepwise
+@Ignore
 class Issue_Dependant_List_Spec
     extends BaseIssueSpec
 {
