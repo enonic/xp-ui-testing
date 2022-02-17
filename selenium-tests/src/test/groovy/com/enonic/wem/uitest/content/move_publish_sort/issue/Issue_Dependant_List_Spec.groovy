@@ -38,8 +38,6 @@ class Issue_Dependant_List_Spec
     @Shared
     Issue TEST_ISSUE;
 
-    @Shared
-    String FOLDER_DISPLAY_NAME = "All Content types images";
 
     def setup()
     {
@@ -81,7 +79,6 @@ class Issue_Dependant_List_Spec
         DOUBLE_CONTENT = buildDouble1_1_Content( null );
         and: "child content has been added"
         findAndSelectContent( SITE.getName() );
-        addContent( DOUBLE_CONTENT );
 
         List<String> assigneesList = new ArrayList<>();
         assigneesList.add( TEST_USER.getName() );
@@ -100,6 +97,7 @@ class Issue_Dependant_List_Spec
         IssueDetailsDialog issueDetailsDialog = new IssueDetailsDialog( getSession() );
         issueDetailsDialog.clickOnItemsTabBarItem();
         sleep( 400 );
+        saveScreenshot( "show_dep" );
         List<String> dependantsNames = issueDetailsDialog.getDependantNames();
 
         then: "the content should be present in the dependants list of the 'Issue Details Dialog'"
