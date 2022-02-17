@@ -5,6 +5,7 @@ import com.enonic.autotests.pages.contentmanager.browsepanel.detailspanel.Conten
 import com.enonic.autotests.pages.contentmanager.wizardpanel.ContentWizardPanel
 import com.enonic.autotests.pages.contentmanager.wizardpanel.image.ImageEditor
 import com.enonic.autotests.pages.form.ImageFormViewPanel
+import spock.lang.Ignore
 import spock.lang.Stepwise
 
 /**
@@ -12,11 +13,12 @@ import spock.lang.Stepwise
  * Verifies bug: XP-4331 Image Editor - Image not refreshed after being restored one of the its versions
  * */
 @Stepwise
+@Ignore
 class Restore_Version_Zoom_Image_Spec
     extends BaseVersionHistorySpec
 {
 
-    def "GIVEN existing image WHEN image has been zoomed AND aplly button pressed THEN new 'version history item' should appear in the widget"()
+    def "GIVEN existing image WHEN image has been zoomed AND apply button pressed THEN new 'version history item' should appear in the widget"()
     {
         given:
         findAndSelectContent( HAND_IMAGE_NAME );

@@ -116,12 +116,12 @@ class IssueDetailsDialog_Spec
         getTestSession().setUser( TEST_USER );
         NavigatorHelper.openContentStudioApp( getTestSession() );
 
-        when: "'Assigned to Me' has been checked"
+        when: "'Assigned to Me' has been clicked"
         IssueListDialog issueListDialog = contentBrowsePanel.clickOnToolbarShowIssues();
         saveScreenshot( "assigned_issue" + USER_NAME );
         List<String> titles = issueListDialog.getIssueTitles();
 
-        then: "one issue with expected name should be displayed"
+        then: "one issue with expected name should be filtered"
         titles.size() == 1;
         and:
         titles.get( 0 ).contains( TEST_TASK.getTitle() );
